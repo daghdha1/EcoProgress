@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Habilita tráfico http sin cifrar en el dominio/ip indicado (para pruebas locales) -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.43.29</domain>
+    </domain-config>
+</network-security-config>
