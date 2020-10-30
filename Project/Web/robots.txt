@@ -1,5 +1,4 @@
 user-agent: *
 disallow: /private
-disallow: /node_modules
 disallow: /_schema
 
