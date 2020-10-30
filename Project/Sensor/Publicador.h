@@ -13,14 +13,13 @@ class Publicador {
 
 private:
 
-  // ADRI-GTI-PROY-G4
 	uint8_t beaconUUID[16] = {
-		'A', 'D', 'R', 'I', '-', 'G', 'T', 'I',
-		'-', 'P', 'R', 'O', 'Y', '-', 'G', '4'
+		'E', 'C', 'O', '-', 'P', 'R', 'O', 'G',
+		'R', 'E', 'S', 'S', '-', 'D', 'E', 'V'
 	};
 
 	EmisoraBLE laEmisora {
-		"ElGrupitoRefachero2", //  nombre emisora
+		"EcoProgressDeviceBTLE", //  nombre emisora
 		0x004c, // fabricanteID (Apple)
 		4 // txPower
 	};
@@ -48,7 +47,7 @@ public:
 	// ............................................................
 	// ............................................................
 	void publicarCO( int16_t valorCO, uint8_t contador, long tiempoEspera ) {
-    
+
 		//
 		// 1. empezamos anuncio
 		//

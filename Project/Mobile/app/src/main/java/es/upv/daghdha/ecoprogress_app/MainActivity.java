@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     private static String ETIQUETA_LOG = ">>>>";
     private double TEST_VALUE = 3.1415;
-    private String MY_STR_DEVICE_UUID = "TEST-GTI-PROY-G4";
+    private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
     private String USER = "daghdha@developer.com";
 
