@@ -1,0 +1,14 @@
+#######################################################################
+####################### DIRECTORY CONFIG APACHE #######################
+#######################################################################
+
+#Lo utilizamos para personalizar la configuración de directivas y parámetros definidos en el archivo de configuración principal del servidor web.
+
+#Activamos el motor de redirecciones
+RewriteEngine on
+
+#La directiva RewriteCond define las condiciones bajo las cuales debe tener lugar la reescritura
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#Redireccionamiento para urls entrantes (index.php gestiona que controlador actuará)
+RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
