@@ -1,4 +1,4 @@
--- create database ecoprogress;
+create database if not exists ecoprogress;
 
 use ecoprogress;
 
@@ -31,14 +31,14 @@ PRIMARY KEY (instant),
 foreign key (idSensor) references Sensors(id)
 );
 
-insert into Users (mail, name, surname, password) values ('rmiguialvz0@ask.com', 'Miguel', 'Alvarez', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('martagb@correo.com', 'Marta', 'García', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('MEspinola@dot.gov', 'Marcelo', 'Espinola', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('sotito@swimnow.com', 'Maria', 'Soto', 'ecoprogress');
+insert into Users (mail, name, surname, password) values ('miguel@developer.com', 'Miguel', 'Alvarez', 'ecoprogress');
+insert into Users (mail, name, surname, password) values ('marta@developer.com', 'Marta', 'García', 'ecoprogress');
+insert into Users (mail, name, surname, password) values ('marcelo@developer.com', 'Marcelo', 'Espinola', 'ecoprogress');
+insert into Users (mail, name, surname, password) values ('sotito@developer.com', 'Maria', 'Soto', 'ecoprogress');
 insert into Users (mail, name, surname, password) values ('daghdha@developer.com', 'Adrian', 'Soler Navarro', 'ecoprogress');
 
-insert into Sensors (id, mail, type) values ('1', 'sotito@swimnow.com', 'CO00001');
-insert into Sensors (id, mail, type) values ('2', 'martagb@correo.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('1', 'sotito@developer.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('2', 'daghdha@developer.com', 'CO00001');
 
 insert into Measures (value, instant, location, idSensor) values (1286, '1595559902', '38.995823, -0.177517', '1');
 insert into Measures (value, instant, location, idSensor) values (1206, '1573702829', '38.995823, -0.177517', '2');
