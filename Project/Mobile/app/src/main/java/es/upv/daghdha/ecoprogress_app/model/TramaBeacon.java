@@ -5,7 +5,7 @@ import java.util.Arrays;
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
 // -----------------------------------------------------------------------------------
-public class Beacon {
+public class TramaBeacon {
     private byte[] prefix = null; // 9 bytes
     private byte[] uuid = null; // 16 bytes
     private byte[] major = null; // 2 bytes
@@ -90,7 +90,7 @@ public class Beacon {
     // Lista<Byte> -->
     //                  IBeacon() -->
     // -------------------------------------------------------------------------------
-    public Beacon(byte[] bytes) {
+    public TramaBeacon(byte[] bytes) {
         this.totalBytes = bytes;
 
         prefix = Arrays.copyOfRange(totalBytes, 0, 8 + 1); // 9 bytes

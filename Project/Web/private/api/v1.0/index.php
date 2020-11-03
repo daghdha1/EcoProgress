@@ -6,7 +6,12 @@ include_once __DIR__ . '/includes/debugger.php';
 // Registramos myAutoloader() como Callback que se ejecutará al intentar inicializar una clase que no existe
 spl_autoload_register('myAutoloader');
 
-// Implementamos myAutoloader(), la cual recibe el nombre de la clase que se intenta inicializar para incluirla (se utilizan expresiones regulares para comparar la cadena classname)
+/* Implementamos myAutoloader(), la cual recibe el nombre de la clase que se intenta inicializar para incluirla (se utilizan expresiones regulares para comparar la cadena classname)
+* 
+* Texto -->
+*           myAutoloader() -->
+* <-- V | F
+*/
 function myAutoloader($classname) {
     if (preg_match('/[a-zA-Z]+Controller$/', $classname)) {
         include_once __DIR__ . '/controllers/' . $classname . '.php';
