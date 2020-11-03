@@ -8,18 +8,18 @@ import androidx.annotation.NonNull;
 
 public class Measure {
     private double value;
-    private int instant;
+    private int timestamp;
     private String location;
-    private String user;
+    private String sensorID;
 
     public Measure() {
     }
 
-    public Measure(double value, int instant, String location, String user) {
+    public Measure(double value, int timestamp, String location, String sensorID) {
         this.value = value;
-        this.instant = instant;
+        this.timestamp = timestamp;
         this.location = location;
-        this.user = user;
+        this.sensorID = sensorID;
     }
 
     public double getValue() {
@@ -30,12 +30,12 @@ public class Measure {
         this.value = value;
     }
 
-    public int getInstant() {
-        return instant;
+    public int getTimestamp() {
+        return timestamp;
     }
 
-    public void setInstant(int instant) {
-        this.instant = instant;
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getLocation() {
@@ -46,18 +46,18 @@ public class Measure {
         this.location = location;
     }
 
-    public String getUser() {
-        return user;
+    public String getSensorID() {
+        return sensorID;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setSensorID(String sensorID) {
+        this.sensorID = sensorID;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "Measure data --> Value: " + this.getValue() + ", Time: " + this.getInstant() + ", Location: " + this.getLocation() + ", User: " + this.getUser();
+        return "Measure data --> Value: " + this.getValue() + ", Timestamp: " + this.getTimestamp() + ", Location: " + this.getLocation() + ", sensorID: " + this.getSensorID();
     }
 
 }
