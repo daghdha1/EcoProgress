@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private double TEST_VALUE = 3.1415;
     private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
-    private String USER = "daghdha@developer.com";
-    private String SENSOR_ID = "1";
+    private String USER_MAIL = "daghdha@developer.com";
+    private String SENSOR_ID = "2"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
     // --------------------------------------------------------------
-    //  Beacon -->
+    //  TramaBeacon -->
     //                  aBeaconHasArrived() -->
     // --------------------------------------------------------------
     private void aBeaconHasArrived(final TramaBeacon b) {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // --------------------------------------------------------------
-    //  Beacon -->
+    //  TramaBeacon -->
     //                  extractMeasure() -->
     //                                             <-- R | -1
     // --------------------------------------------------------------
