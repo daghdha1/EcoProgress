@@ -45,9 +45,9 @@ insert into Sensors (id, mail, type) values ('5', 'marcelo@developer.com', 'CO00
 
 insert into Measures (value, timestamp, location, sensorID) values (1286, '1595559902', '38.995823, -0.177517', '1');
 insert into Measures (value, timestamp, location, sensorID) values (2222, '1573702829', '38.995823, -0.177517', '2');
-insert into Measures (value, timestamp, location, sensorID) values (3333, '1595559902', '38.995823, -0.177517', '3');
-insert into Measures (value, timestamp, location, sensorID) values (4444, '1573702829', '38.995823, -0.177517', '4');
-insert into Measures (value, timestamp, location, sensorID) values (5555, '1595559902', '38.995823, -0.177517', '5');
+insert into Measures (value, timestamp, location, sensorID) values (3333, '1595459910', '38.995823, -0.177517', '3');
+insert into Measures (value, timestamp, location, sensorID) values (4444, '1573802905', '38.995823, -0.177517', '4');
+insert into Measures (value, timestamp, location, sensorID) values (5555, '1595559909', '38.995823, -0.177517', '5');
 
 
 select * from Measures;

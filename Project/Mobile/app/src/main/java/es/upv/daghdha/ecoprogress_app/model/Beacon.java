@@ -5,7 +5,7 @@ import java.util.Arrays;
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
 // -----------------------------------------------------------------------------------
-public class TramaBeacon {
+public class Beacon {
     private byte[] prefix = null; // 9 bytes
     private byte[] uuid = null; // 16 bytes
     private byte[] major = null; // 2 bytes
@@ -17,8 +17,8 @@ public class TramaBeacon {
     private byte[] advFlags = null; // 3 bytes
     private byte[] advHeader = null; // 2 bytes
     private byte[] companyID = new byte[2]; // 2 bytes
-    private byte iBeaconType = 0; // 1 byte
-    private byte iBeaconLength = 0; // 1 byte
+    private byte beaconType = 0; // 1 byte
+    private byte beaconLength = 0; // 1 byte
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
@@ -76,21 +76,21 @@ public class TramaBeacon {
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    public byte getiBeaconType() {
-        return iBeaconType;
+    public byte getBeaconType() {
+        return beaconType;
     }
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    public byte getiBeaconLength() {
-        return iBeaconLength;
+    public byte getBeaconLength() {
+        return beaconLength;
     }
 
     // -------------------------------------------------------------------------------
     // Lista<Byte> -->
     //                  IBeacon() -->
     // -------------------------------------------------------------------------------
-    public TramaBeacon(byte[] bytes) {
+    public Beacon(byte[] bytes) {
         this.totalBytes = bytes;
 
         prefix = Arrays.copyOfRange(totalBytes, 0, 8 + 1); // 9 bytes
@@ -102,8 +102,8 @@ public class TramaBeacon {
         advFlags = Arrays.copyOfRange(prefix, 0, 2 + 1); // 3 bytes
         advHeader = Arrays.copyOfRange(prefix, 3, 4 + 1); // 2 bytes
         companyID = Arrays.copyOfRange(prefix, 5, 6 + 1); // 2 bytes
-        iBeaconType = prefix[7]; // 1 byte
-        iBeaconLength = prefix[8]; // 1 byte
+        beaconType = prefix[7]; // 1 byte
+        beaconLength = prefix[8]; // 1 byte
 
     } // ()
 } // class
