@@ -24,7 +24,7 @@ import java.util.UUID;
 
 import es.upv.daghdha.ecoprogress_app.io.AppAdapter;
 import es.upv.daghdha.ecoprogress_app.model.Measure;
-import es.upv.daghdha.ecoprogress_app.model.TramaBeacon;
+import es.upv.daghdha.ecoprogress_app.model.Beacon;
 
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private double TEST_VALUE = 3.1415;
     private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
-    private String USER = "daghdha@developer.com";
-    private String SENSOR_ID = "1";
+    private String USER_MAIL = "daghdha@developer.com"; // set your mail for testing
+    private String SENSOR_ID = "2"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     //  Beacon -->
     //                  aBeaconHasArrived() -->
     // --------------------------------------------------------------
-    private void aBeaconHasArrived(final TramaBeacon b) {
+    private void aBeaconHasArrived(final Beacon b) {
         // Comprobar si no es un beacon repetido
         String[] intValuesInStrOfMajor = Utils.bytesToIntInStr(b.getMajor()).split(":");
         int typeOfMeasure = Integer.parseInt(intValuesInStrOfMajor[0], 10);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     //                  extractMeasure() -->
     //                                             <-- R | -1
     // --------------------------------------------------------------
-    private void extractMeasure(final TramaBeacon b) {
+    private void extractMeasure(final Beacon b) {
         double CO = Utils.bytesToInt(b.getMinor()); // ppb
         double formattedCO;
         Log.d(ETIQUETA_LOG, "CO_value in ppb-------> " + CO);
@@ -236,15 +236,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
         Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utils.bytesToHexString(bytes));
 
-        TramaBeacon tib = new TramaBeacon(bytes);
+        Beacon tib = new Beacon(bytes);
 
         Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
         Log.d(ETIQUETA_LOG, " prefijo  = " + Utils.bytesToHexString(tib.getPrefix()));
         Log.d(ETIQUETA_LOG, " advFlags = " + Utils.bytesToHexString(tib.getAdvFlags()));
         Log.d(ETIQUETA_LOG, " advHeader = " + Utils.bytesToHexString(tib.getAdvHeader()));
         Log.d(ETIQUETA_LOG, " companyID = " + Utils.bytesToHexString(tib.getCompanyID()));
-        Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getiBeaconType()));
-        Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getiBeaconLength()) + " ( " + tib.getiBeaconLength() + " ) ");
+        Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getBeaconType()));
+        Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getBeaconLength()) + " ( " + tib.getBeaconLength() + " ) ");
         Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToHexString(tib.getUUID()));
         Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToString(tib.getUUID()));
         Log.d(ETIQUETA_LOG, " major  = " + Utils.bytesToHexString(tib.getMajor()) + "( " + Utils.bytesToIntInStr(tib.getMajor()) + " ) ");
@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onScanResult(ScanSettings.SCAN_MODE_BALANCED, result); // Escaneo de ciclo más alto ya que la app se ejecuta en segundo plano (ahorro de energía)
                 // Dispostivo encontrado
                 byte[] data = result.getScanRecord().getBytes();
-                TramaBeacon tib = new TramaBeacon(data);
+                Beacon tib = new Beacon(data);
                 String strUUIDEncontrado = Utils.bytesToString(tib.getUUID());
                 Log.d(ETIQUETA_LOG, "API >= 21 - UUID dispositivo encontrado!!!!: " + tib.getUUID().toString());
                 if (strUUIDEncontrado.compareTo(Utils.uuidToString(uuidTarget)) == 0) {
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLeScan(BluetoothDevice bluetoothDevice, int rssi, byte[] bytes) {
                 // Dispostivo encontrado
-                TramaBeacon b = new TramaBeacon(bytes);
+                Beacon b = new Beacon(bytes);
                 String strUUIDFound = Utils.bytesToString(b.getUUID());
                 Log.d(ETIQUETA_LOG, "API <= 19 - UUID dispositivo encontrado!!!!: " + b.getUUID().toString());
                 if (strUUIDFound.compareTo(Utils.uuidToString(uuidTarget)) == 0) {
