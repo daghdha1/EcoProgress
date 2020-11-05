@@ -31,12 +31,19 @@ class MeasureEntity extends BaseEntity {
 	public function setValue($value) {
         $this->value = $value;
     }
+
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
     }
+
 	public function setLocation($location) {
-        $this->location = $location;
+        $coor = explode(',', $location);
+        $this->location = array(
+            'latitude' => $coor[0], 
+            'longitude' => $coor[1]
+        );
     }
+
 	public function setSensorID($sensorID) {
         $this->sensorID = $sensorID;
     }

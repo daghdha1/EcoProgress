@@ -6,10 +6,11 @@
 * <-- Texto
 */
 function formatStrEntity($str) {
-	// Si en vez de quitar la última letra, se necesitan quitar más
-	/*if (($str === '???') || ($str === '???')) {
-		return substr_replace($str, '', -2);
-	}*/
+	// Salvo que el string sea location, se quita la última letra (ej-> measures -> measure)
+	/*if ($str !== 'location') {
 	
+	}
+	return $str;*/
+
 	return substr_replace($str, '', -1);
 }

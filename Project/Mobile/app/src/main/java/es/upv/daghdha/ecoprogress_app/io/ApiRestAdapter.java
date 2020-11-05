@@ -14,7 +14,6 @@ public class ApiRestAdapter {
     private static ApiRestService API_SERVICE;
     private static final String PROTOCOL_TARGET = "http";
     private static final String IP_SERVER_TARGET = "192.168.43.29";
-    private static final String PORT_SERVER_TARGET = "8080";
 
     // --------------------------------------------------------------
     //                      getApiService() -->
@@ -30,7 +29,7 @@ public class ApiRestAdapter {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
-        String baseUrl = PROTOCOL_TARGET + "://" + IP_SERVER_TARGET + ":" + PORT_SERVER_TARGET + "/";
+        String baseUrl = PROTOCOL_TARGET + "://" + IP_SERVER_TARGET + "/EcoProgress/Project/Web/private/api/v1.0/";
 
         if (API_SERVICE == null) {
             Retrofit retrofit = new Retrofit.Builder()
