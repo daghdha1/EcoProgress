@@ -19,7 +19,7 @@ class Request {
         $this->uriElements = explode('/', $uri);
         $this->resource = strtolower(array_shift($this->uriElements));
 
-        echo '-----------------';
+        /*echo '-----------------';
         echo '<br>';
         echo 'REQUEST URI --> ' . $_SERVER['REQUEST_URI'];
         echo '<br>';
@@ -32,7 +32,7 @@ class Request {
         echo 'uriElements --> ' . $this->uriElements;
         echo '<br>';
         echo 'resource --> ' . $this->resource;
-        echo '<br>';
+        echo '<br>';*/
 
         // Recuperamos los parámetros
         $this->parseIncomingParams();
@@ -101,10 +101,5 @@ class Request {
 
         // Guardamos los parámetros obtenidos
         $this->parameters = $parameters;
-        
-        /*if (!isAssoc($this->parameters)) {
-            echo 'is not Assoc';
-            showIndexedArray($this->parameters);
-        }*/
     }
 }
