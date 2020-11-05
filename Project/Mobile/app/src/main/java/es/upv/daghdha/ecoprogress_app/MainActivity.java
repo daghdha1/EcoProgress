@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static String ETIQUETA_LOG = ">>>>";
-    private double TEST_VALUE = 3.1415;
     private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
     private String USER_MAIL = "daghdha@developer.com"; // set your mail for testing
@@ -63,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Aquí empieza la busqueda de nuestro sensor BTLE
-        this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        // this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        AppAdapter.getAppService().getMeasures();
     } // onCreate()
 
     // --------------------------------------------------------------
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 if (location != null) {
                     Log.d(MainActivity.ETIQUETA_LOG, "Localización obtenida!");
                     // Se guarda la posición tomada en el objeto medición
-                    this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s, %s", location.getLatitude(), location.getLongitude()));
-                    Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s, %s", location.getLatitude(), location.getLongitude()));
+                    this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
+                    Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
                     // Se envian las medidas a la API Rest
                     sendMeasure(this.currentMeasure);
                 } else {
@@ -219,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
         measure.setTimestamp(Math.toIntExact(currentTimeSeconds));
         measure.setSensorID(SENSOR_ID);
+        AppAdapter.getAppService().postMeasure(measure);
+    }
+
+    // FOR TESTING
+    private void sendTestMeasure() {
+        Measure measure = new Measure(1.554, 1637737373, "000001234 - -0.12345678", "2");
         AppAdapter.getAppService().postMeasure(measure);
     }
 

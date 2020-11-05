@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import es.upv.daghdha.ecoprogress_app.MainActivity;
 import es.upv.daghdha.ecoprogress_app.model.Measure;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +42,6 @@ public class AppAdapter {
                             if (response.isSuccessful()) {
                                 ArrayList<Measure> medicionesList = response.body();
                                 Log.d(">>>>", "Size array of measures --> " + medicionesList.size());
-                                //arrayAdapter.notifyDataSetChanged();
                             }
                         }
 

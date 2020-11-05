@@ -18,6 +18,22 @@ class Request {
         $uri = explode('v1.0/',parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))[1];
         $this->uriElements = explode('/', $uri);
         $this->resource = strtolower(array_shift($this->uriElements));
+
+        echo '-----------------';
+        echo '<br>';
+        echo 'REQUEST URI --> ' . $_SERVER['REQUEST_URI'];
+        echo '<br>';
+        echo 'PATH_INFO --> ' . $_SERVER['PATH_INFO'];
+        echo '<br>';
+        echo 'method --> ' . $this->method;
+        echo '<br>';
+        echo 'URI --> ' . $uri;
+        echo '<br>';
+        echo 'uriElements --> ' . $this->uriElements;
+        echo '<br>';
+        echo 'resource --> ' . $this->resource;
+        echo '<br>';
+
         // Recuperamos los parámetros
         $this->parseIncomingParams();
         // Seteamos el formato por defecto 'json'
@@ -85,5 +101,10 @@ class Request {
 
         // Guardamos los parámetros obtenidos
         $this->parameters = $parameters;
+        
+        /*if (!isAssoc($this->parameters)) {
+            echo 'is not Assoc';
+            showIndexedArray($this->parameters);
+        }*/
     }
 }
