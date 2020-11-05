@@ -102,9 +102,5 @@ class Request {
         // Guardamos los parámetros obtenidos
         $this->parameters = $parameters;
         
-        /*if (!isAssoc($this->parameters)) {
-            echo 'is not Assoc';
-            showIndexedArray($this->parameters);
-        }*/
     }
 }

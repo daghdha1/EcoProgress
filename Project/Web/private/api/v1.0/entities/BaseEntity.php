@@ -52,8 +52,6 @@ class BaseEntity {
      
     
     public function executeSql($sql) {
-        //echo '<br>';
-        //echo 'query--> ' . $sql;
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
             // Si hay más de un resultado
@@ -69,8 +67,6 @@ class BaseEntity {
                 $result = $data->fetch_object();
                 return $result;
             }
-        } else {
-           // echo 'No hay respuesta de la base de datos';
         }
         return null;
     }
