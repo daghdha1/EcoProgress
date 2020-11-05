@@ -1,16 +1,18 @@
 // GET measures LOOP
 window.setInterval(getMeasures(), 5000);
+//postMeasures();
 
 function getMeasures() {
     let request = new Request("../../api/v1.0/measures", {
         method: "get"
     });
     fetch(request).then((response) => {
-        return response.json()
+        return response.json();
     }).then((json) => {
         createTableOfMeasures(json);
     })
 }
+
 // TEST POST
 function postMeasures() {
     let dataTest = {

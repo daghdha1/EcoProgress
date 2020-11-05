@@ -1,11 +1,10 @@
-package es.upv.daghdha.ecoprogress_app.io;
+package es.upv.gti.ecoprogress_app.io;
 
 import android.util.Log;
 
 import java.util.ArrayList;
 
-import es.upv.daghdha.ecoprogress_app.MainActivity;
-import es.upv.daghdha.ecoprogress_app.model.Measure;
+import es.upv.gti.ecoprogress_app.model.Measure;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
