@@ -1,8 +1,8 @@
-package es.upv.daghdha.ecoprogress_app.io;
+package es.upv.gti.ecoprogress_app.io;
 
 import java.util.ArrayList;
 
-import es.upv.daghdha.ecoprogress_app.model.Measure;
+import es.upv.gti.ecoprogress_app.model.Measure;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

@@ -18,13 +18,9 @@ function myAutoloader($classname) {
         return true;
     } elseif (preg_match('/[a-zA-Z]+Model$/', $classname)) {
         include_once __DIR__ . '/models/' . $classname . '.php';
-        echo '<br>';
-        echo 'dentro de autoloader--> ' . $classname;
         return true;
     } elseif (preg_match('/[a-zA-Z]+Entity$/', $classname)) {
         include_once __DIR__ . '/entities/' . $classname . '.php';
-        echo '<br>';
-        echo 'dentro de autoloader--> ' . $classname;
         return true;
     } elseif (preg_match('/[a-zA-Z]+View$/', $classname)) {
         include_once __DIR__ . '/views/' . $classname . '.php';
@@ -41,8 +37,6 @@ $request = new Request();
 
 // Obtenemos el nombre del controlador correspondiente (ej -> UsuariosController)
 $controllerName = ucfirst($request->resource) . 'Controller';
-echo '<br>';
-echo 'controllerName--> ' . $controllerName;
 
 // Si no existe el controlador solicitado, llama a myAutoloader() para incluirlo
 if (class_exists($controllerName)) {
