@@ -74,11 +74,7 @@ class BaseEntity {
     // Funcion hecha porque el update/insert/delete no devuelve rows y executeSql no sirve
     public function executeInsertUpdateDeleteSql($sql) {
         // Si hay Respuesta
-        if ($data = $this->conn->query($sql)) {
-            if($data == true) {
-                return true;
-            } 
-        }
-        return false;
+        $data = $this->conn->query($sql))
+        return $data;
     }
 }

@@ -32,9 +32,7 @@ class MeasuresModel extends BaseModel {
 		// Respuesta
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-		if ($result == true) {
-			return $parameters;
-		}
+		if ($result) return $parameters;
 		return null;
 	}
 	

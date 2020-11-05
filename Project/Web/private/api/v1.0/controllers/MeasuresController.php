@@ -56,7 +56,22 @@ class MeasuresController extends BaseController {
        // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
         // Enviamos la medida
-        //$data = $model->postMeasure($request->parameters);
+        $data = $model->postMeasure($request->parameters);
+        // Si hay datos
+        if (!is_null($data)) {
+            // Creamos un nueva medición
+            $measure = $this->createEntity($request->resource);
+            // Asignamos las propiedades de cada objeto measure
+            $measure->setValue($data->value);
+            $measure->setTimestamp($data->timestamp);
+            $measure->setLocation($data->location);
+            $measure->setSensorID($data->sensorID);
+            $result = $measure->toARRAY();
+        }
+        // Cargamos la vista seleccionada
+        $view = $this->loadView($request->format);
+        // Parseamos la respuesta a JSON
+        $view->render($result);
     }
 
     public function putAction($request) {

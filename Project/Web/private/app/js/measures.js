@@ -2,7 +2,7 @@
 window.setInterval(getMeasures(), 5000);
 
 function getMeasures() {
-    var request = new Request("../../api/v1.0/measures", {
+    let request = new Request("../../api/v1.0/measures", {
         method: "get"
     });
     fetch(request).then((response) => {
@@ -11,16 +11,25 @@ function getMeasures() {
         createTableOfMeasures(json);
     })
 }
-
 // TEST POST
 function postMeasures() {
-    var request = new Request("../../api/v1.0/measures", {
-        method: "post"
+    let dataTest = {
+        'value': 9999,
+        'timestamp': "2323244222",
+        'location': "3323244,-033222113",
+        'sensorID': "2"
+    };
+    let request = new Request("../../api/v1.0/measures", {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataTest)
     });
     fetch(request).then((response) => {
         return response.json()
     }).then((json) => {
-        // datos de vuelta
+        console.log("Medida insertada--> " + json);
     })
 }
 
