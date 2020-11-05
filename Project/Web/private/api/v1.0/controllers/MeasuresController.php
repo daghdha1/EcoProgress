@@ -19,10 +19,11 @@ class MeasuresController extends BaseController {
 	* <-- Lista<Texto> 
 	*/
     public function getAction($request) {
-        $result = null;
+        echo '<br>';
+        echo 'request resource in getAction--> ' . $request->resource;
         // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
-        // Obtenemos el array de datos (object)
+        // Obtenemos el array de datos (objects)
         $data = $model->getMeasures();
         // Si hay datos
         if (!is_null($data)) {
@@ -30,13 +31,13 @@ class MeasuresController extends BaseController {
             for ($i=0; $i < count($data); $i++) {
                 // Creamos un nueva medición
                 $measure = $this->createEntity($request->resource);
-                // Asignamos las propiedades del objeto measure
+                // Asignamos las propiedades de cada objeto measure
                 $measure->setValue($data[$i]->value);
                 $measure->setTimestamp($data[$i]->timestamp);
                 $measure->setLocation($data[$i]->location);
                 $measure->setSensorID($data[$i]->sensorID);
-                // Guardamos la medición
-                $result = $measure->toARRAY();
+                // Guardamos las mediciones en el array result[]
+                $result[] = $measure->toARRAY();
             }
         }
         // Cargamos la vista seleccionada

@@ -26,10 +26,13 @@ class DbConnection {
             // Indicamos la codificación de carácteres
             self::$conn->set_charset("utf8");
         }
- 		
+
  		// Comprobamos si ha habido algún error
         if(!isset(self::$conn)) {
             throw new Exception('Database connection cannot be established');
+        } else {
+            echo '<br>';
+            echo 'Database--> Successfuly connection!';
         }
  
         // Devolvemos la conexión

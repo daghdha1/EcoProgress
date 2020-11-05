@@ -1,13 +1,16 @@
 <?php
+
 class UsersModel extends BaseModel {
 	
 	private $adapter;
+
 	// Constructor
 	public function __construct($table, $adapter) {
         parent::__construct($table, $adapter);
         $this->adapter = $adapter;
     }
-	// getMeasures()
+
+	// getUsers()
 	public function getUsers() {
 		// Query
 		$sql = "SELECT * FROM Users";
@@ -17,6 +20,7 @@ class UsersModel extends BaseModel {
 		return $result;
 	}
 	
+	// getUser()
 	public function getUser($mail) {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->adapter, $mail);
@@ -27,6 +31,5 @@ class UsersModel extends BaseModel {
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
-	
 	
 }

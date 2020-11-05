@@ -20,8 +20,7 @@ class BaseEntity {
 
     public function getAll() {
         // Query
-        $sql = "SELECT * FROM $this->table"; // no podemos ordenar por ningun campo porque 
-											 // no coincidenciden en las diferentes tablas
+        $sql = "SELECT * FROM $this->table"; // no podemos ordenar por ningun campo
         // Respuesta
         $result = $this->executeSql($sql);
         // Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -53,6 +52,8 @@ class BaseEntity {
      
     
     public function executeSql($sql) {
+        echo '<br>';
+        echo 'query--> ' . $sql;
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
             // Si hay más de un resultado
@@ -68,6 +69,8 @@ class BaseEntity {
                 $result = $data->fetch_object();
                 return $result;
             }
+        } else {
+            echo 'No hay respuesta de la base de datos';
         }
         return null;
     }
