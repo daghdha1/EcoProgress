@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static String ETIQUETA_LOG = ">>>>";
-    private double TEST_VALUE = 3.1415;
-    private String MY_STR_DEVICE_UUID = "TEST-GTI-PROY-G4";
+    private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
-    private String USER = "daghdha@developer.com";
+    private String USER_MAIL = "daghdha@developer.com"; // set your mail for testing
+    private String SENSOR_ID = "2"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Aquí empieza la busqueda de nuestro sensor BTLE
-        this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        // this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        AppAdapter.getAppService().getMeasures();
     } // onCreate()
 
     // --------------------------------------------------------------
@@ -183,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 if (location != null) {
                     Log.d(MainActivity.ETIQUETA_LOG, "Localización obtenida!");
                     // Se guarda la posición tomada en el objeto medición
-                    this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s, %s", location.getLatitude(), location.getLongitude()));
-                    Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s, %s", location.getLatitude(), location.getLongitude()));
+                    this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
+                    Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
                     // Se envian las medidas a la API Rest
                     sendMeasure(this.currentMeasure);
                 } else {
@@ -216,8 +217,14 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     private void sendMeasure(Measure measure) {
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
-        measure.setInstant(Math.toIntExact(currentTimeSeconds));
-        measure.setUser(USER);
+        measure.setTimestamp(Math.toIntExact(currentTimeSeconds));
+        measure.setSensorID(SENSOR_ID);
+        AppAdapter.getAppService().postMeasure(measure);
+    }
+
+    // FOR TESTING
+    private void sendTestMeasure() {
+        Measure measure = new Measure(1.554, 1637737373, "000001234 - -0.12345678", "2");
         AppAdapter.getAppService().postMeasure(measure);
     }
 
@@ -242,8 +249,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " advFlags = " + Utils.bytesToHexString(tib.getAdvFlags()));
         Log.d(ETIQUETA_LOG, " advHeader = " + Utils.bytesToHexString(tib.getAdvHeader()));
         Log.d(ETIQUETA_LOG, " companyID = " + Utils.bytesToHexString(tib.getCompanyID()));
-        Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getiBeaconType()));
-        Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getiBeaconLength()) + " ( " + tib.getiBeaconLength() + " ) ");
+        Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getBeaconType()));
+        Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getBeaconLength()) + " ( " + tib.getBeaconLength() + " ) ");
         Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToHexString(tib.getUUID()));
         Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToString(tib.getUUID()));
         Log.d(ETIQUETA_LOG, " major  = " + Utils.bytesToHexString(tib.getMajor()) + "( " + Utils.bytesToIntInStr(tib.getMajor()) + " ) ");

@@ -1,4 +1,4 @@
--- create database ecoprogress;
+create database if not exists ecoprogress;
 
 use ecoprogress;
 
@@ -9,7 +9,7 @@ drop table if exists Users;
 CREATE TABLE Users (
 mail varchar (40),
 name varchar (20),
-surname varchar (40),
+surnames varchar (40),
 password varchar (20) not null,
 PRIMARY KEY (mail)
 );
@@ -24,23 +24,33 @@ foreign key (mail) references Users(mail)
 
 CREATE TABLE Measures (
 value double,
-instant int,
-location varchar(27),
-idSensor varchar(10) not null,
-PRIMARY KEY (instant),
-foreign key (idSensor) references Sensors(id)
+timestamp int,
+location varchar(40),
+sensorID varchar(10) not null,
+PRIMARY KEY (timestamp),
+foreign key (sensorID) references Sensors(id)
 );
 
-insert into Users (mail, name, surname, password) values ('rmiguialvz0@ask.com', 'Miguel', 'Alvarez', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('martagb@correo.com', 'Marta', 'García', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('MEspinola@dot.gov', 'Marcelo', 'Espinola', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('sotito@swimnow.com', 'Maria', 'Soto', 'ecoprogress');
-insert into Users (mail, name, surname, password) values ('daghdha@developer.com', 'Adrian', 'Soler Navarro', 'ecoprogress');
+insert into Users (mail, name, surnames, password) values ('miguel@developer.com', 'Miguel', 'Alvarez', 'ecoprogress');
+insert into Users (mail, name, surnames, password) values ('marta@developer.com', 'Marta', 'García', 'ecoprogress');
+insert into Users (mail, name, surnames, password) values ('marcelo@developer.com', 'Marcelo', 'Espinola', 'ecoprogress');
+insert into Users (mail, name, surnames, password) values ('sotito@developer.com', 'Maria', 'Soto', 'ecoprogress');
+insert into Users (mail, name, surnames, password) values ('daghdha@developer.com', 'Adrian', 'Soler Navarro', 'ecoprogress');
 
-insert into Sensors (id, mail, type) values ('1', 'sotito@swimnow.com', 'CO00001');
-insert into Sensors (id, mail, type) values ('2', 'martagb@correo.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('1', 'sotito@developer.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('2', 'daghdha@developer.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('3', 'marta@developer.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('4', 'miguel@developer.com', 'CO00001');
+insert into Sensors (id, mail, type) values ('5', 'marcelo@developer.com', 'CO00001');
 
-insert into Measures (value, instant, location, idSensor) values (1286, '1595559902', '38.995823, -0.177517', '1');
-insert into Measures (value, instant, location, idSensor) values (1206, '1573702829', '38.995823, -0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (1111, '1595559902', '38.995823,-0.177517', '1');
+insert into Measures (value, timestamp, location, sensorID) values (2222, '1573702829', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (3333, '1595459910', '38.995823,-0.177517', '3');
+insert into Measures (value, timestamp, location, sensorID) values (4444, '1573802905', '38.995823,-0.177517', '4');
+insert into Measures (value, timestamp, location, sensorID) values (5555, '1595559909', '38.995823,-0.177517', '5');
+
 
 select * from Measures;
+
+/*SELECT * FROM Users WHERE mail = 'daghdha@developer.com' LIMIT 1;*/
+

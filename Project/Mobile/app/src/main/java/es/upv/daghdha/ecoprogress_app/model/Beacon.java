@@ -17,8 +17,8 @@ public class Beacon {
     private byte[] advFlags = null; // 3 bytes
     private byte[] advHeader = null; // 2 bytes
     private byte[] companyID = new byte[2]; // 2 bytes
-    private byte iBeaconType = 0; // 1 byte
-    private byte iBeaconLength = 0; // 1 byte
+    private byte beaconType = 0; // 1 byte
+    private byte beaconLength = 0; // 1 byte
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
@@ -76,14 +76,14 @@ public class Beacon {
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    public byte getiBeaconType() {
-        return iBeaconType;
+    public byte getBeaconType() {
+        return beaconType;
     }
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    public byte getiBeaconLength() {
-        return iBeaconLength;
+    public byte getBeaconLength() {
+        return beaconLength;
     }
 
     // -------------------------------------------------------------------------------
@@ -102,8 +102,8 @@ public class Beacon {
         advFlags = Arrays.copyOfRange(prefix, 0, 2 + 1); // 3 bytes
         advHeader = Arrays.copyOfRange(prefix, 3, 4 + 1); // 2 bytes
         companyID = Arrays.copyOfRange(prefix, 5, 6 + 1); // 2 bytes
-        iBeaconType = prefix[7]; // 1 byte
-        iBeaconLength = prefix[8]; // 1 byte
+        beaconType = prefix[7]; // 1 byte
+        beaconLength = prefix[8]; // 1 byte
 
     } // ()
 } // class
