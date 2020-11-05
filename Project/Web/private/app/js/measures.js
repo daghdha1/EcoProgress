@@ -13,11 +13,13 @@ function getMeasures() {
     })
 }
 
+postMeasures();
+
 // TEST POST
 function postMeasures() {
     let dataTest = {
-        'value': 9999,
-        'timestamp': "2323244222",
+        'value': 8888,
+        'timestamp': "1111",
         'location': "3323244,-033222113",
         'sensorID': "2"
     };
@@ -29,7 +31,7 @@ function postMeasures() {
         body: JSON.stringify(dataTest)
     });
     fetch(request).then((response) => {
-        return response.json()
+        return response.text()
     }).then((json) => {
         console.log("Medida insertada--> " + json);
     })
