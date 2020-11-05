@@ -9,7 +9,7 @@
 
 define ( 'HOST', 'localhost' );
 define ( 'USER', 'root' );
-define ( 'PASSWORD', '' );
+define ( 'PASSWORD', 'ecoprogress2020' );
 define ( 'DATABASE', 'ecoprogress' );
 define ( 'PORT', 3306);
 
