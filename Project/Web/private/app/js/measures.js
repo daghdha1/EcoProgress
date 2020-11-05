@@ -19,7 +19,7 @@ postMeasures();
 function postMeasures() {
     let dataTest = {
         'value': 8888,
-        'timestamp': "1111",
+        'timestamp': "00001",
         'location': "3323244,-033222113",
         'sensorID': "2"
     };
@@ -31,7 +31,7 @@ function postMeasures() {
         body: JSON.stringify(dataTest)
     });
     fetch(request).then((response) => {
-        return response.text()
+        return response.json()
     }).then((json) => {
         console.log("Medida insertada--> " + json);
     })

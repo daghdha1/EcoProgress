@@ -1,13 +1,15 @@
 <?php
 
-/*
-	Database configuration
-    @author EcoProgress Team 04
-*/
+/**
+ * Database configuration
+ * 
+ * @author EcoProgress Team 04
+ *
+ */
 
 define ( 'HOST', 'localhost' );
 define ( 'USER', 'root' );
-define ( 'PASSWORD', 'ecoprogress2020' );
+define ( 'PASSWORD', '' );
 define ( 'DATABASE', 'ecoprogress' );
 define ( 'PORT', 3306);
 

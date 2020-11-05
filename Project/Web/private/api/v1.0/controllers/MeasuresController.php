@@ -62,12 +62,14 @@ class MeasuresController extends BaseController {
             // Creamos un nueva medición
             $measure = $this->createEntity($request->resource);
             // Asignamos las propiedades de cada objeto measure
-            $measure->setValue($data->value);
-            $measure->setTimestamp($data->timestamp);
-            $measure->setLocation($data->location);
-            $measure->setSensorID($data->sensorID);
+            $measure->setValue($data['value']);
+			$measure->setTimestamp($data['timestamp']);
+            $measure->setLocation($data['location']);
+            $measure->setSensorID($data['sensorID']);
             $result = $measure->toARRAY();
-        }
+			}else{
+				$result = null;
+			}				
         // Cargamos la vista seleccionada
         $view = $this->loadView($request->format);
         // Parseamos la respuesta a JSON
