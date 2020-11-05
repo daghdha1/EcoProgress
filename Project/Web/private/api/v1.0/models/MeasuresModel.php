@@ -23,12 +23,14 @@ class MeasuresModel extends BaseModel {
 	// postMeasure()
 	public function postMeasure($parameters) {
 		// Escapamos los carácteres especiales
-		$strValue = mysqli_real_escape_string($this->adapter, $parameters->value);
-		$strtimestamp = mysqli_real_escape_string($this->adapter, $parameters->timestamp);
-		$strLocation = mysqli_real_escape_string($this->adapter, $parameters->location);
-		$strSensorID = mysqli_real_escape_string($this->adapter, $parameters->sensorID);
+		//echo "------------> " . $parameters;
+		//print_R($parameters);
+		$strValue = mysqli_real_escape_string($this->conn, $parameters['value']);
+		$strtimestamp = mysqli_real_escape_string($this->conn, $parameters['timestamp']);
+		$strLocation = mysqli_real_escape_string($this->conn, $parameters['location']);
+		$strSensorID = mysqli_real_escape_string($this->conn, $parameters['sensorID']);
 		// Query
-		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) values ('$parameters->value', '$parameters->timestamp', '$parameters->location', '$parameters->sensorID')";
+		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) values ('$strValue', '$strtimestamp', '$strLocation', '$strSensorID')";
 		// Respuesta
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
