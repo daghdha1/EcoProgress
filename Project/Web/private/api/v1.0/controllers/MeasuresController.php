@@ -37,7 +37,9 @@ class MeasuresController extends BaseController {
                 // Guardamos las mediciones en el array result[]
                 $result[] = $measure->toARRAY();
             }
-        }
+        } else {
+            $result = null;
+        }   
         // Cargamos la vista seleccionada
         $view = $this->loadView($request->format);
         // Parseamos la respuesta a JSON
@@ -67,9 +69,9 @@ class MeasuresController extends BaseController {
             $measure->setLocation($data['location']);
             $measure->setSensorID($data['sensorID']);
             $result = $measure->toARRAY();
-			}else{
-				$result = null;
-			}				
+		} else {
+			$result = null;
+		}				
         // Cargamos la vista seleccionada
         $view = $this->loadView($request->format);
         // Parseamos la respuesta a JSON

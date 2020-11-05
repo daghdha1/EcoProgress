@@ -1,6 +1,5 @@
 // GET measures LOOP
 window.setInterval(getMeasures(), 5000);
-//postMeasures();
 
 function getMeasures() {
     let request = new Request("../../api/v1.0/measures", {
@@ -13,13 +12,11 @@ function getMeasures() {
     })
 }
 
-postMeasures();
-
-// TEST POST
+//postMeasures();
 function postMeasures() {
     let dataTest = {
         'value': 8888,
-        'timestamp': "00001",
+        'timestamp': "33333",
         'location': "3323244,-033222113",
         'sensorID': "2"
     };
@@ -33,7 +30,7 @@ function postMeasures() {
     fetch(request).then((response) => {
         return response.json()
     }).then((json) => {
-        console.log("Medida insertada--> " + json);
+        console.log("Medida insertada--> ", json);
     })
 }
 
