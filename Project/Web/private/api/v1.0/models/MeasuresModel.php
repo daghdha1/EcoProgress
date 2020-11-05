@@ -17,8 +17,8 @@ class MeasuresModel extends BaseModel {
 		// Respuesta
 		$result = BaseEntity::executeSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-		echo '<br>';
-		echo 'count measures received--> ' . count($result);
+		//echo '<br>';
+		//echo 'count measures received--> ' . count($result);
 		return $result;
 	}
 	

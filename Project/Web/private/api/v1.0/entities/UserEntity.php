@@ -9,7 +9,7 @@ class UserEntity extends BaseEntity {
     public function __construct($table, $adapter) {
         parent::__construct($table, $adapter);
     }
-	
+	// getters
 	public function getMail() {
         return $this->mail;
     }
