@@ -1,15 +1,23 @@
 // .....................................................................
-// GET mediciones LOOP
+// GET measures LOOP
 // .....................................................................
 window.setInterval(function() {
-    fetch('http://192.168.43.29:8080/measures').then((response) => {
-        return response.text()
-    }).then((data) => {
-        console.log(data);
-        var mediciones = JSON.parse(data);
+    var request = new Request("../../api/v1.0/measures", {
+        method: "get"
+    });
+    fetch(request).then((response) => {
+        return response.json()
+    }).then((json) => {
+        try {
+            JSON.parse(json);
+            console.log('bienn');
+        } catch (e) {
+            console.log('----> ' + e);
+        }
+        var measures = json;
         var col = [];
-        for (var i = 0; i < mediciones.length; i++) {
-            for (var key in mediciones[i]) {
+        for (var i = 0; i < measures.length; i++) {
+            for (var key in measures[i]) {
                 if (col.indexOf(key) === -1) {
                     col.push(key);
                 }
@@ -25,11 +33,11 @@ window.setInterval(function() {
             tr.appendChild(th);
         }
         // ADD JSON DATA TO THE TABLE AS ROWS.
-        for (var i = 0; i < mediciones.length; i++) {
+        for (var i = 0; i < measures.length; i++) {
             tr = table.insertRow(-1);
             for (var j = 0; j < col.length; j++) {
                 var tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = mediciones[i][col[j]];
+                tabCell.innerHTML = measures[i][col[j]];
             }
         }
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
