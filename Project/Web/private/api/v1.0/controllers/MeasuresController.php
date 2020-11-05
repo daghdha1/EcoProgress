@@ -14,14 +14,14 @@ class MeasuresController extends BaseController {
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
     *  - Una vez recibidos, los delega a la vista correspondiente, encargada de mostrárselos al cliente web
 	*
-	* Texto -->
+	* Action -->
 	*					getAction() <--
-	* <-- Lista<Texto> 
+	* <-- Lista<T> 
 	*/
     public function getAction($request) {
         // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
-        // Obtenemos el array de datos (objects)
+        // Obtenemos el array de mediciones (objects)
         $data = $model->getMeasures();
         // Si hay datos
         if (!is_null($data)) {
@@ -44,10 +44,19 @@ class MeasuresController extends BaseController {
         $view->render($result);
     }
 
-    // -----------------------------------
-    // FUTURE
+    /* - Recibe y trata una petición POST solicitada
+    *  - Se comunica con el modelo correspondiente y envia los datos facilitados por la petición
+    *  - Una vez enviados, los envia de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
+    *
+    * Action -->
+    *                   postAction() <--
+    * <-- Lista<T>
+    */
     public function postAction($request) {
-       
+       // Cargamos el modelo de Measures
+        $model = $this->loadModel($request->resource);
+        // Enviamos la medida
+        //$data = $model->postMeasure($request->parameters);
     }
 
     public function putAction($request) {

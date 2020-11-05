@@ -22,7 +22,7 @@ class BaseEntity {
         // Query
         $sql = "SELECT * FROM $this->table"; // no podemos ordenar por ningun campo
         // Respuesta
-        $result = $this->executeSql($sql);
+        $result = $this->executeSelectSql($sql);
         // Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
         return $result;
     }
@@ -33,7 +33,7 @@ class BaseEntity {
         // Query
         $sql = "SELECT * FROM $this->table WHERE id = '$strId'";
         // Respuesta
-        $result = $this->executeSql($sql);
+        $result = $this->executeSelectSql($sql);
         // Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
         return $result;
     }
@@ -45,13 +45,13 @@ class BaseEntity {
         // Query
         $sql = "SELECT * FROM $this->table WHERE '$strColumn' = '$strValue'";
         // Respuesta
-        $result = $this->executeSql($sql);
+        $result = $this->executeSelectSql($sql);
         // Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
         return $result;
     }
      
     
-    public function executeSql($sql) {
+    public function executeSelectSql($sql) {
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
             // Si hay más de un resultado
@@ -69,5 +69,16 @@ class BaseEntity {
             }
         }
         return null;
+    }
+
+    // Funcion hecha porque el update/insert/delete no devuelve rows y executeSql no sirve
+    public function executeInsertUpdateDeleteSql($sql) {
+        // Si hay Respuesta
+        if ($data = $this->conn->query($sql)) {
+            if($data == true) {
+                return true;
+            } 
+        }
+        return false;
     }
 }

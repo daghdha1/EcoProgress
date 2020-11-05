@@ -101,6 +101,5 @@ class Request {
 
         // Guardamos los parámetros obtenidos
         $this->parameters = $parameters;
-        
     }
 }

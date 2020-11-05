@@ -1,7 +1,7 @@
-// .....................................................................
 // GET measures LOOP
-// .....................................................................
-window.setInterval(function() {
+window.setInterval(getMeasures(), 5000);
+
+function getMeasures() {
     var request = new Request("../../api/v1.0/measures", {
         method: "get"
     });
@@ -10,7 +10,19 @@ window.setInterval(function() {
     }).then((json) => {
         createTableOfMeasures(json);
     })
-}, 5000);
+}
+
+// TEST POST
+function postMeasures() {
+    var request = new Request("../../api/v1.0/measures", {
+        method: "post"
+    });
+    fetch(request).then((response) => {
+        return response.json()
+    }).then((json) => {
+        // datos de vuelta
+    })
+}
 
 function createTableOfMeasures(data) {
     var col = [];
