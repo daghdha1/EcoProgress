@@ -31,8 +31,8 @@ class DbConnection {
         if(!isset(self::$conn)) {
             throw new Exception('Database connection cannot be established');
         } else {
-            echo '<br>';
-            echo 'Database--> Successfuly connection!';
+            //echo '<br>';
+            //echo 'Database--> Successfuly connection!';
         }
  
         // Devolvemos la conexión

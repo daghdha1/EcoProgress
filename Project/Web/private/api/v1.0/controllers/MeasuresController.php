@@ -19,8 +19,8 @@ class MeasuresController extends BaseController {
 	* <-- Lista<Texto> 
 	*/
     public function getAction($request) {
-        echo '<br>';
-        echo 'request resource in getAction--> ' . $request->resource;
+        //echo '<br>';
+        //echo 'request resource in getAction--> ' . $request->resource;
         // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
         // Obtenemos el array de datos (objects)
