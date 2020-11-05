@@ -1,4 +1,4 @@
-package es.upv.daghdha.ecoprogress_app.io;
+package es.upv.gti.ecoprogress_app.io;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

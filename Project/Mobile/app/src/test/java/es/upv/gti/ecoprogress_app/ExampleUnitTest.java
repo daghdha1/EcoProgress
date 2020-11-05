@@ -1,4 +1,4 @@
-package es.upv.daghdha.ecoprogress_app;
+package es.upv.gti.ecoprogress_app;
 
 import org.junit.Test;
 

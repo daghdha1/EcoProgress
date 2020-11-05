@@ -1,4 +1,4 @@
-package es.upv.daghdha.ecoprogress_app.model;
+package es.upv.gti.ecoprogress_app.model;
 
 import androidx.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package es.upv.daghdha.ecoprogress_app;
+package es.upv.gti.ecoprogress_app;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -22,9 +22,9 @@ import com.google.android.gms.location.LocationServices;
 import java.util.Locale;
 import java.util.UUID;
 
-import es.upv.daghdha.ecoprogress_app.io.AppAdapter;
-import es.upv.daghdha.ecoprogress_app.model.Measure;
-import es.upv.daghdha.ecoprogress_app.model.Beacon;
+import es.upv.gti.ecoprogress_app.io.AppAdapter;
+import es.upv.gti.ecoprogress_app.model.Measure;
+import es.upv.gti.ecoprogress_app.model.Beacon;
 
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
