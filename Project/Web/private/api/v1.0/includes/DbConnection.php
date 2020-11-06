@@ -20,7 +20,7 @@ class DbConnection {
 		// Si aún no existe la conexión, la creamos
         if(!isset(self::$conn)) {
             // Incluimos las constantes de conexión
-            require_once __DIR__ . '/dbConfig.php';
+            require_once __DIR__ . '\dbConfig.php';
             // Generamos la conexión
 			self::$conn = new mysqli(HOST, USER, PASSWORD, DATABASE, PORT);
             // Indicamos la codificación de carácteres
