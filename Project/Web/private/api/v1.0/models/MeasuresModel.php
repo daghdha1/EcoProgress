@@ -22,13 +22,6 @@ class MeasuresModel extends BaseModel {
 
 	// postMeasure()
 	public function postMeasure($parameters) {
-		// Escapamos los carácteres especiales
-		/*
-		echo "\n------------MeasuresModel-------------\n";
-		print_r($parameters);
-		echo "\n----------------------------------------\n";
-		*/
-		
 		$strValue = mysqli_real_escape_string($this->conn, $parameters['value']);
 		$strtimestamp = mysqli_real_escape_string($this->conn, $parameters['timestamp']);
 		$strLocation = mysqli_real_escape_string($this->conn, $parameters['location']);
