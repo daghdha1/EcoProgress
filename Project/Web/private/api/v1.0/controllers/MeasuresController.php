@@ -10,6 +10,9 @@ class MeasuresController extends BaseController {
         parent::__construct();
     }
     
+    // ------------------------------ GET, POST, PUT, DELETE--------------------------------- //
+    // -------------------------------------- ACTIONS --------------------------------------- //
+
     /* - Recibe y trata una petición GET solicitada
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
     *  - Una vez recibidos, los delega a la vista correspondiente, encargada de mostrárselos al cliente web
@@ -66,8 +69,8 @@ class MeasuresController extends BaseController {
 
     }
 
-    // -------------------------------------------------------------------------------------- //
-    // -------------------------------------------------------------------------------------- //
+    // ---------------------------------- PRIVATE METHODS ------------------------------------- //
+    // ---------------------------------------------------------------------------------------- //
 
     private function getMeasures($model, $request) {
         // Obtenemos el array de mediciones (objects stdClass)
