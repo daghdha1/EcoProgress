@@ -92,13 +92,17 @@ class Request {
             // Si vienen codificados en texto plano o JSON, guardamos la array asociativa equivalente
             case 'text/plain':
             case 'application/json':
-                $parameters = json_decode(file_get_contents('php://input'), true);
+                $parameters = json_decode(file_get_contents('php://input'),true);
                 break;
             // Si vienen como application/x-www-form-urlencoded o multipart/form-data-encoded
             case !false:
                 $parameters = $_POST;
         }
-
+		/*
+		echo "\n------------REQUEST-------------\n";
+		print_r($parameters);
+		echo "\n----------------------------------------\n";
+		*/
         // Guardamos los parámetros obtenidos
         $this->parameters = $parameters;
     }
