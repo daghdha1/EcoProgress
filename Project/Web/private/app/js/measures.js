@@ -36,6 +36,7 @@ function postMeasures() {
 
 function createTableOfMeasures(data) {
     var col = [];
+	data = data.reverse();
     // Obtenemos los nombres de las columnas
     for (var i = 0; i < data.length; i++) {
         for (var key in data[i]) {

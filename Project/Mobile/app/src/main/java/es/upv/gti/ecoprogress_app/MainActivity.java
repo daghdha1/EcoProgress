@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.JsonObject;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -62,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Aquí empieza la busqueda de nuestro sensor BTLE
-        // this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
-        AppAdapter.getAppService().getMeasures();
+         this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        //AppAdapter.getAppService().getMeasures();
     } // onCreate()
 
     // --------------------------------------------------------------
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     //          searchThisBTLE() -->
     // --------------------------------------------------------------
     private void searchThisBTLE(final UUID uuidTarget) {
-        Log.d(ETIQUETA_LOG, "Buscando dispositivo con UUID!: " + uuidTarget.toString());
+        //Log.d(ETIQUETA_LOG, "Buscando dispositivo con UUID!: " + uuidTarget.toString());
 
         boolean isBluetoothReadyToUse = BluetoothAdapter.getDefaultAdapter().isEnabled();
         if (isBluetoothReadyToUse) {
@@ -126,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
         String[] intValuesInStrOfMajor = Utils.bytesToIntInStr(b.getMajor()).split(":");
         int typeOfMeasure = Integer.parseInt(intValuesInStrOfMajor[0], 10);
         int currentMeasureCount = Integer.parseInt(intValuesInStrOfMajor[1], 10);
-        Log.d(ETIQUETA_LOG, "TypeOfMeasure-------> " + typeOfMeasure);
-        Log.d(ETIQUETA_LOG, "Counter-------> " + currentMeasureCount);
+        //Log.d(ETIQUETA_LOG, "TypeOfMeasure-------> " + typeOfMeasure);
+        //Log.d(ETIQUETA_LOG, "Counter-------> " + currentMeasureCount);
         if (this.lastMeasureCount != currentMeasureCount) {
             // Mostramos la información del beacon recibido
             showDeviceInfoBTLE(null, 0, b.getTotalBytes());
@@ -219,13 +220,22 @@ public class MainActivity extends AppCompatActivity {
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
         measure.setTimestamp(Math.toIntExact(currentTimeSeconds));
         measure.setSensorID(SENSOR_ID);
-        AppAdapter.getAppService().postMeasure(measure);
+
+        JsonObject json =new JsonObject();
+        json.addProperty("value",measure.getValue());
+        json.addProperty("timestamp",measure.getTimestamp());
+        json.addProperty("location",measure.getLocation());
+        json.addProperty("sensorID",measure.getSensorID());
+
+        AppAdapter.getAppService().postMeasures(measure);
     }
 
     // FOR TESTING
     private void sendTestMeasure() {
         Measure measure = new Measure(1.554, 1637737373, "000001234 - -0.12345678", "2");
-        AppAdapter.getAppService().postMeasure(measure);
+
+
+        //AppAdapter.getAppService().postMeasures(measure);
     }
 
     // --------------------------------------------------------------
@@ -280,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] data = result.getScanRecord().getBytes();
                 Beacon tib = new Beacon(data);
                 String strUUIDEncontrado = Utils.bytesToString(tib.getUUID());
-                Log.d(ETIQUETA_LOG, "API >= 21 - UUID dispositivo encontrado!!!!: " + tib.getUUID().toString());
+                //Log.d(ETIQUETA_LOG, "API >= 21 - UUID dispositivo encontrado!!!!: " + tib.getUUID().toString());
                 if (strUUIDEncontrado.compareTo(Utils.uuidToString(uuidTarget)) == 0) {
                     // Detenemos la búsqueda de dispositivos
                     // detenerBusquedaDispositivosBTLE();
@@ -289,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
                     // Tratamos el beacon obtenido
                     aBeaconHasArrived(tib);
                 } else {
-                    Log.d(MainActivity.ETIQUETA_LOG, " * UUID buscado >" + Utils.uuidToString(uuidTarget) + "< no concuerda con este uuid = >" + strUUIDEncontrado + "<");
+                    //Log.d(MainActivity.ETIQUETA_LOG, " * UUID buscado >" + Utils.uuidToString(uuidTarget) + "< no concuerda con este uuid = >" + strUUIDEncontrado + "<");
                 }
             } // onScanResult()
 
@@ -317,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 // Dispostivo encontrado
                 Beacon b = new Beacon(bytes);
                 String strUUIDFound = Utils.bytesToString(b.getUUID());
-                Log.d(ETIQUETA_LOG, "API <= 19 - UUID dispositivo encontrado!!!!: " + b.getUUID().toString());
+                //Log.d(ETIQUETA_LOG, "API <= 19 - UUID dispositivo encontrado!!!!: " + b.getUUID().toString());
                 if (strUUIDFound.compareTo(Utils.uuidToString(uuidTarget)) == 0) {
                     // Detenemos la búsqueda de dispositivos
                     //detenerBusquedaDispositivosBTLE();
@@ -343,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLeScan(BluetoothDevice bluetoothDevice, int rssi, byte[] bytes) {
                 // Dispostivo encontrado
-                Log.d(ETIQUETA_LOG, "Dentro del trigger onLeScan! - Dispositivo encontrado!");
+                //Log.d(ETIQUETA_LOG, "Dentro del trigger onLeScan! - Dispositivo encontrado!");
                 showDeviceInfoBTLE(bluetoothDevice, rssi, bytes);
             } // onLeScan()
         }; // new LeScanCallback

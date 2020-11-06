@@ -1,10 +1,14 @@
 package es.upv.gti.ecoprogress_app.io;
 
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 import es.upv.gti.ecoprogress_app.model.Measure;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -23,7 +27,11 @@ public interface ApiRestService {
     @GET("measures")
     Call<ArrayList<Measure>> getMeasures();
 
-    @POST("measure")
-    Call<Measure> postMeasure(@Body final Measure measure);
+    @FormUrlEncoded
+    @POST("measures")
+    Call<JsonObject> postMeasures(@Field("value") double value,
+                               @Field("timestamp") int timestamp,
+                               @Field("location") String location,
+                               @Field("sensorID") String sensorID);
 
 }

@@ -57,8 +57,11 @@ class MeasuresController extends BaseController {
     public function postAction($request) {
        // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
+		
         // Enviamos la medida
         $data = $model->postMeasure($request->parameters);
+		
+		
         // Si hay datos
         if (!is_null($data)) {
             // Creamos un nueva medición
