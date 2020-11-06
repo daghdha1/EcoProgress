@@ -55,8 +55,11 @@ class MeasuresController extends BaseController {
     public function postAction($request) {
        // Cargamos el modelo de Measures
         $model = $this->loadModel($request->resource);
+		
         // Enviamos la medida
         $data = $model->postMeasure($request->parameters);
+		
+		
         // Si hay datos
         if (!is_null($data)) {
             // Creamos un nueva medición
@@ -69,7 +72,11 @@ class MeasuresController extends BaseController {
             $result = $measure->toARRAY();
 			}else{
 				$result = null;
-			}				
+			}
+			
+		/*echo "--------------------------\n>";
+		print_r($result);
+		echo "\n-------------------------->";*/
         // Cargamos la vista seleccionada
         $view = $this->loadView($request->format);
         // Parseamos la respuesta a JSON

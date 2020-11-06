@@ -2,6 +2,8 @@ package es.upv.gti.ecoprogress_app.io;
 
 import android.util.Log;
 
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 import es.upv.gti.ecoprogress_app.model.Measure;
@@ -59,22 +61,31 @@ public class AppAdapter {
                 // Envia una medida a la API REST y devuelve el mismo objeto como validación.
                 // --------------------------------------------------------------
                 @Override
-                public void postMeasure(final Measure measure) {
-                    Call<Measure> call = ApiRestAdapter.getApiService().postMeasure(measure);
+                public void postMeasures(final Measure measure) {
+
+                    Call<JsonObject> call = ApiRestAdapter.getApiService().postMeasures(
+                            measure.getValue(),
+                            measure.getTimestamp(),
+                            measure.getLocation(),
+                            measure.getSensorID()
+                    );
+
+
                     Log.d(">>>>", measure.toString());
-                    call.enqueue(new Callback<Measure>() {
+                    call.enqueue(new Callback<JsonObject>() {
                         @Override
-                        public void onResponse(Call<Measure> call, Response<Measure> response) {
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                             if (response.isSuccessful()) {
-                                Measure measure = response.body();
+                                JsonObject measure = response.body();
+                                Log.d(">>>>","RESPONSE: "+ response.body());
                                 Log.d(">>>>", "onResponse medicion has been inserted -- successfully");
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Measure> call, Throwable t) {
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
                             Log.d(">>>>", "onResponse medicion hasn't been inserted -- failed!");
-                            Log.d(">>>>", t.getMessage());
+                            Log.d(">>>>", t.toString());
                         }
                     });
                 }
