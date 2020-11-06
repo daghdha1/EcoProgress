@@ -1,4 +1,3 @@
-// GET measures LOOP
 window.setInterval(getMeasures(), 5000);
 
 function getMeasures() {
@@ -14,11 +13,12 @@ function getMeasures() {
 
 //postMeasures();
 function postMeasures() {
+    //COMENTAR ESTE OBJETO AL USAR SENSOR
     let dataTest = {
-        'value': 8888,
-        'timestamp': "33333",
-        'location': "3323244,-033222113",
-        'sensorID': "2"
+        value: 111000,
+        timestamp: "0000992216",
+        location: "3323244,-033222113",
+        sensorID: "2"
     };
     let request = new Request("../../api/v1.0/measures", {
         method: "post",

@@ -89,7 +89,7 @@ class Request {
 
         // Obtenemos los datos del body o body 'Form Data' disponibles en cada caso
         switch($contentType) {
-            // Si vienen codificados en texto plano o JSON, guardamos la array asociativa devuelta
+            // Si vienen codificados en texto plano o JSON, guardamos la array asociativa equivalente
             case 'text/plain':
             case 'application/json':
                 $parameters = json_decode(file_get_contents('php://input'), true);
