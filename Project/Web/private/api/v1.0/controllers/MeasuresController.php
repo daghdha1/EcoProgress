@@ -10,8 +10,10 @@ class MeasuresController extends BaseController {
         parent::__construct();
     }
     
+    // -------------------------------------------------------------------------------------- //
     // ------------------------------ GET, POST, PUT, DELETE--------------------------------- //
     // -------------------------------------- ACTIONS --------------------------------------- //
+    // -------------------------------------------------------------------------------------- //
 
     /* - Recibe y trata una petición GET solicitada
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
@@ -25,10 +27,12 @@ class MeasuresController extends BaseController {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
 
+        // Check de parámetros
         if (!$this->areThereParameters($request->parameters)) {
+            // Obtiene todas las medidas
             $result = $this->getMeasures($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndSelectGetMethod($model, $request);
+            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request->parameters);
         }
 
         // Cargamos la vista seleccionada
@@ -72,6 +76,13 @@ class MeasuresController extends BaseController {
     // ---------------------------------- PRIVATE METHODS ------------------------------------- //
     // ---------------------------------------------------------------------------------------- //
 
+    /* 
+    * Obtiene todas las medidas disponibles
+    *
+    * MeasuresModel, Request -->
+    *                               getMeasures() <--
+    * <-- Lista<MeasureEntity>
+    */
     private function getMeasures($model, $request) {
         // Obtenemos el array de mediciones (objects stdClass)
         $data = $model->getMeasures();
@@ -94,6 +105,13 @@ class MeasuresController extends BaseController {
         return $result;
     }
 
+    /* 
+    * Inserta una medida en la base de datos
+    *
+    * MeasuresModel, Request -->
+    *                              postMeasure() <--
+    * <-- MeasureEntity
+    */
     private function postMeasure($model, $request) {
         // Enviamos la medida
         $data = $model->postMeasure($request->parameters);
@@ -112,19 +130,37 @@ class MeasuresController extends BaseController {
         return $result;             
     }
 
-    private function areThereParameters($params) {
+
+    /* 
+    * Comprueba si existen parámetros en la petición
+    *
+    * Lista<Texto> -->
+    *                   areThereParameters() <--
+    * <-- T | F
+    */
+    private function areThereParameters(&$params) {
         if (count($params) > 0) {
             return true;
         }
         return false;
     }
 
-    private function getIncomingParametersAndSelectGetMethod($model, $request) {
+    /* 
+    * Escoge el método GET acorde con el parámetro recibido
+    *
+    * MeasuresModel, Lista<Texto> -->
+    *                                                       getIncomingParametersAndExecuteGetMethod() <--
+    * <-- Lista<MeasureEntity> | MeasureEntity | Nada
+    */
+    private function getIncomingParametersAndExecuteGetMethod($model, $params) {
         $result = null;
-        foreach ($request->parameters as $key => $value) {
+        foreach ($params as $key => $value) {
             switch ($key) {
-                case 'instant':
-                    //$result = $model->getMeasuresByInstant($value);
+                case 'period':
+                    $timestamp = getTimestampOfPeriod($value);
+                    if ($timestamp != -1) {
+                        $result = $model->getMeasuresFromTimestamp("1595559909");
+                    }
                     break;
                 default:
                     break;
@@ -134,5 +170,3 @@ class MeasuresController extends BaseController {
     }
 
 }
-
-

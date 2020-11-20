@@ -52,5 +52,5 @@ insert into Measures (value, timestamp, location, sensorID) values (5555, '15955
 
 select * from Measures;
 
-/*SELECT * FROM Users WHERE mail = 'daghdha@developer.com' LIMIT 1;*/
+
 

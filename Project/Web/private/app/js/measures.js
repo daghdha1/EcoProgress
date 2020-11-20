@@ -1,4 +1,4 @@
-window.setInterval(getMeasures(), 5000);
+//window.setInterval(getMeasures(), 5000);
 
 function getMeasures() {
     let request = new Request("../../api/v1.0/measures", {

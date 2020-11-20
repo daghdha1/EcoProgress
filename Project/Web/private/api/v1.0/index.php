@@ -35,8 +35,8 @@ function myAutoloader($classname) {
 // Tratamos la petición (Request)
 $request = new Request();
 
-// Obtenemos el nombre del controlador correspondiente (ej -> UsuariosController)
-$controllerName = ucfirst($request->resource) . 'Controller';
+// Obtenemos el nombre del controlador correspondiente (ej -> MeasuresController)
+$controllerName = $request->resource . 'Controller';
 
 // Si no existe el controlador solicitado, llama a myAutoloader() para incluirlo
 if (class_exists($controllerName)) {
