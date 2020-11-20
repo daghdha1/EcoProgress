@@ -159,7 +159,7 @@ class MeasuresController extends BaseController {
                 case 'period':
                     $timestamp = getTimestampOfPeriod($value);
                     if ($timestamp != -1) {
-                        $result = $model->getMeasuresFromTimestamp("1595559909");
+                        $result = $model->getMeasuresFromTimestamp($timestamp);
                     }
                     break;
                 default:

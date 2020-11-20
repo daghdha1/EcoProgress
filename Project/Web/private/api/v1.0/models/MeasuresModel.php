@@ -62,7 +62,7 @@ class MeasuresModel extends BaseModel {
 	public function getMeasuresFromTimestamp($timestamp) {
 		$strTimestamp = mysqli_real_escape_string($this->conn, $timestamp);
 		// Query
-		$sql = "SELECT FROM $this->table WHERE timestamp >= '$strTimestamp'";
+		$sql = "SELECT * FROM $this->table WHERE timestamp >= '$strTimestamp'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
