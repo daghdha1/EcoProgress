@@ -1,4 +1,3 @@
-// GET measures LOOP
 window.setInterval(getMeasures(), 5000);
 
 function getMeasures() {
@@ -6,35 +5,15 @@ function getMeasures() {
         method: "get"
     });
     fetch(request).then((response) => {
-        return response.json()
+        return response.json();
     }).then((json) => {
         createTableOfMeasures(json);
-    })
-}
-// TEST POST
-function postMeasures() {
-    let dataTest = {
-        'value': 9999,
-        'timestamp': "2323244222",
-        'location': "3323244,-033222113",
-        'sensorID': "2"
-    };
-    let request = new Request("../../api/v1.0/measures", {
-        method: "post",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataTest)
-    });
-    fetch(request).then((response) => {
-        return response.json()
-    }).then((json) => {
-        console.log("Medida insertada--> " + json);
     })
 }
 
 function createTableOfMeasures(data) {
     var col = [];
+	data = data.reverse();
     // Obtenemos los nombres de las columnas
     for (var i = 0; i < data.length; i++) {
         for (var key in data[i]) {
@@ -68,4 +47,26 @@ function createTableOfMeasures(data) {
     var divContainer = document.getElementById("container");
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
+}
+
+//postMeasures(); //COMENTAR ESTA LLAMADA AL USAR SENSOR
+function postMeasures() {
+    let dataTest = {
+        value: 101010,
+        timestamp: "0000111333",
+        location: "3323244,-033222113",
+        sensorID: "2"
+    };
+    let request = new Request("../../api/v1.0/measures", {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataTest)
+    });
+    fetch(request).then((response) => {
+        return response.json()
+    }).then((json) => {
+        console.log("Medida insertada--> ", json);
+    })
 }

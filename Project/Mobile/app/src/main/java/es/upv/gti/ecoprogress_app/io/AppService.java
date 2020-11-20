@@ -1,15 +1,17 @@
-package es.upv.daghdha.ecoprogress_app.io;
+package es.upv.gti.ecoprogress_app.io;
 
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
 // -----------------------------------------------------------------------------------
 
-import es.upv.daghdha.ecoprogress_app.model.Measure;
+import com.google.gson.JsonObject;
+
+import es.upv.gti.ecoprogress_app.model.Measure;
 
 public interface AppService {
 
     void getMeasures();
 
-    void postMeasure(final Measure measure);
+    void postMeasures(final Measure measure);
 
 }

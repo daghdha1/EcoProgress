@@ -1,6 +1,8 @@
-package es.upv.daghdha.ecoprogress_app.model;
+package es.upv.gti.ecoprogress_app.model;
 
 import androidx.annotation.NonNull;
+
+import com.google.gson.JsonObject;
 
 // -----------------------------------------------------------------------------------
 // @author: EcoProgress Team 04
@@ -13,6 +15,16 @@ public class Measure {
     private String sensorID;
 
     public Measure() {
+    }
+
+    public JsonObject toJson(){
+
+        JsonObject json = new JsonObject();
+        json.addProperty("value",this.value);
+        json.addProperty("location",this.location);
+        json.addProperty("timestamp",this.timestamp);
+        json.addProperty("sensorID",this.sensorID);
+        return json;
     }
 
     public Measure(double value, int timestamp, String location, String sensorID) {

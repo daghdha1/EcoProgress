@@ -1,4 +1,7 @@
-package es.upv.daghdha.ecoprogress_app.io;
+package es.upv.gti.ecoprogress_app.io;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -29,12 +32,16 @@ public class ApiRestAdapter {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
-        String baseUrl = PROTOCOL_TARGET + "://" + IP_SERVER_TARGET + "/EcoProgress/Project/Web/private/api/v1.0/";
+        String baseUrl = PROTOCOL_TARGET + "://" + IP_SERVER_TARGET + "/ecoprogress/Project/Web/private/api/v1.0/";
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
         if (API_SERVICE == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(httpClient.build()) // <-- usamos el log level
                     .build();
             API_SERVICE = retrofit.create(ApiRestService.class);
