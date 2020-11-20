@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import es.upv.gti.ecoprogress_app.model.Measure;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -30,8 +29,8 @@ public interface ApiRestService {
     @FormUrlEncoded
     @POST("measures")
     Call<JsonObject> postMeasures(@Field("value") double value,
-                               @Field("timestamp") int timestamp,
-                               @Field("location") String location,
-                               @Field("sensorID") String sensorID);
+                                  @Field("timestamp") int timestamp,
+                                  @Field("location") String location,
+                                  @Field("sensorID") String sensorID);
 
 }
