@@ -1,0 +1,106 @@
+ :root {
+     --midnight: #682172ff;
+     --metallic-seaweed: #007d93ff;
+ }
+ html {
+     width: 100%;
+     height: 100%;
+ }
+ body {
+     filter: contrast(100%), grayscale(0%), hue-rotate(0deg);
+     overflow: hidden;
+     height: 100%;
+ }
+ header {
+     box-shadow: 0px 4px 6px #d6d6d6;
+ }
+ /*********************************************************
+ ************************* NAV BAR ************************
+ **********************************************************/
+
+ #nav_container {
+     margin: 10px;
+     border-style: none;
+ }
+ #nav_bar {
+     border-width: 0px;
+ }
+ .nav-link {
+     font-size: 20px;
+     font-family: 'CenturyGothic';
+     font-weight: bold;
+ }
+ /*********************************************************
+ ********************** TAB 4 CONTENT *********************
+ **********************************************************/
+
+ .tab-content {
+     width: 100%;
+     height: 100%;
+     background-image: linear-gradient(#682172ff, #007d93ff);
+ }
+ #tab_4 {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     flex-direction: column;
+ }
+ #img_container {
+     height: 35%;
+     width: 35%;
+ }
+ #img {
+     display: block;
+     margin-top: 30%;
+     margin-bottom: 30%;
+ }
+ #data_container {
+     background-color: white;
+     width: 90%;
+     border-radius: 12px;
+     padding: 10px;
+ }
+ #data_container .row {
+     line-height: 1.2;
+ }
+ #data_container .row .col-6.txt-title p {
+     font-weight: bold;
+ }
+ #data_container .row .col-6 p {
+     font-size: 12px;
+ }
+ #btn_container {
+     margin-top: 50px;
+ }
+ #btn_white_bg {
+     color: #ffffff;
+ }
+ #btn_container button {
+     width: 100px;
+     height: 30px;
+     border-width: 1px;
+     border-style: solid;
+     border-color: grey;
+     border-radius: 15px;
+     font-size: 20px;
+     background: linear-gradient(to right, #682172ff, #007d93ff);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+ }
+ #btn_white_bg {
+     border-radius: 15px;
+     background-color: white;
+ }
+ /*********************************************************
+ ************* CHANGES ON MULTIPLE DIMENSIONS *************
+ **********************************************************/
+
+ @media screen and (min-width:500px) {}
+ @media screen and (min-width: 738px) {
+     #tab_4 {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         flex-direction: row;
+     }
+ }

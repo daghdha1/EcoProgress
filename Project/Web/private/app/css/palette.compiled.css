@@ -1,25 +1,27 @@
 /* Coolors Exported Palette - https://coolors.co/682172-562a69-422e65-36345f-2d4066-1a5979-09728a-007d93 */
+
 /* CSS HEX */
+
 html {
-  --midnight: #682172ff;
-  --eminence: #562a69ff;
-  --russian-violet: #422e65ff;
-  --space-cadet: #36345fff;
-  --dark-cornflower-blue: #2d4066ff;
-  --blue-sapphire: #1a5979ff;
-  --teal-blue: #09728aff;
-  --metallic-seaweed: #007d93ff;
-  /* CSS HSL */
-  --midnight: hsla(293, 55%, 29%, 1);
-  --eminence: hsla(282, 43%, 29%, 1);
-  --russian-violet: hsla(262, 37%, 29%, 1);
-  --space-cadet: hsla(243, 29%, 29%, 1);
-  --dark-cornflower-blue: hsla(220, 39%, 29%, 1);
-  --blue-sapphire: hsla(200, 65%, 29%, 1);
-  --teal-blue: hsla(191, 88%, 29%, 1);
-  --metallic-seaweed: hsla(189, 100%, 29%, 1);
-  /* SCSS HEX */
-  /* SCSS HSL */
-  /* SCSS RGB */
-  /* SCSS Gradient */
+    --midnight: #682172ff;
+    --eminence: #562a69ff;
+    --russian-violet: #422e65ff;
+    --space-cadet: #36345fff;
+    --dark-cornflower-blue: #2d4066ff;
+    --blue-sapphire: #1a5979ff;
+    --teal-blue: #09728aff;
+    --metallic-seaweed: #007d93ff;
+    /* CSS HSL */
+    --midnight: hsla(293, 55%, 29%, 1);
+    --eminence: hsla(282, 43%, 29%, 1);
+    --russian-violet: hsla(262, 37%, 29%, 1);
+    --space-cadet: hsla(243, 29%, 29%, 1);
+    --dark-cornflower-blue: hsla(220, 39%, 29%, 1);
+    --blue-sapphire: hsla(200, 65%, 29%, 1);
+    --teal-blue: hsla(191, 88%, 29%, 1);
+    --metallic-seaweed: hsla(189, 100%, 29%, 1);
+    /* SCSS HEX */
+    /* SCSS HSL */
+    /* SCSS RGB */
+    /* SCSS Gradient */
 }
