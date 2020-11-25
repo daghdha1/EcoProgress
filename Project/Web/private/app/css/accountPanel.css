@@ -1,3 +1,5 @@
+ /* Author: Adrian Soler */
+
  :root {
      --midnight: #682172ff;
      --metallic-seaweed: #007d93ff;
@@ -27,7 +29,6 @@
  }
  .nav-link {
      font-size: 20px;
-     font-family: 'CenturyGothic';
      font-weight: bold;
  }
  /*********************************************************
@@ -46,8 +47,7 @@
      flex-direction: column;
  }
  #img_container {
-     height: 35%;
-     width: 35%;
+     width: 30%;
  }
  #img {
      display: block;
@@ -57,23 +57,32 @@
  #data_container {
      background-color: white;
      width: 90%;
-     border-radius: 12px;
-     padding: 10px;
+     border-radius: 15px;
+     padding-top: 15px;
  }
  #data_container .row {
-     line-height: 1.2;
+     line-height: 1.3;
  }
- #data_container .row .col-6.txt-title p {
+ #data_container .row .col {
+     display: flex;
+     align-items: center;
+     padding-left: 13px;
+     padding-right: 0px;
+ }
+ #data_container .row .col p {
+     text-align: left;
      font-weight: bold;
  }
- #data_container .row .col-6 p {
+ #data_container .row .col.txt-title p {
+     font-size: 14px;
+     color: var(--metallic-seaweed);
+ }
+ #data_container .row .col.txt-value p {
      font-size: 12px;
+     color: grey;
  }
  #btn_container {
      margin-top: 50px;
- }
- #btn_white_bg {
-     color: #ffffff;
  }
  #btn_container button {
      width: 100px;
@@ -95,12 +104,44 @@
  ************* CHANGES ON MULTIPLE DIMENSIONS *************
  **********************************************************/
 
- @media screen and (min-width:500px) {}
- @media screen and (min-width: 738px) {
+ @media screen and (min-width:450px) {
+     #img_container {
+         width: 25%;
+     }
+ }
+ @media screen and (min-width:600px) {
+     #img_container {
+         width: 22%;
+     }
+ }
+ @media screen and (min-width: 740px) {
+     body {
+         overflow-y: scroll;
+     }
      #tab_4 {
-         display: flex;
-         align-items: center;
-         justify-content: center;
          flex-direction: row;
+         flex-wrap: wrap;
+     }
+     #img_container {
+         flex: 1 1 15%;
+     }
+     #data_container {
+         flex: 1 1 85%;
+     }
+     #btn_container {
+         margin-top: 0px;
+     }
+ }
+ @media screen and (min-width: 900px) {
+     body {
+         overflow-y: hidden;
+     }
+     #img_container {
+         width: 12%;
+     }
+ }
+ @media screen and (min-width: 1200px) {
+     #img_container {
+         width: 10%;
      }
  }
