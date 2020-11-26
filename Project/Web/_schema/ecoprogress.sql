@@ -43,12 +43,12 @@ insert into Sensors (id, mail, type) values ('3', 'marta@developer.com', 'CO0000
 insert into Sensors (id, mail, type) values ('4', 'miguel@developer.com', 'CO00001');
 insert into Sensors (id, mail, type) values ('5', 'marcelo@developer.com', 'CO00001');
 
-insert into Measures (value, timestamp, location, sensorID) values (1111, '1595559902', '38.995823,-0.177517', '1');
-insert into Measures (value, timestamp, location, sensorID) values (2222, '1573702829', '38.995823,-0.177517', '2');
-insert into Measures (value, timestamp, location, sensorID) values (3333, '1595459910', '38.995823,-0.177517', '3');
-insert into Measures (value, timestamp, location, sensorID) values (4444, '1573802905', '38.995823,-0.177517', '4');
-insert into Measures (value, timestamp, location, sensorID) values (5555, '1595559909', '38.995823,-0.177517', '5');
-insert into Measures (value, timestamp, location, sensorID) values (9999, '1605874710', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (1.12, '1606409912', '38.995823,-0.177517', '1');
+insert into Measures (value, timestamp, location, sensorID) values (2.12, '1606323507', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (4.45, '1606237107', '38.995823,-0.177517', '3');
+insert into Measures (value, timestamp, location, sensorID) values (10.5, '1606150707', '38.995823,-0.177517', '4');
+insert into Measures (value, timestamp, location, sensorID) values (20.5, '1606064307', '38.995823,-0.177517', '5');
+insert into Measures (value, timestamp, location, sensorID) values (80.3, '1605977907', '38.995823,-0.177517', '2');
 
 select * from Measures;
 
