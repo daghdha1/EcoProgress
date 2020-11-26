@@ -17,30 +17,15 @@ class Request {
         // Recuperamos el recurso solicitado
         $uri = explode('v1.0/',parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))[1];
         $this->uriElements = explode('/', $uri);
-        $this->resource = strtolower(array_shift($this->uriElements));
-
-        /*echo '-----------------';
-        echo '<br>';
-        echo 'REQUEST URI --> ' . $_SERVER['REQUEST_URI'];
-        echo '<br>';
-        echo 'PATH_INFO --> ' . $_SERVER['PATH_INFO'];
-        echo '<br>';
-        echo 'method --> ' . $this->method;
-        echo '<br>';
-        echo 'URI --> ' . $uri;
-        echo '<br>';
-        echo 'uriElements --> ' . $this->uriElements;
-        echo '<br>';
-        echo 'resource --> ' . $this->resource;
-        echo '<br>';*/
-
-        // Recuperamos los parámetros
+        // Extraemos y guardamos el recurso principal de la uri (ej. Measures)
+        $this->resource = ucfirst(strtolower(array_shift($this->uriElements)));
+        // Recuperamos los parámetros restantes
         $this->parseIncomingParams();
         // Seteamos el formato por defecto 'json'
-        $this->format = 'json';
+        $this->format = ucfirst('json');
         // Si existe otro formato enbebido, lo sobreescribimos
         if(isset($this->parameters['format'])) {
-            $this->format = $this->parameters['format'];
+            $this->format = ucfirst($this->parameters['format']);
         }
         return true;
     }
@@ -51,7 +36,7 @@ class Request {
 	*	<-- Lista<Texto>
     */
     private function parseIncomingParams() {
-        $parameters = array();
+        $params = array();
 
         /*================================
         =              GET               =
@@ -60,17 +45,18 @@ class Request {
         // QUERY
         // En primer lugar, si existen, guardamos parámetros de la QUERY
         if (isset($_SERVER['QUERY_STRING'])) {
-            parse_str($_SERVER['QUERY_STRING'], $parameters);
+            parse_str($_SERVER['QUERY_STRING'], $params);
         }
 
         // URI
-        // Si existen parametros en la URI
-        if (!empty($this->uriElements)) {
+        $numOfParams = count($this->uriElements);
+        // Si existen pares de parámetros en la URI
+        if (!empty($this->uriElements) && $numOfParams%2==0) {
             // Recorro el array uriElements
-            for ($i=0; $i < count($this->uriElements); $i++) {
+            for ($i=0; $i < $numOfParams; $i++) {
                 // Guardo pares de valores
                 if (isset($this->uriElements[$i], $this->uriElements[$i+1])) {
-                    $parameters[$this->uriElements[$i]] = $this->uriElements[++$i];
+                    $params[$this->uriElements[$i]] = $this->uriElements[++$i];
                 }
             }
         }
@@ -92,18 +78,14 @@ class Request {
             // Si vienen codificados en texto plano o JSON, guardamos la array asociativa equivalente
             case 'text/plain':
             case 'application/json':
-                $parameters = json_decode(file_get_contents('php://input'),true);
+                $params = json_decode(file_get_contents('php://input'),true);
                 break;
             // Si vienen como application/x-www-form-urlencoded o multipart/form-data-encoded
             case !false:
-                $parameters = $_POST;
+                $params = $_POST;
         }
-		/*
-		echo "\n------------REQUEST-------------\n";
-		print_r($parameters);
-		echo "\n----------------------------------------\n";
-		*/
+		
         // Guardamos los parámetros obtenidos
-        $this->parameters = $parameters;
+        $this->parameters = $params;
     }
 }
