@@ -142,7 +142,7 @@ for (let id = 0; id < listaIds.length;id++) {
 
 // TODO: En el future solo tenemos que pedir la última 
 function getAndPublishLastMeasure(chart){
-  fetch('http://192.168.1.12/EcoProgress/Project/Web/private/api/v1.0/measures')
+  fetch('http://localhost/EcoProgress/Project/Web/private/api/v1.0/measures')
   .then(response => response.json())
   .then( (data) => {
     //console.log(data);

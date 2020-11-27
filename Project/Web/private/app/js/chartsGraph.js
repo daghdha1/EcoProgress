@@ -85,13 +85,24 @@ var optionsLines = {
 };
 var lineChart = new ApexCharts(document.querySelector("#lineChart"), optionsLines);
 lineChart.render();
-fetch('http://192.168.1.12/EcoProgress/Project/Web/private/api/v1.0/measures').then((response) => {
+recogerDeServerRellenar();
+
+setInterval(recogerDeServerRellenar,3000);
+
+function recogerDeServerRellenar(){
+
+  fetch('http://192.168.1.12/EcoProgress/Project/Web/private/api/v1.0/measures')
+  .then((response) => {
     return response.json()
 }).then((data) => {
     //console.log("Recibimos data del server", data);
+    data = data.reverse();
     convertAndUpdateDataLine(data);
     populateTable(data);
-});
+  });
+
+}
+
 //*****************************************************************
 //Primero vamos a obtener las fechas en epoch y convertirlas en LocaleString para poder utilizarlas en el gráfico.
 //Despues, actualizaremos el gráfico  
@@ -124,17 +135,25 @@ function convertAndUpdateDataLine(measures) {
 }
 
 function populateTable(data) {
-    var tbody = document.getElementById("tbody");
-    for (let i = 0; i < data.length; i++) {
-        var tr = tbody.insertRow(-1);
-        console.log("Primer for:", data[i]);
-        var valorCell = tr.insertCell(-1);
-        valorCell.innerHTML = data[i].value;
-        var momentoCell = tr.insertCell(-1);
-        momentoCell.innerHTML = data[i].timestamp;
-        var lugarCell = tr.insertCell(-1);
-        lugarCell.innerHTML = data[i].location.latitude + "," + data[i].location.longitude;
-        var sensorCell = tr.insertCell(-1);
-        sensorCell.innerHTML = data[i].sensorID;
-    }
+  
+
+  var table = document.querySelector("#tablaMedidas").getElementsByTagName('tbody')[0];
+table.innerHTML = "";
+
+
+  for (let i = 0; i < data.length; i++) {
+    var tr = table.insertRow(-1);
+    console.log("Primer for:", data[i]);
+
+    var valorCell = tr.insertCell(-1);
+    valorCell.innerHTML = data[i].value;
+    var momentoCell = tr.insertCell(-1);
+    momentoCell.innerHTML = data[i].timestamp;
+    var lugarCell = tr.insertCell(-1);
+    lugarCell.innerHTML = data[i].location.latitude + ","+data[i].location.longitude;
+    var sensorCell = tr.insertCell(-1);
+    sensorCell.innerHTML = data[i].sensorID;
+
+  }
+
 }
