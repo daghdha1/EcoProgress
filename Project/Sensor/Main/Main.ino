@@ -3,7 +3,7 @@
 // --------------------------------------------------------------
 //
 // Jordi Bataller i Mascarell
-// Adrián Soler Navarro
+// Equipo 4  GTI 2020.
 // 22-10-2020
 //
 // --------------------------------------------------------------
@@ -94,7 +94,7 @@ void loop () {
 		testCount = 0;
 	}
 
-	esperar(1000);
+	esperar(500);
 
 	// Obtiene valor CO
 	obteneryPublicarValorCO();
@@ -107,7 +107,7 @@ void loop () {
   elMonitor.escribir( "--------------------------" );
 	elMonitor.escribir( "\n" );
 
-	esperar(5000);
+	esperar(500);
 
 } // loop ()
 

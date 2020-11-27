@@ -1,0 +1,62 @@
+.jumbotron-contact {
+  background: #358CCE;
+  color: #FFF;
+  border-radius: 0px;
+  margin-bottom: 30px;
+}
+
+.jumbotron-contact-sm {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.jumbotron-contact small {
+  color: #FFF;
+}
+
+.h1 small {
+  font-size: 16px;
+}
+
+a:hover {
+  color: #007d93;
+}
+
+a {
+  color: #682172;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #1a5979;
+  /*border-color: #0062cc;*/
+}
+
+.btn-primary.focus, .btn-primary:focus {
+  color: #fff;
+  background-color: #1a5979;
+  /*border-color: #0062cc;*/
+  /*box-shadow: 0 0 0 .2rem rgba(38,143,255,.5);*/
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #09728a;
+  /*border-color: #007bff;*/
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+}
+
