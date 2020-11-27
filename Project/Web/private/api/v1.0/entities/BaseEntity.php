@@ -18,15 +18,26 @@ class BaseEntity {
         return $this->conn;
     }
 
+    /* Consulta todos los datos de la tabla solicitada
+    *
+    *                         getAll() <--
+    * <-- T | Lista<Object>
+    */
     public function getAll() {
         // Query
-        $sql = "SELECT * FROM $this->table"; // no podemos ordenar por ningun campo
+        $sql = "SELECT * FROM $this->table";
         // Respuesta
         $result = $this->executeSelectSql($sql);
         // Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
         return $result;
     }
-     
+    
+    /* Consulta todos los datos de la tabla solicitada, filtrados por la colunna id
+    *
+    * Texto -->
+    *                         getById() <--
+    * <-- T | Lista<Object>
+    */
     public function getById($id) {
         // Escapamos los carácteres especiales
         $strId = mysqli_real_escape_string($id);
@@ -38,6 +49,12 @@ class BaseEntity {
         return $result;
     }
     
+    /* Consulta todos los datos de la tabla solicitada, filtrados por la columna y el valor indicado
+    *
+    * Texto, Texto -->
+    *                         getBy() <--
+    * <-- T | Lista<Object>
+    */
     public function getBy($column, $value) {
         // Escapamos los carácteres especiales
         $strColumn = mysqli_real_escape_string($column);
@@ -50,7 +67,12 @@ class BaseEntity {
         return $result;
     }
      
-    
+    /* Ejecuta la consulta get solicitada contra la base de datos
+    *
+    * Texto -->
+    *                           executeSelectSql() <--
+    * <-- T | Lista<Object>
+    */
     public function executeSelectSql($sql) {
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
@@ -71,7 +93,12 @@ class BaseEntity {
         return null;
     }
 
-    // Funcion hecha porque el update/insert/delete no devuelve rows y executeSql no sirve
+    /* Acciones Update/Insert/Delete contra la base de datos
+    *
+    * Texto -->
+    *             executeInsertUpdateDeleteSql() <--
+    * <-- T
+    */
     public function executeInsertUpdateDeleteSql($sql) {
         // Si hay Respuesta
         $data = $this->conn->query($sql);

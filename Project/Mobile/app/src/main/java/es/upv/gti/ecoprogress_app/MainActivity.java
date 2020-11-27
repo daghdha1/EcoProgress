@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Aquí empieza la busqueda de nuestro sensor BTLE
-         this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+        this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
         //AppAdapter.getAppService().getMeasures();
     } // onCreate()
 
@@ -127,13 +127,14 @@ public class MainActivity extends AppCompatActivity {
         String[] intValuesInStrOfMajor = Utils.bytesToIntInStr(b.getMajor()).split(":");
         int typeOfMeasure = Integer.parseInt(intValuesInStrOfMajor[0], 10);
         int currentMeasureCount = Integer.parseInt(intValuesInStrOfMajor[1], 10);
-        //Log.d(ETIQUETA_LOG, "TypeOfMeasure-------> " + typeOfMeasure);
-        //Log.d(ETIQUETA_LOG, "Counter-------> " + currentMeasureCount);
         if (this.lastMeasureCount != currentMeasureCount) {
             // Mostramos la información del beacon recibido
             showDeviceInfoBTLE(null, 0, b.getTotalBytes());
+            // Guardamos el contador de la nueva medida
             this.lastMeasureCount = currentMeasureCount;
+            // Generamos el nuevo objeto medida
             this.currentMeasure = new Measure();
+            // Extraemos el nuevo valor y si es correcto, se guarda con valor != -1
             this.extractMeasure(b);
             if (this.currentMeasure.getValue() != -1) {
                 // Obtiene posición de dispositivo móvil (ASÍNCRONO)
@@ -162,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
             formattedCO = -1;
         }
         this.currentMeasure.setValue(formattedCO);
-        // TEST PARA ENVIAR UNA MEDICION CON UN VALOR EXACTO
-        // this.currentMeasure.setValor(TEST_VALUE);
     }
 
     // --------------------------------------------------------------
@@ -221,11 +220,11 @@ public class MainActivity extends AppCompatActivity {
         measure.setTimestamp(Math.toIntExact(currentTimeSeconds));
         measure.setSensorID(SENSOR_ID);
 
-        JsonObject json =new JsonObject();
-        json.addProperty("value",measure.getValue());
-        json.addProperty("timestamp",measure.getTimestamp());
-        json.addProperty("location",measure.getLocation());
-        json.addProperty("sensorID",measure.getSensorID());
+        JsonObject json = new JsonObject();
+        json.addProperty("value", measure.getValue());
+        json.addProperty("timestamp", measure.getTimestamp());
+        json.addProperty("location", measure.getLocation());
+        json.addProperty("sensorID", measure.getSensorID());
 
         AppAdapter.getAppService().postMeasures(measure);
     }
@@ -233,8 +232,6 @@ public class MainActivity extends AppCompatActivity {
     // FOR TESTING
     private void sendTestMeasure() {
         Measure measure = new Measure(1.554, 1637737373, "000001234 - -0.12345678", "2");
-
-
         //AppAdapter.getAppService().postMeasures(measure);
     }
 

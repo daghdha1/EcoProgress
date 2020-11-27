@@ -16,7 +16,7 @@ public class ApiRestAdapter {
 
     private static ApiRestService API_SERVICE;
     private static final String PROTOCOL_TARGET = "http";
-    private static final String IP_SERVER_TARGET = "192.168.43.29";
+    private static final String IP_SERVER_TARGET = "192.168.1.12";
 
     // --------------------------------------------------------------
     //                      getApiService() -->
