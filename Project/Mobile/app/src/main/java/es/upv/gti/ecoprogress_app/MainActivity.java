@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         double maxValue = 40000;  //valor con margen desde el valor máximo posible y dañino a la vida que es (34500 = 94)
         double minValue = 0; //Valor mínimo posible
         double calibrationCoeficient = 0.0027345; // este coeficiente sale del estudio de nuestros datos y es la relación directa con los valores reales que se obtienen en las estaciones de medición
-        //Log.d(ETIQUETA_LOG, "CO_value from sensor without conversion-------> " + CO);
+        Log.d(ETIQUETA_LOG, "CO_value from sensor without conversion-------> " + CO);
         if (CO >= minValue || CO < maxValue) {
             formattedCO = CO * calibrationCoeficient; // este valor está tratado según los estándares de valores reales
             //Log.d(ETIQUETA_LOG, "-------------------");
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                     this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
                     //Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
                     // Se envian las medidas a la API Rest
-                    //sendMeasure(this.currentMeasure);
+                    sendMeasure(this.currentMeasure);
                 } else {
                     Log.d(MainActivity.ETIQUETA_LOG, "Localización no disponible!!!!");
                 }
@@ -267,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
         measure.setTimestamp(Math.toIntExact(currentTimeSeconds));
         measure.setSensorID(SENSOR_ID);
+
+        Log.d(">>>>", "Se va a enviar una medicion con valor:" + measure.getValue());
 
         JsonObject json = new JsonObject();
         json.addProperty("value", measure.getValue());
@@ -407,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
                     // Detenemos la búsqueda de dispositivos
                     //detenerBusquedaDispositivosBTLE();
                     // Mostramos la información de dispositivo
-                    //mostrarInformacionDispositivoBTLE(bluetoothDevice, rssi, bytes);
+                    showDeviceInfoBTLE(bluetoothDevice, rssi, bytes);
                     // Tratamos el beacon obtenido
                     aBeaconHasArrived(b);
                 } else {
