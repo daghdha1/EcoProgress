@@ -1,172 +1,184 @@
- /* Author: Adrian Soler */
+/* #tabCuenta {
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  background-image: linear-gradient(#682172ff, #007d93ff);
+} */
 
- :root {
-     --midnight: #682172ff;
-     --metallic-seaweed: #007d93ff;
- }
- html {
-     height: 100%;
-     min-height: 100%;
-     max-height: 100%;
- }
- body {
-     height: 100%;
-     min-height: 100%;
-     max-height: 100%;
-     filter: contrast(100%), grayscale(0%), hue-rotate(0deg);
-     overflow-y: scroll;
-     overflow-x: hidden;
- }
- header {
-     box-shadow: 0px 4px 6px #d6d6d6;
- }
- /*********************************************************
- ************************* NAV BAR ************************
- **********************************************************/
+#tabCuenta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 5%;
+}
 
- #nav_container {
-     margin: 10px;
-     border-style: none;
- }
- #nav_bar {
-     border-width: 0px;
- }
- .nav-link {
-     font-size: 20px;
-     font-weight: bold;
- }
- /*********************************************************
- ********************** TAB 4 CONTENT *********************
- **********************************************************/
+#img_container {
+  width: 30%;
+}
 
- .tab-content {
-     height: 100%;
-     min-height: 100%;
-     max-height: 100%;
-     background-image: linear-gradient(#682172ff, #007d93ff);
- }
- #tab-4 {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     flex-direction: column;
-     padding-top: 5%;
- }
- #img_container {
-     width: 30%;
- }
- #img {
-     display: block;
-     margin-top: 30%;
-     margin-bottom: 30%;
- }
- #data_container {
-     background-color: white;
-     width: 90%;
-     border-radius: 15px;
-     padding-top: 15px;
- }
- #data_container .row {
-     line-height: 1.3;
- }
- #data_container .row .col {
-     display: flex;
-     align-items: center;
-     padding-left: 13px;
-     padding-right: 0px;
- }
- #data_container .row .col p {
-     text-align: left;
-     font-weight: bold;
- }
- #data_container .row .col.txt-title p {
-     font-size: 14px;
-     color: var(--metallic-seaweed);
- }
- #data_container .row .col.txt-value p {
-     font-size: 12px;
-     color: grey;
- }
- #btn_container {
-     margin-top: 50px;
- }
- #btn_container button {
-     width: 100px;
-     height: 30px;
-     border-width: 1px;
-     border-style: solid;
-     border-color: grey;
-     border-radius: 15px;
-     font-size: 20px;
-     background: linear-gradient(to right, #682172ff, #007d93ff);
-     -webkit-background-clip: text;
-     -webkit-text-fill-color: transparent;
- }
- #btn_white_bg {
-     border-radius: 15px;
-     background-color: white;
- }
- /*********************************************************
+#img {
+  display: block;
+  margin-top: 30%;
+  margin-bottom: 30%;
+}
+
+#data_container {
+  background-color: white;
+  width: 90%;
+  border-radius: 15px;
+  padding-top: 15px;
+}
+
+#data_container .row {
+  line-height: 1.3;
+}
+
+#data_container .row .col {
+  display: flex;
+  align-items: center;
+  padding-left: 13px;
+  padding-right: 0px;
+}
+
+#data_container .row .col p {
+  text-align: left;
+  font-weight: bold;
+}
+
+#data_container .row .col.txt-title p {
+  font-size: 14px;
+  color: var(--metallic-seaweed);
+}
+
+#data_container .row .col.txt-value p {
+  font-size: 12px;
+  color: grey;
+}
+
+#btn_container {
+  margin-top: 50px;
+}
+
+#btn_container button {
+  width: 100px;
+  height: 30px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+  border-radius: 15px;
+  font-size: 20px;
+  background: linear-gradient(to right, #682172ff, #007d93ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#btn_white_bg {
+  border-radius: 15px;
+  background-color: white;
+}
+
+/* ********************************************************
  ************* CHANGES ON MULTIPLE DIMENSIONS *************
- **********************************************************/
+ ********************************************************* */
 
- @media screen and (min-width:450px) {
-     #img_container {
-         width: 25%;
-     }
- }
- @media screen and (min-width:550px) {
-     #img_container {
-         width: 20%;
-     }
-     #data_container .row .col.txt-title p {
-         font-size: 18px;
-     }
-     #data_container .row .col.txt-value p {
-         font-size: 14px;
-     }
- }
- @media screen and (min-width: 740px) {
-     #tab-4 {
-         flex-direction: row;
-         flex-wrap: wrap;
-         padding: 5% 10% 0%;
-     }
-     #img_container {
-         max-width: 35%;
-         margin-right: 5%;
-     }
-     #data_container {
-         max-width: 70%;
-     }
-     #data_container .row {
-         line-height: 1.3;
-     }
-     #btn_container {
-         margin-top: 2%;
-     }
- }
- @media screen and (min-width: 900px) {
-     body {
-         overflow-y: hidden;
-     }
-     #img_container {
-         max-width: 20%;
-         margin-left: 5%
-     }
-     #data_container {
-         max-width: 70%;
-     }
-     #data_container .row {
-         line-height: 1.5;
-     }
-     #data_container .row .col.txt-title p {
-         font-size: 20px;
-     }
-     #data_container .row .col.txt-value p {
-         font-size: 16px;
-     }
-     #btn_container {
-         margin-top: 2%;
-     }
- }
+@media screen and (min-width:450px) {
+  #img_container {
+    width: 25%;
+  }
+}
+
+@media screen and (min-width:550px) {
+  #img_container {
+    width: 20%;
+  }
+}
+
+@media screen and (min-width:550px) {
+  #data_container .row .col.txt-title p {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width:550px) {
+  #data_container .row .col.txt-value p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #tabCuenta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5% 10% 0%;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #img_container {
+    max-width: 35%;
+    margin-right: 5%;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #data_container {
+    max-width: 70%;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #data_container .row {
+    line-height: 1.3;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  #btn_container {
+    margin-top: 2%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  body {
+    overflow-y: hidden;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #img_container {
+    max-width: 20%;
+    margin-left: 5%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #data_container {
+    max-width: 70%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #data_container .row {
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #data_container .row .col.txt-title p {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #data_container .row .col.txt-value p {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #btn_container {
+    margin-top: 2%;
+  }
+}
+
