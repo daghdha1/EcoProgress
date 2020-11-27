@@ -1,12 +1,16 @@
 package es.upv.gti.ecoprogress_app;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,14 +64,36 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
+
+    Context ctx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
         // Aquí empieza la busqueda de nuestro sensor BTLE
         this.searchThisBTLE(Utils.stringToUUID(MY_STR_DEVICE_UUID));
+
+        ctx = getBaseContext();
         //AppAdapter.getAppService().getMeasures();
     } // onCreate()
+
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "EcoProgress";
+            String description = "Ecoprogress channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("EcoProgress", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     // --------------------------------------------------------------
     // searchAllBTLE() -->
@@ -119,6 +145,21 @@ public class MainActivity extends AppCompatActivity {
             this.leScanCallback = null;
         }
     } // ()
+
+    private void publicarNotificacion(){
+
+        Log.e(">>>>","Has clickado");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "EcoProgress")
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle("¡¡Te estas alejando!!")
+                .setContentText("Si sigues alejando vas a perder la señal")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, builder.build());
+    }
 
     // --------------------------------------------------------------
     //  Beacon -->
@@ -247,9 +288,9 @@ public class MainActivity extends AppCompatActivity {
     //                                      showDeviceInfoBTLE() <--
     // --------------------------------------------------------------
     private void showDeviceInfoBTLE(BluetoothDevice bluetoothDevice, int rssi, byte[] bytes) {
-        //Log.d(ETIQUETA_LOG, " ****************************************************");
-        //Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
-        //Log.d(ETIQUETA_LOG, " ****************************************************");
+        Log.d(ETIQUETA_LOG, " ****************************************************");
+        Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
+        Log.d(ETIQUETA_LOG, " ****************************************************");
         //Log.d(ETIQUETA_LOG, " nombre = " + bluetoothDevice.getName());
         //Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
         //Log.d(ETIQUETA_LOG, " rssi = " + rssi);
@@ -278,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
     // ------------------------------------------------------------- CALLBACKS ------------------------------------------------------------ //
     // ------------------------------------------------------------------------------------------------------------------------------------ //
 
-     String CHANNEL_ID = "0";
+
     // --------------------------------------------------------------
     // UUID -->
     //          callbackForBluetoothLeScannerWithTarget() -->
@@ -301,22 +342,10 @@ public class MainActivity extends AppCompatActivity {
                     // detenerBusquedaDispositivosBTLE();
                     // Mostramos la información de dispositivo
 
-                    Log.d(">>>>",result.getRssi()+"");
-                    Log.d(">>>>",getEstimatedDistanceFromDevice(result.getRssi())+"");
-                    if(getEstimatedDistanceFromDevice(result.getRssi()) > 5){
-                        Log.d(">>>>","TE HAS ALEJADO DEMASIADO");
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                                .setSmallIcon(R.drawable.ic_launcher_background)
-                                .setContentTitle("Tamare")
-                                .setContentText("La serdabou")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
-                        // notificationId is a unique int for each notification that you must define
-                        notificationManager.notify(0, builder.build());
-
-
-
+                    //Log.d(">>>>",result.getRssi()+"");
+                    //Log.d(">>>>",getEstimatedDistanceFromDevice(result.getRssi())+"");
+                    if(getEstimatedDistanceFromDevice(result.getRssi()) >= 5){
+                        publicarNotificacion();
                     }
                     showDeviceInfoBTLE(result.getDevice(), result.getRssi(), data);
                     // Tratamos el beacon obtenido
