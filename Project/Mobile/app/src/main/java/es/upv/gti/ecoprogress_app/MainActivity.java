@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private static String ETIQUETA_LOG = ">>>>";
     private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
-    private String USER_MAIL = "daghdha@developer.com"; // set your mail for testing
-    private String SENSOR_ID = "2"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
+    private String USER_MAIL = "miguel@developer.com"; // set your mail for testing
+    private String SENSOR_ID = "4"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     //          searchThisBTLE() -->
     // --------------------------------------------------------------
     private void searchThisBTLE(final UUID uuidTarget) {
-        //Log.d(ETIQUETA_LOG, "Buscando dispositivo con UUID!: " + uuidTarget.toString());
+        Log.d(ETIQUETA_LOG, "Buscando dispositivo con UUID!: " + uuidTarget.toString());
 
         boolean isBluetoothReadyToUse = BluetoothAdapter.getDefaultAdapter().isEnabled();
         if (isBluetoothReadyToUse) {
@@ -152,17 +154,22 @@ public class MainActivity extends AppCompatActivity {
     //                                             <-- R | -1
     // --------------------------------------------------------------
     private void extractMeasure(final Beacon b) {
-        double CO = Utils.bytesToInt(b.getMinor()); // ppb
-        double formattedCO;
-        Log.d(ETIQUETA_LOG, "CO_value in ppb-------> " + CO);
-        if (CO >= 0) {
-            formattedCO = CO / 1000; // ppm
-            Log.d(ETIQUETA_LOG, "-------------------");
-            Log.d(ETIQUETA_LOG, "CO_value in ppm-------> " + formattedCO);
+        double CO = Utils.bytesToInt(b.getMinor()); //valor tal cual viene del sensor
+        double formattedCO;  //valor post procesado
+        double maxValue = 40000;  //valor con margen desde el valor máximo posible y dañino a la vida que es (34500 = 94)
+        double minValue = 0; //Valor mínimo posible
+        double calibrationCoeficient = 0.0027345; // este coeficiente sale del estudio de nuestros datos y es la relación directa con los valores reales que se obtienen en las estaciones de medición
+        //Log.d(ETIQUETA_LOG, "CO_value from sensor without conversion-------> " + CO);
+        if (CO >= minValue || CO < maxValue) {
+            formattedCO = CO * calibrationCoeficient; // este valor está tratado según los estándares de valores reales
+            //Log.d(ETIQUETA_LOG, "-------------------");
+            //Log.d(ETIQUETA_LOG, "CO_value post conversion is-------> " + formattedCO);
         } else {
             formattedCO = -1;
         }
         this.currentMeasure.setValue(formattedCO);
+        // TEST PARA ENVIAR UNA MEDICION CON UN VALOR EXACTO
+        // this.currentMeasure.setValor(TEST_VALUE);
     }
 
     // --------------------------------------------------------------
@@ -182,12 +189,12 @@ public class MainActivity extends AppCompatActivity {
             // Se activa listener de obtención de localización
             mFusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, null).addOnSuccessListener(this, location -> {
                 if (location != null) {
-                    Log.d(MainActivity.ETIQUETA_LOG, "Localización obtenida!");
+                    //Log.d(MainActivity.ETIQUETA_LOG, "Localización obtenida!");
                     // Se guarda la posición tomada en el objeto medición
                     this.currentMeasure.setLocation(String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
-                    Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
+                    //Log.d(MainActivity.ETIQUETA_LOG, String.format(Locale.getDefault(), "%s,%s", location.getLatitude(), location.getLongitude()));
                     // Se envian las medidas a la API Rest
-                    sendMeasure(this.currentMeasure);
+                    //sendMeasure(this.currentMeasure);
                 } else {
                     Log.d(MainActivity.ETIQUETA_LOG, "Localización no disponible!!!!");
                 }
@@ -240,30 +247,30 @@ public class MainActivity extends AppCompatActivity {
     //                                      showDeviceInfoBTLE() <--
     // --------------------------------------------------------------
     private void showDeviceInfoBTLE(BluetoothDevice bluetoothDevice, int rssi, byte[] bytes) {
-        Log.d(ETIQUETA_LOG, " ****************************************************");
-        Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
-        Log.d(ETIQUETA_LOG, " ****************************************************");
+        //Log.d(ETIQUETA_LOG, " ****************************************************");
+        //Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
+        //Log.d(ETIQUETA_LOG, " ****************************************************");
         //Log.d(ETIQUETA_LOG, " nombre = " + bluetoothDevice.getName());
         //Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
         //Log.d(ETIQUETA_LOG, " rssi = " + rssi);
-        Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
-        Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utils.bytesToHexString(bytes));
+        //Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
+        //Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utils.bytesToHexString(bytes));
 
         Beacon tib = new Beacon(bytes);
 
-        Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
-        Log.d(ETIQUETA_LOG, " prefijo  = " + Utils.bytesToHexString(tib.getPrefix()));
-        Log.d(ETIQUETA_LOG, " advFlags = " + Utils.bytesToHexString(tib.getAdvFlags()));
-        Log.d(ETIQUETA_LOG, " advHeader = " + Utils.bytesToHexString(tib.getAdvHeader()));
-        Log.d(ETIQUETA_LOG, " companyID = " + Utils.bytesToHexString(tib.getCompanyID()));
-        Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getBeaconType()));
-        Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getBeaconLength()) + " ( " + tib.getBeaconLength() + " ) ");
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToHexString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " major  = " + Utils.bytesToHexString(tib.getMajor()) + "( " + Utils.bytesToIntInStr(tib.getMajor()) + " ) ");
-        Log.d(ETIQUETA_LOG, " minor  = " + Utils.bytesToHexString(tib.getMinor()) + "( " + Utils.bytesToInt(tib.getMinor()) + " ) ");
-        Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
-        Log.d(ETIQUETA_LOG, " ****************************************************");
+        //Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
+        //Log.d(ETIQUETA_LOG, " prefijo  = " + Utils.bytesToHexString(tib.getPrefix()));
+        //Log.d(ETIQUETA_LOG, " advFlags = " + Utils.bytesToHexString(tib.getAdvFlags()));
+        //Log.d(ETIQUETA_LOG, " advHeader = " + Utils.bytesToHexString(tib.getAdvHeader()));
+        //Log.d(ETIQUETA_LOG, " companyID = " + Utils.bytesToHexString(tib.getCompanyID()));
+        //Log.d(ETIQUETA_LOG, " iBeacon type = " + Integer.toHexString(tib.getBeaconType()));
+        //Log.d(ETIQUETA_LOG, " iBeacon length 0x = " + Integer.toHexString(tib.getBeaconLength()) + " ( " + tib.getBeaconLength() + " ) ");
+        //Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToHexString(tib.getUUID()));
+        //Log.d(ETIQUETA_LOG, " uuid  = " + Utils.bytesToString(tib.getUUID()));
+        //Log.d(ETIQUETA_LOG, " major  = " + Utils.bytesToHexString(tib.getMajor()) + "( " + Utils.bytesToIntInStr(tib.getMajor()) + " ) ");
+        //Log.d(ETIQUETA_LOG, " minor  = " + Utils.bytesToHexString(tib.getMinor()) + "( " + Utils.bytesToInt(tib.getMinor()) + " ) ");
+        //Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
+        //Log.d(ETIQUETA_LOG, " ****************************************************");
 
     } // ()
 
@@ -271,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
     // ------------------------------------------------------------- CALLBACKS ------------------------------------------------------------ //
     // ------------------------------------------------------------------------------------------------------------------------------------ //
 
+     String CHANNEL_ID = "0";
     // --------------------------------------------------------------
     // UUID -->
     //          callbackForBluetoothLeScannerWithTarget() -->
@@ -292,7 +300,25 @@ public class MainActivity extends AppCompatActivity {
                     // Detenemos la búsqueda de dispositivos
                     // detenerBusquedaDispositivosBTLE();
                     // Mostramos la información de dispositivo
-                    // mostrarInformacionDispositivoBTLE(result.getDevice(), result.getRssi(), data);
+
+                    Log.d(">>>>",result.getRssi()+"");
+                    Log.d(">>>>",getEstimatedDistanceFromDevice(result.getRssi())+"");
+                    if(getEstimatedDistanceFromDevice(result.getRssi()) > 5){
+                        Log.d(">>>>","TE HAS ALEJADO DEMASIADO");
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                                .setSmallIcon(R.drawable.ic_launcher_background)
+                                .setContentTitle("Tamare")
+                                .setContentText("La serdabou")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+                        // notificationId is a unique int for each notification that you must define
+                        notificationManager.notify(0, builder.build());
+
+
+
+                    }
+                    showDeviceInfoBTLE(result.getDevice(), result.getRssi(), data);
                     // Tratamos el beacon obtenido
                     aBeaconHasArrived(tib);
                 } else {
@@ -308,6 +334,29 @@ public class MainActivity extends AppCompatActivity {
             } // onScanFailed()
 
         }; // new scanCallback
+    }
+
+    private int getEstimatedDistanceFromDevice(int rssi){
+
+        if(rssi > -50){
+            return 0;
+        }
+        if(rssi<-50 && rssi>-61){
+            return 1;
+        }
+        if(rssi<=-61 && rssi>-70) {
+            return 2;
+        }
+        if(rssi<=-70 && rssi>-75){
+            return 3;
+        }
+        if(rssi<=-75 && rssi > -82){
+            return 4;
+        }
+        if(rssi <=-82){
+            return 5;
+        }
+    return 0;
     }
 
     // --------------------------------------------------------------
