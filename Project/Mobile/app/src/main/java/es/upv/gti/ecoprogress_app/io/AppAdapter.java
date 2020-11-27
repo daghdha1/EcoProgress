@@ -77,7 +77,7 @@ public class AppAdapter {
                         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                             if (response.isSuccessful()) {
                                 JsonObject measure = response.body();
-                                Log.d(">>>>","RESPONSE: "+ response.body());
+                                Log.d(">>>>", "RESPONSE: " + response.body());
                                 Log.d(">>>>", "onResponse medicion has been inserted -- successfully");
                             }
                         }

@@ -21,7 +21,7 @@ class BaseController{
 	*/
 	protected function loadModel($resource) {
 		// Obtenemos nombre del modelo (ej -> usersModel -> UsersModel)
-        $modelName = ucfirst($resource) . 'Model';
+        $modelName = $resource . 'Model';
 		// Si no existe el modelo solicitado, llama a myAutoloader() para incluirlo
         if (class_exists($modelName)) {
         	// Creamos y devolvemos el modelo
@@ -37,7 +37,7 @@ class BaseController{
 	*/
 	protected function loadView($format) {
 		// Obtenemos el nombre de la vista (controlador de salida) (ej -> JsonView)
-	    $viewName = ucfirst($format) . 'View';
+	    $viewName = $format . 'View';
 	    // Si no existe la vista solicitada, llama a myAutoloader() para incluirla
 	    if(class_exists($viewName)) {
 	    	// Creamos y devolvemos la vista
@@ -53,7 +53,7 @@ class BaseController{
 	*/
 	protected function createEntity($resource) {
 		// Obtenemos nombre formateado de la entidad (ej -> measuresEntity -> MeasureEntity)
-		$entityName = ucfirst(formatStrEntity($resource)) . 'Entity';
+		$entityName = formatStrEntity($resource) . 'Entity';
 		// Si no existe la entidad solicitada, llama a myAutoloader() para incluirla
 	    if(class_exists($entityName)) {
 	    	// Creamos y devolvemos la entidad
