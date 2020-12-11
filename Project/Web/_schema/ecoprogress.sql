@@ -49,6 +49,8 @@ insert into Measures (value, timestamp, location, sensorID) values (4.45, '16062
 insert into Measures (value, timestamp, location, sensorID) values (10.5, '1606150707', '38.995823,-0.177517', '4');
 insert into Measures (value, timestamp, location, sensorID) values (20.5, '1606064307', '38.995823,-0.177517', '5');
 insert into Measures (value, timestamp, location, sensorID) values (80.3, '1605977907', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (63.3, '1605977990', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (63.3, '160597800', '38.995823,-0.177517', '2');
 
 select * from Measures;
 

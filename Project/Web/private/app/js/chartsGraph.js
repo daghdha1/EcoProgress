@@ -93,16 +93,23 @@ var optionsLines = {
 
 var lineChart = new ApexCharts(document.querySelector("#lineChart"), optionsLines);
 lineChart.render();
+recogerDeServerRellenar();
 
-fetch('http://192.168.1.12/EcoProgress/Project/Web/private/api/v1.0/measures')
+setInterval(recogerDeServerRellenar,3000);
+
+function recogerDeServerRellenar(){
+
+  fetch('http://192.168.1.12/EcoProgress/Project/Web/private/api/v1.0/measures')
   .then((response) => {
     return response.json()
   }).then((data) => {
     //console.log("Recibimos data del server", data);
-
+    data = data.reverse();
     convertAndUpdateDataLine(data);
     populateTable(data);
   });
+
+}
 
 //*****************************************************************
 //Primero vamos a obtener las fechas en epoch y convertirlas en LocaleString para poder utilizarlas en el gráfico.
@@ -141,7 +148,11 @@ function convertAndUpdateDataLine(measures) {
 }
 
 function populateTable(data) {
-  var table = document.querySelector("#tablaMedidas");
+  
+
+  var table = document.querySelector("#tablaMedidas").getElementsByTagName('tbody')[0];
+table.innerHTML = "";
+
 
   for (let i = 0; i < data.length; i++) {
     var tr = table.insertRow(-1);
