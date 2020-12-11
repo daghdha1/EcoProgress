@@ -4,7 +4,7 @@ function validate() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     if (email == "ecoprogress" && password == "1234") {
-        alert("Has sido logeado");
+        //alert("Has sido logeado");
         window.location = "../Web/private/app/html/home.html"; // Redirecting to other page.
         return false;
     } else {
