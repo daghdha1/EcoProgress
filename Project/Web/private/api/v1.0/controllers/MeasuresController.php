@@ -26,7 +26,7 @@ class MeasuresController extends BaseController {
     public function getAction($request) {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
-
+        
         // Check de parámetros
         if (!$this->areThereParameters($request->parameters)) {
             // Obtiene todas las medidas
@@ -154,12 +154,21 @@ class MeasuresController extends BaseController {
     */
     private function getIncomingParametersAndExecuteGetMethod($model, $params) {
         $result = null;
+        $sensorID = null;
         foreach ($params as $key => $value) {
             switch ($key) {
+                case 'users':
+                    $sensorID = getSensorIDFromUser($value);
+                    break;
                 case 'period':
-                    $timestamp = getTimestampOfPeriod($value);
-                    if ($timestamp != -1) {
-                        $result = $model->getMeasuresFromTimestamp($timestamp);
+                    if (isNumeric($value[0])) {
+                        $tList = explode('-', $value);
+                        $result = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
+                    } elseif ($value === 'last') {
+                        $result = $model->getLastMeasure($sensorID);
+                    } else {
+                        $t = getTimestampOfPeriod($value);
+                        $result = $model->getMeasuresFromTimestamp($t, $sensorID);
                     }
                     break;
                 default:
