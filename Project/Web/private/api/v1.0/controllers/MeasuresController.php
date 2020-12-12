@@ -26,7 +26,7 @@ class MeasuresController extends BaseController {
     public function getAction($request) {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
-
+        
         // Check de parámetros
         if (!$this->areThereParameters($request->parameters)) {
             // Obtiene todas las medidas
