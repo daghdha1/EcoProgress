@@ -1,8 +1,7 @@
 function showUserData() {
-	
     getUser((userData) => {
         fillInUserFields(userData)
-		//console.log(userData);
+        //console.log(userData);
     });
 }
 
