@@ -1,15 +1,3 @@
-function timeConverter(UNIX_timestamp) {
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
-    return time;
-}
 var optionsColumn = {
     series: [],
     chart: {
@@ -36,7 +24,7 @@ var optionsColumn = {
         categories: [],
         tickAmount: 10,
         labels: {
-            formatter: function(value, timestamp, opts) {
+            formatter: function (value, timestamp, opts) {
                 return timeConverter(timestamp);
             }
         }
@@ -51,7 +39,7 @@ var optionsColumn = {
     },
     tooltip: {
         y: {
-            formatter: function(val) {
+            formatter: function (val) {
                 return "CO: " + val + " ppm"
             }
         }
@@ -59,7 +47,7 @@ var optionsColumn = {
 };
 var columnChart = new ApexCharts(document.querySelector("#columnChart"), optionsColumn);
 columnChart.render();
-fetch('../../api/v1.0/measures/users/daghdha@developer.com/period/week').then((response) => {
+fetch(config.restDir + '/measures').then((response) => {
     return response.json()
 }).then((data) => {
     convertAndUpdateData(data);
@@ -78,6 +66,5 @@ function convertAndUpdateData(measures) {
             y: measures[i].value
         });
     } //for
-    //console.log(parsedData);
     columnChart.updateSeries([parsedData]);
 }
