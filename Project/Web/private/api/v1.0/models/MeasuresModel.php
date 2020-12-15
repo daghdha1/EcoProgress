@@ -2,7 +2,6 @@
 
 class MeasuresModel extends BaseModel {
 	
-	private $table;
 	private $conn;
 
 	/* Constructor
@@ -12,7 +11,6 @@ class MeasuresModel extends BaseModel {
 	*/
 	public function __construct($table, $adapter) {
         parent::__construct($table, $adapter);
-        $this->table= (string)$table;
         $this->conn = $adapter;
     }
 
@@ -42,7 +40,7 @@ class MeasuresModel extends BaseModel {
 		$strLocation = mysqli_real_escape_string($this->conn, $parameters['location']);
 		$strSensorID = mysqli_real_escape_string($this->conn, $parameters['sensorID']);
 		// Query
-		$sql = "INSERT INTO $this->table (value, timestamp, location, sensorID) values ('$strValue', '$strTimestamp', '$strLocation', '$strSensorID')";
+		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) values ('$strValue', '$strTimestamp', '$strLocation', '$strSensorID')";
 		// Respuesta
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -51,18 +49,73 @@ class MeasuresModel extends BaseModel {
 		}
 		return null;
 	}
-	
+
+
 	/* 
-    * Obtiene las medidas desde el primer instante del periodo solicitado
+    * Obtiene el id del sensor del usuario activo
     *
-    * N -->
+    * Texto -->
+    *                 			getSensorIDFromUser() <--
+    * <-- sensorID:N, Nada
+    */
+	public function getSensorIDFromUser($userID) {
+		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+		// Query
+		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strUserID'";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Obtiene la última medida tomada del usuario
+    *
+    * Texto -->
+    *                      getLastMeasure() <--
+    * <-- MeasureEntity
+    */
+	public function getLastMeasure($sensorID) {
+		$strSensorID = mysqli_real_escape_string($this->conn, $sensorID);
+		// Query
+		$sql = "SELECT TOP 1 * FROM measures as m WHERE m.sensorID = '$strSensorID' ORDER BY timestamp DESC";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Obtiene las medidas del usuario desde el instante solicitado
+    *
+    * timestamp:N, Texto -->
     *                      						 getMeasuresFromTimestamp() <--
     * <-- Lista<MeasureEntity> | MeasureEntity
     */
-	public function getMeasuresFromTimestamp($timestamp) {
-		$strTimestamp = mysqli_real_escape_string($this->conn, $timestamp);
+	public function getMeasuresFromTimestamp($t, $sensorID) {
+		$strT = mysqli_real_escape_string($this->conn, $t);
+		$strSensorID = mysqli_real_escape_string($this->conn, $sensorID);
 		// Query
-		$sql = "SELECT * FROM $this->table WHERE timestamp >= '$strTimestamp'";
+		$sql = "SELECT * FROM Measures as m WHERE m.sensorID = '$strSensorID' AND m.timestamp >= '$strT'";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Obtiene las medidas del usuario del periodo personalizado solicitado
+    *
+    * timestamp:N, timestamp:N, Texto -->
+    *                      						 getMeasuresFromTimestamp() <--
+    * <-- Lista<MeasureEntity> | MeasureEntity
+    */
+	public function getMeasuresFromTwoTimestamp($t1, $t2, $sensorID) {
+		$strT1 = mysqli_real_escape_string($this->conn, $t1);
+		$strT2 = mysqli_real_escape_string($this->conn, $t2);
+		$strSensorID = mysqli_real_escape_string($this->conn, $sensorID);
+		// Query
+		$sql = "SELECT * FROM Measures as m WHERE m.sensorID = '$strSensorID' AND m.timestamp >= '$strT1' AND m.timestamp <= '$strT2'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
