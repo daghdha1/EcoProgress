@@ -16,6 +16,9 @@ function getTimestampOfPeriod($period) {
 		case 'week':
 			$targetSeconds = time() - (7 * 24 * 60 * 60);
 			break;
+		case 'month':
+			$targetSeconds = time() - (30 * 7 * 24 * 60 * 60);
+			break;
 		default:
 			$targetSeconds = -1;
 			break;
