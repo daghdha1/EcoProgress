@@ -71,22 +71,17 @@ class BaseEntity {
     *
     * Texto -->
     *                           executeSelectSql() <--
-    * <-- T | Lista<Object>
+    * <-- Lista<T> | Nada
     */
     public function executeSelectSql($sql) {
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
             // Si hay más de un resultado
-            if ($data->num_rows > 1) {
+            if ($data->num_rows > 0) {
                 // Creamos un array de objetos stdClass
                 while ($obj = $data->fetch_object()) {
                     $result[] = $obj;
                 }
-                return $result;
-            // Sino, si solo hay un resultado 
-            } elseif ($data->num_rows == 1) {
-                // Creamos un objeto stdClass
-                $result = $data->fetch_object();
                 return $result;
             }
         }

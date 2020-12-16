@@ -75,7 +75,7 @@ var options = {
     fill: {
         type: 'image',
         image: {
-            src: ["../media/gradient.png"],
+            src: ["../../media/gradient.png"],
             width: undefined,
             height: undefined
         }
@@ -133,7 +133,7 @@ for (let id = 0; id < listaFiltradaIds.length; id++) {
 }
 
 function getAndPublishLastMeasure(chart) {
-    fetch( config.restDir+'/measures').then(response => response.json()).then((data) => {
+    fetch(config.restDir + '/measures').then(response => response.json()).then((data) => {
         //console.log(data);
         var measure = {
             timestamp: 0

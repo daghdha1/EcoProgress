@@ -6,9 +6,7 @@ class MeasureEntity extends BaseEntity {
     private $sensorID;
     
     // Constructor
-    public function __construct($table, $adapter) {
-        parent::__construct($table, $adapter);
-    }
+    public function __construct() {}
     
     // Getters
 	public function getValue() {
