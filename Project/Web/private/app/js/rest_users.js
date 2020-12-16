@@ -11,7 +11,7 @@ function getUser(callback) {
     }).then((json) => {
         console.log("Datos usuario:", json);
         callback(json);"daghdha@developer.com";
-    })*/
+    });*/
     let json_test = new Object();
     json_test.mail = "daghdha@developer.com";
     json_test.name = "Adrian";

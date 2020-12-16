@@ -1,5 +1,4 @@
 'use strict';
-
 var optionsLines = {
     series: [{
         name: 'CO',
@@ -18,7 +17,7 @@ var optionsLines = {
         categories: [],
         tickAmount: 10,
         labels: {
-            formatter: function (value, timestamp, opts) {
+            formatter: function(value, timestamp, opts) {
                 return timeConverter(timestamp);
             }
         }
@@ -75,7 +74,6 @@ var optionsLines = {
 };
 var lineChart = new ApexCharts(document.querySelector("#lineChart"), optionsLines);
 lineChart.render();
-
 getData();
 setInterval(getData, 3000);
 
@@ -88,7 +86,6 @@ function getData() {
         populateTable(data);
     });
 }
-
 //*****************************************************************
 //Primero vamos a obtener las fechas en epoch y convertirlas en LocaleString para poder utilizarlas en el gráfico.
 //Despues, actualizaremos el gráfico  
