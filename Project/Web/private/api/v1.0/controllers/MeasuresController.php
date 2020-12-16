@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 class MeasuresController extends BaseController {
 
@@ -154,14 +154,14 @@ class MeasuresController extends BaseController {
     */
     private function getIncomingParametersAndExecuteGetMethod($model, $params) {
         $result = null;
-        $sensorID = null;
+        //$sensorID = null;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = getSensorIDFromUser($value);
+                    $sensorID = $model->getSensorIDFromUser($value)->id;
                     break;
                 case 'period':
-                    if (isNumeric($value[0])) {
+                    if (is_numeric($value)) {
                         $tList = explode('-', $value);
                         $result = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
                     } elseif ($value === 'last') {
@@ -169,6 +169,7 @@ class MeasuresController extends BaseController {
                     } else {
                         $t = getTimestampOfPeriod($value);
                         $result = $model->getMeasuresFromTimestamp($t, $sensorID);
+						
                     }
                     break;
                 default:

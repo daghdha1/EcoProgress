@@ -1,6 +1,6 @@
-create database if not exists ecoprogress;
+-- create database if not exists ecoprogress;
 
-use ecoprogress;
+-- use ecoprogress;
 
 drop table if exists Measures;
 drop table if exists Sensors;
