@@ -1,4 +1,4 @@
--- create database if not exists ecoprogress;
+create database if not exists ecoprogress;
 
  use ecoprogress;
 
@@ -54,22 +54,3 @@ insert into Measures (value, timestamp, location, sensorID) values (63.3, '16081
 insert into Measures (value, timestamp, location, sensorID) values (33.3, '1608145431', '38.995823,-0.177517', '2');
 
 select * from Measures;
-
-select * from Sensors;
-
-SELECT * FROM Measures m, Sensors s where m.sensorID = s.id and s.mail = "daghdha@developer.com";
-
-select * from measures order by sensorID;
-
-select ST_Distance(
-    point(38.995823, -0.177517),
-    point(38.9955, 0.1661)
-);
-
-SELECT 
-	sensorID,
-    value  location
-FROM 
-   Measures
-   CROSS APPLY STRING_SPLIT(location, ',');
-
