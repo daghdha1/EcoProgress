@@ -1,29 +1,65 @@
-// NO TOCAR, EN PROCESO
-
-// En principio deberiamos de cambiar la cantidad de horas que solicitamos a la api
-function lastDay() {
-    console.log(calculateQuality(getData(24)));
+function showLastMeasure() {
+    //console.log(calculateQuality(getData(24)));
+    getLastMeasure((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com");
 }
-// media aritmetica clasica / promedio
-function calculateQuality(res) {
+
+function showLastHourMeasures() {
+    getMeasuresFromTimestamp((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com", periodValue);
+}
+
+function showLastDayMeasures() {
+    getMeasuresFromTimestamp((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com", periodValue);
+}
+
+function showLastWeekMeasures() {
+    getMeasuresFromTimestamp((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com", periodValue);
+}
+
+function showLastMonthMeasures() {
+    getMeasuresFromTimestamp((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com", periodValue);
+}
+// DONT USE IT (IN PROGRESS)
+function showMyCustomMeasures() {
+    getMeasuresFromTimestamp((dataReceived) => {
+        let airQuality = calculateAirQuality(dataReceived);
+        fillInGraphicBar(airQuality)
+        //console.log(airQuality);
+    }, "daghdha@developer.com", "153923022-162828823");
+}
+
+/*
+ * Calcular la media de las medidas recibidas
+ * 
+ * Lista<Measure> --> 
+ *                       calculateAirQuality() <--
+ * <-- gasValue:R
+ */
+function calculateAirQuality(measureList) {
     let result = 0;
-    res.forEach(item => {
-        result += item;
+    measureList.forEach(measure => {
+        result += measure.value;
     });
-    return (result / res.length);
-}
-// 1 g/m3 = 1 mg/L = 1 ppm
-function getData(x) {
-    // suponiendo que son mg/m3 y que la bd los devuelve asi, si no habrá que parsear
-    let data = new Array();
-    data = [7, 5, 3, 2, 5, 6, 4, 6, 2];
-    return data;
+    return (result / measureList.length);
 }
 
-function convertToMgM3(array) {
-    let result = new Array();
-    array.forEach(element => {
-        result.push(element * 1.146);
-    });
-    return result;
-}
+function fillInGraphicBar(data) {}
