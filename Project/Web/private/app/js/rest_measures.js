@@ -1,45 +1,36 @@
-
-// NO TOCAR, EN PROCESO
-
 /* 
  * Obtiene la última medida tomada del usuario activo
  *
- *                      getLastMeasure() <--
- * <-- MeasureEntity
+ * mail:Texto -->
+ *                               getLastMeasure() <--
+ * <-- MeasureEntity | Nada
  */
-function getLastMeasure(callback) {
-    var request = new Request(config.restDir + "/measures/users/daghdha@developer.com/period/last", {
+function getLastMeasure(callback, userID) {
+    var request = new Request(config.restDir + "/measures/users/" + userID + "/period/last", {
         method: "get"
     });
     fetch(request).then((response) => {
-        // Si la respuesta es exitosa (200 code), devuelve json
         if (response.ok) return response.json();
-        // FUTURE: Si ha habido algún fallo de red, redireccionamos a mensajes de fallo (necesitamos response)
         else return false;
     }).then((json) => {
-        console.log("Datos medida:", json);
         callback(json);
     });
 }
 /* 
  * Obtiene las medidas del usuario desde el instante solicitado
  *
- *                      						 getMeasuresFromTimestamp() <--
- * <-- Lista<MeasureEntity> | MeasureEntity
+ * mail:Texto, period:Texto --> 
+ *                                                      getMeasuresFromTimestamp() <--
+ * <-- Lista<MeasureEntity> | MeasureEntity | Nada
  */
-function getMeasuresFromTimestamp(callback) {
-    var request = new Request(config.restDir + "/measures/users/daghdha@developer.com/period/month", {
+function getMeasuresFromTimestamp(callback, userID, periodValue) {
+    var request = new Request(config.restDir + "/measures/users/" + userID + "/period/" + periodValue, {
         method: "get"
     });
     fetch(request).then((response) => {
-        // Si la respuesta es exitosa (200 code), devuelve json
         if (response.ok) return response.json();
-        // FUTURE: Si ha habido algún fallo de red, redireccionamos a mensajes de fallo (necesitamos response)
         else return false;
     }).then((json) => {
-        console.log("Datos usuario:", json);
         callback(json);
-        "daghdha@developer.com";
     });
-    callback(json_test);
 }

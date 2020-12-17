@@ -10,11 +10,17 @@
 */
 function getTimestampOfPeriod($period) {
 	switch ($period) {
+		case 'hour':
+			$targetSeconds = time() - (60 * 60);
+			break;
 		case 'day':
 			$targetSeconds = time() - (24 * 60 * 60);
 			break;
 		case 'week':
 			$targetSeconds = time() - (7 * 24 * 60 * 60);
+			break;
+		case 'month':
+			$targetSeconds = time() - (30 * 7 * 24 * 60 * 60);
 			break;
 		default:
 			$targetSeconds = -1;

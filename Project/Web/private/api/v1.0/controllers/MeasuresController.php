@@ -142,7 +142,7 @@ class MeasuresController extends BaseController {
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)->id;
+                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
                     break;
                 case 'period':
                     if (is_numeric($value)) {
