@@ -1,6 +1,6 @@
 <?php
 
-class BaseController{
+class BaseController {
 	
 	private $adapter;
 
