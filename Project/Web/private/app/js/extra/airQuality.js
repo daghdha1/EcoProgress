@@ -1,55 +1,60 @@
-var rest = require("./../rest_measures.js");
+showLastMonthMeasures().then((data) => {
+    console.log(data)
+});
 
-showLastMeasure().then((data) => {console.log(data)});
 function showLastMeasure() {
     return new Promise(function(resolve, reject) {
-        rest.getLastMeasure((dataReceived) => {
+        getLastMeasure((dataReceived) => {
             let airQuality = calculateAirQuality(dataReceived);
             resolve(airQuality);
         }, "daghdha@developer.com");
     });
 }
-/*
-function showLastHourMeasures(callback) {
-    getMeasuresFromTimestamp((dataReceived) => {
-        let airQuality = calculateAirQuality(dataReceived);
-        fillInGraphicBar(airQuality)
-        //console.log(airQuality);
-    }, "daghdha@developer.com", periodValue);
+
+function showLastHourMeasures() {
+    return new Promise(function(resolve, reject) {
+        getMeasuresFromTimestamp((dataReceived) => {
+            let airQuality = calculateAirQuality(dataReceived);
+            resolve(airQuality);
+        }, "daghdha@developer.com", "hour");
+    });
 }
 
-function showLastDayMeasures(callback) {
-    getMeasuresFromTimestamp((dataReceived) => {
-        let airQuality = calculateAirQuality(dataReceived);
-        fillInGraphicBar(airQuality)
-        //console.log(airQuality);
-    }, "daghdha@developer.com", periodValue);
+function showLastDayMeasures() {
+    return new Promise(function(resolve, reject) {
+        getMeasuresFromTimestamp((dataReceived) => {
+            let airQuality = calculateAirQuality(dataReceived);
+            resolve(airQuality);
+        }, "daghdha@developer.com", "day");
+    });
 }
 
 function showLastWeekMeasures() {
-    getMeasuresFromTimestamp((dataReceived) => {
-        let airQuality = calculateAirQuality(dataReceived);
-        fillInGraphicBar(airQuality)
-        //console.log(airQuality);
-    }, "daghdha@developer.com", periodValue);
+    return new Promise(function(resolve, reject) {
+        getMeasuresFromTimestamp((dataReceived) => {
+            let airQuality = calculateAirQuality(dataReceived);
+            resolve(airQuality);
+        }, "daghdha@developer.com", "week");
+    });
 }
 
 function showLastMonthMeasures() {
-    getMeasuresFromTimestamp((dataReceived) => {
-        let airQuality = calculateAirQuality(dataReceived);
-        fillInGraphicBar(airQuality)
-        //console.log(airQuality);
-    }, "daghdha@developer.com", periodValue);
+    return new Promise(function(resolve, reject) {
+        getMeasuresFromTimestamp((dataReceived) => {
+            let airQuality = calculateAirQuality(dataReceived);
+            resolve(airQuality);
+        }, "daghdha@developer.com", "month");
+    });
 }
 // DONT USE IT (IN PROGRESS)
 function showMyCustomMeasures() {
-    getMeasuresFromTimestamp((dataReceived) => {
-        let airQuality = calculateAirQuality(dataReceived);
-        fillInGraphicBar(airQuality)
-        //console.log(airQuality);
-    }, "daghdha@developer.com", "153923022-162828823");
+    return new Promise(function(resolve, reject) {
+        getMeasuresFromTimestamp((dataReceived) => {
+            let airQuality = calculateAirQuality(dataReceived);
+            resolve(airQuality);
+        }, "daghdha@developer.com", "153923022-162828823");
+    });
 }
-
 /*
  * Calcular la media de las medidas recibidas
  * 
@@ -57,8 +62,6 @@ function showMyCustomMeasures() {
  *                       calculateAirQuality() <--
  * <-- gasValue:R
  */
-
- /*
 function calculateAirQuality(measureList) {
     let result = 0;
     measureList.forEach(measure => {
@@ -66,7 +69,7 @@ function calculateAirQuality(measureList) {
     });
     return (result / measureList.length);
 }
-
+/*
 function fillInGraphicBar(callback) {
     let airQualitysPromiseList=[];
     airQualitysPromiseList.push(showLastMeasure(() =>{
@@ -154,4 +157,3 @@ function getValueFromPercentage(percent) {
   return value > 70 ? 70 : value;
 }
 */
-
