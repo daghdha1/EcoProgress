@@ -11,7 +11,7 @@ function GetDataForGraphicsBar() {
     airQualitysPromiseList.push(InitRequestLastHourMeasures());
     airQualitysPromiseList.push(InitRequestLastDayMeasures());
     Promise.all(airQualitysPromiseList).then((response) => {
-        populateGraph([33.7, 124, 70.9]);
+        populateGraph(response);
     }).catch(error => console.log("Error in promises ${error}"));
 }
 
