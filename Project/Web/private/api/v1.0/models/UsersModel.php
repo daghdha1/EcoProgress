@@ -42,35 +42,18 @@ class UsersModel extends BaseModel {
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
-	
-	/* 
-    * Obtiene el id del sensor del usuario activo
-    *
-    * Texto -->
-    *                 			getSensorIDFromUser() <--
-    * <-- sensorID:N, Nada
-    */
-	public function getSensorIDFromUser($userID) {
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
-		// Query
-		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strUserID'";
-		// Respuesta
-		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-		return $result;
-	}
 
 	/* 
     * Obtiene el tiempo total del usuario activo
     *
-    * N, N -->
+    * Texto, N -->
     *                 			getActiveUser() <--
     * <-- Active time:N, Nada
     */
-	public function getActiveTimeUser($sensorID, $time) {
-		$strSensorID = mysqli_real_escape_string($this->conn, $sensorID);
+	public function getActiveTimeUser($mail, $time) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
-		$sql = "SELECT timestamp FROM Measures as m WHERE m.sensorID = '$strSensorID' ORDER BY timestamp DESC";
+		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
@@ -85,11 +68,18 @@ class UsersModel extends BaseModel {
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $resultado;
 	}
+	/* 
+    * Obtiene la distancia total recorrida del usuario activo
+    *
+    * N, N -->
+    *                 			getActiveUser() <--
+    * <-- Active time:N, Nada
+    */
 	public function getTraveledDistance($mail) {
 		// Escapamos los carácteres especiales
-		$strMail = mysqli_real_escape_string($this->adapter, $mail);
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Measures m, Sensors s where m.sensorID = s.id and s.mail = '$strMail'";
+		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
 		// Respuesta
 		$result = MyEntity::executeSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null

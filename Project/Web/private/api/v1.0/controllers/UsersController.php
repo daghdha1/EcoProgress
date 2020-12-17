@@ -107,15 +107,15 @@ class UsersController extends BaseController {
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
+                    $userID = $value;
                     break;
                 case 'difference':
                     if ($value === 'half') {
                         $time = 1800;
-                        $result = $model->getActiveTimeUser($sensorID, $time);
+                        $result = $model->getActiveTimeUser($userID, $time);
                     } elseif ($value === 'hour') {
                         $time = 3600;
-                        $result = $model->getActiveTimeUser($sensorID, $time);
+                        $result = $model->getActiveTimeUser($userID, $time);
                     }
                     break;
                 default:

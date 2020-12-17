@@ -7,5 +7,5 @@ function showActiveTimeUser() {
 }
 
 function fillInActiveTimeField(activeTime) {
-    console.log(convertSecondsToFormatTime(activeTime));
+    //console.log(convertSecondsToFormatTime(activeTime));
 }
