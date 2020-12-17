@@ -13,7 +13,6 @@ function getLastMeasure(callback, userID) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        console.log("Datos medida recibidos --> ", json);
         callback(json);
     });
 }
@@ -32,7 +31,6 @@ function getMeasuresFromTimestamp(callback, userID, periodValue) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        console.log("Datos medidas recibidos --> ", json);
         callback(json);
     });
 }

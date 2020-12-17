@@ -10,3 +10,12 @@ function timeConverter(UNIX_timestamp) {
     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
     return time;
 }
+
+function convertSecondsToFormatTime(seconds) {
+    var a = new Date(seconds * 1000);
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = hour + 'h:' + min + 'm:' + sec + 's';
+    return time;
+}
