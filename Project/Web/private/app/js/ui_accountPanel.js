@@ -1,8 +1,7 @@
 function showUserData() {
-    getUser((userData) => {
-        fillInUserFields(userData)
-        //console.log(userData);
-    });
+    getUser((dataReceived) => {
+        fillInUserFields(dataReceived);
+    }, "daghdha@developer.com");
 }
 
 function fillInUserFields(userData) {
