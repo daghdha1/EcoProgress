@@ -85,4 +85,16 @@ class UsersModel extends BaseModel {
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $resultado;
 	}
+	public function getTraveledDistance($mail) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->adapter, $mail);
+		// Query
+		$sql = "SELECT * FROM Measures m, Sensors s where m.sensorID = s.id and s.mail = '$strMail'";
+		// Respuesta
+		$result = MyEntity::executeSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+
 }
