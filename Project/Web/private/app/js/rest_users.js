@@ -23,3 +23,15 @@ function getUser(callback, userID) {
     json_test.devices = ["C000001", "M000002"];
     callback(json_test);
 }
+
+function getActiveTimeUser(callback, userID, differenceValue) {
+    var request = new Request(config.restDir + "/users/users/" + userID + "/difference/" + differenceValue, {
+        method: "get"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return false;
+    }).then((json) => {
+        callback(json);
+    });
+}

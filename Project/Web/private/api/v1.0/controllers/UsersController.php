@@ -32,7 +32,7 @@ class UsersController extends BaseController {
             // Obtiene todos los usuarios
             $result = $this->getUsers($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request->parameters);
+            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
         }
 
         // Cargamos la vista seleccionada
@@ -99,15 +99,15 @@ class UsersController extends BaseController {
     * Escoge el método GET acorde con el parámetro recibido
     *
     * UsersModel, Lista<Texto> -->
-    *                                                       getIncomingParametersAndExecuteGetMethod() <--
+    *                                   getIncomingParametersAndExecuteGetMethod() <--
     * <-- N | Nada
     */
-    private function getIncomingParametersAndExecuteGetMethod($model, $params) {
-        $result = null;
+    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
+        $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)->id;
+                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
                     break;
                 case 'difference':
                     if ($value === 'half') {
