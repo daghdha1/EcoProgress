@@ -1,8 +1,9 @@
-showUserListData();
+showUsersTable();
 showUserData();
 showActiveTimeUser();
-// Callbacks
-function showUserListData() {
+showTotalDistanceUser();
+//////// Callbacks functions ////////
+function showUsersTable() {
     getAllUsers((dataReceived) => {
         fillUsersTable(dataReceived);
     });
@@ -20,7 +21,12 @@ function showActiveTimeUser() {
         fillInActiveTimeField(dataReceived);
     }, "daghdha@developer.com", "hour");
 }
-// Fill functions
+
+function showTotalDistanceUser() {
+    // TODO: falta llamar a la funcion de distancia total
+    fillInTotalDistanceField("1325m");
+}
+//////// Fill functions ////////
 function fillUsersTable(userListData) {
     var table = document.querySelector("#usersDataTable").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
@@ -42,5 +48,9 @@ function fillInUserFields(userData) {
 }
 
 function fillInActiveTimeField(activeTime) {
-    document.getElementById("a_totalTimeActive").innerHTML = convertSecondsToFormatTime(activeTime);
+    document.getElementById("a_timeActive").innerHTML = convertSecondsToFormatTime(activeTime);
+}
+
+function fillInTotalDistanceField(distance) {
+    document.getElementById("a_totalDistance").innerHTML = distance;
 }
