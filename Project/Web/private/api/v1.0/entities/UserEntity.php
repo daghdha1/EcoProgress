@@ -6,9 +6,7 @@ class UserEntity extends BaseEntity {
     private $password;
 	
 	// Constructor
-    public function __construct($table, $adapter) {
-        parent::__construct($table, $adapter);
-    }
+    public function __construct() {}
 	// getters
 	public function getMail() {
         return $this->mail;
