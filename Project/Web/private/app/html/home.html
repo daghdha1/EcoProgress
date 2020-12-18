@@ -6,6 +6,7 @@
             EcoProgress
         </title>
         <!-- STYLES -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -15,6 +16,8 @@
         <link href="../css/palette.compiled.css" rel="stylesheet"/>
         <link href="../css/nav.css" rel="stylesheet"/>
         <!-- SCRIPTS -->
+        <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+        <script src="../js/leaflet-heat.js"></script>
         <script defer="" src="../js/extra/jquery.min.js">
         </script>
         <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
@@ -34,6 +37,10 @@
         <script defer="" src="../js/ui_accountPanel.js">
         </script>
         <script defer="" src="../js/ui_graphicsPanel.js">
+        </script>
+        <script defer="" src="../js/rest_interpolation.js">
+        </script>
+        <script defer="" src="../js/drawMap.js">
         </script>
     </head>
     <body style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
@@ -63,9 +70,7 @@
                 </ul>
                 <div class="tab-content" style="height: 100%;width: 100%; ">
                     <div class="tab-pane active" id="tabInicio" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
-                        <div style="height: 100%;position: relative;">
-                            <iframe allowfullscreen="" frameborder="0" height="400" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBIEKjPKRGYtvbbUdcWRRRqEu4X6GEHyRI&q=Gandia%2C+Spain&zoom=13" style="height: 100%;" width="100%">
-                            </iframe>
+                        <div id="map" style="height: 100%;position: relative;">
                         </div>
                         <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
                             <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 78px;left: 20px;width: 16%;border-radius: 20px;box-shadow: 0px 0px 20px #1a5979;min-width: 200px;max-height: auto;border-width: 3px;">
@@ -113,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="position: absolute;bottom: 20px;right: 20px;width: 30%;">
+                        <div style="position: absolute;bottom: 20px;right: 20px;width: 25%; height: 300px;">
                             <div class="card" id="cardOfGraphs" style="border-radius: 28px;height: 100%;">
                                 <div class="card-body">
                                     <div style="width: 100%;height: 10%;">
