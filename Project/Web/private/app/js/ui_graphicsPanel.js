@@ -94,7 +94,7 @@ window.Apex = {
   
   var optionsColumn = {
     series: [{
-      name: 'Distance Traveled',
+      name: 'Distancia recorrida',
       data: [44, 55, 57, 56, 61, 58, 63]
     }],
     chart: {
@@ -121,7 +121,7 @@ window.Apex = {
     },
     yaxis: {
       title: {
-        text: 'Distance Traveled'
+        text: 'Distancia recorrida'
       }
     },
     fill: {
@@ -478,7 +478,7 @@ window.Apex = {
       },
     },
     series: [71, 63],
-    labels: ['Device 1', 'Device 2'],
+    labels: ['Personalizado 1', 'Personalizado 2'],
     legend: {
       show: true,
       position: 'left',
@@ -508,16 +508,16 @@ window.Apex = {
   
   var optionsArea = {
     series: [{
-      name: 'series1',
+      name: 'CO',
       data: [31, 40, 28, 51, 42, 109, 100]
     }, {
-      name: 'series2',
+      name: 'NO2',
       data: [11, 32, 45, 32, 34, 52, 41]
     },{
-      name: 'series3',
+      name: 'SO2',
       data: [63, 32,15, 02, 34, 25, 31]
     },{
-      name: 'series4',
+      name: 'O3',
       data: [51, 37, 20, 5, 67, 34, 86]
     }],
     chart: {
