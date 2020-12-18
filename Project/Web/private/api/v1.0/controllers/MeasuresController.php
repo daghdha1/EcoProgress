@@ -30,9 +30,9 @@ class MeasuresController extends BaseController {
         // Check de parámetros
         if (!$this->areThereParameters($request->parameters)) {
             // Obtiene todas las medidas
-            $result = $this->getMeasures($model, $request);
+            $result = $this->getAllMeasures($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request->parameters);
+            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
         }
 
         // Cargamos la vista seleccionada
@@ -80,28 +80,13 @@ class MeasuresController extends BaseController {
     * Obtiene todas las medidas disponibles
     *
     * MeasuresModel, Request -->
-    *                               getMeasures() <--
+    *                               getAllMeasures() <--
     * <-- Lista<MeasureEntity>
     */
-    private function getMeasures($model, $request) {
+    private function getAllMeasures($model, $request) {
         // Obtenemos el array de mediciones (objects stdClass)
-        $data = $model->getMeasures();
-        $result = array();
-        // Si hay datos
-        if (!is_null($data)) {
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nueva medición
-                $measure = parent::createEntity($request->resource);
-                // Asignamos las propiedades de cada objeto measure
-                $measure->setValue($data[$i]->value);
-                $measure->setTimestamp($data[$i]->timestamp);
-                $measure->setLocation($data[$i]->location);
-                $measure->setSensorID($data[$i]->sensorID);
-                // Guardamos las mediciones en el array asociativo $result
-                array_push($result, $measure->toARRAY());
-            }
-        }
+        $data = $model->getAllMeasures();
+        $result = $this->createArrayOfMeasures($data, $request->resource);
         return $result;
     }
 
@@ -152,31 +137,58 @@ class MeasuresController extends BaseController {
     *                                                       getIncomingParametersAndExecuteGetMethod() <--
     * <-- Lista<MeasureEntity> | MeasureEntity | Nada
     */
-    private function getIncomingParametersAndExecuteGetMethod($model, $params) {
-        $result = null;
-        //$sensorID = null;
+    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
+        $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)->id;
+                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
                     break;
                 case 'period':
                     if (is_numeric($value)) {
                         $tList = explode('-', $value);
-                        $result = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
+                        $data = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
                     } elseif ($value === 'last') {
-                        $result = $model->getLastMeasure($sensorID);
+                        $data = $model->getLastMeasure($sensorID);
                     } else {
                         $t = getTimestampOfPeriod($value);
-                        $result = $model->getMeasuresFromTimestamp($t, $sensorID);
-						
+                        $data = $model->getMeasuresFromTimestamp($t, $sensorID);
                     }
                     break;
                 default:
                     break;
             }
         }
+        $result = $this->createArrayOfMeasures($data, $request->resource);
         return $result;
+    }
+
+    /*
+    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Measure
+    * 
+    * Lista<stdClass>, Texto -->
+    *                       createArrayOfMeasures() <--
+    * <-- Lista<Measure>
+    */
+    private function createArrayOfMeasures($data, $resource) {
+        // Si hay datos
+        if (!is_null($data)) {
+            $result = array();
+            // Por cada elemento del array de objetos
+            for ($i=0; $i < count($data); $i++) {
+                // Creamos un nueva medición
+                $measure = parent::createEntity($resource);
+                // Asignamos las propiedades de cada objeto measure
+                $measure->setValue($data[$i]->value);
+                $measure->setTimestamp($data[$i]->timestamp);
+                $measure->setLocation($data[$i]->location);
+                $measure->setSensorID($data[$i]->sensorID);
+                // Guardamos las mediciones en el array asociativo $result
+                array_push($result, $measure->toARRAY());
+            }
+            return $result;
+        } 
+        return null;
     }
 
 }
