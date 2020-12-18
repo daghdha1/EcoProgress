@@ -1,5 +1,3 @@
-showUserData();
-
 function showUserData() {
     getUser((dataReceived) => {
         console.log(dataReceived);
