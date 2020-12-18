@@ -11,16 +11,14 @@ class UsersModel extends BaseModel {
     }
 
 	/* 
-    * Obtiene todos los usuarios disponibles
+    * Obtiene todos los usuarios registrados
     *
     *                   			getAllUsers() <--
     * <-- Lista<UserEntity>
     */
 	public function getAllUsers() {
-		// Query
-		$sql = "SELECT * FROM Users";
 		// Respuesta
-		$result = MyEntity::executeSelectSql($sql);
+		$result = BaseEntity::getAll();
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}

@@ -1,4 +1,21 @@
 /* 
+ * Obtiene todos los usuarios registrados
+ *
+ *                              getAllUsers() <--
+ * <-- List<Users> | Nada
+ */
+function getAllUsers(callback) {
+    var request = new Request(config.restDir + "/users", {
+        method: "get"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return false;
+    }).then((json) => {
+        callback(json);
+    });
+}
+/* 
  * Obtiene los datos del usuario activo
  *
  * mail:Texto -->
@@ -23,7 +40,6 @@ function getUser(callback, userID) {
     json_test.devices = ["C000001", "M000002"];
     callback(json_test);
 }
-
 /* 
  * Obtiene el tiempo total activo del usuario
  *

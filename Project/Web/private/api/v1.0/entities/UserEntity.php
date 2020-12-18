@@ -42,4 +42,5 @@ class UserEntity extends BaseEntity {
             'surnames' => $this->surnames,
             'password' => $this->password
         );
+    }
 }

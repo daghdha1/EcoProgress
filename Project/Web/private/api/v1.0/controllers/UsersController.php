@@ -30,7 +30,7 @@ class UsersController extends BaseController {
         // Check de parámetros
         if (!$this->areThereParameters($request->parameters)) {
             // Obtiene todos los usuarios
-            $result = $this->getUsers($model, $request);
+            $result = $this->getAllUsers($model, $request);
         } else {
             $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
         }
@@ -53,15 +53,15 @@ class UsersController extends BaseController {
     // ---------------------------------------------------------------------------------------- //
 
     /* 
-    * Obtiene todas los usuarios disponibles
+    * Obtiene todos los usuarios registrados
     *
     * UsersModel, Request -->
-    *                               getUsers() <--
+    *                               getAllUsers() <--
     * <-- Lista<UsersEntity>
     */
-    private function getUsers($model, $request) {
+    private function getAllUsers($model, $request) {
         // Obtenemos el array de usuarios (objects stdClass)
-        $data = $model->getUsers();
+        $data = $model->getAllUsers();
         $result = array();
         // Si hay datos
         if (!is_null($data)) {
@@ -73,7 +73,7 @@ class UsersController extends BaseController {
                 $user->setMail($data[$i]->mail);
                 $user->setName($data[$i]->name);
                 $user->setSurnames($data[$i]->surnames);
-                $user->setPasword($data[$i]->password);
+                $user->setPassword($data[$i]->password);
                 // Guardamos los usuarios en el array asociativo $result
                 array_push($result, $user->toARRAY());
             }
