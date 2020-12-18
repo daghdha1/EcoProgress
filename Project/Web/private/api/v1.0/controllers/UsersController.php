@@ -108,6 +108,8 @@ class UsersController extends BaseController {
             switch ($key) {
                 case 'users':
                     $userID = $value;
+                    $data = $model->getUser($userID);
+                    $result = $this->createArrayOfUsers($data, $request->resource);
                     break;
                 case 'difference':
                     if ($value === 'half') {
@@ -123,6 +125,34 @@ class UsersController extends BaseController {
             }
         }
         return $result;
+    }
+
+    /*
+    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Users
+    * 
+    * Lista<stdClass>, Texto -->
+    *                               createArrayOfUsers() <--
+    * <-- Lista<User>
+    */
+    private function createArrayOfUsers($data, $resource) {
+        // Si hay datos
+        if (!is_null($data)) {
+            $result = array();
+            // Por cada elemento del array de objetos
+            for ($i=0; $i < count($data); $i++) {
+                // Creamos un nuevo usuario
+                $user = parent::createEntity($resource);
+                // Asignamos las propiedades de cada objeto user
+                $user->setMail($data[$i]->mail);
+                $user->setName($data[$i]->name);
+                $user->setSurnames($data[$i]->surnames);
+                $user->setPassword($data[$i]->password);
+                // Guardamos los usuarios en el array asociativo $result
+                array_push($result, $user->toARRAY());
+            }
+            return $result;
+        } 
+        return null;
     }
 
 }

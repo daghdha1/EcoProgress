@@ -1,276 +1,277 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
-
-<head>
-    <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <title>
-        EcoProgress
-    </title>
-    <!-- STYLES -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../fonts/CenturyGothic.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="../css/homePanel.css" rel="stylesheet" />
-    <link href="../css/accountPanel.css" rel="stylesheet" />
-    <link href="../css/graphicsPanel.css" rel="stylesheet" />
-
-    <link href="../css/palette.compiled.css" rel="stylesheet" />
-    <link href="../css/nav.css" rel="stylesheet" />
-    <!-- SCRIPTS -->
-    <script defer src="../js/extra/jquery.min.js">
-    </script>
-    <script defer src="../bootstrap/js/bootstrap.bundle.min.js">
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/apexcharts">
-    </script>
-    <script defer src="../js/_config.js">
-    </script>
-    <script defer src="../js/_tools.js">
-    </script>
-    <script defer src="../js/rest_measures.js">
-    </script>
-    <script defer src="../js/rest_users.js">
-    </script>
-    <script defer src="../js/extra/airQuality.js">
-    </script>
-    <script defer src="../js/ui_accountPanel.js">
-    </script>
-    <script defer src="../js/ui_graphicsPanel.js">
-    </script>
-</head>
-
-<body onload="showUserData()" style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
-    <header class="text-center"
-        style="text-align: left;height: 8%;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'Century Gothic';">
-        <div style="height: 100%;">
-            <img class="img-fluid align-self-center" src="../media/logo_250.png" style="height: 80px;width: 210px;" />
-        </div>
-    </header>
-    <div style="height: 85%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;">
-        <div style="border-style: none;height: 100%;margin: 0px;">
-            <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-toggle="tab" href="#tabInicio" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Inicio
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="tab" href="#tabGraficos" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Gráficos
-                    </a>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="tab" href="#tabCuenta" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Cuenta
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" style="height: 100%;width: 100%; ">
-                <div class="tab-pane active" id="tabInicio" role="tabpanel"
-                    style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
-                    <div style="height: 100%;position: relative;">
-                        <iframe allowfullscreen="" frameborder="0" height="400"
-                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBIEKjPKRGYtvbbUdcWRRRqEu4X6GEHyRI&q=Gandia%2C+Spain&zoom=13"
-                            style="height: 100%;" width="100%">
-                        </iframe>
-                    </div>
-                    <div
-                        class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
-                        <div class="card text-center d-flex justify-content-center align-items-center"
-                            style="position: absolute !important;bottom: 78px;left: 20px;width: 16%;border-radius: 20px;box-shadow: 0px 0px 20px #1a5979;min-width: 200px;max-height: auto;border-width: 3px;">
-                            <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column"
-                                style="width: 100%;height: 100%;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around"
-                                        role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #007d93;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';border-radius: 50%;"
-                                            type="button">
-                                            CO
+    <head>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+        <title>
+            EcoProgress
+        </title>
+        <!-- STYLES -->
+        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="../css/homePanel.css" rel="stylesheet"/>
+        <link href="../css/accountPanel.css" rel="stylesheet"/>
+        <link href="../css/graphicsPanel.css" rel="stylesheet"/>
+        <link href="../css/palette.compiled.css" rel="stylesheet"/>
+        <link href="../css/nav.css" rel="stylesheet"/>
+        <!-- SCRIPTS -->
+        <script defer="" src="../js/extra/jquery.min.js">
+        </script>
+        <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
+        </script>
+        <script defer="" src="https://cdn.jsdelivr.net/npm/apexcharts">
+        </script>
+        <script defer="" src="../js/_config.js">
+        </script>
+        <script defer="" src="../js/_tools.js">
+        </script>
+        <script defer="" src="../js/rest_measures.js">
+        </script>
+        <script defer="" src="../js/rest_users.js">
+        </script>
+        <script defer="" src="../js/extra/airQuality.js">
+        </script>
+        <script defer="" src="../js/ui_accountPanel.js">
+        </script>
+        <script defer="" src="../js/ui_graphicsPanel.js">
+        </script>
+    </head>
+    <body style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
+        <header class="text-center" style="text-align: left;height: 8%;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'Century Gothic';">
+            <div style="height: 100%;">
+                <img class="img-fluid align-self-center" src="../media/logo_250.png" style="height: 80px;width: 210px;"/>
+            </div>
+        </header>
+        <div style="height: 85%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+            <div style="border-style: none;height: 100%;margin: 0px;">
+                <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-toggle="tab" href="#tabInicio" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-toggle="tab" href="#tabGraficos" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Gráficos
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-toggle="tab" href="#tabCuenta" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Cuenta
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="height: 100%;width: 100%; ">
+                    <div class="tab-pane active" id="tabInicio" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
+                        <div style="height: 100%;position: relative;">
+                            <iframe allowfullscreen="" frameborder="0" height="400" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBIEKjPKRGYtvbbUdcWRRRqEu4X6GEHyRI&q=Gandia%2C+Spain&zoom=13" style="height: 100%;" width="100%">
+                            </iframe>
+                        </div>
+                        <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
+                            <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 78px;left: 20px;width: 16%;border-radius: 20px;box-shadow: 0px 0px 20px #1a5979;min-width: 200px;max-height: auto;border-width: 3px;">
+                                <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column" style="width: 100%;height: 100%;">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around" role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #007d93;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';border-radius: 50%;" type="button">
+                                                CO
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                NO
+                                                <sub>
+                                                    2
+                                                </sub>
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                SO
+                                                <sub>
+                                                    2
+                                                </sub>
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                0
+                                                <sub>
+                                                    3
+                                                </sub>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <button class="btn btn-primary" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;" type="button">
+                                            Mis rutas
                                         </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            NO
-                                            <sub>
-                                                2
-                                            </sub>
-                                        </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            SO
-                                            <sub>
-                                                2
-                                            </sub>
-                                        </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            0
-                                            <sub>
-                                                3
-                                            </sub>
+                                        <button class="btn btn-primary" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;" type="button">
+                                            Crear ruta
                                         </button>
                                     </div>
+                                    <div class="d-flex align-self-start flex-wrap align-items-xl-center" style="width: 100%;padding-left: 15%;">
+                                        <input placeholder="Origen..." style="margin-bottom: 7px;margin-top: 10px;border-radius: 6px;border: 3px solid #007d93;font-family: 'Century Gothic';" type="text">
+                                            <i class="fa fa-map-marker" style="margin-left: 9px;color: #007d93;width: 15;height: 20px;font-size: 25px;">
+                                            </i>
+                                            <input class="justify-content-center" placeholder="Destino..." style="margin-top: 7px;border-radius: 6px;border-width: 3px;border-style: solid;font-family: 'Century Gothic';" type="text"/>
+                                        </input>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-around">
-                                    <button class="btn btn-primary"
-                                        style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;"
-                                        type="button">
-                                        Mis rutas
+                            </div>
+                        </div>
+                        <div style="position: absolute;bottom: 20px;right: 20px;width: 30%;">
+                            <div class="card" id="cardOfGraphs" style="border-radius: 28px;height: 100%;">
+                                <div class="card-body">
+                                    <div style="width: 100%;height: 10%;">
+                                        <h1 style="font-size: 20px;font-family: 'Century Gothic';margin: 0;margin-bottom: 10px;">
+                                            Niveles de concentración
+                                            <br/>
+                                        </h1>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-around" style="width: 100%;height: 90%;margin: 0px;margin-top: 0;">
+                                        <div id="coChart" style="width: 100%;height: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabGraficos" role="tabpanel">
+                        <div id="wrapper">
+                            <div class="content-area">
+                                <div class="container-fluid">
+                                    <div class="main">
+                                        <div class="row sparkboxes mt-4">
+                                            <div class="col-md-3">
+                                                <div class="box box1">
+                                                    <div class="details">
+                                                        <h3>
+                                                            1213
+                                                        </h3>
+                                                        <h4>
+                                                            CLICKS
+                                                        </h4>
+                                                    </div>
+                                                    <div id="spark1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box2">
+                                                    <div class="details">
+                                                        <h3>
+                                                            422
+                                                        </h3>
+                                                        <h4>
+                                                            VIEWS
+                                                        </h4>
+                                                    </div>
+                                                    <div id="spark2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box3">
+                                                    <div class="details">
+                                                        <h3>
+                                                            311
+                                                        </h3>
+                                                        <h4>
+                                                            LEADS
+                                                        </h4>
+                                                    </div>
+                                                    <div id="spark3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box4">
+                                                    <div class="details">
+                                                        <h3>
+                                                            22
+                                                        </h3>
+                                                        <h4>
+                                                            SALES
+                                                        </h4>
+                                                    </div>
+                                                    <div id="spark4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-md-5">
+                                                <div class="box columnbox mt-4">
+                                                    <div id="columnchart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="box mt-4">
+                                                    <div id="linechart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="box radialbox mt-4">
+                                                    <div id="circlechart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="box mt-4">
+                                                    <div id="areachart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active d-lg-flex align-items-lg-start" id="tabCuenta" role="tabpanel" style="background: url('bgprofile.png') top / cover no-repeat;width: 100%;height: 100%;">
+                        <div class="d-flex flex-row align-items-lg-center" style="margin-top: 60px;opacity: 85%;display: table;width: 60rem;height: 30rem;background: #fbfafa;border-radius: 20px;box-shadow: 8px 8px #808184;border-width: 3px;border-style: solid;border-color: #aaaa;">
+                            <div class="d-lg-flex justify-content-lg-end" style="float: left;width: 30%;padding-left: 50px;">
+                                <img class="d-lg-flex align-items-lg-start" src="circulo.svg" style="width: 72%;margin-top: 180px;"/>
+                            </div>
+                            <div class="d-lg-flex justify-content-lg-end" style="border-radius: 50px;height: 300px;width: 10%;">
+                                <div style="border-radius: 50px;height: 300px;width: 6px;background-color: #682172;">
+                                </div>
+                            </div>
+                            <div style="text-align: center;display: table;float: right;width: 60%;height: 40%;">
+                                <div style="display: flex;flex-direction: column;/*margin-bottom: 70px;*/">
+                                    <label style="/*line-height: 10px;*/text-decoration: underline;text-decoration-color: #682172;/*border-bottom: 3px;*/font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Nombre
+                                    </label>
+                                    <label style="font-family: Montserrat, sans-serif;">
+                                        MiNombre
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Apellidos
+                                    </label>
+                                    <label style="font-family: Montserrat, sans-serif;">
+                                        MisApellidos
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Correo
+                                electrónico
+                                    </label>
+                                    <label style="font-family: Montserrat, sans-serif;">
+                                        MiCorreo
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Mis
+                                dispositivos
+                                    </label>
+                                    <label style="font-family: Montserrat, sans-serif;">
+                                        Dispos
+                                    </label>
+                                    <button class="btn btn-primary" style="align-self: center;width: 135px;background: #682172;margin-top: 1rem;font-family: Nunito, sans-serif;" type="button">
+                                        Editar
                                     </button>
-                                    <button class="btn btn-primary"
-                                        style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;"
-                                        type="button">
-                                        Crear ruta
-                                    </button>
-                                </div>
-                                <div class="d-flex align-self-start flex-wrap align-items-xl-center"
-                                    style="width: 100%;padding-left: 15%;">
-                                    <input placeholder="Origen..."
-                                        style="margin-bottom: 7px;margin-top: 10px;border-radius: 6px;border: 3px solid #007d93;font-family: 'Century Gothic';"
-                                        type="text">
-                                    <i class="fa fa-map-marker"
-                                        style="margin-left: 9px;color: #007d93;width: 15;height: 20px;font-size: 25px;">
-                                    </i>
-                                    <input class="justify-content-center" placeholder="Destino..."
-                                        style="margin-top: 7px;border-radius: 6px;border-width: 3px;border-style: solid;font-family: 'Century Gothic';"
-                                        type="text" />
-                                    </input>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div style="position: absolute;bottom: 20px;right: 20px;width: 30%;">
-                        <div class="card" id="cardOfGraphs" style="border-radius: 28px;height: 100%;">
-                            <div class="card-body">
-                                <div style="width: 100%;height: 10%;">
-                                    <h1
-                                        style="font-size: 20px;font-family: 'Century Gothic';margin: 0;margin-bottom: 10px;">
-                                        Niveles de concentración<br /></h1>
-                                </div>
-                                <div class="d-flex flex-row justify-content-around"
-                                    style="width: 100%;height: 90%;margin: 0px;margin-top: 0;">
-                                    <div id="coChart" style="width: 100%;height: 100%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tabGraficos" role="tabpanel">
-
-                    <div id="wrapper">
-                        <div class="content-area">
-                            <div class="container-fluid">
-
-                                <div class="main">
-                                    <div class="row sparkboxes mt-4">
-                                        <div class="col-md-3">
-                                            <div class="box box1">
-                                                <div class="details">
-                                                    <h3>1213</h3>
-                                                    <h4>CLICKS</h4>
-                                                </div>
-                                                <div id="spark1"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="box box2">
-                                                <div class="details">
-                                                    <h3>422</h3>
-                                                    <h4>VIEWS</h4>
-                                                </div>
-                                                <div id="spark2"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="box box3">
-                                                <div class="details">
-                                                    <h3>311</h3>
-                                                    <h4>LEADS</h4>
-                                                </div>
-                                                <div id="spark3"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="box box4">
-                                                <div class="details">
-                                                    <h3>22</h3>
-                                                    <h4>SALES</h4>
-                                                </div>
-                                                <div id="spark4"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-4">
-                                        <div class="col-md-5">
-                                            <div class="box columnbox mt-4">
-                                                <div id="columnchart"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-7">
-                                            <div class="box  mt-4">
-                                                <div id="linechart"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="box radialbox mt-4">
-                                                <div id="circlechart"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="box mt-4">
-                                                <div id="areachart"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" id="tabCuenta" class="tab-pane active d-lg-flex align-items-lg-start"
-                style="background: url('bgprofile.png') top / cover no-repeat;width: 100%;height: 100%;">
-                <div class="d-flex flex-row align-items-lg-center"
-                    style="margin-top: 60px;opacity: 85%;display: table;width: 60rem;height: 30rem;background: #fbfafa;border-radius: 20px;box-shadow: 8px 8px #808184;border-width: 3px;border-style: solid;border-color: #aaaa;">
-                    <div class="d-lg-flex justify-content-lg-end" style="float: left;width: 30%;padding-left: 50px;">
-                        <img class="d-lg-flex align-items-lg-start" style="width: 72%;margin-top: 180px;"
-                            src="circulo.svg" /></div>
-                    <div class="d-lg-flex justify-content-lg-end" style="border-radius: 50px;height: 300px;width: 10%;">
-                        <div style="border-radius: 50px;height: 300px;width: 6px;background-color: #682172;"></div>
-                    </div>
-                    <div style="text-align: center;display: table;float: right;width: 60%;height: 40%;">
-                        <div style="display: flex;flex-direction: column;/*margin-bottom: 70px;*/"><label
-                                style="/*line-height: 10px;*/text-decoration: underline;text-decoration-color: #682172;/*border-bottom: 3px;*/font-size: 21px;font-family: Nunito, sans-serif;">Nombre</label><label
-                                style="font-family: Montserrat, sans-serif;">MiNombre</label>
-                            <label
-                                style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">Apellidos</label><label
-                                style="font-family: Montserrat, sans-serif;">MisApellidos</label><label
-                                style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">Correo
-                                electrónico</label>
-                            <label style="font-family: Montserrat, sans-serif;">MiCorreo</label><label
-                                style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">Mis
-                                dispositivos</label><label style="font-family: Montserrat, sans-serif;">Dispos</label>
-                            <button class="btn btn-primary" type="button"
-                                style="align-self: center;width: 135px;background: #682172;margin-top: 1rem;font-family: Nunito, sans-serif;">Editar</button>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-          
         </div>
-    </div>
-    </div>
-</body>
-
+    </body>
 </html>
