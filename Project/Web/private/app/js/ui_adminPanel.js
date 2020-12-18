@@ -10,6 +10,7 @@ function showUserListData() {
 
 function showUserData() {
     getUser((dataReceived) => {
+        console.log(dataReceived);
         fillInUserFields(dataReceived);
     }, "daghdha@developer.com");
 }
@@ -35,9 +36,9 @@ function fillUsersTable(userListData) {
 }
 
 function fillInUserFields(userData) {
-    document.getElementById("a_name").innerHTML = userData.name;
-    document.getElementById("a_surnames").innerHTML = userData.surnames;
-    document.getElementById("a_devices").innerHTML = userData.devices[0];
+    document.getElementById("a_name").innerHTML = userData[0].name;
+    document.getElementById("a_surnames").innerHTML = userData[0].surnames;
+    document.getElementById("a_devices").innerHTML = "COOOOO1";
 }
 
 function fillInActiveTimeField(activeTime) {
