@@ -5,10 +5,11 @@ function validate() {
     var password = document.getElementById("password").value;
     if (email == "ecoprogress" && password == "1234") {
         //alert("Has sido logeado");
-		// Para el servidor la direccion es, de momento, 
-		// window.location = "./../../private/app/html/home.html"; // Redirecting to other page. //server
+        // Para el servidor la direccion es, de momento, 
+        // window.location = "./../../private/app/html/home.html"; // Redirecting to other page. //server
         window.location = "../Web/private/app/html/home.html"; // Redirecting to other page.
-        return false;
+    } else if (email == "admin" && password == "admin") {
+        window.location = "../Web/private/app/html/adminPanel.html"; // Redirecting to admin page.
     } else {
         attempt--; // Decrementing by one.
         alert("Te quedan " + attempt + " intentos");
@@ -17,7 +18,7 @@ function validate() {
             document.getElementById("email").disabled = true;
             document.getElementById("password").disabled = true;
             document.getElementById("submit").disabled = true;
-            return false;
         }
     }
+    return false;
 }
