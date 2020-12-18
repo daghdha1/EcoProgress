@@ -8,10 +8,23 @@
         <!-- STYLES -->
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
+        <link href="../css/adminPanel.css" rel="stylesheet"/>
         <!-- SCRIPTS -->
-        <script defer="defer" src="../js/jquery.min.js">
+        <script defer="" src="../js/extra/jquery.min.js">
         </script>
-        <script defer="defer" src="../bootstrap/js/bootstrap.min.js">
+        <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
+        </script>
+        <script defer="" src="../js/_config.js">
+        </script>
+        <script defer="" src="../js/_tools.js">
+        </script>
+        <script defer="" src="../js/rest_measures.js">
+        </script>
+        <script defer="" src="../js/rest_users.js">
+        </script>
+        <script defer="" src="../js/ui_accountPanel.js">
+        </script>
+        <script defer="" src="../js/ui_adminPanel.js">
         </script>
     </head>
     <body>
@@ -27,7 +40,7 @@
                         <h4 style="font-family: 'CenturyGothic';text-align: center;font-size: 20px;">
                             Tabla de usuarios
                         </h4>
-                        <div class="table-responsive d-block mx-auto" style="border-collapse: collapse;border-spacing: 0;width: 100%;align-content: center;width: 95%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;/*background-color: rgba(13,149,173,0.61);*/">
+                        <div class="table-responsive d-block mx-auto" style="border-collapse: collapse;border-spacing: 0;width: 100%;align-content: center;width: 95%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;">
                             <table class="table">
                                 <thead>
                                     <tr style="background-color: rgba(13,149,173,0.61);">
@@ -76,26 +89,58 @@
                         <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #682172;">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col">
-                                        <p>
+                                    <div class="col-4 col txt-title">
+                                        <p class="title">
                                             Nombre:
                                         </p>
-                                        <p>
-                                            Apellidos:
-                                        </p>
-                                        <p>
-                                            Dispositivos:
-                                        </p>
-                                        <p>
-                                            Actividad:
-                                            <br/>
-                                        </p>
-                                        <p>
-                                            Distancia recorrida total:
-                                            <br/>
+                                    </div>
+                                    <div class="col-8 col txt-value">
+                                        <p id="a_name">
                                         </p>
                                     </div>
-                                    <div class="col">
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col txt-title">
+                                        <p class="title">
+                                            Apellidos:
+                                        </p>
+                                    </div>
+                                    <div class="col-8 col txt-value">
+                                        <p id="a_surnames">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col txt-title">
+                                        <p class="title">
+                                            Dispositivos:
+                                        </p>
+                                    </div>
+                                    <div class="col-8 col txt-value">
+                                        <p id="a_devices">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col txt-title">
+                                        <p class="title">
+                                            Tiempo de actividad total:
+                                        </p>
+                                    </div>
+                                    <div class="col-8 col txt-value">
+                                        <p id="a_totalTimeActive">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col txt-title">
+                                        <p class="title">
+                                            Distancia recorrida total:
+                                        </p>
+                                    </div>
+                                    <div class="col-8 col txt-value">
+                                        <p id="a_totalDistance">
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -112,20 +157,17 @@
                         <div class="row">
                             <div class="col">
                                 <p>
-                                    Distancia recorrida máxima:
+                                    Distancia recorrida máxima: Próximamente
                                 </p>
                                 <p>
-                                    Usuario mas activo:
+                                    Usuario más activo: Próximamente
                                 </p>
                                 <p>
-                                    Porcentaje de usuarios activos:
+                                    Porcentaje de usuarios activos: Próximamente
                                 </p>
                                 <p>
-                                    Porcentaje de sensores usados diariamente:
-                                    <br/>
+                                    Porcentaje de sensores usados diariamente: Próximamente
                                 </p>
-                            </div>
-                            <div class="col">
                             </div>
                         </div>
                     </div>

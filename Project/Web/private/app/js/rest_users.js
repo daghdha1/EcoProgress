@@ -24,6 +24,13 @@ function getUser(callback, userID) {
     callback(json_test);
 }
 
+/* 
+ * Obtiene el tiempo total activo del usuario
+ *
+ * mail:Texto, Texto -->
+ *                    getUser() <--
+ * <-- seconds:N | Nada
+ */
 function getActiveTimeUser(callback, userID, differenceValue) {
     var request = new Request(config.restDir + "/users/users/" + userID + "/difference/" + differenceValue, {
         method: "get"
