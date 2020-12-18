@@ -36,7 +36,7 @@ class UsersModel extends BaseModel {
 		// Query
 		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1";
 		// Respuesta
-		$result = MyEntity::executeSelectSql($sql);
+		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
