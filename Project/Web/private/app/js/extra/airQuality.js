@@ -121,7 +121,7 @@ function populateGraph(valueList) {
     var options = {
         series: getPercentagesFromValues(valueList),
         chart: {
-            height: '110%',
+            height: '115%',
             type: 'radialBar',
         },
         colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],

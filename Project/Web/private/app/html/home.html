@@ -1,425 +1,281 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
-
-<head>
-    <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <title>
-        EcoProgress
-    </title>
-    <!-- STYLES -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../fonts/CenturyGothic.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="../css/homePanel.css" rel="stylesheet" />
-    <link href="../css/accountPanel.css" rel="stylesheet" />
-    <link href="../css/palette.compiled.css" rel="stylesheet" />
-    <link href="../css/nav.css" rel="stylesheet" />
-    <!-- SCRIPTS -->
-    <script defer src="../js/extra/jquery.min.js">
-    </script>
-    <script defer src="../bootstrap/js/bootstrap.bundle.min.js">
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/apexcharts">
-    </script>
-    <script defer src="../js/_config.js" >
-    </script>
-    <script defer src="../js/_tools.js">
-    </script>
-    <script defer src="../js/rest_measures.js">
-    </script>
-    <script defer src="../js/rest_users.js">
-    </script>
-    <script defer src="../js/extra/airQuality.js">
-    </script>
-    <script defer src="../js/ui_accountPanel.js">
-    </script>
-    <script defer src="../js/ui_adminPanel.js">
-    </script>
-</head>
-
-<body onload="showUserData()" style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
-    <header class="text-center"
-        style="text-align: left;height: 8%;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'Century Gothic';">
-        <div style="height: 100%;">
-            <img class="img-fluid align-self-center" src="../media/logo_250.png" style="height: 80px;width: 210px;" />
-        </div>
-    </header>
-    <div style="height: 85%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;">
-        <div style="border-style: none;height: 100%;margin: 0px;">
-            <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-toggle="tab" href="#tabInicio" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Inicio
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="tab" href="#tabGraficos" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Gráficos
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="tab" href="#tabinfo" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Información
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-toggle="tab" href="#tabCuenta" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
-                        Cuenta
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" style="height: 100%;width: 100%;">
-                <div class="tab-pane active" id="tabInicio" role="tabpanel"
-                    style="height: 100%;margin: 0px;padding: 0px;">
-                    <div style="height: 100%;position: relative;">
-                        <iframe allowfullscreen="" frameborder="0" height="400"
-                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBIEKjPKRGYtvbbUdcWRRRqEu4X6GEHyRI&q=Gandia%2C+Spain&zoom=13"
-                            style="height: 100%;" width="100%">
-                        </iframe>
-                    </div>
-                    <div
-                        class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
-                        <div class="card text-center d-flex justify-content-center align-items-center"
-                            style="position: absolute !important;bottom: 78px;left: 20px;width: 16%;border-radius: 20px;box-shadow: 0px 0px 20px #1a5979;min-width: 200px;max-height: auto;border-width: 3px;">
-                            <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column"
-                                style="width: 100%;height: 100%;">
-                                <div class="d-flex justify-content-center">
-                                    <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around"
-                                        role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #007d93;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';border-radius: 50%;"
-                                            type="button">
-                                            CO
+    <head>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+        <title>
+            EcoProgress
+        </title>
+        <!-- STYLES -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="../css/homePanel.css" rel="stylesheet"/>
+        <link href="../css/accountPanel.css" rel="stylesheet"/>
+        <link href="../css/graphicsPanel.css" rel="stylesheet"/>
+        <link href="../css/palette.compiled.css" rel="stylesheet"/>
+        <link href="../css/nav.css" rel="stylesheet"/>
+        <!-- SCRIPTS -->
+        <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+        <script src="../js/leaflet-heat.js"></script>
+        <script defer="" src="../js/extra/jquery.min.js">
+        </script>
+        <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
+        </script>
+        <script defer="" src="https://cdn.jsdelivr.net/npm/apexcharts">
+        </script>
+        <script defer="" src="../js/_config.js">
+        </script>
+        <script defer="" src="../js/_tools.js">
+        </script>
+        <script defer="" src="../js/rest_measures.js">
+        </script>
+        <script defer="" src="../js/rest_users.js">
+        </script>
+        <script defer="" src="../js/extra/airQuality.js">
+        </script>
+        <script defer="" src="../js/ui_accountPanel.js">
+        </script>
+        <script defer="" src="../js/ui_graphicsPanel.js">
+        </script>
+        <script defer="" src="../js/rest_interpolation.js">
+        </script>
+        <script defer="" src="../js/drawMap.js">
+        </script>
+    </head>
+    <body style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
+        <header class="text-center" style="text-align: left;height: 8%;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'Century Gothic';">
+            <div style="height: 100%;">
+                <img class="img-fluid align-self-center" src="../media/logo_250.png" style="height: 80px;width: 210px;"/>
+            </div>
+        </header>
+        <div style="height: 85%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+            <div style="border-style: none;height: 100%;margin: 0px;">
+                <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-toggle="tab" href="#tabInicio" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-toggle="tab" href="#tabGraficos" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Gráficos
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-toggle="tab" href="#tabCuenta" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">
+                            Cuenta
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="height: 100%;width: 100%; ">
+                    <div class="tab-pane active" id="tabInicio" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
+                        <div id="map" style="height: 100%;position: relative;">
+                        </div>
+                        <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
+                            <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 78px;left: 20px;width: 16%;border-radius: 20px;box-shadow: 0px 0px 20px #1a5979;min-width: 200px;max-height: auto;border-width: 3px;">
+                                <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column" style="width: 100%;height: 100%;">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around" role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #007d93;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';border-radius: 50%;" type="button">
+                                                CO
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                NO
+                                                <sub>
+                                                    2
+                                                </sub>
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                SO
+                                                <sub>
+                                                    2
+                                                </sub>
+                                            </button>
+                                            <button class="btn btn-primary border rounded-circle" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';" type="button">
+                                                0
+                                                <sub>
+                                                    3
+                                                </sub>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <button class="btn btn-primary" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;" type="button">
+                                            Mis rutas
                                         </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            NO
-                                            <sub>
-                                                2
-                                            </sub>
-                                        </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            SO
-                                            <sub>
-                                                2
-                                            </sub>
-                                        </button>
-                                        <button class="btn btn-primary border rounded-circle"
-                                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'Century Gothic';"
-                                            type="button">
-                                            0
-                                            <sub>
-                                                3
-                                            </sub>
+                                        <button class="btn btn-primary" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;" type="button">
+                                            Crear ruta
                                         </button>
                                     </div>
+                                    <div class="d-flex align-self-start flex-wrap align-items-xl-center" style="width: 100%;padding-left: 15%;">
+                                        <input placeholder="Origen..." style="margin-bottom: 7px;margin-top: 10px;border-radius: 6px;border: 3px solid #007d93;font-family: 'Century Gothic';" type="text">
+                                            <i class="fa fa-map-marker" style="margin-left: 9px;color: #007d93;width: 15;height: 20px;font-size: 25px;">
+                                            </i>
+                                            <input class="justify-content-center" placeholder="Destino..." style="margin-top: 7px;border-radius: 6px;border-width: 3px;border-style: solid;font-family: 'Century Gothic';" type="text"/>
+                                        </input>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-around">
-                                    <button class="btn btn-primary"
-                                        style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;"
-                                        type="button">
-                                        Mis rutas
+                            </div>
+                        </div>
+                        <div style="position: absolute;bottom: 20px;right: 20px;width: 25%; height: 300px;">
+                            <div class="card" id="cardOfGraphs" style="border-radius: 28px;height: 100%;">
+                                <div class="card-body">
+                                    <div style="width: 100%;height: 10%;">
+                                        <h1 style="font-size: 20px;font-family: 'Century Gothic';margin: 0;margin-bottom: 10px;">
+                                            Niveles de concentración
+                                            <br/>
+                                        </h1>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-around" style="width: 100%;height: 90%;margin: 0px;margin-top: 0;">
+                                        <div id="coChart" style="width: 100%;height: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabGraficos" role="tabpanel">
+                        <div id="wrapper">
+                            <div class="content-area">
+                                <div class="container-fluid">
+                                    <div class="main">
+                                        <div class="row sparkboxes mt-4">
+                                            <div class="col-md-3">
+                                                <div class="box box1">
+                                                    <div class="details">
+                                                        <h3>
+                                                            CO
+                                                        </h3>
+                                                    </div>
+                                                    <div id="spark1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box2">
+                                                    <div class="details">
+                                                        <h3>
+                                                            NO
+                                                            <sub>
+                                                                2
+                                                            </sub>
+                                                        </h3>
+                                                    </div>
+                                                    <div id="spark2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box3">
+                                                    <div class="details">
+                                                        <h3>
+                                                            SO
+                                                            <sub>
+                                                                2
+                                                            </sub>
+                                                        </h3>
+                                                    </div>
+                                                    <div id="spark3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="box box4">
+                                                    <div class="details">
+                                                        <h3>
+                                                            O
+                                                            <sub>
+                                                                3
+                                                            </sub>
+                                                        </h3>
+                                                    </div>
+                                                    <div id="spark4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-md-5">
+                                                <div class="box columnbox mt-4">
+                                                    <div id="columnchart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="box mt-4">
+                                                    <div id="linechart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="box radialbox mt-4">
+                                                    <p>
+                                                        Próximamente...
+                                                    </p>
+                                                    <div id="circlechart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="box mt-4">
+                                                    <p>
+                                                        ¿Cómo afecta esto a tu esperanza de vida? Próximamente...
+                                                    </p>
+                                                    <div id="areachart">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active d-lg-flex align-items-lg-start" id="tabCuenta" role="tabpanel" style="background: url('../media/bgacuenta.png') top / cover no-repeat;width: 100%;height: 100%;">
+                        <div class="d-flex flex-row align-items-lg-center" style="margin-top: 60px;opacity: 85%;display: table;width: 60rem;height: 30rem;background: #fbfafa;border-radius: 20px;box-shadow: 0px 0px 20px rgb(78,78,78);border-width: 3px;border-style: solid;border-color: #aaaa;">
+                            <div class="d-lg-flex justify-content-lg-end" style="float: left;width: 30%;padding-left: 50px;">
+                                <img class="d-lg-flex align-items-lg-start" src="../media/fotoPerfil.jpeg" style="width: 72%;"/>
+                            </div>
+                            <div class="d-lg-flex justify-content-lg-end" style="border-radius: 50px;height: 300px;width: 10%;">
+                                <div style="border-radius: 50px;height: 300px;width: 6px;background-color: #682172;">
+                                </div>
+                            </div>
+                            <div style="text-align: center;display: table;float: right;width: 60%;height: 40%;">
+                                <div style="display: flex;flex-direction: column;/*margin-bottom: 70px;*/">
+                                    <label style="/*line-height: 10px;*/text-decoration: underline;text-decoration-color: #682172;/*border-bottom: 3px;*/font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Nombre
+                                    </label>
+                                    <label id="l_name" style="font-family: Montserrat, sans-serif;">
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Apellidos
+                                    </label>
+                                    <label id="l_surnames" style="font-family: Montserrat, sans-serif;">
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Correo
+                                    electrónico
+                                    </label>
+                                    <label id="l_mail" style="font-family: Montserrat, sans-serif;">
+                                    </label>
+                                    <label style="text-decoration: underline;text-decoration-color: #682172;border-bottom: 3px;font-size: 21px;font-family: Nunito, sans-serif;">
+                                        Mis
+                                    dispositivos
+                                    </label>
+                                    <label id="l_devices" style="font-family: Montserrat, sans-serif;">
+                                    </label>
+                                    <button class="btn btn-primary" style="align-self: center;width: 135px;background: #682172;margin-top: 1rem;font-family: Nunito, sans-serif;" type="button">
+                                        Editar
                                     </button>
-                                    <button class="btn btn-primary"
-                                        style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 120px;font-family: 'Century Gothic';height: 40px;"
-                                        type="button">
-                                        Crear ruta
-                                    </button>
-                                </div>
-                                <div class="d-flex align-self-start flex-wrap align-items-xl-center"
-                                    style="width: 100%;padding-left: 15%;">
-                                    <input placeholder="Origen..."
-                                        style="margin-bottom: 7px;margin-top: 10px;border-radius: 6px;border: 3px solid #007d93;font-family: 'Century Gothic';"
-                                        type="text">
-                                    <i class="fa fa-map-marker"
-                                        style="margin-left: 9px;color: #007d93;width: 15;height: 20px;font-size: 25px;">
-                                    </i>
-                                    <input class="justify-content-center" placeholder="Destino..."
-                                        style="margin-top: 7px;border-radius: 6px;border-width: 3px;border-style: solid;font-family: 'Century Gothic';"
-                                        type="text" />
-                                    </input>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div style="position: absolute;bottom: 20px;right: 20px;width: 30%;">
-                        <div class="card" id="cardOfGraphs" style="border-radius: 28px;height: 100%;">
-                            <div class="card-body">
-                                <div style="width: 100%;height: 10%;">
-                                    <h1 style="font-size: 20px;font-family: 'Century Gothic';margin: 0;margin-bottom: 10px;">Niveles de concentración<br /></h1>
-                                </div>
-                                <div class="d-flex flex-row justify-content-around" style="width: 100%;height: 90%;margin: 0px;margin-top: 0;">
-                                    <div id="coChart" style="width: 100%;height: 100%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tabGraficos" role="tabpanel" style="height: 100%;">
-                    <div id="lineChart" style="color: #682172;">
-                    </div>
-                    <div class="d-flex justify-content-around flex-wrap flex-sm-column align-items-md-center">
-                        <div class="card-group justify-content-around" style="margin-bottom: 30px;width: 100%;">
-                            <div class="card mx-auto"
-                                style='height: 140px;margin: 0px 5px;margin-bottom: 20px;width: 30%;background: url("../media/Graphic 1.png") bottom repeat-x, linear-gradient(90deg, #682172, #422e65);border-radius: 20px;'>
-                                <h4
-                                    style="padding-left: 25px;font-weight: bold;background: transparent;color: rgb(255,255,255);padding-top: 5px;margin-bottom: 0px;height: 100%;border-radius: 20px;margin-right: 0px;">
-                                    CO
-                                </h4>
-                            </div>
-                            <div class="card mx-auto"
-                                style='height: 140px;margin: 0px 5px;margin-bottom: 20px;width: 30%;border-radius: 20px;background: linear-gradient(rgba(99,99,99,0.9) 0%, rgba(99,99,99,0.9) 100%), url("../media/Graphic 4.png") bottom repeat-x, linear-gradient(90deg, #422e65, #36345f);'>
-                                <h4
-                                    style="padding-left: 25px;font-weight: bold;padding-top: 5px;color: #8f8f8f;margin-bottom: 0px;height: 100%;border-radius: 20px;margin-right: 0px;">
-                                    NO
-                                    <sub>
-                                        2
-                                    </sub>
-                                </h4>
-                            </div>
-                            <div class="card mx-auto"
-                                style='height: 140px;margin: 0px 5px;margin-bottom: 20px;width: 30%;border-radius: 20px;background: linear-gradient(rgba(99,99,99,0.9), rgba(99,99,99,0.9)), url("../media/Graphic 3.png") bottom repeat-x, linear-gradient(90deg, #2d4066, #1a5979);'>
-                                <h4
-                                    style="padding-left: 25px;font-weight: bold;padding-top: 5px;color: #8f8f8f;margin-bottom: 0px;height: 100%;border-radius: 20px;margin-left: 0px;">
-                                    SO
-                                    <sub>
-                                        2
-                                    </sub>
-                                </h4>
-                            </div>
-                            <div class="card mx-auto"
-                                style='height: 140px;margin: 0px 5px;margin-bottom: 20px;width: 30%;border-radius: 20px;background: linear-gradient(rgba(99,99,99,0.9), rgba(99,99,99,0.9)), url("../media/Graphic 4.png") bottom repeat-x, linear-gradient(90deg, #1a5979, #007d93);'>
-                                <h4
-                                    style="padding-left: 25px;font-weight: bold;padding-top: 5px;color: #8f8f8f;margin-bottom: 0px;height: 100%;border-radius: 20px;margin-left: 0px;">
-                                    O
-                                    <sub>
-                                        3
-                                    </sub>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center mx-auto" style="width: 80%;">
-                        <div class="table-responsive mx-auto" style="width: 70%;min-width: 90%;">
-                            <table class="table" id="tablaMedidas">
-                                <thead style="font-weight: bold;color: rgb(255,255,255);background: #36345f;">
-                                    <tr>
-                                        <th
-                                            style="font-weight: bold;border-top-left-radius: 15px;border-bottom-left-radius: 15px;">
-                                            Valor
-                                        </th>
-                                        <th style="font-weight: bold;">
-                                            Momento
-                                        </th>
-                                        <th style="font-weight: bold;">
-                                            Lugar
-                                        </th>
-                                        <th
-                                            style="font-weight: bold;border-top-right-radius: 15px;border-bottom-right-radius: 15px;">
-                                            Usuario
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tabinfo" role="tabpanel" style="height: 100%;">
-                    <div class="d-xl-flex justify-content-xl-center">
-                        <div class="carousel slide d-xl-flex" data-ride="carousel" id="carousel-1"
-                            style="margin-top: 3rem;height: 40%;width: 50%;">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img alt="Slide Image" class="w-100 d-block"
-                                        src="../media/monoxido%20de%20carbono.jpg"
-                                        style="border-style: none;border-bottom-style: none;border-radius: 2px;">
-                                    <div class="card">
-                                        <div class="card-body" style="background: #562a69;border-radius: 7px;">
-                                            <h4 class="card-title" style="text-align: center;color: rgb(254,255,255);">
-                                                Monóxido de carbono
-                                            </h4>
-                                            <p class="card-text"
-                                                style="margin-bottom: 3rem;text-align: center;color: rgb(202,215,228);">
-                                                El monóxido de carbono (CO) es un gas peligroso que se produce sobre
-                                                todo en las combustiones de automóviles.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    </img>
-                                </div>
-                                <div class="carousel-item">
-                                    <img alt="Slide Image" class="w-100 d-block"
-                                        src="../media/Dioxido%20de%20nitrogeno.jpg">
-                                    <div class="card">
-                                        <div class="card-body" style="background: #562a69;border-radius: 7px;">
-                                            <h4 class="card-title" style="text-align: center;color: rgb(254,255,255);">
-                                                Dióxido de nitrógeno
-                                            </h4>
-                                            <p class="card-text"
-                                                style="margin-bottom: 3rem;text-align: center;color: rgb(202,215,228);">
-                                                El dióxido de nitrógeno(NO2) es un gas peligroso que se produce sobre
-                                                todo en los incendios forestales.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    </img>
-                                </div>
-                                <div class="carousel-item">
-                                    <img alt="Slide Image" class="w-100 d-block"
-                                        src="../media/Dioxido%20de%20azufre.jpg">
-                                    <div class="card">
-                                        <div class="card-body" style="background: #562a69;border-radius: 7px;">
-                                            <h4 class="card-title" style="text-align: center;color: rgb(254,255,255);">
-                                                Dióxido de azufre
-                                            </h4>
-                                            <p class="card-text"
-                                                style="margin-bottom: 3rem;text-align: center;color: rgb(202,215,228);">
-                                                El dióxido de azufre(SO2) es un gas irritante que se produce sobre todo
-                                                en las combustiones de las fábricas eléctricas. Es perfectamente
-                                                distinguible por su perceptible olor penetrante.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    </img>
-                                </div>
-                                <div class="carousel-item">
-                                    <img alt="Slide Image" class="w-100 d-block" src="../media/ozono%202.jpg">
-                                    <div class="card">
-                                        <div class="card-body" style="background: #562a69;border-radius: 7px;">
-                                            <h4 class="card-title" style="text-align: center;color: rgb(254,255,255);">
-                                                Ozono
-                                            </h4>
-                                            <p class="card-text"
-                                                style="margin-bottom: 3rem;text-align: center;color: rgb(202,215,228);">
-                                                El ozono (O3) es un gas peligroso que se produce al reaccionar los
-                                                contaminantes de automóviles y fabricas con la luz solar. Enseguida se
-                                                puede percibir por sus efectos más destacables, la irritación y la tos.
-                                                Su efecto más peligroso es la pérdida de la capacidad respiratoria.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    </img>
-                                </div>
-                                <div class="carousel-item">
-                                    <img alt="Slide Image" class="w-100 d-block" src="../media/vida.jpg">
-                                    <div class="card">
-                                        <div class="card-body" style="background: #562a69;border-radius: 7px;">
-                                            <h4 class="card-title" style="text-align: center;color: rgb(254,255,255);">
-                                                Estimación de aspiración de gases
-                                            </h4>
-                                            <p class="card-text"
-                                                style="margin-bottom: 3rem;text-align: center;color: rgb(202,215,228);">
-                                                Al consumir (XXXX) porcentaje de gases en el aire que respiras, podemos
-                                                estimar que restas (XXXX) tiempo de tu vida.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    </img>
-                                </div>
-                            </div>
-                            <div>
-                                <a class="carousel-control-prev" data-slide="prev" href="#carousel-1" role="button">
-                                    <span class="carousel-control-prev-icon">
-                                    </span>
-                                    <span class="sr-only">
-                                        Previous
-                                    </span>
-                                </a>
-                                <a class="carousel-control-next" data-slide="next" href="#carousel-1" role="button">
-                                    <span class="carousel-control-next-icon">
-                                    </span>
-                                    <span class="sr-only">
-                                        Next
-                                    </span>
-                                </a>
-                            </div>
-                            <ol class="carousel-indicators" style="margin-top: 4rem;">
-                                <li class="active" data-slide-to="0" data-target="#carousel-1">
-                                </li>
-                                <li data-slide-to="1" data-target="#carousel-1">
-                                </li>
-                                <li data-slide-to="2" data-target="#carousel-1">
-                                </li>
-                                <li data-slide-to="3" data-target="#carousel-1">
-                                </li>
-                                <li data-slide-to="4" data-target="#carousel-1">
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tabCuenta" role="tabpanel"
-                    style="background: linear-gradient(#682172, #007d93);height: 100%;">
-                    <div id="img_container">
-                        <img alt="Image" class="img-fluid rounded-circle" id="img" src="../media/img_account_test.png">
-                        </img>
-                    </div>
-                    <div class="container-fluid" id="data_container">
-                        <div class="row">
-                            <div class="col-5 col txt-title">
-                                <p>
-                                    Nombre
-                                </p>
-                            </div>
-                            <div class="col-7 col txt-value">
-                                <p id="name">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 col txt-title">
-                                <p>
-                                    Apellidos
-                                </p>
-                            </div>
-                            <div class="col-7 col txt-value">
-                                <p id="surnames">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 col txt-title">
-                                <p>
-                                    Correo electrónico
-                                </p>
-                            </div>
-                            <div class="col-7 col txt-value">
-                                <p id="mail">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-5 col txt-title">
-                                <p>
-                                    Mis dispositivos
-                                </p>
-                            </div>
-                            <div class="col-7 col txt-value">
-                                <p id="devices">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="btn_container">
-                        <div id="btn_white_bg">
-                            <button>
-                                Editar
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

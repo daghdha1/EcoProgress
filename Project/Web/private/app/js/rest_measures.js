@@ -16,6 +16,24 @@ function getLastMeasure(callback, userID) {
         callback(json);
     });
 }
+
+/* 
+ * Obtiene la última medida tomada del usuario activo
+ *
+ *                               getAllMeasures() <--
+ * <-- ListaMeasures | Nada
+ */
+function getAllMeasures(callback) {
+    var request = new Request(config.restDir + "/measures", {
+        method: "get"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return false;
+    }).then((json) => {
+        callback(json);
+    });
+}
 /* 
  * Obtiene las medidas del usuario desde el instante solicitado
  *
