@@ -1,6 +1,6 @@
-create database if not exists ecoprogress;
+-- create database if not exists ecoprogress;
 
-use ecoprogress;
+ use ecoprogress;
 
 drop table if exists Measures;
 drop table if exists Sensors;
@@ -44,15 +44,22 @@ insert into Sensors (id, mail, type) values ('4', 'miguel@developer.com', 'CO000
 insert into Sensors (id, mail, type) values ('5', 'marcelo@developer.com', 'CO00001');
 
 insert into Measures (value, timestamp, location, sensorID) values (1.12, '1606409912', '38.995823,-0.177517', '1');
-insert into Measures (value, timestamp, location, sensorID) values (2.12, '1606323507', '38.995823,-0.177517', '2');
 insert into Measures (value, timestamp, location, sensorID) values (4.45, '1606237107', '38.995823,-0.177517', '3');
 insert into Measures (value, timestamp, location, sensorID) values (10.5, '1606150707', '38.995823,-0.177517', '4');
 insert into Measures (value, timestamp, location, sensorID) values (20.5, '1606064307', '38.995823,-0.177517', '5');
-insert into Measures (value, timestamp, location, sensorID) values (80.3, '1605977907', '38.995823,-0.177517', '2');
-insert into Measures (value, timestamp, location, sensorID) values (63.3, '1605977990', '38.995823,-0.177517', '2');
-insert into Measures (value, timestamp, location, sensorID) values (63.3, '160597800', '38.995823,-0.177517', '2');
+
+insert into Measures (value, timestamp, location, sensorID) values (35.12, '1608144531', '38.995823,-0.177517', '2');
+insert into Measures (value, timestamp, location, sensorID) values (56.3, '1608144831','38.9955, 0.1661','2');
+insert into Measures (value, timestamp, location, sensorID) values (63.3, '1608145131', '38.9973, 0.1662', '2');
+insert into Measures (value, timestamp, location, sensorID) values (33.3, '1608145431', '38.995823,-0.177517', '2');
 
 select * from Measures;
+
+select * from Sensors;
+
+SELECT * FROM Measures.location, Sensors s where m.sensorID = s.id and s.mail = "daghdha@developer.com";
+
+select * from measures order by sensorID;
 
 
 

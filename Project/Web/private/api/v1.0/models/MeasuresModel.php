@@ -17,10 +17,10 @@ class MeasuresModel extends BaseModel {
 	/* 
     * Obtiene todas las medidas disponibles
     *
-    *                   			getMeasures() <--
+    *                   			getAllMeasures() <--
     * <-- Lista<MeasuresEntity>
     */
-	public function getMeasures() {
+	public function getAllMeasures() {
 		// Respuesta
 		$result = BaseEntity::getAll();
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -69,7 +69,7 @@ class MeasuresModel extends BaseModel {
 	}
 
 	/* 
-    * Obtiene la última medida tomada del usuario
+    * Obtiene la última medida tomada del usuario activo
     *
     * Texto -->
     *                      getLastMeasure() <--
@@ -78,7 +78,7 @@ class MeasuresModel extends BaseModel {
 	public function getLastMeasure($sensorID) {
 		$strSensorID = mysqli_real_escape_string($this->conn, $sensorID);
 		// Query
-		$sql = "SELECT TOP 1 * FROM measures as m WHERE m.sensorID = '$strSensorID' ORDER BY timestamp DESC";
+		$sql = "SELECT * FROM Measures as m WHERE m.sensorID = '2' ORDER BY timestamp DESC LIMIT 1";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
