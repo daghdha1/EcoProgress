@@ -76,7 +76,7 @@ class BaseEntity {
     public function executeSelectSql($sql) {
         // Si hay Respuesta
         if ($data = $this->conn->query($sql)) {
-            // Si hay más de un resultado
+            // Si hay algún resultado
             if ($data->num_rows > 0) {
                 // Creamos un array de objetos stdClass
                 while ($obj = $data->fetch_object()) {

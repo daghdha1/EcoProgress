@@ -1,6 +1,20 @@
 <?php
 
 /* 
+* Comprueba si existen parámetros en la petición URI
+*
+* Lista<Texto> -->
+*                   areThereURIParameters() <--
+* <-- T | F
+*/
+function areThereURIParameters(&$params) {
+    if (count($params) > 0) {
+        return true;
+    }
+    return false;
+}
+
+/* 
 * Devuelve el instante de tiempo del periodo seleccionado (ej. instante de tiempo hace 24 horas)
 * Devuelve -1 si no encuentra un periodo válido 
 *
@@ -64,8 +78,7 @@ function removeElementsInStrArray(&$array, $regex) {
  */
 
 function haversineDistanceCalculator(
-	$latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
-  {
+	$latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
 	// convert from degrees to radians
 	$latFrom = deg2rad($latitudeFrom);
 	$lonFrom = deg2rad($longitudeFrom);
@@ -75,7 +88,7 @@ function haversineDistanceCalculator(
 	$latDelta = $latTo - $latFrom;
 	$lonDelta = $lonTo - $lonFrom;
   
-	$angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-	  cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+	$angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+	
 	return $angle * $earthRadius;
   }
