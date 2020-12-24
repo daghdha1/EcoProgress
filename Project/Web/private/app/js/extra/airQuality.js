@@ -6,10 +6,10 @@ GetDataForGraphicsBar();
  * <-- Lista<R>
  */
 function GetDataForGraphicsBar() {
-    let airQualitysPromiseList = [];
-    airQualitysPromiseList.push(InitRequestLastMeasure());
-    airQualitysPromiseList.push(InitRequestLastHourMeasures());
+    let airQualitysPromiseList = []; // [day,hour,last]
     airQualitysPromiseList.push(InitRequestLastDayMeasures());
+    airQualitysPromiseList.push(InitRequestLastHourMeasures());
+    airQualitysPromiseList.push(InitRequestLastMeasure());
     Promise.all(airQualitysPromiseList).then((response) => {
         populateGraph(response);
     }).catch(error => console.log("Error in promises ${error}"));
@@ -104,12 +104,6 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
-'use strict';
-var elementoQueBuscar = "cardOfGraphs";
-var idQueBuscar = "chart";
-var myElement = document.getElementById(elementoQueBuscar);
-var listaIds = myElement.querySelectorAll('*[id]');
-//console.log("Lista ids sin filtrar:",listaIds);
 /*
  * Rellena el rosco gráfico de medidas de calidad del aire
  * 
@@ -118,39 +112,75 @@ var listaIds = myElement.querySelectorAll('*[id]');
  * 
  */
 function populateGraph(valueList) {
+    valueList = [4.89, 69.5, 78];
     var options = {
         series: getPercentagesFromValues(valueList),
+        labels: ['Diaria', 'Horaria', 'Última'],
         chart: {
-            height: '115%',
+            height: '190%',
+            width: '100%',
             type: 'radialBar',
+            fontFamily: 'CenturyGothic',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 3000,
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 1500
+                }
+            }
         },
-        colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],
         plotOptions: {
             radialBar: {
+                startAngle: -90,
+                endAngle: 90,
                 dataLabels: {
+                    show: true,
                     name: {
-                        fontSize: '22px',
+                        show: true,
+                        color: myColors.soft_black,
+                        offsetY: -55,
                     },
                     value: {
                         show: true,
-                        fontSize: '12px',
+                        fontSize: '18px',
+                        color: myColors.blue_sapphire,
+                        offsetY: -20,
                         formatter: function(val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
                     total: {
                         show: true,
-                        label: 'Gas',
+                        label: 'CO',
+                        color: myColors.soft_black,
+                        fontSize: '27px',
                         formatter: function(w) {
-                            return "CO"
+                            return ""
                         }
                     }
                 }
             }
         },
-        labels: ['Diaria', 'Horaria', 'Actual'],
+        fill: {
+            colors: applyColorBarByValue(valueList),
+            opacity: 0.9,
+            type: 'gradient',
+            gradient: {
+                shade: 'dark',
+                type: "horizontal",
+                shadeIntensity: 0.3,
+                gradientToColors: applyGradientToColorsByValue(valueList),
+                inverseColors: false,
+                opacityFrom: 0.9,
+                opacityTo: 1,
+                stops: [0, 100],
+                colorStops: []
+            }
+        }
     };
-    var chartCo = new ApexCharts(document.querySelector("#coChart"), options);
+    let chartCo = new ApexCharts(document.querySelector("#coChart"), options);
     chartCo.render();
 }
 /*
@@ -170,9 +200,9 @@ function getPercentagesFromValues(valueList) {
         if (valueList[i] != -1) {
             let percent = valueList[i] * maxPercent / max;
             let formatPercent = Math.round((percent + Number.EPSILON) * 100) / 100;
-            percentList[i] = formatPercent > 100 ? 100 : formatPercent;
+            percentList[i] = formatPercent >= 100 ? 100 : formatPercent;
         } else {
-            percentList[i] = 0;
+            percentList[i] = 100;
         }
     }
     return percentList;
@@ -194,4 +224,41 @@ function getLabelsFromPercentage(percent) {
         return label + " ppm";
     }
     return "No hay datos";
+}
+
+function applyColorBarByValue(dataList) {
+    colorList = [];
+    dataList.forEach(function(val) {
+        switch (true) {
+            case val >= 0:
+                colorList.push(myColors.artic_blue);
+                break;
+            default:
+                colorList.push(myColors.soft_grey);
+        }
+    });
+    return colorList;
+}
+
+function applyGradientToColorsByValue(dataList) {
+    colorList = [];
+    dataList.forEach(function(val) {
+        switch (true) {
+            case val > 60:
+                colorList.push(myColors.eminence);
+                break;
+            case val > 40:
+                colorList.push(myColors.space_cadet);
+                break;
+            case val > 20:
+                colorList.push(myColors.blue_sapphire);
+                break;
+            case val >= 0:
+                colorList.push(myColors.metallic_seaweed);
+                break;
+            default:
+                colorList.push(myColors.soft_grey);
+        }
+    });
+    return colorList;
 }
