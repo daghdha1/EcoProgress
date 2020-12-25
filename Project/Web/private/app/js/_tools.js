@@ -1,3 +1,25 @@
+function showThisModalPanel(namePanel) {
+    if (!document.getElementById(namePanel)) {
+        $.ajax({
+            url: '../html/' + namePanel + '.html',
+            dataType: 'html',
+            success: function(data) {
+                document.body.insertAdjacentHTML('afterbegin', data);
+                initModalPanel(namePanel);
+            }
+        });
+    } else {
+        initModalPanel(namePanel);
+    }
+}
+
+function initModalPanel(namePanel) {
+    $('#' + namePanel).modal({
+        show: true,
+        keyboard: false
+    });
+}
+
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

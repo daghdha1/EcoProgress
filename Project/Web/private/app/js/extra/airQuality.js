@@ -112,10 +112,10 @@ function calculateAirQuality(measureList) {
  * 
  */
 function populateGraph(valueList) {
-    valueList = [-1, 43.5, 16.4];
+    //valueList = [-1, 43.5, 16.4];
     var options = {
         series: getPercentagesFromValues(valueList),
-        labels: ['Diaria', 'Horaria', 'Última'],
+        labels: ['Diaria', 'Horaria', 'Actual'],
         chart: {
             height: '190%',
             width: '100%',

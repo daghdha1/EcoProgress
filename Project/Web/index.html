@@ -23,13 +23,17 @@
             </script>
             <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js">
             </script>
+            <script defer="" src="private/app/js/_config.js">
+            </script>
+            <script defer="" src="public/js/_tools.js">
+            </script>
             <script defer="" src="public/js/login.js">
             </script>
-            <script defer="" src="private/app/js/_config.js">
+            <script defer="" src="public/js/registration.js">
             </script>
         </meta>
     </head>
-    <body class="text-center" style="font-family: 'Century Gothic';color: #682172;height: 100%;">
+    <body class="text-center" style="font-family:'Century Gothic';color: #682172;height: 100%;">
         <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
             <div class="container-fluid justify-content-center flex-column m-0 p-0">
                 <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
@@ -37,40 +41,9 @@
                         <img src="public/img/logo.png" style="width: 210px;margin: 0;"/>
                     </a>
                     <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;width: 200px;right: 0px;position: absolute;">
-                        <a class="ml-auto" data-toggle="modal" href="#btn_login" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0;margin-left: 0;text-align: right;">
+                        <a class="ml-auto" onclick="return showThisModalPanel('loginPanel')" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0;margin-left: 0;text-align: right;">
                             Iniciar Sesión
                         </a>
-                        <div class="modal fade" id="btn_login" role="dialog" tabindex="-1">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                                            <span aria-hidden="true">
-                                                ×
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body d-flex flex-column">
-                                        <p class="text-center text-muted" style="margin-bottom: 5px;">
-                                            Correo electrónico
-                                        </p>
-                                        <input class="justify-content-center mx-auto" id="email" inputmode="email" name="email" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email">
-                                            <p class="text-center text-muted" style="margin-bottom: 5px;">
-                                                Contraseña
-                                            </p>
-                                            <input class="justify-content-center mx-auto" id="password" name="password" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password">
-                                                <a class="d-xl-flex justify-content-center mx-auto" data-toggle="modal" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0px;margin-left: 0px;width: 35%;margin-bottom: 20px;font-size: 14px;">
-                                                    Recuperar contraseña
-                                                </a>
-                                                <button class="btn btn-primary mx-auto" id="submit" onclick="validate()" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="button">
-                                                    Iniciar sesión
-                                                </button>
-                                            </input>
-                                        </input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
