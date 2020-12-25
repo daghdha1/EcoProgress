@@ -112,7 +112,7 @@ function calculateAirQuality(measureList) {
  * 
  */
 function populateGraph(valueList) {
-    valueList = [4.89, 69.5, 78];
+    valueList = [-1, 43.5, 16.4];
     var options = {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Última'],
@@ -164,14 +164,14 @@ function populateGraph(valueList) {
             }
         },
         fill: {
-            colors: applyColorBarByValue(valueList),
+            colors: getColorBarByValue(valueList),
             opacity: 0.9,
             type: 'gradient',
             gradient: {
                 shade: 'dark',
                 type: "horizontal",
                 shadeIntensity: 0.3,
-                gradientToColors: applyGradientToColorsByValue(valueList),
+                gradientToColors: getGradientToColorsByValue(valueList),
                 inverseColors: false,
                 opacityFrom: 0.9,
                 opacityTo: 1,
@@ -199,10 +199,10 @@ function getPercentagesFromValues(valueList) {
     for (var i = 0; i < valueList.length; i++) {
         if (valueList[i] != -1) {
             let percent = valueList[i] * maxPercent / max;
-            let formatPercent = Math.round((percent + Number.EPSILON) * 100) / 100;
+            let formatPercent = Math.round(percent * 100) / 100;
             percentList[i] = formatPercent >= 100 ? 100 : formatPercent;
         } else {
-            percentList[i] = 100;
+            percentList[i] = 101; // 101 for non data
         }
     }
     return percentList;
@@ -215,23 +215,30 @@ function getPercentagesFromValues(valueList) {
  * <-- R
  */
 function getLabelsFromPercentage(percent) {
-    // valor minimo son 0ppm y el maximo 70ppm
+    // Valor mínimo son 0ppm y el maximo 70ppm
     let min = 0;
     let max = 70;
     let maxPercent = 100;
-    if (percent != 0) {
+    if (percent != 101) {
         let label = percent * max / maxPercent;
-        return label + " ppm";
+        let formatLabel = Math.round(label * 100) / 100;
+        return formatLabel + " ppm";
     }
     return "No hay datos";
 }
-
-function applyColorBarByValue(dataList) {
+/*
+ * Obtiene los colores de las barras iniciales dependiendo de si hay datos o no (>=0 || -1)
+ * 
+ * Lista<gasValue:R> -->  
+ *                              getColorBarByValue() <--
+ * <-- Lista<colors:Texto>
+ */
+function getColorBarByValue(valueList) {
     colorList = [];
-    dataList.forEach(function(val) {
+    valueList.forEach(function(val) {
         switch (true) {
             case val >= 0:
-                colorList.push(myColors.artic_blue);
+                colorList.push(myColors.soft_metallic_seaweed);
                 break;
             default:
                 colorList.push(myColors.soft_grey);
@@ -239,22 +246,31 @@ function applyColorBarByValue(dataList) {
     });
     return colorList;
 }
-
-function applyGradientToColorsByValue(dataList) {
+/*
+ * Obtiene los gradientes de color de las barras dependiendo del valor dado
+ * 
+ * Lista<gasValue:R> -->  
+ *                              getGradientToColorsByValue() <--
+ * <-- Lista<colors:Texto>
+ */
+function getGradientToColorsByValue(valueList) {
     colorList = [];
-    dataList.forEach(function(val) {
+    valueList.forEach(function(val) {
         switch (true) {
-            case val > 60:
+            case val >= 50:
                 colorList.push(myColors.eminence);
                 break;
-            case val > 40:
+            case val >= 30:
                 colorList.push(myColors.space_cadet);
                 break;
-            case val > 20:
+            case val >= 15:
                 colorList.push(myColors.blue_sapphire);
                 break;
-            case val >= 0:
+            case val >= 7:
                 colorList.push(myColors.metallic_seaweed);
+                break;
+            case val >= 0:
+                colorList.push(myColors.soft_metallic_seaweed);
                 break;
             default:
                 colorList.push(myColors.soft_grey);
