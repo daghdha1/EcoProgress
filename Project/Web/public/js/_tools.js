@@ -28,3 +28,27 @@ function swapModalPanel(activePanel, targetPanel) {
     hideModalPanel(activePanel);
     initModalPanel(targetPanel);
 }
+
+function createElementDOM(containerId, html) {
+    return document.getElementById(containerId).insertAdjacentHTML('beforeend', html);
+}
+
+function clearElementDOM(id) {
+    document.getElementById(id).value = "";
+}
+
+function getTextValueDOM(id) {
+    return document.getElementById(id).value.replace(/<[^>]*>/g, "");
+}
+
+function setTextValueDOM(id, str) {
+    document.getElementById(id).value = str;
+}
+
+function setFocusElementDOM(id) {
+    document.getElementById(id).focus();
+}
+
+function setPlaceHolderDOM(id, str) {
+    document.getElementById(id).placeholder = str;
+}
