@@ -10,21 +10,26 @@
             </header>
             <div class="modal-body d-flex flex-column">
                 <p class="text-center text-muted" style="margin-bottom: 5px;">
+                    Nombre de usuario
+                </p>
+                <input class="justify-content-center mx-auto" id="reg_name" inputmode="text" name="name" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
+                <p class="text-center text-muted" style="margin-bottom: 5px;">
                     Correo electrónico
                 </p>
-                <input class="justify-content-center mx-auto" id="email" inputmode="email" name="email" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email">
-                    <p class="text-center text-muted" style="margin-bottom: 5px;">
-                        Contraseña
-                    </p>
-                    <input class="justify-content-center mx-auto" id="password" name="password" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password">
-                        <a class="d-xl-flex justify-content-center mx-auto" data-toggle="modal" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0px;margin-left: 0px;width: 35%;margin-bottom: 20px;font-size: 14px;">
-                            Recuperar contraseña
-                        </a>
-                        <button class="btn btn-primary mx-auto" id="submit" onclick="validate()" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="button">
-                            Iniciar sesión
-                        </button>
-                    </input>
-                </input>
+                <input class="justify-content-center mx-auto" id="reg_email" inputmode="email" name="email" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email"/>
+                <p class="text-center text-muted" style="margin-bottom: 5px;">
+                    Contraseña
+                </p>
+                <input class="justify-content-center mx-auto" id="reg_password" name="password" style="width: 70%;margin-bottom: 5%;text-align: center;" type="password"/>
+                <button class="btn btn-primary mx-auto" id="reg_submit" onclick="regValidation()" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="button">
+                    Regístrate
+                </button>
+                <p class="d-xl-flex justify-content-center mx-auto" style="width: 100%; margin-top: 5%; margin-bottom: 20px;">
+                    ¿Ya tienes una cuenta?
+                    <a onclick="return swapModalPanel('registrationPanel','loginPanel')" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold; margin-left: 15px; font-size: 14px;">
+                        Iniciar sesión
+                    </a>
+                </p>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-function showThisModalPanel(namePanel) {
+function showModalPanel(namePanel) {
     if (!document.getElementById(namePanel)) {
         $.ajax({
             url: '../html/' + namePanel + '.html',
