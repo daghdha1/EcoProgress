@@ -1,24 +1,50 @@
-var attempt = 3; // Variable to count number of attempts.
-// Below function Executes on click of login button.
-function validate() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    if (email == "ecoprogress" && password == "1234") {
-        //alert("Has sido logeado");
-        // Para el servidor la direccion es, de momento, 
-        // window.location = "./../../private/app/html/home.html"; // Redirecting to other page. //server
-        window.location = "../Web/private/app/html/home.html"; // Redirecting to other page.
-    } else if (email == "admin" && password == "admin") {
-        window.location = "../Web/private/app/html/adminPanel.html"; // Redirecting to admin page.
-    } else {
-        attempt--; // Decrementing by one.
-        alert("Te quedan " + attempt + " intentos");
-        // Disabling fields after 3 attempts.
-        if (attempt == 0) {
-            document.getElementById("email").disabled = true;
-            document.getElementById("password").disabled = true;
-            document.getElementById("submit").disabled = true;
+function logValidation() {
+    let params = logValidation.arguments;
+    let form = params[0];
+    if (isValidForm(form, params)) {
+        let formData = new FormData(form);
+        formData.append("action", "login");
+        let request = new Request(config.restDir + "/users", {
+            method: "post",
+            body: formData
+        });
+        clearElementDOM("log_email"); //TEST
+        clearElementDOM("log_password"); //TEST
+        setFocusElementDOM("log_email"); //TEST
+        // TODO
+        // Enviamos la petición
+        /*fetch(request).then(function(response) {
+            // Si la respuesta es exitosa (200 code), devuelve json
+            if (response.ok) return response.json();
+            else return false;
+        }).then(function(json) {
+            // Si es null (no ha encontrado ninguna coincidencia)
+            if (json === null) {
+                clearElementDOM("log_email");
+                clearElementDOM("log_password");
+                setFocusElementDOM("log_email");
+            }
+            // Sino, se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
+            else {
+                hideModalPanel('loginPanel');
+                //saveUserSession(json);
+                window.location.href = './private/app/html/home.html';
+            }
+        });*/
+    }
+}
+// FALTA RECIBIR DE LA BASE DE DATOS SI ES ROOT O USER
+function saveUserSession(userDataSession) {
+    sessionStorage.setItem("mail", userDataSession.mail);
+    sessionStorage.setItem("root", userDataSession.root);
+}
+
+function isValidForm(form, params) {
+    for (var i = 1; i < params.length; i++) {
+        if (form[params[i]].value.length == 0) {
+            setFocusElementDOM(params[i]);
+            return false;
         }
     }
-    return false;
+    return true;
 }

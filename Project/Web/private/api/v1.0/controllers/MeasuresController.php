@@ -14,6 +14,7 @@ class MeasuresController extends BaseController {
     // ------------------------------ GET, POST, PUT, DELETE--------------------------------- //
     // -------------------------------------- ACTIONS --------------------------------------- //
     // -------------------------------------------------------------------------------------- //
+    // --------------------- THESE METHODS CALL PRIVATE LOGIC METHODS ----------------------- //
 
     /* - Recibe y trata una petición GET solicitada
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
@@ -28,7 +29,7 @@ class MeasuresController extends BaseController {
         $model = parent::loadModel($request->resource);
         
         // Check de parámetros
-        if (!$this->areThereParameters($request->parameters)) {
+        if (!areThereURIParameters($request->parameters)) {
             // Obtiene todas las medidas
             $result = $this->getAllMeasures($model, $request);
         } else {
@@ -53,7 +54,7 @@ class MeasuresController extends BaseController {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
 
-        if ($this->areThereParameters($request->parameters)) {
+        if (areThereURIParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
             $result = null;
@@ -73,8 +74,10 @@ class MeasuresController extends BaseController {
 
     }
 
-    // ---------------------------------- PRIVATE METHODS ------------------------------------- //
-    // ---------------------------------------------------------------------------------------- //
+    // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
+    // -------------------------------------------------------------------------------------------------- //
+
+    // ---------------------------------------------- GET ----------------------------------------------- //
 
     /* 
     * Obtiene todas las medidas disponibles
@@ -91,46 +94,6 @@ class MeasuresController extends BaseController {
     }
 
     /* 
-    * Inserta una medida en la base de datos
-    *
-    * MeasuresModel, Request -->
-    *                              postMeasure() <--
-    * <-- MeasureEntity
-    */
-    private function postMeasure($model, $request) {
-        // Enviamos la medida
-        $data = $model->postMeasure($request->parameters);
-        $result = null;
-        // Si hay datos
-        if (!is_null($data)) {
-            // Creamos un nueva medición
-            $measure = parent::createEntity($request->resource);
-            // Asignamos las propiedades de cada objeto measure
-            $measure->setValue($data['value']);
-            $measure->setTimestamp($data['timestamp']);
-            $measure->setLocation($data['location']);
-            $measure->setSensorID($data['sensorID']);
-            $result = $measure->toARRAY();
-        }
-        return $result;             
-    }
-
-
-    /* 
-    * Comprueba si existen parámetros en la petición
-    *
-    * Lista<Texto> -->
-    *                   areThereParameters() <--
-    * <-- T | F
-    */
-    private function areThereParameters(&$params) {
-        if (count($params) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    /* 
     * Escoge el método GET acorde con el parámetro recibido
     *
     * MeasuresModel, Lista<Texto> -->
@@ -142,17 +105,20 @@ class MeasuresController extends BaseController {
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
+                    $userID = $value;
+                    if (count($params) == 1) {
+                        $data = $model->getAllMeasuresOfUser($userID);
+                    }
                     break;
                 case 'period':
                     if (is_numeric($value)) {
                         $tList = explode('-', $value);
-                        $data = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
+                        $data = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $userID);
                     } elseif ($value === 'last') {
-                        $data = $model->getLastMeasure($sensorID);
+                        $data = $model->getLastMeasure($userID);
                     } else {
                         $t = getTimestampOfPeriod($value);
-                        $data = $model->getMeasuresFromTimestamp($t, $sensorID);
+                        $data = $model->getMeasuresFromTimestamp($t, $userID);
                     }
                     break;
                 default:
@@ -189,6 +155,25 @@ class MeasuresController extends BaseController {
             return $result;
         } 
         return null;
+    }
+
+    // ---------------------------------------------- POST ----------------------------------------------- //
+
+    /* 
+    * Inserta una medida en la base de datos
+    *
+    * MeasuresModel, Request -->
+    *                              postMeasure() <--
+    * <-- MeasureEntity
+    */
+    private function postMeasure($model, $request) {
+        // Enviamos la medida
+        $data = $model->postMeasure($request->parameters);
+        if ($data) {
+            $result = $this->createArrayOfMeasures($request->parameters, $request->resource);
+            return $result;    
+        }
+        return null;    
     }
 
 }

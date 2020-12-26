@@ -1,3 +1,34 @@
+function initModalPanel(namePanel) {
+    if (!document.getElementById(namePanel)) {
+        $.ajax({
+            url: '../html/' + namePanel + '.html',
+            dataType: 'html',
+            success: function(data) {
+                document.body.insertAdjacentHTML('afterbegin', data);
+                showModalPanel(namePanel);
+            }
+        });
+    } else {
+        showModalPanel(namePanel);
+    }
+}
+
+function showModalPanel(namePanel) {
+    $('#' + namePanel).modal({
+        show: true,
+        keyboard: false
+    });
+}
+
+function hideModalPanel(namePanel) {
+    $('#' + namePanel).modal('hide');
+}
+
+function swapModalPanel(activePanel, targetPanel) {
+    hideModalPanel(activePanel);
+    initModalPanel(targetPanel);
+}
+
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
