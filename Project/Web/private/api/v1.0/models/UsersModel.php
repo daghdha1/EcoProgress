@@ -10,17 +10,17 @@ class UsersModel extends BaseModel {
         $this->conn = $adapter;
     }
 
+    // ---------------------------------------------- GET ----------------------------------------------- //
+
 	/* 
-    * Obtiene todos los usuarios disponibles
+    * Obtiene todos los usuarios registrados
     *
     *                   			getAllUsers() <--
     * <-- Lista<UserEntity>
     */
 	public function getAllUsers() {
-		// Query
-		$sql = "SELECT * FROM Users";
 		// Respuesta
-		$result = MyEntity::executeSelectSql($sql);
+		$result = BaseEntity::getAll();
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
@@ -38,7 +38,7 @@ class UsersModel extends BaseModel {
 		// Query
 		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1";
 		// Respuesta
-		$result = MyEntity::executeSelectSql($sql);
+		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
@@ -47,10 +47,10 @@ class UsersModel extends BaseModel {
     * Obtiene el tiempo total del usuario activo
     *
     * Texto, N -->
-    *                 			getActiveUser() <--
+    *                 			getActiveTimeOfUser() <--
     * <-- Active time:N, Nada
     */
-	public function getActiveTimeUser($mail, $time) {
+	public function getActiveTimeOfUser($mail, $time) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
 		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";

@@ -1,184 +1,441 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Landing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/css/CenturyGothic.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="public/css/AXY-Contact-Us-1.css">
-    <link rel="stylesheet" href="public/css/AXY-Contact-Us.css">
-    <link rel="stylesheet" href="public/css/Footer-Basic.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css">
-    <link rel="stylesheet" href="public/css/Navigation-Clean.css">
-    <link rel="stylesheet" href="public/css/palette.compiled.css">
-    <link rel="stylesheet" href="public/css/styles.css">
-	
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <script defer src="public/js/bs-init.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
-    <script defer src="public/js/login.js"></script>
-	<script defer src="private/app/js/config.js"></script>
-</head>
-
-<body class="text-center" style="font-family: 'Century Gothic';color: #682172;height: 100%;">
-    <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
-        <div class="container-fluid justify-content-center flex-column m-0 p-0">
-            <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;"><a class="navbar-brand text-center" id="logo" href="#logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;"><img src="public/img/logo.png" style="width: 210px;margin: 0;"></a>
-                <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end"
-                    style="padding: 0;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;width: 200px;right: 0px;position: absolute;"><a class="ml-auto" href="#btn_login" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0;margin-left: 0;text-align: right;" data-toggle="modal">Iniciar Sesión</a>
-                    <div class="modal fade" role="dialog"
-                        tabindex="-1" id="btn_login">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                <div class="modal-body d-flex flex-column">
-                                    <p class="text-center text-muted" style="margin-bottom: 5px;">Correo electrónico</p><input class="justify-content-center mx-auto" type="email" id="email" name="email" style="width: 70%;margin-bottom: 10px;text-align: center;" inputmode="email">
-                                    <p class="text-center text-muted"
-                                        style="margin-bottom: 5px;">Contraseña</p><input class="justify-content-center mx-auto" type="password" id="password" name="password" style="width: 70%;margin-bottom: 10px;text-align: center;"><a class="d-xl-flex justify-content-center mx-auto"
-                                        style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0px;margin-left: 0px;width: 35%;margin-bottom: 20px;font-size: 14px;" data-toggle="modal">Recuperar contraseña</a>
-                                    <button
-                                        class="btn btn-primary mx-auto" id="submit" type="button" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;"
-                                        onclick="validate()">Iniciar sesión</button>
+    <head>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+            <title>
+                Landing
+            </title>
+            <link href="public/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+            <link href="public/css/CenturyGothic.css" rel="stylesheet"/>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+            <link href="public/css/AXY-Contact-Us-1.css" rel="stylesheet"/>
+            <link href="public/css/AXY-Contact-Us.css" rel="stylesheet"/>
+            <link href="public/css/Footer-Basic.css" rel="stylesheet"/>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet"/>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css" rel="stylesheet"/>
+            <link href="public/css/Navigation-Clean.css" rel="stylesheet"/>
+            <link href="public/css/palette.compiled.css" rel="stylesheet"/>
+            <script defer="" src="public/js/jquery.min.js">
+            </script>
+            <script defer="" src="public/bootstrap/js/bootstrap.bundle.min.js">
+            </script>
+            <script defer="" src="public/js/bs-init.js">
+            </script>
+            <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js">
+            </script>
+            <script defer="" src="private/app/js/_config.js">
+            </script>
+            <script defer="" src="public/js/_tools.js">
+            </script>
+            <script defer="" src="public/js/login.js">
+            </script>
+            <script defer="" src="public/js/registration.js">
+            </script>
+        </meta>
+    </head>
+    <body class="text-center" style="font-family:'Century Gothic';color: #682172;height: 100%;">
+        <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
+            <div class="container-fluid justify-content-center flex-column m-0 p-0">
+                <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
+                    <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
+                        <img src="public/img/logo.png" style="width: 210px;margin: 0;"/>
+                    </a>
+                    <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
+                        <a class="ml-auto" onclick="return initModalPanel('loginPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                            Iniciar Sesión
+                        </a>
+                        <a class="ml-auto" onclick="return initModalPanel('registrationPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;">
+                            Regístrate
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="main_content" class="container-fluid" style='height: 788px;min-height: auto;padding-right: 0px;padding-left: 0px;background: url("public/img/unknown.png") center / cover no-repeat;max-height: 788px;'>
+            <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
+                <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 80px;right: 20px;width: 26%;border-radius: 20px;box-shadow: 0 0 10px #888888;min-width: 200px;max-height: auto;">
+                    <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column">
+                        <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around" role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
+                            <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" style="font-weight: bold;/*background: #007d93;*/width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;" type="button">
+                                CO
+                            </button>
+                            <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;" type="button">
+                                NO
+                                <sub>
+                                    2
+                                </sub>
+                            </button>
+                            <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;" type="button">
+                                SO
+                                <sub>
+                                    2
+                                </sub>
+                            </button>
+                            <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;" type="button">
+                                0
+                                <sub>
+                                    3
+                                </sub>
+                            </button>
+                        </div>
+                        <div class="flex-sm-column">
+                            <p style="font-weight: bold;">
+                                Si quieres acceder a información más detallada, colabora en
+                            nuestra red de sensores
+                            </p>
+                            <a class="btn btn-primary" href="#contacto" role="button" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;">
+                                Contacto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-block d-xl-flex justify-content-center align-items-xl-center footer" style="height: 45px;box-shadow: 0px -4px 6px #d6d6d6;background: #ffffff;position: absolute;bottom: 0px;width: 100%;">
+                <a href="#info">
+                    <i class="fa fa-chevron-down" href="#info" style="font-size: 30px;text-align: center;/*color: #682172;*/">
+                    </i>
+                </a>
+            </div>
+        </div>
+        <div class="container-fluid text-center d-flex flex-column justify-content-center justify-content-xl-center align-items-xl-center" style="width: 100%;max-width: 100%;background: url('public/img/bgLanding.png') bottom / cover no-repeat, #ffffff;height: 300%;padding: 0;">
+            <section class="d-flex justify-content-around justify-content-xl-center align-items-xl-center" id="info" style="/*margin-top: 0;*/height: 33%;width: 100%;">
+                <div class="row d-xl-flex justify-content-around justify-content-xl-center" style="height: 500px;margin-right: 0;margin-left: 0;width: 100%;">
+                    <div class="col-md-3 d-xl-flex justify-content-xl-center">
+                        <div class="card" style="border-width: 0px;width: 80%;height: 100%;background: rgba(255,255,255,0.80);">
+                            <div class="card-body d-flex flex-column justify-content-around" style="margin-right: 0;background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;/*box-shadow: box-shadow: 0px 0px 20px rgb(78,78,78);*/box-shadow: 0px 0px 10px rgb(78,78,78);color: rgb(57,31,61);border-width: 0;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;/*width: 100%;*/">
+                                <h4 class="card-title" style="text-align: center;color: #422e65;font-weight: bold;font-family: Nunito, sans-serif;">
+                                    Monóxido de carbono
+                                </h4>
+                                <p class="card-text" style="color: #2d4066;text-align: justify;margin-bottom: 0;font-family: Montserrat, sans-serif;">
+                                    El monóxido de carbono es un gas inoloro e incoloro, pero muy peligroso que se encuentra en el humo de las combustiones.
+                                </p>
+                                <button class="btn btn-primary" data-target="#modal1" data-toggle="modal" style="  border-color: #09728a;
+      background: #007d93;
+    " type="button">
+                                    Más Info
+                                </button>
+                            </div>
+                            <div class="modal fade show" id="modal1" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="  color: #682172;
+    ">
+                                                Monóxido de carbono
+                                            </h4>
+                                            <button class="close" data-dismiss="modal" type="button">
+                                                <span>
+                                                    ×
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="  color: #682172;
+    ">
+                                                El monóxido de carbono (CO) es un gas sin olor ni color pero muy peligroso se encuentra en el humo de la combustión, como el expulsado por automóviles , candelabros, estufas, fogones de gas y sistemas de calefacción.
+                                                <br/>
+                                                El CO proveniente de estos humos puede acumularse en lugares que no tienen una buena circulación de aire fresco. Una persona puede envenenarse al respirarlos.
+                                                <br/>
+                                                Puede causar súbitamente una enfermedad y la
+                                            muerte. Los síntomas más comunes de envenenamiento por CO son:
+                                                <br/>
+                                                Dolor de cabeza
+                                                <br/>
+                                                Mareos
+                                                <br/>
+                                                Debilidad
+                                                <br/>
+                                                Náusea
+                                                <br/>
+                                                Vómitos
+                                                <br/>
+                                                Dolor en el pecho      
+                                                                                                                  Confusión
+                                                <br/>
+                                                Los valores oscilan entre 0-70 ppm, en estado normal solemos
+                                                <br/>
+                                                ingerir entre 10 y 35 ppm. Valores superiores a 70 resultan
+                                            mortales.
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-xl-flex justify-content-xl-center">
+                        <div class="card" style="border-width: 0;width: 80%;height: 100%;background: rgba(255,255,255,0.80);">
+                            <div class="card-body d-flex flex-column justify-content-around" style="margin-right: 0;background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;/*box-shadow: 9px 8px #422e65;*/box-shadow: 0px 0px 10px rgb(78,78,78);border: 0 solid #422e65;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;width: 100%;">
+                                <h4 class="card-title" style="text-align: center;color: #422e65;font-weight: bold;font-family: Nunito, sans-serif;">
+                                    Dióxido de azufre
+                                </h4>
+                                <p class="card-text" style="color: #2d4066;text-align: justify;margin-bottom: 0;font-family: Montserrat, sans-serif;">
+                                    El dióxido de azufre es un gas irritante incoloro pero con un olor penetrante y percibible.
+                                </p>
+                                <button class="btn btn-primary" data-target="#modal2" data-toggle="modal" style="" type="button">
+                                    Más Info
+                                </button>
+                            </div>
+                            <div class="modal fade show" id="modal2" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="  color: #682172;
+    ">
+                                                Dióxido de azufre
+                                            </h4>
+                                            <button class="close" data-dismiss="modal" type="button">
+                                                <span>
+                                                    ×
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="  color: #682172;
+    ">
+                                                El Dióxido de azufre es un gas incoloro, irritante, con un olor penetrante que se comienza a percibir con 0,3 a 1,4 ppm y es perfectamente distinguible a partir de 3 ppm -partes por
+                                                <br/>
+                                                millón. La principal fuente
+                                            de emisión de dióxido de azufre a la atmósfera es la combustión de productos petrolíferos y la quema de carbón en centrales eléctricas y calefacciones centrales.
+                                                <br/>
+                                                No es un gas inflamable, ni explosivo y tiene
+                                            mucha estabilidad, es muy soluble en agua y en contacto con ella se convierte en ácido sulfúrico.
+                                                <br/>
+                                                <br/>
+                                                La contaminación del aire por SO2 causa los siguientes efectos:
+                                                <br/>
+                                                <br/>
+                                                Dificultad para respirar.
+                                                <br/>
+                                                Inflamación de las vías respiratorias.
+                                                <br/>
+                                                Irritación ocular por formación de ácido sulfuroso sobre las            mucosas húmedas.
+                                                <br/>
+                                                Alteraciones psíquicas.
+                                                <br/>
+                                                Edema pulmonar.
+                                                <br/>
+                                                Paro cardíaco.
+                                                <br/>
+                                                Colapso circulatorio.
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-xl-flex justify-content-xl-center">
+                        <div class="card" style="border-width: 0;width: 80%;height: 100%;background: rgba(255,255,255,0.80);">
+                            <div class="card-body d-flex flex-column justify-content-around" style="background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;/*box-shadow: 9px 8px #422e65;*/box-shadow: 0px 0px 10px rgb(78,78,78);border: 0 solid #422e65;border-top-style: solid;border-top-color: #36345f;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;width: 100%;">
+                                <h4 class="card-title" style="text-align: center;color: #422e65;font-weight: bold;font-family: Nunito, sans-serif;">
+                                    Dióxido de nitrógeno
+                                </h4>
+                                <p class="card-text" style="color: #2d4066;text-align: justify;margin-bottom: 0;font-family: Montserrat, sans-serif;">
+                                    El dióxido de nitrógeno es un compuesto químico gaseoso de color marrón, tóxico e irritante.
+                                </p>
+                                <button class="btn btn-primary" data-target="#modal3" data-toggle="modal" style="  background: #007d93;
+    " type="button" width="20">
+                                    Más Info
+                                </button>
+                            </div>
+                            <div class="modal fade show" id="modal3" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="  color: #682172;
+    ">
+                                                Dióxido de nitrógeno
+                                            </h4>
+                                            <button class="close" data-dismiss="modal" type="button">
+                                                <span>
+                                                    ×
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="  color: #682172;
+    ">
+                                                El dióxido de nitrógeno (NO2) es un compuesto químico gaseoso de color marrón amarillento formado por la combinación de un átomo de nitrógeno y dos de oxígeno. Es un gas tóxico e irritante. El NO2 junto al NO -óxido
+                                            nitroso- son conocidos como NOx y son algunos de los principales contaminantes en las ciudades.
+                                                <br/>
+                                                En la naturaleza se produce por los incendios forestales o las erupciones volcánicas. También se produce de forma
+                                            natural por la descomposición de nitratos orgánicos. El volumen total  que se produce de forma natural es infinitamente menor que el que se produce por efecto del hombre.
+                                                <br/>
+                                                La exposición continuada  NO2 se relaciona
+                                            con diversas enfermedades de las vía respiratorias como disminución de la capacidad pulmonar, bronquitis agudas, asma y se considera el culpable de los procesos alérgicos, sobre todo en niños.
+                                                <br/>
+                                                Se ha relacionado
+                                            las exposiciones crónicas a bajo nivel  con el enfisema pulmonar. Otros efectos menores son la irritación ocular y de las mucosas.
+                                                <br/>
+                                                Existen algunos estudios que apuntan a un incremento en la mortalidad aunque
+                                            aún no está suficientemente bien establecido que la causa sea solamente la exposición a NO2
+                                                <br/>
+                                                <br/>
+                                                El valor del NO2 medio horario no podrá exceder de 200
+                                                <br/>
+                                                microgramos por metro cúbico (mg / m3) más de 18
+                                            veces en un año y el valor medio anual de NO2 no pueden superar los 40 microgramos por metro cúbico (mg / m3).
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-xl-flex justify-content-xl-center">
+                        <div class="card" style="width: 80%;height: 100%;border-width: 0px;background: rgba(255,255,255,0.80);border-radius: 13px;">
+                            <div class="card-body d-flex flex-column justify-content-around" style="background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;/*box-shadow: 10px 8px #422e65;*/box-shadow: 0px 0px 10px rgb(78,78,78);width: 100%;border: 0px none rgb(104, 33, 114);border-bottom-color: #422e65;">
+                                <h4 class="card-title" style="text-align: center;color: #422e65;font-weight: bold;font-family: Nunito, sans-serif;">
+                                    Ozono
+                                </h4>
+                                <p class="card-text" style="color: #2d4066;text-align: justify;margin-bottom: 0;font-family: Montserrat, sans-serif;">
+                                    El ozono es un gas incoloro que se encuentra en el aire que respiramos que se forma cuando los contaminantes de automóviles o fábricas reaccionan con la luz solar.
+                                </p>
+                                <button class="btn btn-primary" data-target="#modal4" data-toggle="modal" style="  background: #007d93;
+      border-color: #09728a;
+    " type="button">
+                                    Más Info
+                                </button>
+                            </div>
+                            <div class="modal fade show" id="modal4" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="  color: #682172;
+    ">
+                                                Ozono
+                                            </h4>
+                                            <button class="close" data-dismiss="modal" type="button">
+                                                <span>
+                                                    ×
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="  color: #682172;
+    ">
+                                                El ozono es un gas incoloro que se encuentra en el aire que respiramos.
+                                                <br/>
+                                                Puede ser bueno o malo, dependiendo de donde se encuentre.
+                                                <br/>
+                                                El ozono "malo" se encuentra al nivel del suelo. Se forma cuando
+                                            los contaminantes de los automóviles, las fábricas y otras fuentes reaccionan químicamente con la luz del sol. Es el componente principal del smog. Suele ser peor en verano. Respirar el ozono malo puede ser dañino.
+                                                <br/>
+                                                Provoca tos, irritación en la garganta, empeoramiento defecciones como asma, bronquitis y enfisema y hasta daños
+                                                <br/>
+                                                pulmonares permanentes, si la exposición a éste es habitual.
+                                                <br/>
+                                                Otros efectos pueden
+                                            ser agravamientos asmáticos, falta de aliento, dolor de pecho en respiraciones profundas, respiración silbante y tos.
+                                                <br/>
+                                                <br/>
+                                                El límite inferior es de 0,1 ppm (0,2 mg/m3) y el límite superior es de 0,3 ppm (0,6
+                                            mg/m3)
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                                <br/>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid" style="height: 788px;min-height: auto;padding-right: 0px;padding-left: 0px;background: url(&quot;public/img/unknown.png&quot;) center / cover no-repeat;max-height: 788px;">
-        <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
-            <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 80px;right: 20px;width: 26%;border-radius: 20px;box-shadow: 0 0 10px #888888;min-width: 200px;max-height: auto;">
-                <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column">
-                    <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around" role="group" style="min-width: 65px;max-width: 270px;margin: 0;"><button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button" style="font-weight: bold;/*background: #007d93;*/width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;">CO</button>
-                        <button
-                            class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button" style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;">NO<sub>2</sub></button><button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;">SO<sub>2</sub></button>
-                            <button
-                                class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button" style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;">0<sub>3</sub></button>
+            </section>
+            <section style="height: 33%;width: 100%;/*position: absolute;*/font-weight: 600;">
+                <div>
+                    <div style="text-align: left;margin-bottom: 100px;margin-top: 200px;width: 47%;margin-left: 20px;">
+                        <h1 style="font-size: 30px;font-weight: bold;font-family: Nunito, sans-serif;">
+                            ¿Por qué es malo emitir tantos gases como el CO?
+                        </h1>
+                        <p style="font-family: Montserrat, sans-serif;">
+                            <strong>
+                                El monóxido de carbono (CO) es un gas peligroso que usted no puede oler, probar o ver. Se produce cuando los combustibles a base de carbono, tales como queroseno, gasolina, gas natural, propano, carbón o madera se queman sin suficiente oxígeno, lo que provoca una combustión incompleta.
+                            </strong>
+                        </p>
                     </div>
-                    <div class="flex-sm-column">
-                        <p style="font-weight: bold;">Si quieres acceder a información más detallada, colabora en nuestra red de sensores</p><a class="btn btn-primary" role="button" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;"
-                            href="#contacto">Contacto</a></div>
+                    <div class="ml-auto" style="text-align: right;margin-top: 400px;width: 75%;margin-right: 230px;">
+                        <h1 style="font-size: 30px;font-weight: bold;color: rgb(255,255,255);font-family: Nunito, sans-serif;">
+                            <strong>
+                                ¿Qué proponemos para cambiar esto?
+                            </strong>
+                        </h1>
+                        <p class="ml-auto" style="color: rgb(255,255,255);width: 55%;margin-bottom: 0px;margin-right: 20px;font-family: Montserrat, sans-serif;">
+                            <strong>
+                                Al montar una red general de sensores , capaces de medir de manera exacta y a tiempo real los valores de emisión de dichos gases, podemos llevar un control más exhaustivo de la calidad del aire de nuestras calles, barrios, ciudades, etc.
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>
+                                Así mismo podremos poner solución a dichos problemas tanto a nivel personal, evitando zonas más conflictivas o peligrosas, como a nivel local, dando aviso de dichas zonas preocupantes.
+                            </strong>
+                            <br/>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="d-block d-xl-flex justify-content-center align-items-xl-center footer" style="height: 45px;box-shadow: 0px -4px 6px #d6d6d6;background: #ffffff;position: absolute;bottom: 0px;width: 100%;"><a href="#info"><i class="fa fa-chevron-down" style="font-size: 30px;text-align: center;/*color: #682172;*/" href="#info"></i></a></div>
-    </div>
-    <section id="info" style="margin-top: 200px;">
-        <div class="card-group" data-aos="fade-right" data-aos-duration="800" style="margin-right: auto;margin-left: auto;height: 466px;margin-top: 6rem;border-radius: 0px;width: 1151px;">
-            <div class="card">
-                <div class="card-body" data-bs-hover-animate="bounce" style="margin-right: 1rem;background: #682172;border-radius: 13px;opacity: 0.96;box-shadow: 10px 8px #422e65;border: 2px solid #422e65 ;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;">
-                    <h4 class="card-title" style="margin-top: 2rem;text-align: center;color: rgb(255,255,255);">Monóxido de carbono</h4>
-                    <p class="card-text" style="margin-top: 3rem;color: rgb(220,220,220);text-align: justify;">El monóxido de carbono es un gas inoloro e incoloro, pero muy peligroso que se encuentra en el humo de las combustiones.</p><button class="btn btn-primary" data-toggle= "modal" data-target="#modal1" type="button" style="margin-left: 4.5rem;margin-top: 2rem;border-color: #09728a;background: #007d93;">Más Info</button></div><div role="dialog" id="modal1" tabindex="-1" class="modal fade show">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: #682172;">Monóxido de carbono</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            <div class="modal-body">
-                <p style="color: #682172;">El monóxido de carbono (CO) es un gas sin olor ni color pero muy peligroso se encuentra en el humo de la combustión, como el expulsado por automóviles , candelabros, estufas, fogones de gas y sistemas de calefacción.<br />El CO proveniente
-                    de estos humos puede acumularse en lugares que no tienen una buena circulación de aire fresco. Una persona puede envenenarse al respirarlos.<br />Puede causar súbitamente una enfermedad y la muerte. Los síntomas más comunes de envenenamiento
-                    por CO son:<br />      Dolor de cabeza   <br />      Mareos<br />      Debilidad   <br />      Náusea   <br />      Vómitos<br />      Dolor en el pecho                                                                              Confusión<br
-                    />Los valores oscilan entre 0-70 ppm, en estado normal solemos<br />ingerir entre 10 y 35 ppm. Valores superiores a 70 resultan mortales.<br /><br /><br /><br /><br /><br /></p>
-            </div>
-        </div>
-    </div>
-</div></div>
-            <div class="card">
-                <div class="card-body" data-bs-hover-animate="bounce" style="margin-right: 1rem;background: #682172;border-radius: 13px;opacity: 0.96;box-shadow: 9px 8px #422e65;border-style: solid;border-color: #422e65;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;">
-                    <h4 class="card-title" style="margin-top: 2rem;text-align: center;color: rgb(252,252,252);">Dióxido de azufre</h4>
-                    <p class="card-text" style="margin-top: 4.7rem;color: rgb(220,220,220);text-align: justify;">El dióxido de azufre es un gas irritante incoloro pero con un olor penetrante y percibible.</p><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal2" style="margin-left: 4.5rem;margin-top: 4.8rem;border-color: #09728a;background: #007d93;">Más Info</button></div><div role="dialog" id="modal2" tabindex="-1" class="modal fade show" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: #682172;">Dióxido de azufre</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            <div class="modal-body">
-                <p style="color: #682172;">El Dióxido de azufre es un gas incoloro, irritante, con un olor penetrante que se comienza a percibir con 0,3 a 1,4 ppm y es perfectamente distinguible a partir de 3 ppm -partes por<br />millón. La principal fuente de emisión de dióxido
-                    de azufre a la atmósfera es la combustión de productos petrolíferos y la quema de carbón en centrales eléctricas y calefacciones centrales.<br />No es un gas inflamable, ni explosivo y tiene mucha estabilidad, es muy soluble en agua
-                    y en contacto con ella se convierte en ácido sulfúrico.<br /><br />La contaminación del aire por SO2 causa los siguientes efectos:<br /><br />        Dificultad para respirar.        <br />        Inflamación de las vías respiratorias.
-                          <br />        Irritación ocular por formación de ácido sulfuroso sobre las            mucosas húmedas. <br />        Alteraciones psíquicas.        <br />        Edema pulmonar.        <br />        Paro cardíaco.        <br
-                    />        Colapso circulatorio.<br /><br /><br /><br /><br /><br /></p>
-            </div>
-        </div>
-    </div>
-</div></div>
-            <div class="card">
-                <div class="card-body" data-bs-hover-animate="bounce" style="margin-right: 1rem;background: #682172;border-radius: 13px;opacity: 0.96;box-shadow: 9px 8px #422e65;border-style: solid;border-color: #422e65;border-top-style: solid;border-top-color: #36345f;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;">
-                    <h4 class="card-title" style="margin-top: 2rem;text-align: center;color: rgb(255,255,255);">Dióxido de nitrógeno</h4>
-                    <p class="card-text" style="margin-top: 3rem;color: rgb(220,220,220);text-align: justify;">El dióxido de nitrógeno es un compuesto químico gaseoso de color marrón, tóxico e irritante.</p><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal3" style="margin-left: 4.5rem;margin-top: 4.7rem;border-color: #09728a;background: #007d93;">Más Info</button></div><div role="dialog" tabindex="-1" class="modal fade show" id="modal3">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: #682172;">Dióxido de nitrógeno</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            <div class="modal-body">
-                <p style="color: #682172;">El dióxido de nitrógeno (NO2) es un compuesto químico gaseoso de color marrón amarillento formado por la combinación de un átomo de nitrógeno y dos de oxígeno. Es un gas tóxico e irritante. El NO2 junto al NO -óxido nitroso- son conocidos
-                    como NOx y son algunos de los principales contaminantes en las ciudades.<br />En la naturaleza se produce por los incendios forestales o las erupciones volcánicas. También se produce de forma natural por la descomposición de nitratos
-                    orgánicos. El volumen total  que se produce de forma natural es infinitamente menor que el que se produce por efecto del hombre.<br />La exposición continuada  NO2 se relaciona con diversas enfermedades de las vía respiratorias como
-                    disminución de la capacidad pulmonar, bronquitis agudas, asma y se considera el culpable de los procesos alérgicos, sobre todo en niños.<br />Se ha relacionado las exposiciones crónicas a bajo nivel  con el enfisema pulmonar. Otros
-                    efectos menores son la irritación ocular y de las mucosas.<br />Existen algunos estudios que apuntan a un incremento en la mortalidad aunque aún no está suficientemente bien establecido que la causa sea solamente la exposición a NO2<br
-                    /><br />El valor del NO2 medio horario no podrá exceder de 200<br />microgramos por metro cúbico (mg / m3) más de 18 veces en un año y el valor medio anual de NO2 no pueden superar los 40 microgramos por metro cúbico (mg / m3).<br
-                    /><br /><br /><br /></p>
-            </div>
-        </div>
-    </div>
-</div></div>
-            <div class="card">
-                <div class="card-body" data-bs-hover-animate="bounce" style="background: #682172;border-radius: 13px;opacity: 0.96;box-shadow: 10px 8px #422e65;border-style: solid;border-color: #422e65;border-bottom-color: #422e65;">
-                    <h4 class="card-title" style="margin-top: 2rem;text-align: center;color: rgb(255,255,255);">Ozono</h4>
-                    <p class="card-text" style="margin-top: 3rem;color: rgb(220,220,220);text-align: justify;">El ozono es un gas incoloro que se encuentra en el aire que respiramos que se forma cuando los contaminantes de automóviles o fábricas reaccionan con la luz solar.</p><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal4" style="margin-left: 4.5rem;margin-top: 1.9rem;background: #007d93;border-color: #09728a;">Más Info</button></div><div role="dialog" tabindex="-1" class="modal fade show" id="modal4">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: #682172;">Ozono</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-            <div class="modal-body">
-                <p style="color: #682172;">El ozono es un gas incoloro que se encuentra en el aire que respiramos.<br />Puede ser bueno o malo, dependiendo de donde se encuentre.<br />El ozono &quot;malo&quot; se encuentra al nivel del suelo. Se forma cuando los contaminantes de
-                    los automóviles, las fábricas y otras fuentes reaccionan químicamente con la luz del sol. Es el componente principal del smog. Suele ser peor en verano. Respirar el ozono malo puede ser dañino. <br />Provoca tos, irritación en la garganta,
-                    empeoramiento defecciones como asma, bronquitis y enfisema y hasta daños<br />pulmonares permanentes, si la exposición a éste es habitual.<br />Otros efectos pueden ser agravamientos asmáticos, falta de aliento, dolor de pecho en respiraciones
-                    profundas, respiración silbante y tos.<br /><br /> El límite inferior es de 0,1 ppm (0,2 mg/m3) y el límite superior es de 0,3 ppm (0,6 mg/m3) <br /><br /><br /><br /></p>
-            </div>
-        </div>
-    </div>
-</div></div>
-        </div>
-    </section>
-    <div class="container-fluid text-center d-block justify-content-center justify-content-xl-center align-items-xl-center" style="width: 100%;max-width: 100%;background: url(&quot;public/img/background2.png&quot;) right / contain no-repeat, #ffffff;height: 200%;padding: 0;">
-        <section data-aos="fade-up" data-aos-duration="800" style="height: 50%;width: 100%;/*position: absolute;*/font-weight: 600;">
-    <div style="text-align: left;margin-bottom: 100px;margin-top: 400px;width: 60%;margin-left: 20px;">
-        <h1 style="font-weight: bold;font-size: 30px;">¿Por qué es malo emitir tantos gases como el CO?</h1>
-        <p style="font-size: 20px;width: 80%;"><strong>El monóxido de carbono (CO) es un gas peligroso que usted</strong>&nbsp;no puede oler, probar o ver. Se produce cuando&nbsp;los&nbsp;<strong>combustibles a base de carbono, tales como queroseno,&nbsp;gasolina, gas natural, propano, carbón o madera se&nbsp;queman sin suficiente oxígeno, lo que provoca una&nbsp;combustión incompleta.</strong></p>
-    </div>
-    <div class="ml-auto" style="width: 75%;margin-top: 400px; margin-right:200px;text-align: right;">
-        <h1 style="font-weight: bold;color: rgb(255,255,255);font-size: 30px;">¿Qué proponemos para cambiar esto?</h1>
-        <p class="ml-auto" style="color: rgb(255,255,255);font-size: 20px;width: 55%;margin-right: 20px;"><strong>Al montar una red general de sensores (XY), capaces de medir de manera exacta y a tiempo real los valores de emisión de dichos gases, podemos llevar un control más exhaustivo de la calidad del aire de nuestras calles, barrios, ciudades, etc.</strong><br><br><strong>Así mismo podremos poner solución a dichos problemas tanto a nivel personal, evitando zonas más conflictivas o peligrosas, como a nivel local, dando aviso de dichas zonas preocupantes.</strong></p>
-    </div>
-</section>
-        <section class="d-lg-flex justify-content-lg-center" style="max-height: 100%;width: 100%;/*position: absolute;*//*bottom: 0px;*/height: 50%;">
-            <div class="card" data-aos="zoom-in" data-aos-duration="1000" style="width: 591px;height: 364px;border-radius: 25px;background: rgba(255,255,255,0.88);box-shadow: 0px 0px 20px rgb(78,78,78);border-width: 0px;top: 264px;">
-                <div class="card-header" id="contacto" style="background: rgba(255,255,255,0);border-width: 0px;padding: 15px 20px;">
-                    <h3 class="mb-0" style="font-weight: 1000;letter-spacing: 1px;">Contacto</h3>
+            </section>
+            <section class="d-lg-flex justify-content-lg-center" style="width: 100%;/*position: absolute;*//*bottom: 0px;*/height: 33%;">
+                <div class="card" style="width: 591px;height: 364px;border-radius: 25px;background: rgba(255,255,255,0.88);box-shadow: 0px 0px 20px rgb(78,78,78);border-width: 0px;top: 264px;">
+                    <div class="card-header" id="contacto" style="background: rgba(255,255,255,0);border-width: 0px;padding: 15px 20px;height: 20%;">
+                        <h3 class="mb-0" style="font-weight: 1000;letter-spacing: 1px;font-family: Nunito, sans-serif;">
+                            Contacto
+                        </h3>
+                    </div>
+                    <div class="card-body d-block d-xl-flex flex-column align-content-center" style="background: rgba(255,255,255,0);padding: 10px;">
+                        <p class="card-text" style="margin: 10px;font-weight: 600;font-family: Nunito, sans-serif;">
+                            Correo electrónico
+                        </p>
+                        <span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;font-family: Montserrat, sans-serif;">
+                            ecoprogress@gmail.com
+                        </span>
+                        <p class="card-text" style="margin: 10px;font-weight: 600;font-family: Nunito, sans-serif;">
+                            Teléfono
+                        </p>
+                        <span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;font-family: Montserrat, sans-serif;">
+                            600011223
+                        </span>
+                        <p class="card-text" style="margin: 10px;font-weight: 600;font-family: Nunito, sans-serif;">
+                            Dirección
+                        </p>
+                        <span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;font-family: Montserrat, sans-serif;">
+                            C/Paseo de la Universidad, 25
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body d-block d-xl-flex flex-column align-content-center" style="background: rgba(255,255,255,0);padding: 10px;">
-                    <p class="card-text" style="margin: 10px;font-weight: 600;">Correo electrónico</p><span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;">ecoprogress@gmail.com</span>
-                    <p class="card-text" style="margin: 10px;font-weight: 600;">Teléfono</p><span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;">600011223</span>
-                    <p class="card-text" style="margin: 10px;font-weight: 600;">Dirección</p><span style="margin: 10px;margin-bottom: 15px;margin-top: 0;color: #007d93;font-weight: 600;">C/Paseo de la Universidad, 25</span></div>
+            </section>
+            <div class="d-block d-xl-flex justify-content-center align-items-xl-center footer" style="height: 45px;box-shadow: 0px -4px 6px #d6d6d6;background: #ffffff;position: absolute;bottom: -2715px;width: 100%;">
+                <a href="#Map">
+                    <i class="fa fa-chevron-up" href="#Map" style="font-size: 30px;text-align: center;/*color: #682172;*/">
+                    </i>
+                </a>
             </div>
-        </section>
-    </div>
-    <div class="footer-basic" style="padding-top: 20px;background: #2d4066;color: #eaeaea;padding-bottom: 20px;">
-        <footer>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#logo">Inicio</a></li>
-                <li class="list-inline-item"><a href="#contacto">Contacto</a></li>
-                <li class="list-inline-item"><a href="#">Términos de privacidad</a></li>
-            </ul>
-            <p class="copyright">Copyright © 2020 Ecoprogress Inc. Todos los derechos reservados</p>
-        </footer>
-    </div>
-</body>
-
+        </div>
+    </body>
 </html>

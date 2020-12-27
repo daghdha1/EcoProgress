@@ -1,0 +1,126 @@
+#wrapper {
+}
+
+.main{
+}
+.body-bg {
+  background: #F3F4FA !important;
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+}
+
+.box .apexcharts-xaxistooltip {
+  background: #1B213B;
+  color: #fff;
+}
+
+.content-area {
+  max-width: 1280px;
+  margin: 0 auto;
+  scroll-behavior: smooth;
+
+}
+
+.box {
+  background-color: rgba(255,255,255,0.88);
+  padding: 25px 25px;
+  box-shadow: 0px 0px 15px rgb(139, 139, 139);
+  border-radius: 10px;
+}
+
+.shadow {
+  box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+}
+
+.sparkboxes .box {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-shadow: 0 1px 1px 1px #666;
+  box-shadow: 0px 0px 15px rgb(139, 139, 139);
+  position: relative;
+  border-radius: 5px;
+}
+
+.sparkboxes .box .details {
+  position: absolute;
+  color: #fff;
+  transform: scale(0.7) translate(-22px, 20px);
+}
+
+.sparkboxes strong {
+  position: relative;
+  z-index: 3;
+  top: -8px;
+  color: #fff;
+}
+
+.sparkboxes .box1 {
+  background-image: linear-gradient( 135deg, #008ba3 1%, #1a5979ff 100%);
+}
+
+.sparkboxes .box2 {
+  background-image: linear-gradient( 135deg, #1a5979ff 10%, #2d4066ff 100%);
+}
+
+.sparkboxes .box3 {
+  background-image: linear-gradient( 135deg, #2d4066ff 10%, #562a69ff 100%);
+}
+
+.sparkboxes .box4 {
+  background-image: linear-gradient( 135deg, #562a69ff 10%, #6f2279 100%);
+}
+
+.columnbox {
+  padding-right: 15px;
+}
+
+.radialbox {
+  max-height: 333px;
+  margin-bottom: 60px;
+}
+
+.apexcharts-legend-series tspan:nth-child(3) {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.edit-on-codepen {
+  text-align: right;
+  width: 100%;
+  padding: 0 20px 40px;
+  position: relative;
+  top: -30px;
+  cursor: pointer;
+}
+
+/* fusionexport btn CSS START */
+
+#fusionexport-btn {
+  min-width: 169px;
+  min-height: 38px;
+  text-align: center;
+}
+
+#fusionexport-btn .span {
+  display: inline-block;
+}
+
+#fusionexport-btn[disabled] {
+  cursor: wait;
+}
+
+.spinner-border {
+  display: none;
+}
+
+#fusionexport-btn[disabled] .spinner-border {
+  display: inline-block;
+}
+
+#fusionexport-btn[disabled] .btn-text {
+  display: none;
+}
+
+/* fusionexport btn CSS START */

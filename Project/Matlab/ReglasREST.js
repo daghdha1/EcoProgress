@@ -2,9 +2,9 @@
 // ReglasREST.js
 // .....................................................................
 module.exports.cargar = function (servidorExpress) {
-    
 
-    
+
+
     servidorExpress.get('/prueba/', function (peticion, respuesta) {
         console.log(" * GET /prueba ");
         respuesta.send("¡Funciona!");
@@ -14,12 +14,12 @@ module.exports.cargar = function (servidorExpress) {
     // .......................................................
     // GET USUARIOS
     // .......................................................
-    servidorExpress.get(
+    servidorExpress.post(
         '/interpolate',
         function (peticion, respuesta) {
             console.log(" * GET /interpolate ");
 
-            let data = getFakeData()
+            let data = JSON.parse(peticion.body)
             data = addFixedPoints(data);
 
             listx = convertDataToString(data.listx);
@@ -32,40 +32,91 @@ module.exports.cargar = function (servidorExpress) {
             console.log("Z-> ", listz);
 
 
-            writeFile("listx.txt",listx);
-            writeFile("listy.txt",listy);
-            writeFile("listz.txt",listz);
+            writeFile("listx.txt", listx);
+            writeFile("listy.txt", listy);
+            writeFile("listz.txt", listz);
 
             executeComand("matlab -nosplash -nodesktop -minimize -r interpola('listx.txt','listy.txt','listz.txt','result.txt')");
 
-            
-            respuesta.send("Hola");
-            //executeComand();
+            let interpolation = getMatrixFromFile("result.txt");
+            console.log(interpolation);
+            respuesta.send(interpolation);
         });
-
 }
 
-function getFakeData() {
+executeComand("matlab -nosplash -nodesktop -minimize -r interpola('listx.txt','listy.txt','listz.txt','result.txt')");
 
+setInterval(() => {
+    executeComand("matlab -nosplash -nodesktop -minimize -r interpola('listx.txt','listy.txt','listz.txt','result.txt')");
+}, 300000);
+
+
+
+var fs = require('fs');
+var math = require("mathjs")
+var lastTimestamp = 0;
+
+function getMatrixFromFile(file) {
+    let allx = fs.readFileSync("fixedx.txt", "utf8");
+    allx = allx.trim(); // final crlf in file
+    let linesx = allx.split("\n");
+    let nx = linesx.length;
+
+    let ally = fs.readFileSync("fixedy.txt", "utf8");
+    ally = ally.trim(); // final crlf in file
+    let linesy = ally.split("\n");
+    let ny = linesy.length;
+
+
+    let all = fs.readFileSync(file, "utf8");
+    all = all.trim(); // final crlf in file
+    let lines = all.split("\n");
+    let n = lines.length;
+    console.log(n);
+
+    console.log("Nro Lineas:", n);
+    let matriz = [];
+    for (let i = 0; i < n; i++) {
+        //console.log(i);
+        let values = lines[i].split(",");
+        let valx = linesx[i].split(",");
+        let valy = linesy[i].split(",");
+        for (let j = 0; j < values.length; j++) {
+            //console.log(values.length)
+            /*console.log("Valores: ");
+            console.log(valx[j]);
+            console.log(valy[j]);
+            console.log(values[j]);*/
+            //console.log("Posicion:",i + " " + j);
+            matriz.push([parseFloat(valy[j]), parseFloat(valx[j]), parseFloat(values[j])]);
+        }
+    }   
+    //console.log(matriz.length);
     return {
-        listy: [39.014858,39.007964,39.000172],
-        listx: [-0.174677, -0.167992, -0.161251],
-        listz: [70,30,70]
-    }
+        l: matriz
+    };
 }
 
-function addFixedPoints(data){
+
+function addFixedPoints(data) {
     data.listx.push(-0.181846);
     data.listx.push(-0.145412);
-    
+    data.listx.push(-0.145412);
+    data.listx.push(-0.181846);
+
+    data.listy.push(39.018389);
+    data.listy.push(38.998124);
     data.listy.push(39.018389);
     data.listy.push(38.998124);
 
     data.listz.push(0);
     data.listz.push(0);
+    data.listz.push(0);
+    data.listz.push(0);
 
     return data;
 }
+
 function convertDataToString(list) {
 
     let result = "";
@@ -77,9 +128,9 @@ function convertDataToString(list) {
     }
     return result;
 }
-const fs = require('fs');
-function writeFile(nombre,data) {
-    fs.writeFile(nombre, data, function (err) {
+
+function writeFile(nombre, data) {
+    fs.writeFileSync(nombre, data, function (err) {
         if (err) {
             return console.log(err);
         }
@@ -87,20 +138,26 @@ function writeFile(nombre,data) {
     });
 }
 
-const {exec} = require("child_process");
+const {
+    exec
+} = require("child_process");
+const {
+    Console
+} = require('console');
 
 function executeComand(command) {
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
+    let currentTimestamp = Date.now();
+    console.log(currentTimestamp);
+
+    if ((lastTimestamp - currentTimestamp) > 300) {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+        });
+        lastTimestamp = currentTimestamp;
+    }
 }
 
 
