@@ -1,10 +1,10 @@
-function logValidation() {
-    let params = logValidation.arguments;
+function login() {
+    let params = login.arguments;
     let form = params[0];
     if (isValidForm(form, params)) {
         let formData = new FormData(form);
         formData.append("action", "login");
-        let request = new Request(config.restDir + "/users", {
+        let request = new Request(config.restDir + "/auth", {
             method: "post",
             body: formData
         });
@@ -37,14 +37,4 @@ function logValidation() {
 function saveUserSession(userDataSession) {
     sessionStorage.setItem("mail", userDataSession.mail);
     sessionStorage.setItem("root", userDataSession.root);
-}
-
-function isValidForm(form, params) {
-    for (var i = 1; i < params.length; i++) {
-        if (form[params[i]].value.length == 0) {
-            setFocusElementDOM(params[i]);
-            return false;
-        }
-    }
-    return true;
 }

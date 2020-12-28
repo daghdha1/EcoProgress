@@ -1,3 +1,13 @@
+function isValidForm(form, params) {
+    for (var i = 1; i < params.length; i++) {
+        if (form[params[i]].value.length == 0) {
+            setFocusElementDOM(params[i]);
+            return false;
+        }
+    }
+    return true;
+}
+
 function initModalPanel(namePanel) {
     if (!document.getElementById(namePanel)) {
         $.ajax({
