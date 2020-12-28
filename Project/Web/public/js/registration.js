@@ -1,6 +1,7 @@
 function registration() {
     let params = registration.arguments;
     let form = params[0];
+    // Si los campos no están vacíos (excepto apellidos)
     if (isValidForm(form, params)) {
         let formData = new FormData(form);
         formData.append("action", "registration");
@@ -10,9 +11,11 @@ function registration() {
         });
         // Enviamos la petición
         fetch(request).then(function(response) {
-            // Si la respuesta es exitosa (200 code), devuelve json
-            if (response.ok) return response.json();
-            else return false;
+            // Si el email y la product key son válidas
+            // Return Success - Valid Email
+            // $msg = 'Your account has been made, <br /> please verify it by clicking the activation link that has been send to your email.';
+            if (response.ok) return response.json(); 
+            else return null;
         }).then(function(json) {
             // Si es null (no ha encontrado ninguna coincidencia)
             if (json === null) {
@@ -22,9 +25,8 @@ function registration() {
                 clearElementDOM("reg_key");
                 setFocusElementDOM("reg_name");
             }
-            // Sino, se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
+            // Sino, 
             else {
-                swapModalPanel('registrationPanel', 'loginPanel');
                 alert("Registro realizado, por favor, inicia sesión.")
             }
         });

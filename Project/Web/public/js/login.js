@@ -16,7 +16,7 @@ function login() {
         /*fetch(request).then(function(response) {
             // Si la respuesta es exitosa (200 code), devuelve json
             if (response.ok) return response.json();
-            else return false;
+            else return null;
         }).then(function(json) {
             // Si es null (no ha encontrado ninguna coincidencia)
             if (json === null) {

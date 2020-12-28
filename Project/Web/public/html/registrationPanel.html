@@ -9,24 +9,32 @@
                 </button>
             </header>
             <!-- Form  -->
-            <form name="formLogin" onsubmit="registration(this, 'reg_name', 'reg_email', 'reg_password', 'reg_key'); return false;">
+            <form name="formLogin" onsubmit="registration(this, 'reg_name', 'reg_surnames', 'reg_email', 'reg_password', 'reg_password_confirm', 'reg_key'); return false;">
                 <div class="modal-body d-flex flex-column">
                     <label class="text-center text-muted" for="reg_name" style="margin-bottom: 5px;">
-                        Nombre de usuario
+                        Nombre *
                     </label>
                     <input class="justify-content-center mx-auto" id="reg_name" inputmode="text" name="reg_name" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
+                    <label class="text-center text-muted" for="reg_surnames" style="margin-bottom: 5px;">
+                        Apellidos
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_surnames" inputmode="text" name="reg_surnames" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
                     <label class="text-center text-muted" for="reg_email" style="margin-bottom: 5px;">
-                        Correo electrónico
+                        Correo electrónico *
                     </label>
                     <input class="justify-content-center mx-auto" id="reg_email" inputmode="email" name="reg_email" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email"/>
                     <label class="text-center text-muted" for="reg_password" style="margin-bottom: 5px;">
-                        Contraseña
+                        Contraseña *
                     </label>
-                    <input class="justify-content-center mx-auto" id="reg_password" name="password" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password"/>
+                    <input class="justify-content-center mx-auto" id="reg_password" name="reg_password" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password"/>
+                    <label class="text-center text-muted" for="reg_password_confirm" style="margin-bottom: 5px;">
+                        Confirma tu contraseña *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_password_confirm" name="reg_password_confirm" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password"/>
                     <label class="text-center text-muted" for="reg_key" style="margin-bottom: 5px;">
-                        Clave de producto
+                        Clave de producto *
                     </label>
-                    <input class="justify-content-center mx-auto" id="reg_key" name="key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
+                    <input class="justify-content-center mx-auto" id="reg_key" name="reg_key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
                     <button class="btn btn-primary mx-auto" formmethod="post" id="reg_submit" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="submit">
                         Regístrate
                     </button>

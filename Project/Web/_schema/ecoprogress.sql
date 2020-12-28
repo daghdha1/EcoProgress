@@ -13,7 +13,8 @@ surnames VARCHAR (40),
 password VARCHAR (20) NOT NULL,
 last_conn INT,
 reg_date INT NOT NULL,
-status VARCHAR (10) DEFAULT 'pending',
+role VARCHAR (4) NOT NULL,
+account_status VARCHAR (10) DEFAULT 'pending',
 PRIMARY KEY (mail)
 );
 
@@ -47,7 +48,7 @@ FOREIGN KEY (sensorID) REFERENCES Sensors(id)
 #INSERT INTO Users (mail, name, surnames, password) VALUES ('marta@developer.com', 'Marta', 'García', 'ecoprogress');
 #INSERT INTO Users (mail, name, surnames, password) VALUES ('marcelo@developer.com', 'Marcelo', 'Espinola', 'ecoprogress');
 #INSERT INTO Users (mail, name, surnames, password) VALUES ('sotito@developer.com', 'Maria', 'Soto', 'ecoprogress');
-INSERT INTO Users (mail, name, surnames, password) VALUES ('daghdha@developer.com', 'Adrian', 'Soler Navarro', 'ecoprogress');
+INSERT INTO Users (mail, name, surnames, password, last_conn, reg_date, role) VALUES ('daghdha@developer.com', 'Adrian', 'Soler Navarro', 'ecoprogress', NULL, 1620203039, 'root');
 
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', NULL, 'CO', '1d2d92g6', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('2', NULL, 'CO', '20kDÑ2ln', 0);
