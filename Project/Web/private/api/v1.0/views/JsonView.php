@@ -7,7 +7,7 @@ class JsonView extends BaseView {
 		header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE');
         header('Content-Type: application/json; charset=utf-8');
         // Devolvemos al cliente web la respuesta formateada
-        //echo json_encode($content);
+        echo json_encode($content);
     }
 
 }

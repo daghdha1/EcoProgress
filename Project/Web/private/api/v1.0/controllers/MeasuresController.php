@@ -57,7 +57,7 @@ class MeasuresController extends BaseController {
         if (areThereParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
-            $result = null;
+            $result = NULL;
         }
 
         // Cargamos la vista seleccionada
@@ -154,7 +154,7 @@ class MeasuresController extends BaseController {
             }
             return $result;
         } 
-        return null;
+        return NULL;
     }
 
     // ---------------------------------------------- POST ----------------------------------------------- //
@@ -173,7 +173,7 @@ class MeasuresController extends BaseController {
             $result = $this->createArrayOfMeasures($request->parameters, $request->resource);
             return $result;    
         }
-        return null;    
+        return NULL;    
     }
 
 }

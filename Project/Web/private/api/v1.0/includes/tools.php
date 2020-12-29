@@ -13,6 +13,16 @@ function formatStrEntity($str) {
 	return substr_replace($str, '', -1);
 }
 
+/*
+* Entity<T>, Texto -->
+* 			  			 isAnEntityOf()
+* <-- V | F
+*/
+function isAnEntityOf($data, $name) {
+	$entity = $name . 'Entity';
+	return is_a($data, $entity, false);
+}
+
 /* 
 * Comprueba si existen parámetros en la petición URI
 *

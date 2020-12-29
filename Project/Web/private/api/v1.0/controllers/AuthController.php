@@ -49,7 +49,7 @@ class AuthController extends BaseController {
         $usersModel = parent::loadModel("Users");
         // Cargamos el modelo de Sensors
         $sensorsModel = parent::loadModel("Sensors");
-        
+
         $result = $this->getIncomingParametersAndExecutePostMethod($usersModel, $sensorsModel, $request);
 
         // Cargamos la vista seleccionada
@@ -89,8 +89,14 @@ class AuthController extends BaseController {
         if (isset($params['action'])) {
             switch ($params['action']) {
                 case 'registration':
-                    $data = $this->prepareUserData($usersModel, $sensorsModel, $params);
-                    $result = $this->registration($usersModel, $data);
+                    $userData = $this->prepareUserData($usersModel, $sensorsModel, $params);
+                    $user = $this->registration($usersModel, $userData);
+                    if (isAnEntityOf($user, 'User')) {
+                        $result = array();
+                        array_push($result, $user->toArray());
+                    } else {
+                        $result = $user;
+                    }
                     break;
                 case 'login':
                     // $result = $model->login($params['username'], $params['password']);
@@ -103,8 +109,9 @@ class AuthController extends BaseController {
                     break;
                 default:
             }
+            return $result;
         }
-        return $result;
+        return NULL;
     }
 
     // ---------------------------------------------- REGISTRATION METHODS ----------------------------------------------- //
@@ -114,7 +121,7 @@ class AuthController extends BaseController {
     *
     * UsersModel, SensorsModel, Lista<Texto> -->
     *                                               prepareUserData() <--
-    * <-- UserEntity | Nada
+    * <-- UserEntity | Texto
     */
     private function prepareUserData($usersModel, $sensorsModel, $params) {
         // Si el sensor a registrar está disponible (existe y no tiene propietario)
@@ -136,30 +143,43 @@ class AuthController extends BaseController {
                 return $user;
             } else {
                 // El mail indicado ya existe!
-                $msg = 'El mail indicado ya existe.';
+                $errorMsg = 'El mail indicado ya existe.';
             }
         } else {
             // La clave del producto no es válida!
-            $msg = 'La clave del producto no es válida.';
+            $errorMsg = 'La clave del producto no es válida.';
         }
-        return $msg;
+        return $errorMsg;
     }
 
+    /* 
+    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    *
+    * UsersModel, Lista<Texto> -->
+    *                                  registration() <--
+    * <-- UserEntity | Texto
+    */
     private function registration($usersModel, $data) {
-        if (is_a($data, 'UserEntity', false)) {
+        if (isAnEntityOf($data, 'User')) {
             if ($usersModel->createUser($data)) {
-                    line();
-                    debug('sending email!', "");
-                if ($this->sendVerificationEmailTo($data)) {
-                    line();
-                    debug('email sended!', "");
+                //debug('sending email!', "");
+                if ($this->sendVerificationEmail($data)) {
+                    //line();
+                    //debug('email sended!', "");
+                } else {
+                    //line();
+                    //debug('email NOT sended', "");
+                    //$errorMsg = 'Se ha producido un error al enviar el correo';
                 }
+            } else {
+                $errorMsg = 'Se ha producido un error al crear el usuario';
+                $data = $errorMsg;
             }
         }
         return $data;
     }
 
-    private function sendVerificationEmailTo($data) {
+    private function sendVerificationEmail($data) {
         $to      = $data->getMail();
         $subject = 'EcoProgress Verification';
         $message = '
