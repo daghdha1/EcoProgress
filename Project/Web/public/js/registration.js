@@ -5,6 +5,7 @@ function registration() {
     if (isValidForm(form, params)) {
         let formData = new FormData(form);
         formData.append("action", "registration");
+        formData.delete("reg_password_confirm");
         let request = new Request(config.restDir + "/auth", {
             method: "post",
             body: formData
@@ -20,14 +21,16 @@ function registration() {
             // Si es null (no ha encontrado ninguna coincidencia)
             if (json === null) {
                 clearElementDOM("reg_name");
-                clearElementDOM("reg_email");
+                clearElementDOM("reg_mail");
                 clearElementDOM("reg_password");
+                clearElementDOM("reg_password_confirm")
                 clearElementDOM("reg_key");
-                setFocusElementDOM("reg_name");
+
+                setFocusElementDOM("reg_mail");
             }
             // Sino, 
             else {
-                alert("Registro realizado, por favor, inicia sesión.")
+                alert("json recibido!")
             }
         });
     }

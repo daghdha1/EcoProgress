@@ -33,4 +33,14 @@ class SensorsModel extends BaseModel {
 		return $result;
 	}
 
+	public function isTheSensorAvailable($key) {
+		$strKey = mysqli_real_escape_string($this->conn, $key);
+		// Query
+		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' AND s.state = 0";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
 }

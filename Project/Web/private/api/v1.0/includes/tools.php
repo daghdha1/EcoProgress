@@ -1,25 +1,41 @@
 <?php
 
+// -------------------------------------------------------------------------------------- //
+// -------------------------------------- REQUEST --------------------------------------- //
+
+/*
+* Texto -->
+* 			  formatStrEntity()
+* <-- Texto
+*/
+function formatStrEntity($str) {
+	// Se quita la última letra (ej-> measures -> measure)
+	return substr_replace($str, '', -1);
+}
+
 /* 
 * Comprueba si existen parámetros en la petición URI
 *
 * Lista<Texto> -->
-*                   areThereURIParameters() <--
+*                    areThereURIParameters() <--
 * <-- T | F
 */
-function areThereURIParameters(&$params) {
+function areThereParameters(&$params) {
     if (count($params) > 0) {
         return true;
     }
     return false;
 }
 
+// -------------------------------------------------------------------------------------------- //
+// -------------------------------------- FUNCTIONALITY --------------------------------------- //
+
 /* 
 * Devuelve el instante de tiempo del periodo seleccionado (ej. instante de tiempo hace 24 horas)
 * Devuelve -1 si no encuentra un periodo válido 
 *
 * Texto -->
-* 				getTimestampOfPeriod()
+* 				getTimestampOfPeriod() <--
 * <-- N | -1
 */
 function getTimestampOfPeriod($period) {
@@ -43,32 +59,9 @@ function getTimestampOfPeriod($period) {
 	return $targetSeconds;
 }
 
-/*
-* Texto -->
-* 			formatStrEntity()
-* <-- Texto
-*/
-function formatStrEntity($str) {
-	// Se quita la última letra (ej-> measures -> measure)
-	return substr_replace($str, '', -1);
-}
-
-/*
-* Lista<Texto> -->
-* 					removeElementsInStrArray()
-* <-- Lista<Texto>
-*/
-function removeElementsInStrArray(&$array, $regex) {
-	for ($i=0; $i < count($array); $i++) {
-		if (preg_match($regex, $array[$i]) === 1) {
-			unset($array[$i]);
-		}
-	}
-}
-
-
 /**
- * Esta todo en grados.
+ * Calcula la distancia recorrida
+ *
  * @param float $latitudeFrom latitud del punto inicial 
  * @param float $longitudeFrom longitud del punto inicial
  * @param float $latitudeTo latitud del punto final
@@ -77,9 +70,8 @@ function removeElementsInStrArray(&$array, $regex) {
  * @return float Distancia en metros sobre el globo
  */
 
-function haversineDistanceCalculator(
-	$latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
-	// convert from degrees to radians
+function haversineDistanceCalculator ($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
+	// Convert from degrees to radians
 	$latFrom = deg2rad($latitudeFrom);
 	$lonFrom = deg2rad($longitudeFrom);
 	$latTo = deg2rad($latitudeTo);
@@ -92,3 +84,71 @@ function haversineDistanceCalculator(
 	
 	return $angle * $earthRadius;
   }
+
+// --------------------------------------------------------------------------------------- //
+// -------------------------------------- SECURITY --------------------------------------- //
+
+/*
+* Devuelve un número random entre un rango de valores indicado
+*
+* 			generateSecretCode() <--
+* <-- N
+*/
+function generateSecretCode() {
+	$rand = rand(10000, 30000);
+	return $rand;
+}
+
+/*
+* Devuelve el hash md5 como un número hexadecimal de 32 carácteres
+*
+* 				generateMd5Hash() <--
+* <-- Texto
+*/
+function generateMd5Hash($value) {
+	$hash = md5($value);
+	return $hash;
+}
+
+/*
+* Genera una cadena de texto aleatoria de 60 carácteres usando el algoritmo bcrypt
+*
+* 						generatePasswordHash() <--
+* <-- Texto | False
+*/
+function generatePasswordHash($pw) {
+	$pw_hashed = password_hash($pw, PASSWORD_DEFAULT);
+	return $pw_hashed;
+}
+
+// ------------------------------------------------------------------------------------- //
+// -------------------------------------- OTHERS --------------------------------------- //
+
+/*
+*  line() -->
+*/
+function line() {
+	echo '</br>';
+}
+
+/*
+* Texto, Texto -->
+* 					  debug() <--
+* <-- Texto
+*/
+function debug($msg, $value) {
+	echo $msg . '--> ' . $value;
+}
+
+/*
+* Lista<Texto> -->
+* 					removeElementsInStrArray() <--
+* <-- Lista<Texto>
+*/
+function removeElementsInStrArray(&$array, $regex) {
+	for ($i=0; $i < count($array); $i++) {
+		if (preg_match($regex, $array[$i]) === 1) {
+			unset($array[$i]);
+		}
+	}
+}

@@ -48,9 +48,9 @@ class UsersModel extends BaseModel {
     *
     * Texto, N -->
     *                 			getActiveTimeOfUser() <--
-    * <-- Active time:N, Nada
+    * <-- Active range:N, Nada
     */
-	public function getActiveTimeOfUser($mail, $time) {
+	public function getActiveTimeOfUser($mail, $range) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
 		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
@@ -61,19 +61,20 @@ class UsersModel extends BaseModel {
 		$resultado = 0;
 		for($i = 0; $i < count($result); $i++){
 			$res = $result[$i]->timestamp - $result[$i+1]->timestamp;
-			if($res <= $time) {
+			if($res <= $range) {
 				$resultado = $resultado + $res;
 			}
 		}
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 		return $resultado;
 	}
+
 	/* 
     * Obtiene la distancia total recorrida del usuario activo
     *
-    * N, N -->
+    * Texto -->
     *                 			getActiveUser() <--
-    * <-- Active time:N, Nada
+    * <-- N, Nada
     */
 	public function getTraveledDistance($mail) {
 		// Escapamos los carácteres especiales
@@ -86,5 +87,35 @@ class UsersModel extends BaseModel {
 		return $result;
 	}
 
+    // ---------------------------------------------- POST ----------------------------------------------- //
+
+	/* 
+    * Crea un usuario en la base de datos
+    *
+    * Lista<Texto> -->
+    *                   createUser() <--
+    * <-- UserEntity
+    *
+    * Nota: Lo más seguro es crear sentencias preparadas pero por tiempo lo dejo con saneamiento de strings solo
+    */
+	public function createUser($data) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->conn, $data->getMail());
+		$strName = mysqli_real_escape_string($this->conn, $data->getName());
+		$strSurnames = mysqli_real_escape_string($this->conn, $data->getSurnames());
+		$strPassword = $data->getPassword();
+		$strSecretCode = (int)$data->getSecretCode();
+		$strRegDate = (int)$data->getRegDate();
+		$strRole = mysqli_real_escape_string($this->conn, $data->getRole());
+		$strAccountStatus = mysqli_real_escape_string($this->conn, $data->getAccountStatus());
+
+		// Query
+		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $strSecretCode, $strRegDate, '$strRole', '$strAccountStatus');";
+		
+		// Devuelve true, si no ha podido insertar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+
+		return $result;
+	}
 
 }

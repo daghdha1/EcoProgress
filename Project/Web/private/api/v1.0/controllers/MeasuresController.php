@@ -29,7 +29,7 @@ class MeasuresController extends BaseController {
         $model = parent::loadModel($request->resource);
         
         // Check de parámetros
-        if (!areThereURIParameters($request->parameters)) {
+        if (!areThereParameters($request->parameters)) {
             // Obtiene todas las medidas
             $result = $this->getAllMeasures($model, $request);
         } else {
@@ -54,7 +54,7 @@ class MeasuresController extends BaseController {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
 
-        if (areThereURIParameters($request->parameters)) {
+        if (areThereParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
             $result = null;

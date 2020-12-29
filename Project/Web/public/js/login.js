@@ -8,9 +8,9 @@ function login() {
             method: "post",
             body: formData
         });
-        clearElementDOM("log_email"); //TEST
+        clearElementDOM("log_mail"); //TEST
         clearElementDOM("log_password"); //TEST
-        setFocusElementDOM("log_email"); //TEST
+        setFocusElementDOM("log_mail"); //TEST
         // TODO
         // Enviamos la petición
         /*fetch(request).then(function(response) {

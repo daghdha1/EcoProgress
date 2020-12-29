@@ -27,9 +27,8 @@ class UsersController extends BaseController {
     public function getAction($request) {
         // Cargamos el modelo de Users
         $model = parent::loadModel($request->resource);
-        
         // Check de parámetros
-        if (!areThereURIParameters($request->parameters)) {
+        if (!areThereParameters($request->parameters)) {
             // Obtiene todos los usuarios
             $result = $this->getAllUsers($model, $request);
         } else {
