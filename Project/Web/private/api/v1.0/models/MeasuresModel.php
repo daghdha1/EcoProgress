@@ -14,6 +14,8 @@ class MeasuresModel extends BaseModel {
         $this->conn = $adapter;
     }
 
+    // Nota: Lo más seguro es crear sentencias preparadas pero por tiempo lo dejo con saneamiento de strings solo
+
 	// ---------------------------------------------- GET ----------------------------------------------- //
 
 	/* 

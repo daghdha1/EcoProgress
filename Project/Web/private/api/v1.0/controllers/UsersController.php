@@ -138,7 +138,7 @@ class UsersController extends BaseController {
             }
             return $result;
         } 
-        return null;
+        return NULL;
     }
 
 }

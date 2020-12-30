@@ -14,6 +14,8 @@ class SensorsModel extends BaseModel {
         $this->conn = $adapter;
     }
 
+    // Nota: Lo más seguro es crear sentencias preparadas pero por tiempo lo dejo con saneamiento de strings solo
+
 	// ---------------------------------------------- GET ----------------------------------------------- //
 
 	/* 
@@ -33,14 +35,24 @@ class SensorsModel extends BaseModel {
 		return $result;
 	}
 
+	// ---------------------------------------------- CHECKS ----------------------------------------------- //
+
+	/* 
+    * Comprueba si el sensor está disponible (no registrado)
+    *
+    * Texto -->
+    *                   isTheSensorAvailable() <--
+    * <-- V | F
+    */
 	public function isTheSensorAvailable($key) {
 		$strKey = mysqli_real_escape_string($this->conn, $key);
 		// Query
 		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' AND s.state = 0";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-		return $result;
+		// Devuelve verdadero, si no ha encontrado ninguna coincidencia, devuelve falso
+		if (!is_null($result)) return true;
+		return false;
 	}
 
 }

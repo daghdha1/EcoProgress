@@ -10,6 +10,8 @@ class UsersModel extends BaseModel {
         $this->conn = $adapter;
     }
 
+    // Nota: Lo más seguro es crear sentencias preparadas pero por tiempo lo dejo con saneamiento de strings solo
+
     // ---------------------------------------------- GET ----------------------------------------------- //
 
 	/* 
@@ -36,7 +38,7 @@ class UsersModel extends BaseModel {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1";
+		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1;";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -53,7 +55,7 @@ class UsersModel extends BaseModel {
 	public function getActiveTimeOfUser($mail, $range) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
-		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
+		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC;";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
@@ -80,7 +82,7 @@ class UsersModel extends BaseModel {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
+		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail';";
 		// Respuesta
 		$result = MyEntity::executeSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -92,22 +94,20 @@ class UsersModel extends BaseModel {
 	/* 
     * Crea un usuario en la base de datos
     *
-    * Lista<Texto> -->
+    * UserEntity -->
     *                   createUser() <--
-    * <-- UserEntity
-    *
-    * Nota: Lo más seguro es crear sentencias preparadas pero por tiempo lo dejo con saneamiento de strings solo
+    * <-- V | F
     */
-	public function createUser($data) {
+	public function createUser($user) {
 		// Escapamos los carácteres especiales
-		$strMail = mysqli_real_escape_string($this->conn, $data->getMail());
-		$strName = mysqli_real_escape_string($this->conn, $data->getName());
-		$strSurnames = mysqli_real_escape_string($this->conn, $data->getSurnames());
-		$strPassword = $data->getPassword();
-		$strSecretCode = (int)$data->getSecretCode();
-		$strRegDate = (int)$data->getRegDate();
-		$strRole = mysqli_real_escape_string($this->conn, $data->getRole());
-		$strAccountStatus = mysqli_real_escape_string($this->conn, $data->getAccountStatus());
+		$strMail = mysqli_real_escape_string($this->conn, $user->getMail());
+		$strName = mysqli_real_escape_string($this->conn, $user->getName());
+		$strSurnames = mysqli_real_escape_string($this->conn, $user->getSurnames());
+		$strPassword = $user->getPassword();
+		$strSecretCode = (int)$user->getSecretCode();
+		$strRegDate = (int)$user->getRegDate();
+		$strRole = mysqli_real_escape_string($this->conn, $user->getRole());
+		$strAccountStatus = mysqli_real_escape_string($this->conn, $user->getAccountStatus());
 
 		// Query
 		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $strSecretCode, $strRegDate, '$strRole', '$strAccountStatus');";
@@ -116,6 +116,27 @@ class UsersModel extends BaseModel {
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 
 		return $result;
+	}
+
+	// ---------------------------------------------- CHECKS ----------------------------------------------- //
+	
+	/* 
+    * Comprueba si el código de activación de registro del usuario es válido
+    *
+    * Texto, N -->
+    *                 isTheRegistrationCodeValid() <--
+    * <-- V | F
+    */
+	public function isTheRegistrationCodeValid($mail, $reg_code) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+		$strSecretCode = (int)$reg_code;
+		// Query
+		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = '$strSecretCode';";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve verdadero, si no ha encontrado ninguna coincidencia, devuelve falso
+		if (!is_null($result)) return true;
+		return false;
 	}
 
 }

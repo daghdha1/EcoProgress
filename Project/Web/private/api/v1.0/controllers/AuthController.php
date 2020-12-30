@@ -50,7 +50,7 @@ class AuthController extends BaseController {
         // Cargamos el modelo de Sensors
         $sensorsModel = parent::loadModel("Sensors");
 
-        $result = $this->getIncomingParametersAndExecutePostMethod($usersModel, $sensorsModel, $request);
+        $result = $this->getIncomingParametersAndExecuteMethod($usersModel, $sensorsModel, $request);
 
         // Cargamos la vista seleccionada
         $view = parent::loadView($request->format);
@@ -59,7 +59,17 @@ class AuthController extends BaseController {
     }
 
     public function putAction($request) {
+        // Cargamos el modelo de Users
+        $usersModel = parent::loadModel("Users");
+        // Cargamos el modelo de Sensors
+        $sensorsModel = parent::loadModel("Sensors");
 
+        $result = $this->getIncomingParametersAndExecuteMethod($usersModel, $sensorsModel, $request);
+
+        // Cargamos la vista seleccionada
+        $view = parent::loadView($request->format);
+        // Parseamos la respuesta a JSON
+        $view->render($result);
     }
 
     public function deleteAction($request) {
@@ -70,11 +80,7 @@ class AuthController extends BaseController {
     // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
     // -------------------------------------------------------------------------------------------------- //
 
-    // ---------------------------------------------- (GET) ----------------------------------------------- //
-
-    
-
-    // ---------------------------------------------- (POST) ----------------------------------------------- //
+    // -------------------------------------------- REQUEST --------------------------------------------- //
 
     /* 
     * Escoge el método POST acorde con el parámetro recibido
@@ -83,19 +89,22 @@ class AuthController extends BaseController {
     *                                               getIncomingParametersAndExecutePostMethod() <--
     * <-- RESULT T
     */
-    private function getIncomingParametersAndExecutePostMethod($usersModel, $sensorsModel, $request) {
+    private function getIncomingParametersAndExecuteMethod($usersModel, $sensorsModel, $request) {
         $params = $request->parameters;
         // Si existe una de estas acciones, la ejecutamos
         if (isset($params['action'])) {
             switch ($params['action']) {
                 case 'registration':
-                    $userData = $this->prepareUserData($usersModel, $sensorsModel, $params);
-                    $user = $this->registration($usersModel, $userData);
-                    if (isAnEntityOf($user, 'User')) {
-                        $result = array();
-                        array_push($result, $user->toArray());
+                    if($this->checkUserData($usersModel, $sensorsModel, $params)) {
+                        $user = $this->createUserEntity($params);
+                        $result = $this->registration($usersModel, $user);
                     } else {
-                        $result = $user;
+                        $result = 'Correo eléctronico y/o clave de producto inválidos';
+                    }
+                    break;
+                case 'accountActivation':
+                    if ($this->checkRegistrationCode($usersModel, $params)) {
+                        // TODO--> $this->accountActivation();
                     }
                     break;
                 case 'login':
@@ -108,77 +117,55 @@ class AuthController extends BaseController {
                     // $result = $model->recovery($params['email']);
                     break;
                 default:
+                    $result = NULL;
             }
             return $result;
         }
         return NULL;
     }
 
-    // ---------------------------------------------- REGISTRATION METHODS ----------------------------------------------- //
+    // ---------------------------------------------- (GET) ----------------------------------------------- //
 
-    /* 
-    * Preparación de los datos de usuario para ser insertados en la base de datos
-    *
-    * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                               prepareUserData() <--
-    * <-- UserEntity | Texto
-    */
-    private function prepareUserData($usersModel, $sensorsModel, $params) {
-        // Si el sensor a registrar está disponible (existe y no tiene propietario)
-        if (!is_null($sensorsModel->isTheSensorAvailable($params['reg_key']))) {
-            // Si el email a registrar está disponible (no existe)
-            if (is_null($usersModel->getUser($params['reg_mail']))) {
-                // Creamos un nuevo usuario
-                $user = parent::createEntity('Users');
-                // Asignamos las propiedades del objeto user a enviar
-                $user->setMail($params['reg_mail']);
-                $user->setName($params['reg_name']);
-                $user->setSurnames($params['reg_surnames']);
-                $user->setPassword(generatePasswordHash($params['reg_password']));
-                $user->setSecretCode(generateSecretCode());
-                $user->setLastConn(NULL);
-                $user->setRegDate(time());
-                $user->setRole('user');
-                $user->setAccountStatus('pending');
-                return $user;
-            } else {
-                // El mail indicado ya existe!
-                $errorMsg = 'El mail indicado ya existe.';
-            }
-        } else {
-            // La clave del producto no es válida!
-            $errorMsg = 'La clave del producto no es válida.';
-        }
-        return $errorMsg;
-    }
+    
+
+    // ---------------------------------------------- (POST) ----------------------------------------------- //
 
     /* 
     * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
     *
-    * UsersModel, Lista<Texto> -->
+    * UsersModel, UserEntity -->
     *                                  registration() <--
-    * <-- UserEntity | Texto
+    * <-- Lista<UserEntity> | Texto
     */
-    private function registration($usersModel, $data) {
-        if (isAnEntityOf($data, 'User')) {
-            if ($usersModel->createUser($data)) {
-                //debug('sending email!', "");
-                if ($this->sendVerificationEmail($data)) {
-                    //line();
-                    //debug('email sended!', "");
-                } else {
-                    //line();
-                    //debug('email NOT sended', "");
-                    //$errorMsg = 'Se ha producido un error al enviar el correo';
-                }
+    private function registration($usersModel, $user) {    
+        if ($usersModel->createUser($user)) {
+            //debug('sending email!', "");
+            if ($this->sendVerificationEmail($user)) {
+                //line();
+                //debug('email sended!', "");
+                $result = array();
+                array_push($result, $user->toArray());
             } else {
-                $errorMsg = 'Se ha producido un error al crear el usuario';
-                $data = $errorMsg;
+                //line();
+                //debug('email NOT sended', "");
+                //$result = 'Se ha producido un error al enviar el correo';
+                // TEMPORAL hasta que puedan enviarse emails
+                $result = array(); 
+                array_push($result, $user->toArray()); 
             }
+        } else {
+            $result = 'Se ha producido un error al crear el usuario';
         }
-        return $data;
+        return $result;
     }
 
+    /* 
+    * Envía un correo de verificación de cuenta con el código secreto implícito
+    *
+    * UserEntity -->
+    *                     sendVerificationEmail() <--
+    * <-- V | F
+    */
     private function sendVerificationEmail($data) {
         $to      = $data->getMail();
         $subject = 'EcoProgress Verification';
@@ -193,15 +180,71 @@ class AuthController extends BaseController {
         --------------------------
           
         ';
-        
-        /*Introduzca el código de verificación en nuestro formulario de registro:
-        http://www.yourwebsite.com/verify.php?email='.$email.'&hash='.$hash.'*/
 
         $message = wordwrap($message, 70, "\r\n");
 
         $headers = 'From:ecoprogress@server.com' . "\r\n";
         
         return mail($to, $subject, $message, $headers);
+    }
+
+    // -------------------------------------------- (PUT) --------------------------------------------- //
+
+    // -------------------------------------------- UTIL ---------------------------------------------- //
+
+    /* 
+    * Crea un objeto User
+    *
+    * Lista<Texto> -->
+    *                    createUserEntity() <--
+    * <-- UserEntity
+    */
+    private function createUserEntity($params) {
+        // Creamos un nuevo usuario
+        $user = parent::createEntity('Users');
+        // Asignamos las propiedades del objeto user a enviar
+        $user->setMail($params['reg_mail']);
+        $user->setName($params['reg_name']);
+        $user->setSurnames($params['reg_surnames']);
+        $user->setPassword(generatePasswordHash($params['reg_password']));
+        $user->setSecretCode(generateSecretCode());
+        $user->setLastConn(NULL);
+        $user->setRegDate(time());
+        $user->setRole('user');
+        $user->setAccountStatus('pending');
+        return $user;
+    }
+
+    // -------------------------------------------- CHECKS ---------------------------------------------- //
+
+    /* 
+    * Comprobación de datos de usuario válidos
+    *
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               checkUserData() <--
+    * <-- V | F
+    */
+    private function checkUserData($usersModel, $sensorsModel, $params) {
+        // Si el sensor a registrar está disponible (existe y no tiene propietario)
+        if ($sensorsModel->isTheSensorAvailable($params['reg_key'])) {
+            // Si el email a registrar está disponible (no existe)
+            if (is_null($usersModel->getUser($params['reg_mail']))) {
+                return true;
+            } 
+        }
+        return false;
+    }
+
+    /* 
+    * Comprobación de código de activación de cuenta
+    *
+    * UsersModel, Lista<Texto> -->
+    *                                checkRegistrationCode() <--
+    * <-- V | F
+    */
+    private function checkRegistrationCode($usersModel, $params) {
+        // Si el código de activación de cuenta coincide con el secretCode del usuario
+        return $usersModel->isTheRegistrationCodeValid($params['reg_code_mail'], $params['reg_code']) {
     }
 
 }

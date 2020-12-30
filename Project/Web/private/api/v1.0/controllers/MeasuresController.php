@@ -33,7 +33,7 @@ class MeasuresController extends BaseController {
             // Obtiene todas las medidas
             $result = $this->getAllMeasures($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            $result = $this->getIncomingParametersAndExecuteMethod($model, $request);
         }
 
         // Cargamos la vista seleccionada
@@ -77,21 +77,7 @@ class MeasuresController extends BaseController {
     // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
     // -------------------------------------------------------------------------------------------------- //
 
-    // ---------------------------------------------- GET ----------------------------------------------- //
-
-    /* 
-    * Obtiene todas las medidas disponibles
-    *
-    * MeasuresModel, Request -->
-    *                               getAllMeasures() <--
-    * <-- Lista<MeasureEntity>
-    */
-    private function getAllMeasures($model, $request) {
-        // Obtenemos el array de mediciones (objects stdClass)
-        $data = $model->getAllMeasures();
-        $result = $this->createArrayOfMeasures($data, $request->resource);
-        return $result;
-    }
+    // -------------------------------------------- REQUEST ----------------------------------------------- //
 
     /* 
     * Escoge el método GET acorde con el parámetro recibido
@@ -100,7 +86,7 @@ class MeasuresController extends BaseController {
     *                                                       getIncomingParametersAndExecuteGetMethod() <--
     * <-- Lista<MeasureEntity> | MeasureEntity | Nada
     */
-    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
+    private function getIncomingParametersAndExecuteMethod($model, $request) {
         $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
@@ -129,11 +115,48 @@ class MeasuresController extends BaseController {
         return $result;
     }
 
+    // ---------------------------------------------- (GET) ----------------------------------------------- //
+
+    /* 
+    * Obtiene todas las medidas disponibles
+    *
+    * MeasuresModel, Request -->
+    *                               getAllMeasures() <--
+    * <-- Lista<MeasureEntity>
+    */
+    private function getAllMeasures($model, $request) {
+        // Obtenemos el array de mediciones (objects stdClass)
+        $data = $model->getAllMeasures();
+        $result = $this->createArrayOfMeasures($data, $request->resource);
+        return $result;
+    }
+
+    // ---------------------------------------------- (POST) ----------------------------------------------- //
+
+    /* 
+    * Inserta una medida en la base de datos
+    *
+    * MeasuresModel, Request -->
+    *                              postMeasure() <--
+    * <-- MeasureEntity
+    */
+    private function postMeasure($model, $request) {
+        // Enviamos la medida
+        $data = $model->postMeasure($request->parameters);
+        if ($data) {
+            $result = $this->createArrayOfMeasures($request->parameters, $request->resource);
+            return $result;    
+        }
+        return NULL;    
+    }
+
+    // -------------------------------------------- UTIL ---------------------------------------------- //
+
     /*
     * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Measure
     * 
     * Lista<stdClass>, Texto -->
-    *                       createArrayOfMeasures() <--
+    *                               createArrayOfMeasures() <--
     * <-- Lista<Measure>
     */
     private function createArrayOfMeasures($data, $resource) {
@@ -155,25 +178,6 @@ class MeasuresController extends BaseController {
             return $result;
         } 
         return NULL;
-    }
-
-    // ---------------------------------------------- POST ----------------------------------------------- //
-
-    /* 
-    * Inserta una medida en la base de datos
-    *
-    * MeasuresModel, Request -->
-    *                              postMeasure() <--
-    * <-- MeasureEntity
-    */
-    private function postMeasure($model, $request) {
-        // Enviamos la medida
-        $data = $model->postMeasure($request->parameters);
-        if ($data) {
-            $result = $this->createArrayOfMeasures($request->parameters, $request->resource);
-            return $result;    
-        }
-        return NULL;    
     }
 
 }
