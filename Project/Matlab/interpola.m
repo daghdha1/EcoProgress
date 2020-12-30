@@ -1,8 +1,8 @@
     
-function exitcode = interpola(listx,listy,listz,output)
-display(listx)
-display(listy)
-display(listz)
+function exitcode = interpola(listx,listy,listz,result,n)
+disp(listx)
+disp(listy)
+disp(listz)
 
 [x]=importdata(listx);
 
@@ -16,25 +16,31 @@ lonGRID=-0.1767568992:0.00023:-0.1454121450;
 
 [LATGRID,LONGRID]=meshgrid(latGRID,lonGRID)d
 %}
-% 39.016102, -0.204320
-% 38.979311, -0.133220
-y1 = 38.979311:(0.00018*5):39.016102; 
-x1= -0.204320:(0.00023*5):-0.133220;
+% Punto inicial 39.020594, -0.211071
+% Punto final 38.944588, -0.129491
 
+% Dividimos la lat/lon inicial hasta la lat/lon final de 20*n en 20*n
+% metros.
+y1 = 38.944588:(0.00018*n):39.020594; 
+x1= -0.211071:(0.00023*n):-0.129491;
 
 [X1,Y1] = meshgrid(x1,y1);
 
-writematrix(X1,"fixedx.txt",'Delimiter',',') 
-writematrix(Y1,"fixedy.txt",'Delimiter',',') 
+% Guardamos la matriz
+writematrix(X1,"required/fixedx.txt",'Delimiter',',') 
+writematrix(Y1,"required/fixedy.txt",'Delimiter',',') 
 
-Z_corrector= griddata(x,y,z,X1,Y1,'cubic');
+Z_corrector= griddata(x,y,z,X1,Y1,'v4');
+Z_corrector = max(0,min(100,Z_corrector));
+
  pcolor(X1,Y1,Z_corrector), shading interp, colorbar
 % plot(Z_corrector)
 title('Ejercicio 2 tarea')
 
 % figure, [C,h]=contour(X1,Y1,LDEN_corrector, 30); clabel(C,h),colorbar
 % title('Curvas de nivel tarea 2')
-writematrix(Z_corrector,'result.txt','Delimiter',',')  
+writematrix(Z_corrector,result,'Delimiter',',')  
 
 %fclose(c);
+quit
 end

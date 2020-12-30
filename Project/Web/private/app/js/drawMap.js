@@ -5,13 +5,12 @@ function drawMap(data) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([39.003628, -0.166529]).addTo(map);
 
     var heat = L.heatLayer(data, {
-        radius: 20,
-        blur: 30, 
+        radius: 1,
+        blur: 5,
         maxZoom: 10,
-        max: 50.0,
+        max: 70.0,
         gradient: {
             0.0: 'green',
             0.5: 'yellow',
@@ -51,16 +50,17 @@ function drawGoogleMaps(data) {
         data: heatMapData
     });
     const gradient = ["rgba(102, 255, 0, 0)",
-    "rgba(102, 255, 0, 1)",
-    "rgba(147, 255, 0, 1)",
-    "rgba(193, 255, 0, 1)",
-    "rgba(238, 255, 0, 1)",
-    "rgba(244, 227, 0, 1)",
-    "rgba(249, 198, 0, 1)",
-    "rgba(255, 170, 0, 1)",
-    "rgba(255, 113, 0, 1)",
-    "rgba(255, 57, 0, 1)",
-    "rgba(255, 0, 0, 1)"];
+        "rgba(102, 255, 0, 1)",
+        "rgba(147, 255, 0, 1)",
+        "rgba(193, 255, 0, 1)",
+        "rgba(238, 255, 0, 1)",
+        "rgba(244, 227, 0, 1)",
+        "rgba(249, 198, 0, 1)",
+        "rgba(255, 170, 0, 1)",
+        "rgba(255, 113, 0, 1)",
+        "rgba(255, 57, 0, 1)",
+        "rgba(255, 0, 0, 1)"
+    ];
     heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
     heatmap.set("radius", heatmap.get("radius") ? null : 20);
     heatmap.set("maxIntensity", 70)
