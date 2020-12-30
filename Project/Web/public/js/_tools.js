@@ -10,14 +10,15 @@ function isValidForm(form, params) {
     return true;
 }
 
-function initModalPanel(namePanel) {
+function initModalPanel(namePanel, callback) {
     if (!document.getElementById(namePanel)) {
         $.ajax({
             url: './public/html/' + namePanel + '.html',
             dataType: 'html',
             success: function(data) {
-                document.body.insertAdjacentHTML('afterbegin', data);
+                document.body.insertAdjacentHTML('beforeend', data);
                 showModalPanel(namePanel);
+                if (callback != null) callback();
             }
         });
     } else {
@@ -36,9 +37,9 @@ function hideModalPanel(namePanel) {
     $('#' + namePanel).modal('hide');
 }
 
-function swapModalPanel(activePanel, targetPanel) {
+function swapModalPanel(activePanel, targetPanel, callback) {
     hideModalPanel(activePanel);
-    initModalPanel(targetPanel);
+    initModalPanel(targetPanel, callback);
 }
 
 function createElementDOM(containerId, html) {
@@ -60,6 +61,15 @@ function setTextValueDOM(id, str) {
 function setFocusElementDOM(id) {
     document.getElementById(id).focus();
 }
+
+function setAsyncFocusElementDOM(id) {
+    var r = setInterval(() => {
+        if (document.getElementById(id)) {
+            clearInterval(r);
+            setFocusElementDOM(id);
+        }
+    }, 100);
+};
 
 function setPlaceHolderDOM(id, str) {
     document.getElementById(id).placeholder = str;

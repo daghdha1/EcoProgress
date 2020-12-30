@@ -15,15 +15,17 @@ function registration() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            if (json === null) {
-                //clearElementDOM("reg_name");
-                //clearElementDOM("reg_mail");
-                //clearElementDOM("reg_password");
-                //clearElementDOM("reg_password_confirm")
-                //clearElementDOM("reg_key");
-                setFocusElementDOM("reg_mail");
-            } else {
-                console.log(json);
+            switch (typeof json) {
+                case 'object':
+                    swapModalPanel("registrationPanel", "registrationCodePanel", () => {
+                        setTextValueDOM("reg_code", json[0].secretCode); // FUTURE: El usuario debería introducirlo manualemnte (con mail)
+                        // setFocusElementDOM("reg_code"); // FIX ME: No recibe el focus
+                    });
+                    break;
+                case 'string':
+                    console.log(json);
+                    break;
+                default:
             }
         });
     }

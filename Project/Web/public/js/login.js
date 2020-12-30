@@ -8,9 +8,6 @@ function login() {
             method: "post",
             body: formData
         });
-        clearElementDOM("log_mail"); //TEST
-        clearElementDOM("log_password"); //TEST
-        setFocusElementDOM("log_mail"); //TEST
         // TODO
         // Enviamos la petición
         /*fetch(request).then(function(response) {
@@ -22,7 +19,7 @@ function login() {
             if (json === null) {
                 clearElementDOM("log_email");
                 clearElementDOM("log_password");
-                setFocusElementDOM("log_email");
+                setFocusElementDOM("log_mail");
             }
             // Sino, se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
             else {

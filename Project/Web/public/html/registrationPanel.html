@@ -9,7 +9,7 @@
                 </button>
             </header>
             <!-- Form  -->
-            <form name="formLogin" onsubmit="registration(this, 'reg_name', 'reg_surnames', 'reg_mail', 'reg_password', 'reg_password_confirm', 'reg_key'); return false;">
+            <form name="formRegistration" onsubmit="registration(this, 'reg_name', 'reg_surnames', 'reg_mail', 'reg_password', 'reg_password_confirm', 'reg_key'); return false;">
                 <div class="modal-body d-flex flex-column">
                     <label class="text-center text-muted" for="reg_name" style="margin-bottom: 5px;">
                         Nombre *
@@ -35,12 +35,12 @@
                         Clave de producto *
                     </label>
                     <input class="justify-content-center mx-auto" id="reg_key" name="reg_key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
-                    <button class="btn btn-primary mx-auto" formmethod="post" id="reg_submit" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="submit">
+                    <button class="btn btn-primary mx-auto" formmethod="post" id="reg_submit" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background:#682172; border-style:none; width:35%;" type="submit">
                         Regístrate
                     </button>
                     <label class="d-xl-flex justify-content-center mx-auto" style="width: 100%; margin-top: 5%; margin-bottom: 20px;" type="text">
                         ¿Ya tienes una cuenta?
-                        <a onclick="return swapModalPanel('registrationPanel','loginPanel')" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold; margin-left: 15px; font-size: 14px;">
+                        <a onclick="return swapModalPanel('registrationPanel','loginPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:15px; font-size:14px;">
                             Iniciar sesión
                         </a>
                     </label>
