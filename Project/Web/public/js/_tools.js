@@ -47,7 +47,6 @@ function destroyModalPanel(namePanel) {
     // Solo elimina la instancia, no el elemento del DOM
     //$('#' + namePanel).modal('dispose');
     removeElementDOM(namePanel);
-    console.log(namePanel + " eliminado!");
 }
 
 function swapModalPanel(activePanel, targetPanel, callback) {

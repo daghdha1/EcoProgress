@@ -1,25 +1,30 @@
-function initModalPanel(namePanel) {
-    if (!document.getElementById(namePanel)) {
+function initModalPanel(namePanel, callback) {
+    if (document.getElementById(namePanel) == null) {
         $.ajax({
             url: '../html/' + namePanel + '.html',
             dataType: 'html',
             success: function(data) {
-                document.body.insertAdjacentHTML('afterbegin', data);
+                document.body.insertAdjacentHTML('beforeend', data);
+                configModalPanel(namePanel);
                 showModalPanel(namePanel);
+                if (callback != null) callback();
             }
         });
-    } else {
-        destroyModalPanel(namePanel);
-        initModalPanel(namePanel);
     }
 }
 
-function showModalPanel(namePanel) {
+function configModalPanel(namePanel) {
     $('#' + namePanel).modal({
         backdrop: 'static',
-        keyboard: false,
-        show: true
+        keyboard: false
     });
+    $('#' + namePanel).on('hidden.bs.modal', function() {
+        destroyModalPanel(namePanel);
+    });
+}
+
+function showModalPanel(namePanel) {
+    $('#' + namePanel).modal('show');
 }
 
 function hideModalPanel(namePanel) {
@@ -27,12 +32,14 @@ function hideModalPanel(namePanel) {
 }
 
 function destroyModalPanel(namePanel) {
-    $('#' + namePanel).modal('dispose'); 
+    // Solo elimina la instancia, no el elemento del DOM
+    //$('#' + namePanel).modal('dispose');
+    removeElementDOM(namePanel);
 }
 
-function swapModalPanel(activePanel, targetPanel) {
-    destroyModalPanel(activePanel);
-    initModalPanel(targetPanel);
+function swapModalPanel(activePanel, targetPanel, callback) {
+    hideModalPanel(activePanel);
+    initModalPanel(targetPanel, callback);
 }
 
 function timeConverter(UNIX_timestamp) {
