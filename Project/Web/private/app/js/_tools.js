@@ -9,14 +9,16 @@ function initModalPanel(namePanel) {
             }
         });
     } else {
-        showModalPanel(namePanel);
+        destroyModalPanel(namePanel);
+        initModalPanel(namePanel);
     }
 }
 
 function showModalPanel(namePanel) {
     $('#' + namePanel).modal({
-        show: true,
-        keyboard: false
+        backdrop: 'static',
+        keyboard: false,
+        show: true
     });
 }
 
@@ -24,8 +26,12 @@ function hideModalPanel(namePanel) {
     $('#' + namePanel).modal('hide');
 }
 
+function destroyModalPanel(namePanel) {
+    $('#' + namePanel).modal('dispose'); 
+}
+
 function swapModalPanel(activePanel, targetPanel) {
-    hideModalPanel(activePanel);
+    destroyModalPanel(activePanel);
     initModalPanel(targetPanel);
 }
 

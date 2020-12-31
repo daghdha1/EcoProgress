@@ -28,7 +28,7 @@ function registration() {
                         setTextValueDOM("reg_code_mail", formData.get("reg_mail"));
                         setTextValueDOM("reg_code_key", formData.get("reg_key"));
                         setTextValueDOM("reg_code", json[0].secretCode); // FUTURE: El usuario debería introducirlo manualmente (con mail)
-                        // setFocusElementDOM("reg_code"); // FIX ME: No recibe el focus
+                        // setFocusElementDOM("reg_code"); // FIX ME: No recibe el focus (??)
                     });
                     break;
                 case 'string':
@@ -65,7 +65,9 @@ function accountActivation() {
         }).then(function(json) {
             switch (typeof json) {
                 case 'object':
-                    console.log(json);
+                    swapModalPanel("registrationCodePanel", "loginPanel", () => {
+                        showElementDOM("lbl_account_activated");
+                    });
                     break;
                 case 'string':
                     console.log(json);

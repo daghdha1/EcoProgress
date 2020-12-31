@@ -206,6 +206,39 @@ class AuthController extends BaseController {
         return mail($to, $subject, $message, $headers);
     }
 
+    // -------------------------------------------- CHECKS ---------------------------------------------- //
+
+    /* 
+    * Comprobación de datos de registro de usuario válidos
+    *
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               checkUserData() <--
+    * <-- V | F
+    */
+    private function checkUserData($usersModel, $sensorsModel, $params) {
+        // Si el sensor a registrar está disponible (existe y no tiene propietario)
+        if ($sensorsModel->isTheSensorAvailable($params['reg_key'])) {
+            // Si el email a registrar está disponible (no existe)
+            if (is_null($usersModel->getUser($params['reg_mail']))) {
+                return true;
+            } 
+        }
+        return false;
+    }
+
+    /* 
+    * Comprobación de código de activación de cuenta
+    *
+    * UsersModel, Lista<Texto> -->
+    *                                checkRegistrationCode() <--
+    * <-- V | F
+    */
+    private function checkRegistrationCode($usersModel, $params) {
+        // Si el código de activación de cuenta coincide con el secretCode del usuario
+        return $usersModel->isTheRegistrationCodeValid($params['reg_code_mail'], $params['reg_code']);
+        // TODO Añadir comprobación mail y secretCode
+    }
+
     // -------------------------------------------- UTILS ---------------------------------------------- //
 
     /* 
@@ -277,38 +310,6 @@ class AuthController extends BaseController {
         $sensor->setActivationKey($data[0]->activation_key);
         $sensor->setState($data[0]->state);
         return $sensor;
-    }
-
-    // -------------------------------------------- CHECKS ---------------------------------------------- //
-
-    /* 
-    * Comprobación de datos de usuario válidos
-    *
-    * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                               checkUserData() <--
-    * <-- V | F
-    */
-    private function checkUserData($usersModel, $sensorsModel, $params) {
-        // Si el sensor a registrar está disponible (existe y no tiene propietario)
-        if ($sensorsModel->isTheSensorAvailable($params['reg_key'])) {
-            // Si el email a registrar está disponible (no existe)
-            if (is_null($usersModel->getUser($params['reg_mail']))) {
-                return true;
-            } 
-        }
-        return false;
-    }
-
-    /* 
-    * Comprobación de código de activación de cuenta
-    *
-    * UsersModel, Lista<Texto> -->
-    *                                checkRegistrationCode() <--
-    * <-- V | F
-    */
-    private function checkRegistrationCode($usersModel, $params) {
-        // Si el código de activación de cuenta coincide con el secretCode del usuario
-        return $usersModel->isTheRegistrationCodeValid($params['reg_code_mail'], $params['reg_code']);
     }
 
 }
