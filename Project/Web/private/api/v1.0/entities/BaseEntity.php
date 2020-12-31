@@ -92,7 +92,7 @@ class BaseEntity {
     *
     * Texto -->
     *             executeInsertUpdateDeleteSql() <--
-    * <-- T
+    * <-- V | F
     */
     public function executeInsertUpdateDeleteSql($sql) {
         // Si hay Respuesta

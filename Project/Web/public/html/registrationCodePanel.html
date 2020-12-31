@@ -1,0 +1,40 @@
+<div class="modal fade" id="registrationCodePanel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header">
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    &times;
+                </button>
+            </header>
+            <!-- Form  -->
+            <form name="formRegistrationCode" onsubmit="accountActivation(this, 'reg_code_mail', 'reg_code_key', 'reg_code'); return false;">
+                <div class="modal-body d-flex flex-column">
+                    <label class="text-center" style="margin-bottom: 20px; color:#682172;">
+                        El código de verificación de cuenta ha sido enviado a su correo electrónico, por favor, introdúzcalo aquí.
+                    </label>
+                    <label class="text-center text-muted" for="reg_code_mail" style="margin-bottom: 5px;">
+                        Correo electrónico
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_code_mail" name="reg_code_mail" style="width: 70%;margin-bottom: 5%;text-align: center;" type="email"/>
+                    <label class="text-center text-muted" for="reg_code_key" style="margin-bottom: 5px;">
+                        Clave de producto
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_code_key" name="reg_code_key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
+                    <label class="text-center text-muted" for="reg_code" style="margin-bottom: 5px;">
+                        Código de verificación
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_code" name="reg_code" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
+                    <button class="btn btn-primary mx-auto" formmethod="post" id="reg_code_submit" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background:#682172; border-style:none; width:35%;" type="submit">
+                        Verificar cuenta
+                    </button>
+                    <label class="d-xl-flex justify-content-center mx-auto" style="width:100%; margin-top:5%; margin-bottom:20px;" type="text">
+                        ¿No has recibido el email de verificación?
+                        <a onclick="return resendVerificationCode()" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:15px; font-size:14px;">
+                            Reenviar email
+                        </a>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
