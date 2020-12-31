@@ -53,6 +53,7 @@ class UsersController extends BaseController {
     
     }
 
+    // INFO: php no recomienda el uso de 'put' por seguridad, usar 'post' en su defecto
     public function putAction($request) {
 
     }
@@ -65,20 +66,6 @@ class UsersController extends BaseController {
     // ------------------------------------------------------------------------------------------------- //
 
     // ---------------------------------------------- GET ----------------------------------------------- //
-
-    /* 
-    * Obtiene todos los usuarios registrados
-    *
-    * UsersModel, Request -->
-    *                               getAllUsers() <--
-    * <-- Lista<UserEntity>
-    */
-    private function getAllUsers($model, $request) {
-        // Obtenemos el array de usuarios (objects stdClass)
-        $data = $model->getAllUsers();
-        $result = $this->createArrayOfUsers($data, $request->resource);
-        return $result;
-    }
 
     /* 
     * Escoge el método GET acorde con el parámetro recibido
@@ -113,12 +100,30 @@ class UsersController extends BaseController {
         return $result;
     }
 
+    /* 
+    * Obtiene todos los usuarios registrados
+    *
+    * UsersModel, Request -->
+    *                               getAllUsers() <--
+    * <-- Lista<UserEntity>
+    */
+    private function getAllUsers($model, $request) {
+        // Obtenemos el array de usuarios (objects stdClass)
+        $data = $model->getAllUsers();
+        $result = $this->createArrayOfUsers($data, $request->resource);
+        return $result;
+    }
+
+    // -------------------------------------------- UTILS ---------------------------------------------- //
+
     /*
     * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Users
     * 
     * Lista<stdClass>, Texto -->
     *                               createArrayOfUsers() <--
     * <-- Lista<User>
+    *
+    * Nota: data es una array númerica (iterativa)
     */
     private function createArrayOfUsers($data, $resource) {
         // Si hay datos

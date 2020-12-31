@@ -6,7 +6,7 @@
  */
 function getAllUsers(callback) {
     var request = new Request(config.restDir + "/users", {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
@@ -24,7 +24,7 @@ function getAllUsers(callback) {
  */
 function getUser(callback, userID) {
     var request = new Request(config.restDir + "/users/users/" + userID, {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
@@ -42,7 +42,7 @@ function getUser(callback, userID) {
  */
 function getActiveTimeUser(callback, userID, differenceValue) {
     var request = new Request(config.restDir + "/users/users/" + userID + "/difference/" + differenceValue, {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();

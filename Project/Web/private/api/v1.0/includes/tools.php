@@ -138,7 +138,7 @@ function generatePasswordHash($pw) {
 *  line() -->
 */
 function line() {
-	echo '</br>';
+	echo PHP_EOL;
 }
 
 /*

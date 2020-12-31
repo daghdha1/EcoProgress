@@ -18,7 +18,7 @@ class UsersModel extends BaseModel {
     * Obtiene todos los usuarios registrados
     *
     *                   			getAllUsers() <--
-    * <-- Lista<UserEntity>
+    * <-- Lista<User<stdClass>>
     */
 	public function getAllUsers() {
 		// Respuesta
@@ -31,14 +31,14 @@ class UsersModel extends BaseModel {
     * Obtiene el usuario activo
     *
     * userID:Texto -->
-    *                   getUser() <--
-    * <-- UserEntity
+    *                   	getUser() <--
+    * <-- User<stdClass>
     */
 	public function getUser($mail) {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1;";
+		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -55,7 +55,7 @@ class UsersModel extends BaseModel {
 	public function getActiveTimeOfUser($mail, $range) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
-		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC;";
+		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
@@ -82,7 +82,7 @@ class UsersModel extends BaseModel {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail';";
+		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
 		// Respuesta
 		$result = MyEntity::executeSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -95,10 +95,10 @@ class UsersModel extends BaseModel {
     * Crea un usuario en la base de datos
     *
     * UserEntity -->
-    *                   createUser() <--
+    *                   insertUser() <--
     * <-- V | F
     */
-	public function createUser($user) {
+	public function insertUser($user) {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $user->getMail());
 		$strName = mysqli_real_escape_string($this->conn, $user->getName());
@@ -110,9 +110,33 @@ class UsersModel extends BaseModel {
 		$strAccountStatus = mysqli_real_escape_string($this->conn, $user->getAccountStatus());
 
 		// Query
-		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $strSecretCode, $strRegDate, '$strRole', '$strAccountStatus');";
+		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $strSecretCode, $strRegDate, '$strRole', '$strAccountStatus')";
 		
 		// Devuelve true, si no ha podido insertar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+
+		return $result;
+	}
+
+	/* 
+    * Actualiza un usuario en la base de datos
+    *
+    * UserEntity -->
+    *                   updateUser() <--
+    * <-- V | F
+    */
+	public function updateUser($user) {
+		// Escapamos los carácteres especiales
+		$strMail = $user->getMail();
+		$strName = mysqli_real_escape_string($this->conn, $user->getName());
+		$strSurnames = mysqli_real_escape_string($this->conn, $user->getSurnames());
+		$numLastConn = $user->getLastConn();
+		$strAccountStatus = mysqli_real_escape_string($this->conn, $user->getAccountStatus());
+
+		// Query
+		$sql = "UPDATE Users as u SET u.name = '$strName', u.surnames = '$strSurnames', u.last_conn = $numLastConn, u.account_status = '$strAccountStatus' WHERE u.mail = '$strMail'";
+		
+		// Devuelve true, si no ha podido actualizar el registro, devuelve false
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 
 		return $result;
@@ -131,12 +155,14 @@ class UsersModel extends BaseModel {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		$strSecretCode = (int)$reg_code;
 		// Query
-		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = '$strSecretCode';";
+		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = $strSecretCode";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve verdadero, si no ha encontrado ninguna coincidencia, devuelve falso
 		if (!is_null($result)) return true;
 		return false;
 	}
+
+	// ---------------------------------------------- UTILS ----------------------------------------------- //
 
 }

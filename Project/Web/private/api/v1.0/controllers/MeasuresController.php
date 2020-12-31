@@ -66,6 +66,7 @@ class MeasuresController extends BaseController {
         $view->render($result);
     }
 
+    // INFO: php no recomienda el uso de 'put' por seguridad, usar 'post' en su defecto
     public function putAction($request) {
 
     }
@@ -150,7 +151,7 @@ class MeasuresController extends BaseController {
         return NULL;    
     }
 
-    // -------------------------------------------- UTIL ---------------------------------------------- //
+    // -------------------------------------------- UTILS ---------------------------------------------- //
 
     /*
     * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Measure

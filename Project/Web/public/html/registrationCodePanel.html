@@ -9,7 +9,7 @@
                 </button>
             </header>
             <!-- Form  -->
-            <form name="formRegistrationCode" onsubmit="accountActivation(this, 'reg_code_mail', 'reg_code'); return false;" prependid="false">
+            <form name="formRegistrationCode" onsubmit="accountActivation(this, 'reg_code_mail', 'reg_code_key', 'reg_code'); return false;">
                 <div class="modal-body d-flex flex-column">
                     <label class="text-center" style="margin-bottom: 20px; color:#682172;">
                         El código de activación de cuenta ha sido enviado a su correo electrónico, por favor, introdúzcalo aquí.
@@ -18,6 +18,10 @@
                         Correo electrónico
                     </label>
                     <input class="justify-content-center mx-auto" id="reg_code_mail" name="reg_code_mail" style="width: 70%;margin-bottom: 5%;text-align: center;" type="email"/>
+                    <label class="text-center text-muted" for="reg_code_key" style="margin-bottom: 5px;">
+                        Clave de producto
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_code_key" name="reg_code_key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
                     <label class="text-center text-muted" for="reg_code" style="margin-bottom: 5px;">
                         Código de verificación
                     </label>

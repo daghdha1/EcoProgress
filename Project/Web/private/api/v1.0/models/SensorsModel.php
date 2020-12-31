@@ -18,20 +18,79 @@ class SensorsModel extends BaseModel {
 
 	// ---------------------------------------------- GET ----------------------------------------------- //
 
+    /* 
+    * Obtiene el sensor de un usuario
+    *
+    * Texto -->
+    *                   		getSensor() <--
+    * <-- Sensor<stdClass>
+    */
+	public function getSensor($mail) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+		// Query
+		$sql = "SELECT * FROM Sensors as s WHERE s.mail = '$strMail' LIMIT 1";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Obtiene el sensor de un usuario en base a su clave de activación
+    *
+    * Texto -->
+    *                   		getSensorByActivationKey() <--
+    * <-- Sensor<stdClass>
+    */
+	public function getSensorByActivationKey($key) {
+		$strKey = mysqli_real_escape_string($this->conn, $key);
+		// Query
+		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' LIMIT 1";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
 	/* 
     * Obtiene el id del sensor del usuario activo
     *
     * Texto -->
-    *                 			getSensorIDOfUser() <--
-    * <-- sensorID:N, Nada
+    *                 			getSensorId() <--
+    * <-- sensorID:N | Nada
     */
-	public function getSensorIDOfUser($userID) {
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+	public function getSensorId($mail) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strUserID'";
+		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strMail'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	// ----------------------------------------------- POST ------------------------------------------------ //
+
+	/* 
+    * Actualiza un sensor en la base de datos
+    *
+    * SensorEntity -->
+    *                   updateUser() <--
+    * <-- V | F
+    */
+	public function updateSensor($sensor) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->conn, $sensor->getMail());
+		$strType = mysqli_real_escape_string($this->conn, $sensor->getType());
+		$numState = $sensor->getState();
+		$strActivationKey = mysqli_real_escape_string($this->conn, $sensor->getActivationKey());
+
+		// Query
+		$sql = "UPDATE Sensors as s SET s.mail = '$strMail', s.type = '$strType', s.state = $numState WHERE s.activation_key = '$strActivationKey'";
+		
+		// Devuelve true, si no ha podido actualizar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+
 		return $result;
 	}
 
@@ -41,7 +100,7 @@ class SensorsModel extends BaseModel {
     * Comprueba si el sensor está disponible (no registrado)
     *
     * Texto -->
-    *                   isTheSensorAvailable() <--
+    *               isTheSensorAvailable() <--
     * <-- V | F
     */
 	public function isTheSensorAvailable($key) {

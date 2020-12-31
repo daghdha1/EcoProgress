@@ -5,7 +5,7 @@ function login() {
         let formData = new FormData(form);
         formData.append("action", "login");
         let request = new Request(config.restDir + "/auth", {
-            method: "post",
+            method: "POST",
             body: formData
         });
         // TODO

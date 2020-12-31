@@ -21,8 +21,8 @@ class MeasuresModel extends BaseModel {
 	/* 
     * Obtiene todas las medidas disponibles
     *
-    *                   							getAllMeasures() <--
-    * <-- Lista<MeasuresEntity> | MeasureEntity
+    *                   									getAllMeasures() <--
+    * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
 	public function getAllMeasures() {
 		// Respuesta
@@ -35,8 +35,8 @@ class MeasuresModel extends BaseModel {
     * Obtiene todas las medidas del usuario activo
     *
     * Texto -->
-    *                   							getAllMeasuresOfUser() <--
-    * <-- Lista<MeasuresEntity> | MeasureEntity
+    *                   									getAllMeasuresOfUser() <--
+    * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
 	public function getAllMeasuresOfUser($userID) {
 		$strUserID = mysqli_real_escape_string($this->conn, $userID);
@@ -52,8 +52,8 @@ class MeasuresModel extends BaseModel {
     * Obtiene la última medida tomada del usuario activo
     *
     * Texto -->
-    *                      getLastMeasure() <--
-    * <-- MeasureEntity
+    *                      		getLastMeasure() <--
+    * <-- Measure<stdClass>
     */
 	public function getLastMeasure($userID) {
 		$strUserID = mysqli_real_escape_string($this->conn, $userID);
@@ -69,8 +69,8 @@ class MeasuresModel extends BaseModel {
     * Obtiene las medidas del usuario desde el instante solicitado
     *
     * timestamp:N, Texto -->
-    *                      						 getMeasuresFromTimestamp() <--
-    * <-- Lista<MeasureEntity> | MeasureEntity
+    *                      						 			getMeasuresFromTimestamp() <--
+    * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
 	public function getMeasuresFromTimestamp($t, $userID) {
 		$strT = mysqli_real_escape_string($this->conn, $t);
@@ -87,8 +87,8 @@ class MeasuresModel extends BaseModel {
     * Obtiene las medidas del usuario del periodo personalizado solicitado
     *
     * timestamp:N, timestamp:N, Texto -->
-    *                      						 getMeasuresFromTimestamp() <--
-    * <-- Lista<MeasureEntity> | MeasureEntity
+    *                      						 			getMeasuresFromTimestamp() <--
+    * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
 	public function getMeasuresFromTwoTimestamp($t1, $t2, $userID) {
 		$strT1 = mysqli_real_escape_string($this->conn, $t1);
@@ -108,8 +108,8 @@ class MeasuresModel extends BaseModel {
     * Inserta una medida en la base de datos
     *
     * Lista<Texto> -->
-    *                      postMeasure() <--
-    * <-- MeasureEntity
+    *                      		postMeasure() <--
+    * <-- Measure<stdClass>
     */
 	public function postMeasure($parameters) {
 		$strValue = mysqli_real_escape_string($this->conn, $parameters['value']);
