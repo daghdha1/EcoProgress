@@ -75,16 +75,20 @@ function hideElementDOM(id) {
     document.getElementById(id).style.display = "none";
 }
 
+function setFocusElementDOM(id) {
+    document.getElementById(id).focus();
+}
+
+function setReadOnlyInputDOM(id) {
+    document.getElementById(id).readOnly = true; 
+}
+
 function getTextValueDOM(id) {
     return document.getElementById(id).value.replace(/<[^>]*>/g, "");
 }
 
 function setTextValueDOM(id, str) {
     document.getElementById(id).value = str;
-}
-
-function setFocusElementDOM(id) {
-    document.getElementById(id).focus();
 }
 
 function setAsyncFocusElementDOM(id) {

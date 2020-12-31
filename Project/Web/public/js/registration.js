@@ -27,8 +27,11 @@ function registration() {
                     swapModalPanel("registrationPanel", "registrationCodePanel", () => {
                         setTextValueDOM("reg_code_mail", formData.get("reg_mail"));
                         setTextValueDOM("reg_code_key", formData.get("reg_key"));
-                        setTextValueDOM("reg_code", json[0].secretCode); // FUTURE: El usuario debería introducirlo manualmente (con mail)
-                        // setFocusElementDOM("reg_code"); // FIX ME: No recibe el focus (??)
+                        // FUTURE: El usuario debería introducirlo manualmente (con mail)
+                        setTextValueDOM("reg_code", json[0].secretCode); 
+                        setReadOnlyInputDOM("reg_code_mail");
+                        setReadOnlyInputDOM("reg_code_key");
+                        //setFocusElementDOM("reg_code"); // FIX ME: No recibe el focus (??)
                     });
                     break;
                 case 'string':
