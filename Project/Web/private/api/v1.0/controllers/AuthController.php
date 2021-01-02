@@ -25,15 +25,7 @@ class AuthController extends BaseController {
 	* <-- Lista<T> 
 	*/
     public function getAction($request) {
-        // Cargamos el modelo de Users
-        //$model = parent::loadModel("Users");
         
-        //debug('get', 'Estoy en el get de auth');
-
-        // Cargamos la vista seleccionada
-        //$view = parent::loadView($request->format);
-        // Parseamos la respuesta a JSON
-        //$view->render($result);
     }
 
     /* - Recibe y trata una petición POST solicitada
@@ -41,7 +33,7 @@ class AuthController extends BaseController {
     *  - Una vez enviados, los reenvía de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
     *
     * Action -->
-    *                       postAction() <--
+    *                           postAction() <--
     * <-- Lista<T> | Texto
     */
     public function postAction($request) {
@@ -77,8 +69,8 @@ class AuthController extends BaseController {
     * Escoge el método POST acorde con el parámetro recibido
     *
     * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                               getIncomingParametersAndExecuteMethod() <--
-    * <-- RESULT T
+    *                                                   getIncomingParametersAndExecuteMethod() <--
+    * <-- RESULT T | Texto | Nada
     */
     private function getIncomingParametersAndExecuteMethod($usersModel, $sensorsModel, $request) {
         $params = $request->parameters;
@@ -86,7 +78,7 @@ class AuthController extends BaseController {
         if (isset($params['action'])) {
             switch ($params['action']) {
                 case 'registration':
-                    if($this->checkUserData($usersModel, $sensorsModel, $params)) {
+                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params)) {
                         $result = $this->registration($usersModel, $params);
                     } else {
                         $result = 'Correo eléctronico y/o clave de producto inválidos';
@@ -98,7 +90,11 @@ class AuthController extends BaseController {
                     }
                     break;
                 case 'login':
-                    // $result = $model->login($params['username'], $params['password']);
+                    if ($this->checkLoginData($usersModel, $params)) {
+                        $result = $this->login($usersModel, $params);
+                    } else {
+                        $result = 'Datos de inicio de sesión inválidos';
+                    }
                     break;
                 case 'logout':
                     // $result = $model->logout();
@@ -149,6 +145,13 @@ class AuthController extends BaseController {
         return $result;
     }
 
+    /* 
+    * Activación de cuenta de usuario
+    *
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               accountActivation() <--
+    * <-- Lista<UserEntity> | Texto
+    */
     private function accountActivation($usersModel, $sensorsModel, $params) {
         // Updating user
         $data = $usersModel->getUser($params['reg_code_mail']);
@@ -160,7 +163,7 @@ class AuthController extends BaseController {
             
             // Updating sensor
             if ($isUserUpdated) {
-                $data = $sensorsModel->getSensorByActivationKey($params['reg_code_key']);
+                $data = $sensorsModel->getSensorFromActivationKey($params['reg_code_key']);
                 $sensor = $this->createSensorFromDatabase($data);
                 $sensor->setMail($params['reg_code_mail']);
                 $sensor->setState(1);
@@ -178,46 +181,48 @@ class AuthController extends BaseController {
     }
 
     /* 
-    * Envía un correo de verificación de cuenta con el código secreto implícito (TESTING, NOT USE)
+    * Inicio de sesión de usuario y guardado de sesión en servidor generando un nuevo token (session_id)
+    *
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                                   login() <--
+    * <-- Lista<UserEntity> | Texto
+    */
+    private function login($usersModel, $params) {
+        $data = $usersModel->getUser($params['log_mail']);
+        if (!is_null($data)) {
+            $user = $this->createUserFromDatabase($data);
+            $this->saveUserSession($user);
+            $result = array(); 
+            array_push($result, $user->toArray());
+            return $result;
+        }
+        return "Ha ocurrido un fallo inesperado en el inicio de sesión";
+    }
+
+    /* 
+    * Salvado de datos en la sesión actual del servidor
     *
     * UserEntity -->
-    *                     sendVerificationEmail() <--
-    * <-- V | F
+    *                   saveUserSession() <--
     */
-    private function sendVerificationEmail($data) {
-        $to      = $data->getMail();
-        $subject = 'EcoProgress Verification';
-        $message = '
-  
-        ¡Bienvenido/a ' . $data->getName() . '!, gracias por registrarse.
-        
-        Su cuenta ha sido creada, puede iniciar sesión después de haber activado su cuenta introduciendo el siguiente código de activación.
-          
-        --------------------------
-        Código de activación: ' . $data->getSecretCode() . '
-        --------------------------
-          
-        ';
-
-        $message = wordwrap($message, 70, "\r\n");
-
-        $headers = 'From:ecoprogress@server.com' . "\r\n";
-        
-        return mail($to, $subject, $message, $headers);
+    private function saveUserSession($user) {
+        session_start();
+        $_SESSION['mail'] = $user->getMail();
+        $_SESSION['name'] = $user->getName();
     }
 
     // -------------------------------------------- CHECKS ---------------------------------------------- //
 
     /* 
-    * Comprobación de datos de registro de usuario válidos
+    * Comprobación de datos de registro de usuario
     *
     * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                               checkUserData() <--
+    *                                               checkRegistrationData() <--
     * <-- V | F
     */
-    private function checkUserData($usersModel, $sensorsModel, $params) {
+    private function checkRegistrationData($usersModel, $sensorsModel, $params) {
         // Si el sensor a registrar está disponible (existe y no tiene propietario)
-        if ($sensorsModel->isTheSensorAvailable($params['reg_key'])) {
+        if (!is_null($sensorsModel->getAvailableSensorFromActivationKey($params['reg_key']))) {
             // Si el email a registrar está disponible (no existe)
             if (is_null($usersModel->getUser($params['reg_mail']))) {
                 return true;
@@ -235,8 +240,30 @@ class AuthController extends BaseController {
     */
     private function checkRegistrationCode($usersModel, $params) {
         // Si el código de activación de cuenta coincide con el secretCode del usuario
-        return $usersModel->isTheRegistrationCodeValid($params['reg_code_mail'], $params['reg_code']);
-        // TODO Añadir comprobación mail y secretCode
+        if (!is_null($usersModel->getUserFromMailAndRegCode($params['reg_code_mail'], $params['reg_code']))) {
+            return true;
+        }
+        return false;
+        // TODO Añadir comprobación mail y secretCode de form
+    }
+
+    /* 
+    * Comprobación de datos de inicio de sesión de usuario
+    *
+    * UsersModel, Lista<Texto> -->
+    *                                checkLoginData() <--
+    * <-- V | F
+    */
+    private function checkLoginData($usersModel, $params) {
+        // Obtenemos el usuario de la base de datos
+        $data = $usersModel->getUser($params['log_mail']);
+        if (!is_null($data) && $data[0]->account_status === 'active') {
+            $pwForm = $params['log_password'];
+            $pwHashed = $data[0]->password;
+            // Comprobamos si la contraseña enviada desde el formulario se corresponde con el hash alojado en la db
+            return verifyPasswordHash($pwForm, $pwHashed);
+        }
+        return false;
     }
 
     // -------------------------------------------- UTILS ---------------------------------------------- //
@@ -310,6 +337,37 @@ class AuthController extends BaseController {
         $sensor->setActivationKey($data[0]->activation_key);
         $sensor->setState($data[0]->state);
         return $sensor;
+    }
+
+    /*
+    * (TESTING, NOT USE)
+    *
+    * Envía un correo de verificación de cuenta con el código secreto implícito 
+    *
+    * UserEntity -->
+    *                     sendVerificationEmail() <--
+    * <-- V | F
+    */
+    private function sendVerificationEmail($user) {
+        $to      = $user->getMail();
+        $subject = 'EcoProgress Verification';
+        $message = '
+  
+        ¡Bienvenido/a ' . $user->getName() . '!, gracias por registrarse.
+        
+        Su cuenta ha sido creada, puede iniciar sesión después de haber activado su cuenta introduciendo el siguiente código de activación.
+          
+        --------------------------
+        Código de activación: ' . $user->getSecretCode() . '
+        --------------------------
+          
+        ';
+
+        $message = wordwrap($message, 70, "\r\n");
+
+        $headers = 'From:ecoprogress@server.com' . "\r\n";
+        
+        return mail($to, $subject, $message, $headers);
     }
 
 }

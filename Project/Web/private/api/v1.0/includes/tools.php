@@ -131,6 +131,16 @@ function generatePasswordHash($pw) {
 	return $pw_hashed;
 }
 
+/*
+* Comprueba si la contraseña enviada desde el formulario se corresponde con el hash alojado
+*
+* 						verifyPasswordHash() <--
+* <-- Texto | False
+*/
+function verifyPasswordHash(&$pwForm, &$pwHashed) {
+	return password_verify($pwForm, $pwHashed);
+}
+
 // ------------------------------------------------------------------------------------- //
 // -------------------------------------- OTHERS --------------------------------------- //
 

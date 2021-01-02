@@ -2,36 +2,51 @@ function login() {
     let params = login.arguments;
     let form = params[0];
     if (isValidForm(form, params)) {
+        // Form data
         let formData = new FormData(form);
         formData.append("action", "login");
-        let request = new Request(config.restDir + "/auth", {
+        // URL to send request
+        let url = config.restDir + "/auth";
+        // Token of user for authorization
+        // let bearer = 'Bearer ' + bearer_token; // Login no dispone del token aún (se envía pass y se obtiene un token para posteriori)
+        // Headers
+        // let headers = new Headers();
+        // headers.append("Authorization", bearer);
+        // headers.append("Content-Type", "application/json"); // Login no necesita content-type, viene implícito en el form
+        var myInit = { 
             method: "POST",
+            //headers: headers,
+            //withCredentials: true,
+            //credentials: "include",
+            mode: "cors",
+            cache: "default",
             body: formData
-        });
-        // TODO
+        };
+        let request = new Request(url, myInit);
         // Enviamos la petición
-        /*fetch(request).then(function(response) {
-            // Si la respuesta es exitosa (200 code), devuelve json
+        fetch(request).then(function(response) {
             if (response.ok) return response.json();
-            else return null;
+            else return 'Ha habido un error en la conexión con el servidor';
         }).then(function(json) {
-            // Si es null (no ha encontrado ninguna coincidencia)
-            if (json === null) {
-                clearElementDOM("log_email");
-                clearElementDOM("log_password");
-                setFocusElementDOM("log_mail");
+            switch (typeof json) {
+                case 'object':
+                    // Se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
+                    hideModalPanel('loginPanel');
+                    //saveUserSession(json);
+                    //window.location.href = './private/app/html/home.html';
+                    break;
+                case 'string':
+                    alert(json);
+                    break;
+                default:
             }
-            // Sino, se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
-            else {
-                hideModalPanel('loginPanel');
-                //saveUserSession(json);
-                window.location.href = './private/app/html/home.html';
-            }
-        });*/
+        });
     }
 }
+
 // FALTA RECIBIR DE LA BASE DE DATOS SI ES ROOT O USER
 function saveUserSession(userDataSession) {
     sessionStorage.setItem("mail", userDataSession.mail);
-    sessionStorage.setItem("root", userDataSession.root);
+    sessionStorage.setItem("bearer_token", userDataSession.password);
+    sessionStorage.setItem("role", userDataSession.root);
 }
