@@ -35,7 +35,6 @@ function login() {
                         window.location.href = './private/app/html/home.html';
                         //saveUserSession(json);
                     } else if (json[0].role === 'root') {
-                        console.log("HOLAAAA");
                         // Redireccionamos a la página de admin
                         window.location.href = './private/app/html/adminPanel.html';
                     }

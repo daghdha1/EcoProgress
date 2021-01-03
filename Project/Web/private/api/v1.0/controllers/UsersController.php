@@ -79,9 +79,9 @@ class UsersController extends BaseController {
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $userID = $value;
+                    $mail = $value;
                     if (count($params) == 1) {
-                        $data = $model->getUser($userID);
+                        $data = $model->getUser($mail);
                         $result = $this->createArrayOfUsers($data, $request->resource);
                     }
                     break;
@@ -91,7 +91,7 @@ class UsersController extends BaseController {
                     } elseif ($value === 'hour') {
                         $time = 3600;
                     }
-                    $result = $model->getActiveTimeOfUser($userID, $time);
+                    $result = $model->getActiveTimeOfUser($mail, $time);
                     break;
                 default:
                     break;
@@ -121,7 +121,7 @@ class UsersController extends BaseController {
     * 
     * Lista<stdClass>, Texto -->
     *                               createArrayOfUsers() <--
-    * <-- Lista<User>
+    * <-- Lista<UserEntity>
     *
     * Nota: data es una array númerica (iterativa)
     */

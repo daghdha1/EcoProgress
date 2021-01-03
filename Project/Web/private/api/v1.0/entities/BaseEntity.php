@@ -95,8 +95,6 @@ class BaseEntity {
     * <-- V | F
     */
     public function executeInsertUpdateDeleteSql($sql) {
-        // Si hay Respuesta
-        $data = $this->conn->query($sql);
-        return $data;
+        return $this->conn->query($sql);
     }
 }

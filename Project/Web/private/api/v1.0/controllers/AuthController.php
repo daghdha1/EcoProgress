@@ -119,22 +119,18 @@ class AuthController extends BaseController {
         $user = $this->createUserFromParams($params);
         if ($usersModel->insertUser($user)) {
             // TEMPORAL hasta que puedan enviarse emails
-            $result = array(); 
-            array_push($result, $user->toArray());
+            return $user->parseUserToArrayUsers();
             /*if ($this->sendVerificationEmail($user)) {
                 //line();
                 //debug('email sended!', "");
-                $result = array();
-                array_push($result, $user->toArray());
+                return $user->parseUserToArrayUsers();
             } else {
                 //line();
                 //debug('email NOT sended', "");
-                //$result = 'Se ha producido un error al enviar el correo'; 
+                return 'Se ha producido un error al enviar el correo'; 
             }*/
-        } else {
-            $result = 'Se ha producido un error al crear el usuario';
         }
-        return $result;
+        return 'Se ha producido un error al crear el usuario';
     }
 
     /* 
@@ -163,9 +159,7 @@ class AuthController extends BaseController {
                 
                 // Return user updated
                 if ($isSensorUpdated) {
-                    $result = array(); 
-                    array_push($result, $user->toArray());
-                    return $result;
+                    return $user->parseUserToArrayUsers();
                 }
             }
         }
@@ -184,9 +178,7 @@ class AuthController extends BaseController {
         if (!is_null($data)) {
             $user = $this->createUserFromDatabase($data);
             $this->createUserSession($user);
-            $result = array(); 
-            array_push($result, $user->toArray());
-            return $result;
+            return $user->parseUserToArrayUsers();
         }
         return "Ha ocurrido un fallo inesperado en el inicio de sesión";
     }

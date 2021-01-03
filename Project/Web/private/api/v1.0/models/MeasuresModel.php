@@ -108,8 +108,8 @@ class MeasuresModel extends BaseModel {
     * Inserta una medida en la base de datos
     *
     * Lista<Texto> -->
-    *                      		postMeasure() <--
-    * <-- Measure<stdClass>
+    *                      postMeasure() <--
+    * <-- V | F
     */
 	public function postMeasure($parameters) {
 		$strValue = mysqli_real_escape_string($this->conn, $parameters['value']);
@@ -120,7 +120,7 @@ class MeasuresModel extends BaseModel {
 		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) VALUES ('$strValue', '$strTimestamp', '$strLocation', '$strSensorID')";
 		// Respuesta
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		// Devuelve true, si no es posible insertar el registro, devuelve false
 		return $result;
 	}
 

@@ -85,4 +85,20 @@ class UserEntity extends BaseEntity {
             'accountStatus' => $this->accountStatus
         );
     }
+
+    /*
+    * Crea un array asociativo de objetos Users (Entities) desde un objeto User (Entity) (TO SEND WITH RESPONSE)
+    * 
+    * UserEntity -->
+    *                           parseUserToArrayUsers() <--
+    * <-- Lista<UserEntity>
+    *
+    * Nota: data es una array númerica (iterativa)
+    */
+    public function parseUserToArrayUsers() {
+        $result = array(); 
+        array_push($result, $this->toArray());
+        return $result;
+    }
+
 }
