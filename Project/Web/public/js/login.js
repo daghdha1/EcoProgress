@@ -34,9 +34,10 @@ function login() {
                         // Redireccionamos a la página principal del usuario
                         window.location.href = './private/app/html/home.html';
                         //saveUserSession(json);
-                    } else if (json[0].role === 'admin') {
+                    } else if (json[0].role === 'root') {
+                        console.log("HOLAAAA");
                         // Redireccionamos a la página de admin
-                        window.location.href = './private/app/html/admin.html';
+                        window.location.href = './private/app/html/adminPanel.html';
                     }
                     hideModalPanel('loginPanel');
                     console.log("Cookie recibida del usuario " + json[0].mail + " --> ");

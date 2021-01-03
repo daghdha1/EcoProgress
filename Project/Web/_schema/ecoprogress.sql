@@ -40,7 +40,7 @@ FOREIGN KEY (sensorID) REFERENCES Sensors(id)
 );
 
 # ADMIN
-INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Adrian', 'Soler Navarro', 'admin', 23342, 1620203039, 'root', 'active');
+INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Adrian', 'Soler Navarro', '$2y$10$m.IAnLCSMxLfd8bp/hvUh.B2FeObQF9vwFwVIWNfhktIb6G77e2Ze', 23342, 1620203039, 'root', 'active');
 
 # USER
 
