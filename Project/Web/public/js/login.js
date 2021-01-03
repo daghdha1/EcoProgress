@@ -13,7 +13,7 @@ function login() {
         // let headers = new Headers();
         // headers.append("Authorization", bearer);
         // headers.append("Content-Type", "application/json"); // Login no necesita content-type, viene implícito en el form
-        var myInit = { 
+        var myInit = {
             method: "POST",
             //headers: headers,
             //withCredentials: true,
@@ -30,10 +30,16 @@ function login() {
         }).then(function(json) {
             switch (typeof json) {
                 case 'object':
-                    // Se guardan los datos de sesión de usuario y redireccionamos a la página principal del usuario
+                    if (json[0].role === 'user') {
+                        // Redireccionamos a la página principal del usuario
+                        window.location.href = './private/app/html/home.html';
+                        console.log("Cookie recibida del usuario " + json[0].mail + " --> ");
+                        console.log(document.cookie);
+                        //saveUserSession(json);
+                    } else if (json[0].role === 'admin') {
+
+                    }
                     hideModalPanel('loginPanel');
-                    //saveUserSession(json);
-                    //window.location.href = './private/app/html/home.html';
                     break;
                 case 'string':
                     alert(json);
@@ -43,7 +49,6 @@ function login() {
         });
     }
 }
-
 // FALTA RECIBIR DE LA BASE DE DATOS SI ES ROOT O USER
 function saveUserSession(userDataSession) {
     sessionStorage.setItem("mail", userDataSession.mail);

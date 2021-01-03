@@ -37,6 +37,15 @@ function areThereParameters(&$params) {
     return false;
 }
 
+function isUserSessionValid($session_id) {
+	if(!isset($_COOKIE[$session_id])) {
+    	echo "Cookie named '" . session_name() . "' is not set!";
+	} else {
+	    echo "Cookie '" . session_name() . "' is set!<br>";
+	    echo "Value is: " . $_COOKIE[session_name()];
+	}
+}
+
 // -------------------------------------------------------------------------------------------- //
 // -------------------------------------- FUNCTIONALITY --------------------------------------- //
 
@@ -158,6 +167,7 @@ function line() {
 */
 function debug($msg, $value) {
 	echo $msg . '--> ' . $value;
+	line();
 }
 
 /*
@@ -172,3 +182,4 @@ function removeElementsInStrArray(&$array, $regex) {
 		}
 	}
 }
+
