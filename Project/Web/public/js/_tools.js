@@ -1,37 +1,29 @@
-function isValidForm(form, params) {
-    for (var i = 1; i < params.length; i++) {
-        if (form[params[i]].name != 'reg_surnames') {
-            if (form[params[i]].value.length == 0 || form[params[i]].name == 'reg_password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
-                setFocusElementDOM(params[i]);
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-function initModalPanel(namePanel, callback) {
+function initModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
             url: './public/html/' + namePanel + '.html',
             dataType: 'html',
-            success: function(data) {
+            success: (data) => {
                 document.body.insertAdjacentHTML('beforeend', data);
-                configModalPanel(namePanel);
+                configModalPanel(namePanel, cb1, cb2);
                 showModalPanel(namePanel);
-                if (callback != null) callback();
             }
         });
     }
 }
 
-function configModalPanel(namePanel) {
+function configModalPanel(namePanel, hiddenCallback, shownCallback) {
     $('#' + namePanel).modal({
         backdrop: 'static',
         keyboard: false
     });
-    $('#' + namePanel).on('hidden.bs.modal', function() {
+    $('#' + namePanel).on('hidden.bs.modal', () => {
         destroyModalPanel(namePanel);
+        if (hiddenCallback != null) hiddenCallback();
+    });
+    $('#' + namePanel).on('shown.bs.modal', () => {
+        findAndFocusFirstInputFormElement();
+        if (shownCallback != null) shownCallback();
     });
 }
 
@@ -49,9 +41,9 @@ function destroyModalPanel(namePanel) {
     removeElementDOM(namePanel);
 }
 
-function swapModalPanel(activePanel, targetPanel, callback) {
+function swapModalPanel(activePanel, targetPanel, cb1, cb2) {
     hideModalPanel(activePanel);
-    initModalPanel(targetPanel, callback);
+    initModalPanel(targetPanel, cb1, cb2);
 }
 
 function createElementDOM(containerId, html) {
@@ -79,7 +71,7 @@ function setFocusElementDOM(id) {
 }
 
 function setReadOnlyInputDOM(id) {
-    document.getElementById(id).readOnly = true; 
+    document.getElementById(id).readOnly = true;
 }
 
 function getTextValueDOM(id) {
@@ -101,4 +93,23 @@ function setAsyncFocusElementDOM(id) {
 
 function setPlaceHolderDOM(id, str) {
     document.getElementById(id).placeholder = str;
+}
+
+function findAndFocusFirstInputFormElement() {
+    $(document).ready(() => {
+        let e = $("form").find("*").filter(":input:visible:enabled:not([readonly]):first").get(0);
+        setFocusElementDOM(e.id);
+    });
+}
+
+function isValidForm(form, params) {
+    for (var i = 1; i < params.length; i++) {
+        if (form[params[i]].name != 'reg_surnames') {
+            if (form[params[i]].value.length == 0 || form[params[i]].name == 'reg_password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
+                setFocusElementDOM(params[i]);
+                return false;
+            }
+        }
+    }
+    return true;
 }

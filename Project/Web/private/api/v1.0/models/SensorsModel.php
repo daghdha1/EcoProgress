@@ -39,10 +39,10 @@ class SensorsModel extends BaseModel {
     * Obtiene el sensor de un usuario en base a su clave de activación
     *
     * Texto -->
-    *                   		getSensorByActivationKey() <--
+    *                   		getSensorFromActivationKey() <--
     * <-- Sensor<stdClass>
     */
-	public function getSensorByActivationKey($key) {
+	public function getSensorFromActivationKey($key) {
 		$strKey = mysqli_real_escape_string($this->conn, $key);
 		// Query
 		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' LIMIT 1";
@@ -100,18 +100,17 @@ class SensorsModel extends BaseModel {
     * Comprueba si el sensor está disponible (no registrado)
     *
     * Texto -->
-    *               isTheSensorAvailable() <--
-    * <-- V | F
+    *               				getAvailableSensorFromActivationKey() <--
+    * <-- Sensor<stdClass> | Nada
     */
-	public function isTheSensorAvailable($key) {
+	public function getAvailableSensorFromActivationKey($key) {
 		$strKey = mysqli_real_escape_string($this->conn, $key);
 		// Query
 		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' AND s.state = 0";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve verdadero, si no ha encontrado ninguna coincidencia, devuelve falso
-		if (!is_null($result)) return true;
-		return false;
+		// Devuelve el sensor, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
 	}
 
 }

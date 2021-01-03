@@ -31,8 +31,8 @@ class UsersModel extends BaseModel {
     * Obtiene el usuario activo
     *
     * userID:Texto -->
-    *                   	getUser() <--
-    * <-- User<stdClass>
+    *                   			getUser() <--
+    * <-- User<stdClass> | Nada
     */
 	public function getUser($mail) {
 		// Escapamos los carácteres especiales
@@ -42,6 +42,24 @@ class UsersModel extends BaseModel {
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Comprueba si el código de activación de registro del usuario es válido
+    *
+    * Texto, N -->
+    *                 				getUserFromMailAndRegCode() <--
+    * <-- User<stdClass> | Nada
+    */
+	public function getUserFromMailAndRegCode($mail, $regCode) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+		$numRegCode = (int)$regCode;
+		// Query
+		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = $numRegCode";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el user, si no ha encontrado ninguna coincidencia, devuelve null
 		return $result;
 	}
 
@@ -104,13 +122,13 @@ class UsersModel extends BaseModel {
 		$strName = mysqli_real_escape_string($this->conn, $user->getName());
 		$strSurnames = mysqli_real_escape_string($this->conn, $user->getSurnames());
 		$strPassword = $user->getPassword();
-		$strSecretCode = (int)$user->getSecretCode();
-		$strRegDate = (int)$user->getRegDate();
+		$numSecretCode = (int)$user->getSecretCode();
+		$numRegDate = (int)$user->getRegDate();
 		$strRole = mysqli_real_escape_string($this->conn, $user->getRole());
 		$strAccountStatus = mysqli_real_escape_string($this->conn, $user->getAccountStatus());
 
 		// Query
-		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $strSecretCode, $strRegDate, '$strRole', '$strAccountStatus')";
+		$sql = "INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('$strMail', '$strName', '$strSurnames', '$strPassword', $numSecretCode, $numRegDate, '$strRole', '$strAccountStatus')";
 		
 		// Devuelve true, si no ha podido insertar el registro, devuelve false
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
@@ -141,28 +159,5 @@ class UsersModel extends BaseModel {
 
 		return $result;
 	}
-
-	// ---------------------------------------------- CHECKS ----------------------------------------------- //
-	
-	/* 
-    * Comprueba si el código de activación de registro del usuario es válido
-    *
-    * Texto, N -->
-    *                 isTheRegistrationCodeValid() <--
-    * <-- V | F
-    */
-	public function isTheRegistrationCodeValid($mail, $reg_code) {
-		$strMail = mysqli_real_escape_string($this->conn, $mail);
-		$strSecretCode = (int)$reg_code;
-		// Query
-		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = $strSecretCode";
-		// Respuesta
-		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve verdadero, si no ha encontrado ninguna coincidencia, devuelve falso
-		if (!is_null($result)) return true;
-		return false;
-	}
-
-	// ---------------------------------------------- UTILS ----------------------------------------------- //
 
 }
