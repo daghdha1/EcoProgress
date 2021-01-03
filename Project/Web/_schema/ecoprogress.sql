@@ -39,10 +39,16 @@ PRIMARY KEY (timestamp),
 FOREIGN KEY (sensorID) REFERENCES Sensors(id)
 );
 
-# ADMIN
+# ADMIN (don't have sensors - only management)
+# Admin  --> mail: admin@admin  password: admin
 INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Adrian', 'Soler Navarro', '$2y$10$m.IAnLCSMxLfd8bp/hvUh.B2FeObQF9vwFwVIWNfhktIb6G77e2Ze', 23342, 1620203039, 'root', 'active');
 
-# USER
+# USER (use these data for registration)
+# Adrián  --> mail: daghdha@dev.com   activation_key: 1d2d92g6  for sensor 1
+# Marcelo --> mail: marcelo@dev.com   activation_key: 20kDÑ2ln  for sensor 2
+# Marta   --> mail: marta@dev.com     activation_key: KD82mA8f  for sensor 3
+# Miguel  --> mail: miguel@dev.com    activation_key: kÑA232r1  for sensor 4
+# María   --> mail: maria@dev.com     activation_key: 9slñE2k6  for sensor 5
 
 # SENSORS
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', NULL, 'CO', '1d2d92g6', 0);
