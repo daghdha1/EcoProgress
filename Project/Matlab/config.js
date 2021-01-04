@@ -1,5 +1,5 @@
 module.exports  = {
-    n:2,
+    n:1,
     lastTimestamp : 0,
     pathx : "required/listx.txt",
     pathy : "required/listy.txt",

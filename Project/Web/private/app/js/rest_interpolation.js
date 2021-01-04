@@ -1,7 +1,10 @@
 getAllMeasures((measures) => {
     let data = processData(measures);
     postData(data, (heatMap) => {
-        drawMap(heatMap.l);
+
+        let parsedData = parseToObjectForHeatmap(heatMap.l);
+        
+        drawMap(parsedData);
     });
 });
 
@@ -21,6 +24,28 @@ function processData(data) {
     }
 
     return finalData;
+}
+
+function parseToObjectForHeatmap(data) {
+
+    var dataObj = {
+        max: 63,
+        data: []
+    };
+    //array dde arrays [ [lat, lon, value],  [lat, lon, value], ...]
+    for (let i = 0; i < data.length; i++) {
+
+        let pos = data[i];
+        var obj = {
+            lat: pos[0],
+            lng: pos[1],
+            value: pos[2]
+        };
+
+        dataObj.data.push(obj);
+    }
+    return dataObj;
+
 }
 
 function postData(data, cb) {
