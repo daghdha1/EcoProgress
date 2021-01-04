@@ -37,7 +37,7 @@ function areThereParameters(&$params) {
     return false;
 }
 
-function isUserSessionValid($session_id) {
+function authenticateUser($session_id) {
 	if(!isset($_COOKIE[$session_id])) {
     	echo "Cookie named '" . session_name() . "' is not set!";
 	} else {
@@ -47,7 +47,7 @@ function isUserSessionValid($session_id) {
 }
 
 // -------------------------------------------------------------------------------------------- //
-// -------------------------------------- FUNCTIONALITY --------------------------------------- //
+// -------------------------------------- FUNCTIONALITIES --------------------------------------- //
 
 /* 
 * Devuelve el instante de tiempo del periodo seleccionado (ej. instante de tiempo hace 24 horas)
@@ -88,7 +88,6 @@ function getTimestampOfPeriod($period) {
  * @param float $earthRadius Mradio de la tierra en m
  * @return float Distancia en metros sobre el globo
  */
-
 function haversineDistanceCalculator ($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
 	// Convert from degrees to radians
 	$latFrom = deg2rad($latitudeFrom);
@@ -141,7 +140,7 @@ function generatePasswordHash($pw) {
 }
 
 /*
-* Comprueba si la contraseña enviada desde el formulario se corresponde con el hash alojado
+* Comprueba si la contraseña enviada desde el formulario se corresponde con el pw hashed alojado en la db
 *
 * 						verifyPasswordHash() <--
 * <-- Texto | False

@@ -13,13 +13,13 @@ function showUserData() {
     getUser((dataReceived) => {
         console.log(dataReceived);
         fillInUserFields(dataReceived);
-    }, "daghdha@developer.com");
+    }, "daghdha@dev.com");
 }
 
 function showActiveTimeUser() {
     getActiveTimeUser((dataReceived) => {
         fillInActiveTimeField(dataReceived);
-    }, "daghdha@developer.com", "hour");
+    }, "daghdha@dev.com", "hour");
 }
 
 function showTotalDistanceUser() {

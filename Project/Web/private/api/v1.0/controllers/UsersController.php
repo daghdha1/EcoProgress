@@ -72,17 +72,18 @@ class UsersController extends BaseController {
     *
     * UsersModel, Lista<Texto> -->
     *                                   getIncomingParametersAndExecuteGetMethod() <--
-    * <-- N | Nada
+    * <-- UserEntity | N | Nada
     */
     private function getIncomingParametersAndExecuteGetMethod($model, $request) {
         $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $userID = $value;
+                    $mail = $value;
                     if (count($params) == 1) {
-                        $data = $model->getUser($userID);
-                        $result = $this->createArrayOfUsers($data, $request->resource);
+                        $data = $model->getUser($mail);
+                        $user = parent::createEntity($request->resource)->createUserFromDatabase($data);
+                        $result = $user->parseUserToAssocArrayUsers();
                     }
                     break;
                 case 'difference':
@@ -91,9 +92,10 @@ class UsersController extends BaseController {
                     } elseif ($value === 'hour') {
                         $time = 3600;
                     }
-                    $result = $model->getActiveTimeOfUser($userID, $time);
+                    $result = $model->getActiveTimeOfUser($mail, $time);
                     break;
                 default:
+                    $result = NULL;
                     break;
             }
         }
@@ -109,41 +111,34 @@ class UsersController extends BaseController {
     */
     private function getAllUsers($model, $request) {
         // Obtenemos el array de usuarios (objects stdClass)
-        $data = $model->getAllUsers();
-        $result = $this->createArrayOfUsers($data, $request->resource);
-        return $result;
+        $dataList = $model->getAllUsers();
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayUsers($dataList, $request->resource);
+        }
+        return 'error';
     }
 
     // -------------------------------------------- UTILS ---------------------------------------------- //
 
     /*
-    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Users
+    * Crea un array asociativo de objetos User (UserEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
     * 
     * Lista<stdClass>, Texto -->
-    *                               createArrayOfUsers() <--
-    * <-- Lista<User>
+    *                               parseDataListToAssocArrayUsers() <--
+    * <-- Lista<UserEntity>
     *
-    * Nota: data es una array númerica (iterativa)
+    * Nota: dataList es una array númerica (iterativa)
     */
-    private function createArrayOfUsers($data, $resource) {
-        // Si hay datos
-        if (!is_null($data)) {
-            $result = array();
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nuevo usuario
-                $user = parent::createEntity($resource);
-                // Asignamos las propiedades de cada objeto user
-                $user->setMail($data[$i]->mail);
-                $user->setName($data[$i]->name);
-                $user->setSurnames($data[$i]->surnames);
-                $user->setPassword($data[$i]->password);
-                // Guardamos los usuarios en el array asociativo $result
-                array_push($result, $user->toARRAY());
-            }
-            return $result;
-        } 
-        return NULL;
+    private function parseDataListToAssocArrayUsers($dataList, $resource) {
+        $result = array();
+        // Por cada elemento del array de objetos
+        for ($i=0; $i < count($dataList); $i++) {
+            // Creamos un nuevo usuario
+            $user = parent::createEntity($resource)->createUserFromDatabase($dataList, $i);
+            // Guardamos cada user iterado en el array asociativo $result
+            array_push($result, $user->toARRAY());
+        }
+        return $result;
     }
 
 }
