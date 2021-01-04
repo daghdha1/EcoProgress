@@ -37,12 +37,12 @@ function areThereParameters(&$params) {
     return false;
 }
 
-function authenticateUser($session_id) {
-	if(!isset($_COOKIE[$session_id])) {
+function authenticateUser() {
+	if(!isset($_COOKIE[session_id()])) {
     	echo "Cookie named '" . session_name() . "' is not set!";
 	} else {
 	    echo "Cookie '" . session_name() . "' is set!<br>";
-	    echo "Value is: " . $_COOKIE[session_name()];
+	    echo "Value is: " . $_COOKIE[session_id()];
 	}
 }
 
