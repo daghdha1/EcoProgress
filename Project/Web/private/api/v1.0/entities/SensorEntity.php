@@ -53,4 +53,22 @@ class SensorEntity extends BaseEntity {
             'state' => $this->state
         );
     }
+
+    /* 
+    * Crea un objeto Sensor (SensorEntity) recibido desde un lista de objetos <stdClass> de la base de datos (Database)
+    *
+    * Lista<stdClass>, iterator:N -->
+    *                                    createSensorFromDatabase() <--
+    * <-- SensorEntity
+    *
+    * Nota: dataList es una array númerica (iterativa)
+    */
+    public function createSensorFromDatabase($dataList, $i=0) {
+        $this->setId($dataList[$i]->id);
+        $this->setMail($dataList[$i]->mail);
+        $this->setType($dataList[$i]->type);
+        $this->setActivationKey($dataList[$i]->activation_key);
+        $this->setState($dataList[$i]->state);
+        return $this;
+    }
 }

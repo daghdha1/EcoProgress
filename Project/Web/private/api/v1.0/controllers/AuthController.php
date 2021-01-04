@@ -116,14 +116,15 @@ class AuthController extends BaseController {
     * <-- Lista<UserEntity> | Texto
     */
     private function registration($usersModel, $params) {
-        $user = $this->createUserFromParams($params);
+        // Creamos un nuevo usuario
+        $user = parent::createEntity('Users')->createUserFromParams($params);
         if ($usersModel->insertUser($user)) {
             // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToArrayUsers();
+            return $user->parseUserToAssocArrayUsers();
             /*if ($this->sendVerificationEmail($user)) {
                 //line();
                 //debug('email sended!', "");
-                return $user->parseUserToArrayUsers();
+                return $user->parseUserToAssocArrayUsers();
             } else {
                 //line();
                 //debug('email NOT sended', "");
@@ -144,22 +145,19 @@ class AuthController extends BaseController {
         // Updating user
         $data = $usersModel->getUser($params['reg_code_mail']);
         if (!is_null($data)) {
-            $user = $this->createUserFromDatabase($data);
+            $user = parent::createEntity('Users')->createUserFromDatabase($data);
             $user->setLastConn(time());
             $user->setAccountStatus('active');
             $isUserUpdated = $usersModel->updateUser($user);
-            
             // Updating sensor
             if ($isUserUpdated) {
                 $data = $sensorsModel->getSensorFromActivationKey($params['reg_code_key']);
-                $sensor = $this->createSensorFromDatabase($data);
+                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($data);
                 $sensor->setMail($params['reg_code_mail']);
                 $sensor->setState(1);
                 $isSensorUpdated = $sensorsModel->updateSensor($sensor);
-                
-                // Return user updated
                 if ($isSensorUpdated) {
-                    return $user->parseUserToArrayUsers();
+                    return $user->parseUserToAssocArrayUsers();
                 }
             }
         }
@@ -169,16 +167,16 @@ class AuthController extends BaseController {
     /* 
     * Inicio de sesión de usuario y guardado de sesión en servidor generando un nuevo token (session_id)
     *
-    * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                                   login() <--
+    * UsersModel, Lista<Texto> -->
+    *                                    login() <--
     * <-- Lista<UserEntity> | Texto
     */
     private function login($usersModel, $params) {
         $data = $usersModel->getUser($params['log_mail']);
         if (!is_null($data)) {
-            $user = $this->createUserFromDatabase($data);
+            $user = parent::createEntity('Users')->createUserFromDatabase($data);
             $this->createUserSession($user);
-            return $user->parseUserToArrayUsers();
+            return $user->parseUserToAssocArrayUsers();
         }
         return "Ha ocurrido un fallo inesperado en el inicio de sesión";
     }
@@ -274,79 +272,6 @@ class AuthController extends BaseController {
             return verifyPasswordHash($pwForm, $pwHashed);
         }
         return false;
-    }
-
-    // -------------------------------------------- UTILS ---------------------------------------------- //
-
-    /* 
-    * Crea un objeto User recibido desde los parámetros de un form
-    *
-    * Lista<Texto> -->
-    *                    createUserFromParams() <--
-    * <-- UserEntity
-    * 
-    * Nota: params es una array asociativa (clave-valor)
-    */
-    private function createUserFromParams($params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users');
-        // Asignamos las propiedades del objeto user a enviar
-        $user->setMail($params['reg_mail']);
-        $user->setName($params['reg_name']);
-        $user->setSurnames($params['reg_surnames']);
-        $user->setPassword(generatePasswordHash($params['reg_password']));
-        $user->setSecretCode(generateSecretCode());
-        $user->setLastConn(NULL);
-        $user->setRegDate(time());
-        $user->setRole('user');
-        $user->setAccountStatus('pending');
-        return $user;
-    }
-
-    /* 
-    * Crea un objeto User recibido desde la base de datos
-    *
-    * User<stdClass> -->
-    *                       createUserFromDatabase() <--
-    * <-- UserEntity
-    *
-    * Nota: data es una array númerica (iterativa)
-    */
-    private function createUserFromDatabase($data) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users');
-        // Asignamos las propiedades del objeto user a enviar
-        $user->setMail($data[0]->mail);
-        $user->setName($data[0]->name);
-        $user->setSurnames($data[0]->surnames);
-        $user->setPassword($data[0]->password);
-        $user->setSecretCode($data[0]->secret_code);
-        $user->setLastConn($data[0]->last_conn);
-        $user->setRegDate($data[0]->reg_date);
-        $user->setRole($data[0]->role);
-        $user->setAccountStatus($data[0]->account_status);
-        return $user;
-    }
-
-    /* 
-    * Crea un objeto Sensor recibido desde la base de datos
-    *
-    * Sensor<stdClass> -->
-    *                           createSensorFromDatabase() <--
-    * <-- SensorEntity
-    *
-    * Nota: data es una array númerica (iterativa)
-    */
-    private function createSensorFromDatabase($data) {
-        // Creamos un nuevo sensor
-        $sensor = parent::createEntity('Sensors');
-        // Asignamos las propiedades del objeto sensor a enviar
-        $sensor->setId($data[0]->id);
-        $sensor->setMail($data[0]->mail);
-        $sensor->setType($data[0]->type);
-        $sensor->setActivationKey($data[0]->activation_key);
-        $sensor->setState($data[0]->state);
-        return $sensor;
     }
 
     /*

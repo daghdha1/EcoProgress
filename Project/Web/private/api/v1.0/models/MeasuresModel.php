@@ -38,10 +38,10 @@ class MeasuresModel extends BaseModel {
     *                   									getAllMeasuresOfUser() <--
     * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
-	public function getAllMeasuresOfUser($userID) {
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+	public function getAllMeasuresOfUser($mail) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strUserID'";
+		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -55,10 +55,10 @@ class MeasuresModel extends BaseModel {
     *                      		getLastMeasure() <--
     * <-- Measure<stdClass>
     */
-	public function getLastMeasure($userID) {
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+	public function getLastMeasure($mail) {
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strUserID' ORDER BY timestamp DESC LIMIT 1";
+		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC LIMIT 1";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -72,11 +72,11 @@ class MeasuresModel extends BaseModel {
     *                      						 			getMeasuresFromTimestamp() <--
     * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
-	public function getMeasuresFromTimestamp($t, $userID) {
+	public function getMeasuresFromTimestamp($t, $mail) {
 		$strT = mysqli_real_escape_string($this->conn, $t);
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strUserID' AND m.timestamp >= '$strT'";
+		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' AND m.timestamp >= '$strT'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
@@ -90,12 +90,12 @@ class MeasuresModel extends BaseModel {
     *                      						 			getMeasuresFromTimestamp() <--
     * <-- Lista<Measures<stdClass>> | Measure<stdClass>
     */
-	public function getMeasuresFromTwoTimestamp($t1, $t2, $userID) {
+	public function getMeasuresFromTwoTimestamp($t1, $t2, $mail) {
 		$strT1 = mysqli_real_escape_string($this->conn, $t1);
 		$strT2 = mysqli_real_escape_string($this->conn, $t2);
-		$strUserID = mysqli_real_escape_string($this->conn, $userID);
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strUserID' AND m.timestamp >= '$strT1' AND m.timestamp <= '$strT2'";
+		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' AND m.timestamp >= '$strT1' AND m.timestamp <= '$strT2'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null

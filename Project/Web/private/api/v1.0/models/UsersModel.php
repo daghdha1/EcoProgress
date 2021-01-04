@@ -67,7 +67,7 @@ class UsersModel extends BaseModel {
     * Obtiene el tiempo total del usuario activo
     *
     * Texto, N -->
-    *                 			getActiveTimeOfUser() <--
+    *                 				getActiveTimeOfUser() <--
     * <-- Active range:N, Nada
     */
 	public function getActiveTimeOfUser($mail, $range) {
