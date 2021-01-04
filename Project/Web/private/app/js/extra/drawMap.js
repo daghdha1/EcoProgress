@@ -1,45 +1,103 @@
-function drawMap(data) {
+/*function drawMap(data) {
     var map = L.map('map').setView([39.003628, -0.166529], 18);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    L.marker([39.003628, -0.166529]).addTo(map);
-    var heat = L.heatLayer(data, {
-        radius: 20,
-        blur: 30,
+
+
+    /*var heat = L.heatLayer(data, {
+        radius: 1,
+        blur: 5,
         maxZoom: 10,
-        max: 50.0,
+        max: 70.0,
         gradient: {
             0.0: 'green',
             0.5: 'yellow',
             1.0: 'red'
         }
     }).addTo(map);
+
+    var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',
+        imageBounds = [
+            [39.020594, -0.211071],
+            [38.944588, -0.129491]
+        ];
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+}
+*/
+
+
+function drawMap(heatmap) {
+
+    var testData = heatmap;
+
+    var baseLayer = L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }
+    );
+
+    var cfg = {
+        // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+        // if scaleRadius is false it will be the constant radius used in pixels
+        "radius": 0.0008,
+        "maxOpacity": .6,
+        // scales the radius based on map zoom
+        "scaleRadius": true,
+        // if set to false the heatmap uses the global maximum for colorization
+        // if activated: uses the data maximum within the current map boundaries
+        //   (there will always be a red spot with useLocalExtremas true)
+        "useLocalExtrema": false,
+        // which field name in your data represents the latitude - default "lat"
+        latField: 'lat',
+        // which field name in your data represents the longitude - default "lng"
+        lngField: 'lng',
+        // which field name in your data represents the data value - default "value"
+        valueField: 'value',
+        blur: .4,
+        gradient: {
+            // enter n keys between 0 and 1 here
+            // for gradient color customization
+            '0': '#000000FF', //0
+            '0.1429': '#b6ff3c', //10
+            '0.3143': '#d9ff42', //22
+            '0.50': '#ffff3e', //35
+            '0.7143': '#ffa700', //50
+            '0.9286': '#ff6b30', //65
+            '1.00': '#ff0030'  //70
+        }
+    };
+
+
+    var heatmapLayer = new HeatmapOverlay(cfg);
+
+    var map = new L.Map('map', {
+        center: new L.LatLng(39.003628, -0.166529),
+        zoom: 17,
+        layers: [baseLayer, heatmapLayer]
+    });
+
+
+    addOfficialSensors(map)
+    heatmapLayer.setData(testData);
+
 }
 
-function drawGoogleMaps(data) {
-    var sanFrancisco = new google.maps.LatLng(38.995823, -0.174677);
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: sanFrancisco,
-        zoom: 13,
-        mapTypeId: 'satellite'
+function addOfficialSensors(map) {
+
+    var mapIcon = L.icon({
+        iconUrl: './private/app/media/map_marker.png',
+
+        iconSize: [38, 38], // size of the icon
     });
-    var heatMapData = [];
-    for (let i = 0; i < data.length; i++) {
-        let aux = data[i];
-        heatMapData.push({
-            location: new google.maps.LatLng(aux[0], aux[1]),
-            weight: aux[2]
-        });
-    }
-    //console.log(heatMapData.length);
-    var heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatMapData
-    });
-    const gradient = ["rgba(102, 255, 0, 0)", "rgba(102, 255, 0, 1)", "rgba(147, 255, 0, 1)", "rgba(193, 255, 0, 1)", "rgba(238, 255, 0, 1)", "rgba(244, 227, 0, 1)", "rgba(249, 198, 0, 1)", "rgba(255, 170, 0, 1)", "rgba(255, 113, 0, 1)", "rgba(255, 57, 0, 1)", "rgba(255, 0, 0, 1)"];
-    heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
-    heatmap.set("radius", heatmap.get("radius") ? null : 20);
-    heatmap.set("maxIntensity", 70)
-    heatmap.setMap(map);
-    console.log("Se supone que va??");
+
+
+    var marker = L.marker([38.96797739, -0.19109882], { // el de gandía
+        icon: mapIcon
+    }).addTo(map);
+
+    marker.bindPopup("Estacion de medida de Gandía").openPopup();
+
 }

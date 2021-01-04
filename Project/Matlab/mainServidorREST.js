@@ -33,10 +33,10 @@ async function main() {
 
     // capturo control-c para cerrar el servicio ordenadamente
     process.on('SIGINT', function () {
-        console.log(" terminando ")
-        servicio.close()
+        servicio.close();
+        console.log(" terminando ");
     })
 } // ()
 
 
-main()
+main();

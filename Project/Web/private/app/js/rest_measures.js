@@ -31,6 +31,7 @@ function getAllMeasures(callback) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
+        console.log(json);
         callback(json);
     });
 }
