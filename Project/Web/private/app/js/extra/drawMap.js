@@ -88,7 +88,7 @@ function drawMap(heatmap) {
 function addOfficialSensors(map) {
 
     var mapIcon = L.icon({
-        iconUrl: '../media/map_marker.png',
+        iconUrl: './private/app/media/map_marker.png',
 
         iconSize: [38, 38], // size of the icon
     });
