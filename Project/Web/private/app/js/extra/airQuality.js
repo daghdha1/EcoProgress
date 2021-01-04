@@ -23,7 +23,7 @@ function InitRequestLastMeasure() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com");
+        }, "test@test");
     });
 }
 
@@ -35,7 +35,7 @@ function InitRequestLastHourMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com", "hour");
+        }, "test@test", "hour");
     });
 }
 
@@ -47,7 +47,7 @@ function InitRequestLastDayMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com", "day");
+        }, "test@test", "day");
     });
 }
 
@@ -59,7 +59,7 @@ function InitRequestLastWeekMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com", "week");
+        }, "test@test", "week");
     });
 }
 
@@ -71,7 +71,7 @@ function InitRequestLastMonthMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com", "month");
+        }, "test@test", "month");
     });
 }
 // DONT USE IT (IN PROGRESS)
@@ -83,7 +83,7 @@ function InitRequestMyCustomMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "daghdha@developer.com", "153923022-162828823");
+        }, "test@test", "153923022-162828823");
     });
 }
 /*
