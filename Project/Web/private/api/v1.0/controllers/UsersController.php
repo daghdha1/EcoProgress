@@ -14,6 +14,7 @@ class UsersController extends BaseController {
     // ------------------------------ GET, POST, PUT, DELETE--------------------------------- //
     // -------------------------------------- ACTIONS --------------------------------------- //
     // -------------------------------------------------------------------------------------- //
+    // --------------------- THESE METHODS CALL PRIVATE LOGIC METHODS ----------------------- //
 
     /* - Recibe y trata una petición GET solicitada
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
@@ -26,9 +27,8 @@ class UsersController extends BaseController {
     public function getAction($request) {
         // Cargamos el modelo de Users
         $model = parent::loadModel($request->resource);
-        
         // Check de parámetros
-        if (!$this->areThereParameters($request->parameters)) {
+        if (!areThereParameters($request->parameters)) {
             // Obtiene todos los usuarios
             $result = $this->getAllUsers($model, $request);
         } else {
@@ -41,6 +41,19 @@ class UsersController extends BaseController {
         $view->render($result);
     }
 
+    /* - Recibe y trata una petición POST solicitada
+    *  - Se comunica con el modelo correspondiente y envia los datos facilitados por la petición
+    *  - Una vez enviados, los envia de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
+    *
+    * Action -->
+    *                   postAction() <--
+    * <-- Lista<T>
+    */
+    public function postAction($request) {
+    
+    }
+
+    // INFO: php no recomienda el uso de 'put' por seguridad, usar 'post' en su defecto
     public function putAction($request) {
 
     }
@@ -49,110 +62,83 @@ class UsersController extends BaseController {
 
     }
 
-    // ---------------------------------- PRIVATE METHODS ------------------------------------- //
-    // ---------------------------------------------------------------------------------------- //
+    // ------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
+    // ------------------------------------------------------------------------------------------------- //
 
-    /* 
-    * Obtiene todos los usuarios registrados
-    *
-    * UsersModel, Request -->
-    *                               getAllUsers() <--
-    * <-- Lista<UsersEntity>
-    */
-    private function getAllUsers($model, $request) {
-        // Obtenemos el array de usuarios (objects stdClass)
-        $data = $model->getAllUsers();
-        $result = array();
-        // Si hay datos
-        if (!is_null($data)) {
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nuevo usuario
-                $user = parent::createEntity($request->resource);
-                // Asignamos las propiedades de cada objeto user
-                $user->setMail($data[$i]->mail);
-                $user->setName($data[$i]->name);
-                $user->setSurnames($data[$i]->surnames);
-                $user->setPassword($data[$i]->password);
-                // Guardamos los usuarios en el array asociativo $result
-                array_push($result, $user->toARRAY());
-            }
-        }
-        return $result;
-    }
-
-    /* 
-    * Comprueba si existen parámetros en la petición
-    *
-    * Lista<Texto> -->
-    *                   areThereParameters() <--
-    * <-- T | F
-    */
-    private function areThereParameters(&$params) {
-        if (count($params) > 0) {
-            return true;
-        }
-        return false;
-    }
+    // ---------------------------------------------- GET ----------------------------------------------- //
 
     /* 
     * Escoge el método GET acorde con el parámetro recibido
     *
     * UsersModel, Lista<Texto> -->
     *                                   getIncomingParametersAndExecuteGetMethod() <--
-    * <-- N | Nada
+    * <-- UserEntity | N | Nada
     */
     private function getIncomingParametersAndExecuteGetMethod($model, $request) {
         $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $userID = $value;
-                    $data = $model->getUser($userID);
-                    $result = $this->createArrayOfUsers($data, $request->resource);
+                    $mail = $value;
+                    if (count($params) == 1) {
+                        $data = $model->getUser($mail);
+                        $user = parent::createEntity($request->resource)->createUserFromDatabase($data);
+                        $result = $user->parseUserToAssocArrayUsers();
+                    }
                     break;
                 case 'difference':
                     if ($value === 'half') {
                         $time = 1800;
-                        $result = $model->getActiveTimeUser($userID, $time);
                     } elseif ($value === 'hour') {
                         $time = 3600;
-                        $result = $model->getActiveTimeUser($userID, $time);
                     }
+                    $result = $model->getActiveTimeOfUser($mail, $time);
                     break;
                 default:
+                    $result = NULL;
                     break;
             }
         }
         return $result;
     }
 
+    /* 
+    * Obtiene todos los usuarios registrados
+    *
+    * UsersModel, Request -->
+    *                               getAllUsers() <--
+    * <-- Lista<UserEntity>
+    */
+    private function getAllUsers($model, $request) {
+        // Obtenemos el array de usuarios (objects stdClass)
+        $dataList = $model->getAllUsers();
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayUsers($dataList, $request->resource);
+        }
+        return 'error';
+    }
+
+    // -------------------------------------------- UTILS ---------------------------------------------- //
+
     /*
-    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Users
+    * Crea un array asociativo de objetos User (UserEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
     * 
     * Lista<stdClass>, Texto -->
-    *                               createArrayOfUsers() <--
-    * <-- Lista<User>
+    *                               parseDataListToAssocArrayUsers() <--
+    * <-- Lista<UserEntity>
+    *
+    * Nota: dataList es una array númerica (iterativa)
     */
-    private function createArrayOfUsers($data, $resource) {
-        // Si hay datos
-        if (!is_null($data)) {
-            $result = array();
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nuevo usuario
-                $user = parent::createEntity($resource);
-                // Asignamos las propiedades de cada objeto user
-                $user->setMail($data[$i]->mail);
-                $user->setName($data[$i]->name);
-                $user->setSurnames($data[$i]->surnames);
-                $user->setPassword($data[$i]->password);
-                // Guardamos los usuarios en el array asociativo $result
-                array_push($result, $user->toARRAY());
-            }
-            return $result;
-        } 
-        return null;
+    private function parseDataListToAssocArrayUsers($dataList, $resource) {
+        $result = array();
+        // Por cada elemento del array de objetos
+        for ($i=0; $i < count($dataList); $i++) {
+            // Creamos un nuevo usuario
+            $user = parent::createEntity($resource)->createUserFromDatabase($dataList, $i);
+            // Guardamos cada user iterado en el array asociativo $result
+            array_push($result, $user->toARRAY());
+        }
+        return $result;
     }
 
 }

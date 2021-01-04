@@ -1,11 +1,60 @@
 <?php
 
+// -------------------------------------------------------------------------------------- //
+// -------------------------------------- REQUEST --------------------------------------- //
+
+/*
+* Texto -->
+* 			  formatStrEntity()
+* <-- Texto
+*/
+function formatStrEntity($str) {
+	// Se quita la última letra (ej-> measures -> measure)
+	return substr_replace($str, '', -1);
+}
+
+/*
+* Entity<T>, Texto -->
+* 			  			 isAnEntityOf()
+* <-- V | F
+*/
+function isAnEntityOf($data, $name) {
+	$entity = $name . 'Entity';
+	return is_a($data, $entity, false);
+}
+
+/* 
+* Comprueba si existen parámetros en la petición URI
+*
+* Lista<Texto> -->
+*                    areThereURIParameters() <--
+* <-- T | F
+*/
+function areThereParameters(&$params) {
+    if (count($params) > 0) {
+        return true;
+    }
+    return false;
+}
+
+function authenticateUser($session_id) {
+	if(!isset($_COOKIE[$session_id])) {
+    	echo "Cookie named '" . session_name() . "' is not set!";
+	} else {
+	    echo "Cookie '" . session_name() . "' is set!<br>";
+	    echo "Value is: " . $_COOKIE[session_name()];
+	}
+}
+
+// -------------------------------------------------------------------------------------------- //
+// -------------------------------------- FUNCTIONALITIES --------------------------------------- //
+
 /* 
 * Devuelve el instante de tiempo del periodo seleccionado (ej. instante de tiempo hace 24 horas)
 * Devuelve -1 si no encuentra un periodo válido 
 *
 * Texto -->
-* 				getTimestampOfPeriod()
+* 				getTimestampOfPeriod() <--
 * <-- N | -1
 */
 function getTimestampOfPeriod($period) {
@@ -29,19 +78,100 @@ function getTimestampOfPeriod($period) {
 	return $targetSeconds;
 }
 
+/**
+ * Calcula la distancia recorrida
+ *
+ * @param float $latitudeFrom latitud del punto inicial 
+ * @param float $longitudeFrom longitud del punto inicial
+ * @param float $latitudeTo latitud del punto final
+ * @param float $longitudeTo longitud del punto final
+ * @param float $earthRadius Mradio de la tierra en m
+ * @return float Distancia en metros sobre el globo
+ */
+function haversineDistanceCalculator ($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
+	// Convert from degrees to radians
+	$latFrom = deg2rad($latitudeFrom);
+	$lonFrom = deg2rad($longitudeFrom);
+	$latTo = deg2rad($latitudeTo);
+	$lonTo = deg2rad($longitudeTo);
+  
+	$latDelta = $latTo - $latFrom;
+	$lonDelta = $lonTo - $lonFrom;
+  
+	$angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+	
+	return $angle * $earthRadius;
+  }
+
+// --------------------------------------------------------------------------------------- //
+// -------------------------------------- SECURITY --------------------------------------- //
+
 /*
-* Texto -->
-* 			formatStrEntity()
+* Devuelve un número random entre un rango de valores indicado
+*
+* 			generateSecretCode() <--
+* <-- N
+*/
+function generateSecretCode() {
+	$rand = rand(10000, 30000);
+	return $rand;
+}
+
+/*
+* Devuelve el hash md5 como un número hexadecimal de 32 carácteres
+*
+* 				generateMd5Hash() <--
 * <-- Texto
 */
-function formatStrEntity($str) {
-	// Se quita la última letra (ej-> measures -> measure)
-	return substr_replace($str, '', -1);
+function generateMd5Hash($value) {
+	$hash = md5($value);
+	return $hash;
+}
+
+/*
+* Genera una cadena de texto aleatoria de 60 carácteres usando el algoritmo bcrypt
+*
+* 						generatePasswordHash() <--
+* <-- Texto | False
+*/
+function generatePasswordHash($pw) {
+	$pw_hashed = password_hash($pw, PASSWORD_DEFAULT);
+	return $pw_hashed;
+}
+
+/*
+* Comprueba si la contraseña enviada desde el formulario se corresponde con el pw hashed alojado en la db
+*
+* 						verifyPasswordHash() <--
+* <-- Texto | False
+*/
+function verifyPasswordHash(&$pwForm, &$pwHashed) {
+	return password_verify($pwForm, $pwHashed);
+}
+
+// ------------------------------------------------------------------------------------- //
+// -------------------------------------- OTHERS --------------------------------------- //
+
+/*
+*  line() -->
+*/
+function line() {
+	echo PHP_EOL;
+}
+
+/*
+* Texto, Texto -->
+* 					  debug() <--
+* <-- Texto
+*/
+function debug($msg, $value) {
+	echo $msg . '--> ' . $value;
+	line();
 }
 
 /*
 * Lista<Texto> -->
-* 					removeElementsInStrArray()
+* 					removeElementsInStrArray() <--
 * <-- Lista<Texto>
 */
 function removeElementsInStrArray(&$array, $regex) {
@@ -52,30 +182,3 @@ function removeElementsInStrArray(&$array, $regex) {
 	}
 }
 
-
-/**
- * Esta todo en grados.
- * @param float $latitudeFrom latitud del punto inicial 
- * @param float $longitudeFrom longitud del punto inicial
- * @param float $latitudeTo latitud del punto final
- * @param float $longitudeTo longitud del punto final
- * @param float $earthRadius Mradio de la tierra en m
- * @return float Distancia en metros sobre el globo
- */
-
-function haversineDistanceCalculator(
-	$latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
-  {
-	// convert from degrees to radians
-	$latFrom = deg2rad($latitudeFrom);
-	$lonFrom = deg2rad($longitudeFrom);
-	$latTo = deg2rad($latitudeTo);
-	$lonTo = deg2rad($longitudeTo);
-  
-	$latDelta = $latTo - $latFrom;
-	$lonDelta = $lonTo - $lonFrom;
-  
-	$angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-	  cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-	return $angle * $earthRadius;
-  }

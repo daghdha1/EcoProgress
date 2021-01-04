@@ -7,7 +7,7 @@
  */
 function getLastMeasure(callback, userID) {
     var request = new Request(config.restDir + "/measures/users/" + userID + "/period/last", {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
@@ -25,7 +25,7 @@ function getLastMeasure(callback, userID) {
  */
 function getAllMeasures(callback) {
     var request = new Request(config.restDir + "/measures", {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
@@ -44,7 +44,7 @@ function getAllMeasures(callback) {
  */
 function getMeasuresFromTimestamp(callback, userID, periodValue) {
     var request = new Request(config.restDir + "/measures/users/" + userID + "/period/" + periodValue, {
-        method: "get"
+        method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();

@@ -6,10 +6,10 @@ GetDataForGraphicsBar();
  * <-- Lista<R>
  */
 function GetDataForGraphicsBar() {
-    let airQualitysPromiseList = [];
-    airQualitysPromiseList.push(InitRequestLastMeasure());
-    airQualitysPromiseList.push(InitRequestLastHourMeasures());
+    let airQualitysPromiseList = []; // [day,hour,last]
     airQualitysPromiseList.push(InitRequestLastDayMeasures());
+    airQualitysPromiseList.push(InitRequestLastHourMeasures());
+    airQualitysPromiseList.push(InitRequestLastMeasure());
     Promise.all(airQualitysPromiseList).then((response) => {
         populateGraph(response);
     }).catch(error => console.log("Error in promises ${error}"));
@@ -104,12 +104,6 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
-'use strict';
-var elementoQueBuscar = "cardOfGraphs";
-var idQueBuscar = "chart";
-var myElement = document.getElementById(elementoQueBuscar);
-var listaIds = myElement.querySelectorAll('*[id]');
-//console.log("Lista ids sin filtrar:",listaIds);
 /*
  * Rellena el rosco gráfico de medidas de calidad del aire
  * 
@@ -118,39 +112,75 @@ var listaIds = myElement.querySelectorAll('*[id]');
  * 
  */
 function populateGraph(valueList) {
+    //valueList = [-1, 43.5, 16.4];
     var options = {
         series: getPercentagesFromValues(valueList),
+        labels: ['Diaria', 'Horaria', 'Actual'],
         chart: {
-            height: '115%',
+            height: '190%',
+            width: '100%',
             type: 'radialBar',
+            fontFamily: 'CenturyGothic',
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 3000,
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 1500
+                }
+            }
         },
-        colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5'],
         plotOptions: {
             radialBar: {
+                startAngle: -90,
+                endAngle: 90,
                 dataLabels: {
+                    show: true,
                     name: {
-                        fontSize: '22px',
+                        show: true,
+                        color: myColors.soft_black,
+                        offsetY: -55,
                     },
                     value: {
                         show: true,
-                        fontSize: '12px',
+                        fontSize: '18px',
+                        color: myColors.blue_sapphire,
+                        offsetY: -20,
                         formatter: function(val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
                     total: {
                         show: true,
-                        label: 'Gas',
+                        label: 'CO',
+                        color: myColors.soft_black,
+                        fontSize: '27px',
                         formatter: function(w) {
-                            return "CO"
+                            return ""
                         }
                     }
                 }
             }
         },
-        labels: ['Diaria', 'Horaria', 'Actual'],
+        fill: {
+            colors: getColorBarByValue(valueList),
+            opacity: 0.9,
+            type: 'gradient',
+            gradient: {
+                shade: 'dark',
+                type: "horizontal",
+                shadeIntensity: 0.3,
+                gradientToColors: getGradientToColorsByValue(valueList),
+                inverseColors: false,
+                opacityFrom: 0.9,
+                opacityTo: 1,
+                stops: [0, 100],
+                colorStops: []
+            }
+        }
     };
-    var chartCo = new ApexCharts(document.querySelector("#coChart"), options);
+    let chartCo = new ApexCharts(document.querySelector("#coChart"), options);
     chartCo.render();
 }
 /*
@@ -169,10 +199,10 @@ function getPercentagesFromValues(valueList) {
     for (var i = 0; i < valueList.length; i++) {
         if (valueList[i] != -1) {
             let percent = valueList[i] * maxPercent / max;
-            let formatPercent = Math.round((percent + Number.EPSILON) * 100) / 100;
-            percentList[i] = formatPercent > 100 ? 100 : formatPercent;
+            let formatPercent = Math.round(percent * 100) / 100;
+            percentList[i] = formatPercent >= 100 ? 100 : formatPercent;
         } else {
-            percentList[i] = 0;
+            percentList[i] = 101; // 101 for non data
         }
     }
     return percentList;
@@ -185,13 +215,66 @@ function getPercentagesFromValues(valueList) {
  * <-- R
  */
 function getLabelsFromPercentage(percent) {
-    // valor minimo son 0ppm y el maximo 70ppm
+    // Valor mínimo son 0ppm y el maximo 70ppm
     let min = 0;
     let max = 70;
     let maxPercent = 100;
-    if (percent != 0) {
+    if (percent != 101) {
         let label = percent * max / maxPercent;
-        return label + " ppm";
+        let formatLabel = Math.round(label * 100) / 100;
+        return formatLabel + " ppm";
     }
     return "No hay datos";
+}
+/*
+ * Obtiene los colores de las barras iniciales dependiendo de si hay datos o no (>=0 || -1)
+ * 
+ * Lista<gasValue:R> -->  
+ *                              getColorBarByValue() <--
+ * <-- Lista<colors:Texto>
+ */
+function getColorBarByValue(valueList) {
+    colorList = [];
+    valueList.forEach(function(val) {
+        switch (true) {
+            case val >= 0:
+                colorList.push(myColors.soft_metallic_seaweed);
+                break;
+            default:
+                colorList.push(myColors.soft_grey);
+        }
+    });
+    return colorList;
+}
+/*
+ * Obtiene los gradientes de color de las barras dependiendo del valor dado
+ * 
+ * Lista<gasValue:R> -->  
+ *                              getGradientToColorsByValue() <--
+ * <-- Lista<colors:Texto>
+ */
+function getGradientToColorsByValue(valueList) {
+    colorList = [];
+    valueList.forEach(function(val) {
+        switch (true) {
+            case val >= 50:
+                colorList.push(myColors.eminence);
+                break;
+            case val >= 30:
+                colorList.push(myColors.space_cadet);
+                break;
+            case val >= 15:
+                colorList.push(myColors.blue_sapphire);
+                break;
+            case val >= 7:
+                colorList.push(myColors.metallic_seaweed);
+                break;
+            case val >= 0:
+                colorList.push(myColors.soft_metallic_seaweed);
+                break;
+            default:
+                colorList.push(myColors.soft_grey);
+        }
+    });
+    return colorList;
 }
