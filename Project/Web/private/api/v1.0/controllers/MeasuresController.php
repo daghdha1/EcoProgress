@@ -115,7 +115,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         }
-        return 'No hay medidas disponibles';
+        return NULL;
     }
 
     // ---------------------------------------------- (GET) ----------------------------------------------- //
@@ -133,7 +133,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         } 
-        return 'No hay medidas disponibles';
+        return NULL;
     }
 
     // ---------------------------------------------- (POST) ----------------------------------------------- //

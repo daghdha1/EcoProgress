@@ -47,7 +47,6 @@ function swapModalPanel(activePanel, targetPanel, cb1, cb2) {
 }
 
 function findAndFocusFirstInputFormElement() {
-    console.log("findAndFocusFirstFormInputElement ha sido llamado");
     $(document).ready(() => {
         let e = $("form").find("*").filter(":input:visible:enabled:not([readonly]):first").get(0);
         setFocusElementDOM(e.id);

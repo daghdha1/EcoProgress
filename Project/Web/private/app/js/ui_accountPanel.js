@@ -3,7 +3,7 @@ showUserData();
 function showUserData() {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
-    }, "daghdha@dev.com");
+    }, "test@test");
 }
 
 function fillInUserFields(userData) {
