@@ -36,44 +36,24 @@
     <script defer="" src="private/app/js/rest_measures.js"></script>
     <script defer="" src="private/app/js/rest_interpolation.js"></script>
     <script defer="" src="private/app/js/drawMap.js"></script>
+    <script defer="" src="public/js/login.js"></script>
+    <script defer="" src="public/js/registration.js"></script>
 </head>
 
 <body class="text-center" style="font-family: 'Century Gothic';color: #682172;height: 100%;">
-    <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean"
-        style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
+    <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
         <div class="container-fluid justify-content-center flex-column m-0 p-0">
-            <div class="d-flex justify-content-center align-items-xl-center"
-                style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
-                <a class="navbar-brand text-center" id="logo" href="#logo"
-                    style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;"><img
-                        src="public/img/logo.png" style="width: 210px;margin: 0;"></a>
-                <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end"
-                    style="padding: 0;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;width: 200px;right: 0px;position: absolute;">
-                    <a class="ml-auto" href="#btn_login"
-                        style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0;margin-left: 0;text-align: right;"
-                        data-toggle="modal">Iniciar Sesión</a>
-                    <div class="modal fade" role="dialog" tabindex="-1" id="btn_login">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header"><button type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                <div class="modal-body d-flex flex-column">
-                                    <p class="text-center text-muted" style="margin-bottom: 5px;">Correo electrónico</p>
-                                    <input class="justify-content-center mx-auto" type="email" id="email" name="email"
-                                        style="width: 70%;margin-bottom: 10px;text-align: center;" inputmode="email">
-                                    <p class="text-center text-muted" style="margin-bottom: 5px;">Contraseña</p><input
-                                        class="justify-content-center mx-auto" type="password" id="password"
-                                        name="password" style="width: 70%;margin-bottom: 10px;text-align: center;"><a
-                                        class="d-xl-flex justify-content-center mx-auto"
-                                        style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold;margin: 0px;margin-left: 0px;width: 35%;margin-bottom: 20px;font-size: 14px;"
-                                        data-toggle="modal">Recuperar contraseña</a>
-                                    <button class="btn btn-primary mx-auto" id="submit" type="button"
-                                        style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;"
-                                        onclick="validate()">Iniciar sesión</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
+                <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
+                    <img src="public/img/logo.png" style="width: 210px;margin: 0;"/>
+                </a>
+                <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
+                    <a class="ml-auto" onclick="return initModalPanel('loginPanel', null, null)" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                        Iniciar Sesión
+                    </a>
+                    <a class="ml-auto" onclick="return initModalPanel('registrationPanel', null, null)" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;">
+                        Regístrate
+                    </a>
                 </div>
             </div>
         </div>
