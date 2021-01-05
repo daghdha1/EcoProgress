@@ -189,21 +189,10 @@ class AuthController extends BaseController {
     */
     private function createUserSession($user) {
         session_start();
-        //session_regenerate_id();
-        //date_default_timezone_set('UTC');
-        //date_default_timezone_set('Europe/Madrid');
-        //debug("TIMEZONE", date_default_timezone_get());
-        //$t=time();
-        //debug("seconds", $t . "<br>");
-        //debug("y,m,d", date("Y-m-d"));
-        //debug("h,m,s", date('H:i:sa'));
-        //debug("datecookie", date(DATE_COOKIE));
-        //$fecha = new DateTime();
-        //debug("datetime",$fecha->getTimestamp());
-        //setcookie(session_name(), session_id(), time() + 3600, '/'); // expira la sesión después de 1h
+        setcookie("REQSESSID", session_id(), time() + 120); // expira la sesión en 2 min
+        $_SESSION['SESSID'] = session_id();
         $_SESSION['mail'] = $user->getMail();
         $_SESSION['name'] = $user->getName();
-        $_SESSION["timeout"] = time();
     }
 
     /* 
@@ -213,7 +202,7 @@ class AuthController extends BaseController {
     */
     private function deleteUserSession() {
         session_start();
-        setcookie(session_name(), session_id(), 1); // expira la sesión
+        setcookie("REQSESSID", session_id(), 1); // expira la sesión
         session_unset();
         $_SESSION = [];
         return session_destroy();

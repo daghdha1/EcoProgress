@@ -1,5 +1,22 @@
 <?php
 
+/*
+*  line() -->
+*/
+function line() {
+	echo PHP_EOL;
+}
+
+/*
+* Texto, Texto -->
+* 					  debug() <--
+* <-- Texto
+*/
+function debug($msg, $value) {
+	echo $msg . '--> ' . $value;
+	line();
+}
+
 /* Comprobación de array indexado o asociativo
 *
 * Lista<T> -->
