@@ -25,16 +25,20 @@ class UsersController extends BaseController {
 	* <-- Lista<T> 
 	*/
     public function getAction($request) {
-        // Cargamos el modelo de Users
-        $model = parent::loadModel($request->resource);
-        // Check de parámetros
-        if (!areThereParameters($request->parameters)) {
-            // Obtiene todos los usuarios
-            $result = $this->getAllUsers($model, $request);
+        if (authenticateUserSession()) {
+            // Cargamos el modelo de Users
+            $model = parent::loadModel($request->resource);
+            // Check de parámetros
+            if (!areThereParameters($request->parameters)) {
+                // Obtiene todos los usuarios
+                $result = $this->getAllUsers($model, $request);
+            } else {
+                // Ejecuta el método correspondiente
+                $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            }
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            $result = 'Usuario sin permisos';
         }
-
         // Cargamos la vista seleccionada
         $view = parent::loadView($request->format);
         // Parseamos la respuesta a JSON

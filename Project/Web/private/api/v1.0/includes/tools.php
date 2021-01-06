@@ -47,12 +47,12 @@ function areThereParameters(&$params) {
 function authenticateUserSession() {
     session_start();
 	if(isset($_COOKIE['REQSESSID']) && $_COOKIE['REQSESSID'] == $_SESSION['SESSID']) {
-		debug('Cookie: ', session_name() . ' is set!');
+		debug('Cookie: ', 'REQSESSID is set!');
 		debug('Value of Request Cookie: ', $_COOKIE['REQSESSID']);
 		debug('Value of Session Cookie: ', $_SESSION['SESSID']);
     	return true;
 	} else {
-	    debug('Cookie: ', session_name() . ' is not valid!');
+	    debug('Cookie: ', 'REQSESSID is not set!');
 	    return false;
 	}
 }

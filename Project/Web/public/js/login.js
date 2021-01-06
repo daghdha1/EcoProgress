@@ -31,16 +31,15 @@ function login() {
             switch (typeof json) {
                 case 'object':
                     if (json[0].role === 'user') {
+                        // Guardamos datos básicos de usuario
+                        saveUserSession(json);
                         // Redireccionamos a la página principal del usuario
                         window.location.href = './private/app/html/home.html';
-                        //saveUserSession(json);
                     } else if (json[0].role === 'root') {
                         // Redireccionamos a la página de admin
                         window.location.href = './private/app/html/adminPanel.html';
                     }
                     hideModalPanel('loginPanel');
-                    console.log("Cookie recibida del usuario " + json[0].mail + " --> ");
-                    console.log(document.cookie);
                     break;
                 case 'string':
                     alert(json);
@@ -50,9 +49,8 @@ function login() {
         });
     }
 }
-// FALTA RECIBIR DE LA BASE DE DATOS SI ES ROOT O USER
+
 function saveUserSession(userDataSession) {
     sessionStorage.setItem("mail", userDataSession.mail);
-    sessionStorage.setItem("bearer_token", userDataSession.password);
-    sessionStorage.setItem("role", userDataSession.root);
+    sessionStorage.setItem("name", userDataSession.name);
 }

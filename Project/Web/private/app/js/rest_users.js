@@ -12,7 +12,8 @@ function getAllUsers(callback) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }
 /* 
@@ -30,7 +31,8 @@ function getUser(callback, userID) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }
 /* 
@@ -48,6 +50,7 @@ function getActiveTimeUser(callback, userID, differenceValue) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }

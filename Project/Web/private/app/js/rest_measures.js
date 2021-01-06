@@ -13,7 +13,8 @@ function getLastMeasure(callback, userID) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }
 
@@ -31,8 +32,8 @@ function getAllMeasures(callback) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        console.log(json);
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }
 /* 
@@ -50,6 +51,7 @@ function getMeasuresFromTimestamp(callback, userID, periodValue) {
         if (response.ok) return response.json();
         else return false;
     }).then((json) => {
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }
