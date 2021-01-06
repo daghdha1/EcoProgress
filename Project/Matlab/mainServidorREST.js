@@ -6,8 +6,6 @@ const bodyParser = require('body-parser')
 var cors = require('cors');
 
 
-
-
 // .....................................................................
 // main()
 // .....................................................................
@@ -27,7 +25,7 @@ async function main() {
     var reglas = require("./ReglasREST.js")
     reglas.cargar(servidorExpress);
     // arrancao el servidor
-    var servicio = servidorExpress.listen(8080, function () {
+    var servicio = servidorExpress.listen(8080,"localhost", function () {
         console.log("servidor REST escuchando en el puerto 8080 ")
     })
 
@@ -37,6 +35,5 @@ async function main() {
         console.log(" terminando ");
     })
 } // ()
-
 
 main();

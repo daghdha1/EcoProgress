@@ -29,7 +29,7 @@ function processData(data) {
 function parseToObjectForHeatmap(data) {
 
     var dataObj = {
-        max: 63,
+        max: 70,
         data: []
     };
     //array dde arrays [ [lat, lon, value],  [lat, lon, value], ...]
@@ -45,12 +45,10 @@ function parseToObjectForHeatmap(data) {
         dataObj.data.push(obj);
     }
     return dataObj;
-
 }
 
 function postData(data, cb) {
-
-    fetch("http://localhost:8080/interpolate", {
+    fetch(config.restInterpDir, {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers: {

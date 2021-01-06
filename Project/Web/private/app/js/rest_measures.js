@@ -16,7 +16,6 @@ function getLastMeasure(callback, userID) {
         callback(json);
     });
 }
-
 /* 
  * Obtiene la última medida tomada del usuario activo
  *
@@ -53,3 +52,4 @@ function getMeasuresFromTimestamp(callback, userID, periodValue) {
         callback(json);
     });
 }
+
