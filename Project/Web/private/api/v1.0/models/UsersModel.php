@@ -104,6 +104,7 @@ class UsersModel extends BaseModel {
 		// Respuesta
 		$result = MyEntity::executeSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+
 		return $result;
 	}
 

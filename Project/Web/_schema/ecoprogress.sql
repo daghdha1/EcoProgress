@@ -74,3 +74,17 @@ INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '16064
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1606237120', '38.995823,-0.177517', '2');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1606150777', '38.995823,-0.177517', '2');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (20.5, '1606064397', '38.995823,-0.177517', '2');
+
+# MEASURES FOR TEST
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1609934467', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1609934667', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1609934167', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (20.5, '1609934867', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (35.12, '1609933867', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (56.3, '1609933767','38.9955, 0.1661','6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (63.3, '1609932667', '38.9973, 0.1662', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (33.3, '1609932967', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1609932867', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1609931767', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1609931867', '38.995823,-0.177517', '6');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (20.5, '1609931967', '38.995823,-0.177517', '6');

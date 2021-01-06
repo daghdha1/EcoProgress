@@ -17,7 +17,6 @@ function getLastMeasure(callback, userID) {
         else window.location.replace(config.indexDir);
     });
 }
-
 /* 
  * Obtiene la última medida tomada del usuario activo
  *
@@ -55,3 +54,4 @@ function getMeasuresFromTimestamp(callback, userID, periodValue) {
         else window.location.replace(config.indexDir);
     });
 }
+

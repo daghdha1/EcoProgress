@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Landing</title>
+    <link rel="icon" type="favicon.png" href="favicon.png" sizes="16x16 24x24 36x36 48x48">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/css/CenturyGothic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css">
     <link rel="stylesheet" href="public/css/Navigation-Clean.css">
     <link rel="stylesheet" href="public/css/palette.compiled.css">
-    <link rel="stylesheet" href="public/css/styles.css">
+    <!-- <link rel="stylesheet" href="public/css/styles.css"> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
 
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -23,17 +24,17 @@
     </script>
     <script defer src="public/js/bs-init.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
-    <script defer src="private/app/js/_config.js"></script>
+    <script defer src="public/js/_config.js"></script>
 
 
 
     <script defer src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-    <script defer src="private/app/js/extra/heatmap.js"></script> 
-    <script defer src="private/app/js/extra/leaflet-heatmap.js"></script>
+    <script defer src="public/js/libraries/heatmap.js"></script> 
+    <script defer src="public/js/libraries/leaflet-heatmap.js"></script>
 
-    <script defer src="private/app/js/rest_measures.js"></script>
-    <script defer src="private/app/js/rest_interpolation.js"></script>
-    <script defer src="private/app/js/extra/drawMap.js"></script>
+    <script defer src="public/js/rest_landing.js"></script>
+    <script defer src="public/js/rest_interpolation.js"></script>
+    <script defer src="public/js/drawLandingMap.js"></script>
     <script defer src="public/js/login.js"></script>
     <script defer src="public/js/registration.js"></script>
     <script defer src="public/js/_tools.js"></script>
@@ -44,7 +45,7 @@
         <div class="container-fluid justify-content-center flex-column m-0 p-0">
             <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
                 <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
-                    <img src="public/img/logo.png" style="width: 210px;margin: 0;"/>
+                    <img src="public/media/logo.png" style="width: 210px;margin: 0;"/>
                 </a>
                 <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
                     <a class="ml-auto" onclick="return initModalPanel('loginPanel', null, null)" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
@@ -112,7 +113,7 @@
     </div>
 
     <div class="container-fluid text-center d-flex flex-column justify-content-center justify-content-xl-center align-items-xl-center"
-        style="width: 100%;max-width: 100%;background: url('public/img/bgLanding.png') bottom / cover no-repeat, #ffffff;height: 300%;padding: 0;">
+        style="width: 100%;max-width: 100%;background: url('public/media/bgLanding.png') bottom / cover no-repeat, #ffffff;height: 300%;padding: 0;">
         <section class="d-flex justify-content-around justify-content-xl-center align-items-xl-center" id="info"
             style="/*margin-top: 0;*/height: 33%;width: 100%;">
             <div class="row d-xl-flex justify-content-around justify-content-xl-center"

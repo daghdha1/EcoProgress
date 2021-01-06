@@ -120,7 +120,7 @@ class MeasuresModel extends BaseModel {
 		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) VALUES ('$strValue', '$strTimestamp', '$strLocation', '$strSensorID')";
 		// Respuesta
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
-		// Devuelve true, si no es posible insertar el registro, devuelve false
+		// Devuelve true, si no es posible insertar el registro devuelve false
 		return $result;
 	}
 

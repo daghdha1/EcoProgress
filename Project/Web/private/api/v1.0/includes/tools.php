@@ -91,7 +91,6 @@ function getTimestampOfPeriod($period) {
 
 /**
  * Calcula la distancia recorrida
- *
  * @param float $latitudeFrom latitud del punto inicial 
  * @param float $longitudeFrom longitud del punto inicial
  * @param float $latitudeTo latitud del punto final

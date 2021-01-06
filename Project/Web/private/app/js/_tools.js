@@ -74,3 +74,28 @@ function convertSecondsToFormatTime(seconds) {
     var time = hour + 'h:' + min + 'm:' + sec + 's';
     return time;
 }
+
+//******************************************************************
+// Funciones para generar datos aleatorios
+//******************************************************************
+function randomDataArray() {
+    var dataArray = [];
+    var start = 20;
+    var range = 10;
+    for (var i = 0; i < 10; i++) {
+        let aux = getRandomInt(start - range, start + range)
+        aux < 0 ? aux = 0 : aux = aux;
+        dataArray.push(aux);
+        start = aux;
+    }
+    console.log(dataArray);
+    return dataArray;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+//******************************************************************
+//******************************************************************
