@@ -1,13 +1,10 @@
 getAllMeasures((measures) => {
     let data = processData(measures);
     postData(data, (heatMap) => {
-
         let parsedData = parseToObjectForHeatmap(heatMap.l);
-        
         drawMap(parsedData);
     });
 });
-
 
 function processData(data) {
     //console.log("data---->",data);
@@ -16,32 +13,27 @@ function processData(data) {
         listy: [],
         listz: []
     };
-
     for (let i = 0; i < data.length; i++) {
         finalData.listx.push(data[i].location.longitude);
         finalData.listy.push(data[i].location.latitude);
         finalData.listz.push((data[i].value));
     }
-
     return finalData;
 }
 
 function parseToObjectForHeatmap(data) {
-
     var dataObj = {
         max: 70,
         data: []
     };
     //array dde arrays [ [lat, lon, value],  [lat, lon, value], ...]
     for (let i = 0; i < data.length; i++) {
-
         let pos = data[i];
         var obj = {
             lat: pos[0],
             lng: pos[1],
             value: pos[2]
         };
-
         dataObj.data.push(obj);
     }
     return dataObj;
@@ -49,17 +41,14 @@ function parseToObjectForHeatmap(data) {
 
 function postData(data, cb) {
     fetch(config.restInterpDir, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            return res.json();
-        })
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-            cb(response)
-        });
-
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).catch(error => console.error('Error:', error)).then(response => {
+        cb(response)
+    });
 }

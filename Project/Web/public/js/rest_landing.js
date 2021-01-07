@@ -12,9 +12,10 @@ function getAllMeasures(callback) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
         console.log(json);
-        callback(json);
+        if (json != null) callback(json);
+        else window.location.replace(config.indexDir);
     });
 }

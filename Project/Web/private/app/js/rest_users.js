@@ -10,7 +10,7 @@ function getAllUsers(callback) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
         if (json != null) callback(json);
         else window.location.replace(config.indexDir);
@@ -29,7 +29,7 @@ function getUser(callback, userID) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
         if (json != null) callback(json);
         else window.location.replace(config.indexDir);
@@ -48,7 +48,7 @@ function getActiveTimeUser(callback, userID, differenceValue) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
         if (json != null) callback(json);
         else window.location.replace(config.indexDir);

@@ -51,10 +51,10 @@ function authenticateUserSession() {
 		debug('Value of Request Cookie: ', $_COOKIE['REQSESSID']);
 		debug('Value of Session Cookie: ', $_SESSION['SESSID']);
     	return true;
-	} else {
-	    debug('Cookie: ', 'REQSESSID is not set!');
-	    return false;
-	}
+	} 
+    debug('Cookie: ', 'REQSESSID is not set!');
+    session_write_close();
+    return false;
 }
 
 // -------------------------------------------------------------------------------------------- //

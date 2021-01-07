@@ -32,8 +32,10 @@ class MeasuresController extends BaseController {
         if (!areThereParameters($request->parameters)) {
             // Obtiene todas las medidas
             $result = $this->getAllMeasures($model, $request);
-        } else {
+        } else if (authenticateUserSession()) {
             $result = $this->getIncomingParametersAndExecuteMethod($model, $request);
+        } else {
+            $result = NULL;
         }
 
         // Cargamos la vista seleccionada
@@ -104,8 +106,8 @@ class MeasuresController extends BaseController {
                     } elseif ($value === 'last') {
                         $dataList = $model->getLastMeasure($mail);
                     } else {
-                        $t = getTimestampOfPeriod($value);
-                        $dataList = $model->getMeasuresFromTimestamp($t, $mail);
+                        $ts = getTimestampOfPeriod($value);
+                        $dataList = $model->getMeasuresFromTimestamp($ts, $mail);
                     }
                     break;
                 default:
@@ -115,7 +117,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         }
-        return NULL;
+        return 'No hay medidas disponibles';
     }
 
     // ---------------------------------------------- (GET) ----------------------------------------------- //
@@ -133,7 +135,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         } 
-        return NULL;
+        return 'No hay medidas disponibles';
     }
 
     // ---------------------------------------------- (POST) ----------------------------------------------- //
@@ -148,7 +150,9 @@ class MeasuresController extends BaseController {
     private function postMeasure($model, $request) {
         // Enviamos la medida
         if ($model->postMeasure($request->parameters)) {
-            return $this->parseDataListToAssocArrayMeasures($request->parameters, $request->resource);  
+            // Creamos un nueva medición
+            $measure = parent::createEntity($request->resource)->createMeasureFromParams($request->parameters);
+            return $measure->parseMeasureToAssocArrayMeasures(); 
         }
         return 'No se ha podido insertar la medición';    
     }

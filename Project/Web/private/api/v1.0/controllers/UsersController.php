@@ -37,8 +37,9 @@ class UsersController extends BaseController {
                 $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
             }
         } else {
-            $result = 'Usuario sin permisos';
+            $result = NULL;
         }
+
         // Cargamos la vista seleccionada
         $view = parent::loadView($request->format);
         // Parseamos la respuesta a JSON

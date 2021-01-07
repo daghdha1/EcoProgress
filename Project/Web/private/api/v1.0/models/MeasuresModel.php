@@ -111,11 +111,11 @@ class MeasuresModel extends BaseModel {
     *                      postMeasure() <--
     * <-- V | F
     */
-	public function postMeasure($parameters) {
-		$strValue = mysqli_real_escape_string($this->conn, $parameters['value']);
-		$strTimestamp = mysqli_real_escape_string($this->conn, $parameters['timestamp']);
-		$strLocation = mysqli_real_escape_string($this->conn, $parameters['location']);
-		$strSensorID = mysqli_real_escape_string($this->conn, $parameters['sensorID']);
+	public function postMeasure($params) {
+		$strValue = mysqli_real_escape_string($this->conn, $params['value']);
+		$strTimestamp = mysqli_real_escape_string($this->conn, $params['timestamp']);
+		$strLocation = mysqli_real_escape_string($this->conn, $params['location']);
+		$strSensorID = mysqli_real_escape_string($this->conn, $params['sensorID']);
 		// Query
 		$sql = "INSERT INTO Measures (value, timestamp, location, sensorID) VALUES ('$strValue', '$strTimestamp', '$strLocation', '$strSensorID')";
 		// Respuesta

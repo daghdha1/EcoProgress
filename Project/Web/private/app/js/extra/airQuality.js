@@ -94,7 +94,6 @@ function InitRequestMyCustomMeasures() {
  * <-- gasValue:R
  */
 function calculateAirQuality(measureList) {
-
     console.log(measureList)
     let result = 0;
     measureList.forEach(measure => {

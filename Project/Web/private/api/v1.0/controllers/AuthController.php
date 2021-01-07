@@ -193,12 +193,14 @@ class AuthController extends BaseController {
         $_SESSION['SESSID'] = session_id();
         $_SESSION['mail'] = $user->getMail();
         $_SESSION['name'] = $user->getName();
+        session_write_close();
     }
 
     /* 
     * Finalización de sesión de usuario y destrucción de variables de sesión
     *
-    * deleteUserSession() <--
+    *               deleteUserSession() <--
+    * <-- V | F
     */
     private function deleteUserSession() {
         session_start();
