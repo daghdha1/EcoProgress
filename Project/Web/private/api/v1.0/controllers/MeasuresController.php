@@ -30,12 +30,11 @@ class MeasuresController extends BaseController {
         
         // Check de parámetros
         if (!areThereParameters($request->parameters)) {
-            // Obtiene todas las medidas
             $result = $this->getAllMeasures($model, $request);
-        } else if (authenticateUserSession()) {
+        } elseif (authenticateUserSession()) {
             $result = $this->getIncomingParametersAndExecuteMethod($model, $request);
         } else {
-            $result = NULL;
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__, 1);
         }
 
         // Cargamos la vista seleccionada
@@ -59,7 +58,7 @@ class MeasuresController extends BaseController {
         if (areThereParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
-            $result = NULL;
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
         }
 
         // Cargamos la vista seleccionada
@@ -80,7 +79,7 @@ class MeasuresController extends BaseController {
     // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
     // -------------------------------------------------------------------------------------------------- //
 
-    // -------------------------------------------- REQUEST ----------------------------------------------- //
+    // -------------------------------------------- REQUEST --------------------------------------------- //
 
     /* 
     * Escoge el método GET acorde con el parámetro recibido
@@ -95,7 +94,7 @@ class MeasuresController extends BaseController {
             switch ($key) {
                 case 'users':
                     $mail = $value;
-                    if (count($params) == 1) {
+                    if (count($params) === 1) {
                         $dataList = $model->getAllMeasuresOfUser($mail);
                     }
                     break;
@@ -117,7 +116,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         }
-        return 'No hay medidas disponibles';
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     // ---------------------------------------------- (GET) ----------------------------------------------- //
@@ -135,7 +134,7 @@ class MeasuresController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         } 
-        return 'No hay medidas disponibles';
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     // ---------------------------------------------- (POST) ----------------------------------------------- //
@@ -154,7 +153,7 @@ class MeasuresController extends BaseController {
             $measure = parent::createEntity($request->resource)->createMeasureFromParams($request->parameters);
             return $measure->parseMeasureToAssocArrayMeasures(); 
         }
-        return 'No se ha podido insertar la medición';    
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     // ---------------------------------------------- UTILS ----------------------------------------------- //

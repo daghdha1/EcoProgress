@@ -38,7 +38,6 @@ window.Apex = {
         }
     }
 };
-
 getMeasuresFromTimestamp((data) => {
     populateColumchart(getFakeData()) // later it'll be data from fetch
     populateLinechart(data);
@@ -62,7 +61,6 @@ function populateLinechart(data) {
     var parsedData = []
     var parsedTimestamps = []
     if (data != null) {
-
         for (var i = 0; i < data.length; i++) {
             parsedData.push(parseInt(data[i].value));
             parsedTimestamps.push(timeConverter(data[i].timestamp))
@@ -75,16 +73,12 @@ function populateLinechart(data) {
                 categories: parsedTimestamps
             }
         })
-
     }
-
 }
 
 function populateColumchart(data) {
     let parsedData = []
     let days = []
-    console.log("Colums",data)
-
     if (data != null) {
         for (var i = 0; i < data.length; i++) {
             parsedData.push(data[i].distance);
@@ -98,38 +92,26 @@ function populateColumchart(data) {
                 categories: days
             }
         })
-
     }
-
-
 }
-
 //va a recibir un array de objetos. Cada objeto va a estar formado por un día y la distancia recorrida
 function getFakeData() {
     let fakeData = [{
-            date: "01/01/2021",
-            distance: 5.5
-        },
-        {
-            date: "02/01/2021",
-            distance: 10.04
-        },
-        {
-            date: "03/01/2021",
-            distance: 10.9
-        },
-        {
-            date: "04/01/2021",
-            distance: 7.9
-        },
-        {
-            date: "05/01/2021",
-            distance: 4.7
-        }
-    ];
+        date: "01/01/2021",
+        distance: 5.5
+    }, {
+        date: "02/01/2021",
+        distance: 10.04
+    }, {
+        date: "03/01/2021",
+        distance: 10.9
+    }, {
+        date: "04/01/2021",
+        distance: 7.9
+    }, {
+        date: "05/01/2021",
+        distance: 4.7
+    }];
     return fakeData;
 }
-
-window.setInterval(function () {
-
-}, 3000);
+window.setInterval(function() {}, 3000);

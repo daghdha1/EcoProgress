@@ -1,3 +1,23 @@
+// -------------------------------------------------------------------------------- //
+// -----------------  Manejador de respuestas del servidor (JSON) ----------------- //
+// -------------------------------------------------------------------------------- //
+function responseHandler(json, callback) {
+    switch (true) {
+        case json == null:
+            alert("Error en la conexión con el servidor");
+            break;
+        case json.hasOwnProperty('error'):
+            alert(json.error + ": Class--> " + json.class + ", Method--> " + json.method + ", at line " + json.line + ". (Auth-->" + json.auth + ")");
+            if (json.auth === 1) window.location.replace(config.indexDir);
+            break;
+        case Array.isArray(json):
+            callback(json);
+            break;
+    }
+}
+// -------------------------------------------------------------------------------- //
+// -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
+// -------------------------------------------------------------------------------- //
 function initModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
@@ -52,7 +72,9 @@ function findAndFocusFirstInputFormElement() {
         setFocusElementDOM(e.id);
     });
 }
-
+// -------------------------------------------------------------------------------- //
+// ------------------------------ Funciones Tiempo -------------------------------- //
+// -------------------------------------------------------------------------------- //
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -74,9 +96,8 @@ function convertSecondsToFormatTime(seconds) {
     var time = hour + 'h:' + min + 'm:' + sec + 's';
     return time;
 }
-
 //******************************************************************
-// Funciones para generar datos aleatorios
+//          Funciones para generar datos aleatorios
 //******************************************************************
 function randomDataArray() {
     var dataArray = [];
@@ -88,7 +109,6 @@ function randomDataArray() {
         dataArray.push(aux);
         start = aux;
     }
-    console.log(dataArray);
     return dataArray;
 }
 
@@ -97,5 +117,3 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//******************************************************************
-//******************************************************************

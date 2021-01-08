@@ -12,8 +12,7 @@ function getAllMeasures(callback) {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        if (json != null) callback(json);
-        else window.location.replace(config.indexDir);
+        responseHandler(json, callback);
     });
 }
 /* 
@@ -31,11 +30,7 @@ function getLastMeasure(callback, mail) {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        if (json != null) callback(json);
-        else {
-            console.log("Holaaaa");
-            window.location.replace(config.indexDir);
-        }
+        responseHandler(json, callback);
     });
 }
 /* 
@@ -53,7 +48,6 @@ function getMeasuresFromTimestamp(callback, mail, periodValue) {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        if (json != null) callback(json);
-        else window.location.replace(config.indexDir);
+        responseHandler(json, callback);
     });
 }

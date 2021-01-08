@@ -231,7 +231,6 @@ getMeasuresFromTimestamp((data) => {
         for (var i = 0; i < 10; i++) {
             last10Data.push(parseInt(data[i].value));
         }
-        console.log("Last 10->", last10Data);
         minicoGrafica.updateSeries([{
             data: last10Data
         }])

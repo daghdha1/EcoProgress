@@ -47,13 +47,8 @@ function areThereParameters(&$params) {
 function authenticateUserSession() {
     session_start();
 	if(isset($_COOKIE['REQSESSID']) && $_COOKIE['REQSESSID'] == $_SESSION['SESSID']) {
-		debug('Cookie: ', 'REQSESSID is set!');
-		debug('Value of Request Cookie: ', $_COOKIE['REQSESSID']);
-		debug('Value of Session Cookie: ', $_SESSION['SESSID']);
     	return true;
-	} 
-    debug('Cookie: ', 'REQSESSID is not set!');
-    session_write_close();
+	}
     return false;
 }
 
@@ -164,7 +159,7 @@ function verifyPasswordHash(&$pwForm, &$pwHashed) {
 
 /*
 * Lista<Texto> -->
-* 					removeElementsInStrArray() <--
+* 						removeElementsInStrArray() <--
 * <-- Lista<Texto>
 */
 function removeElementsInStrArray(&$array, $regex) {
@@ -175,3 +170,17 @@ function removeElementsInStrArray(&$array, $regex) {
 	}
 }
 
+/*
+* Texto, N -->
+* 						createAssocArrayError() <--
+* <-- Lista<Texto>
+*/
+function createAssocArrayError($class, $method, $line, $auth=0) {
+	return array(
+		'error' => 'Error catched',
+		'class' => $class,
+		'method' => $method,
+		'line' => $line,
+		'auth' => $auth
+	);
+}
