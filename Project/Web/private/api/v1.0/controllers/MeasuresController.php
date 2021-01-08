@@ -14,6 +14,7 @@ class MeasuresController extends BaseController {
     // ------------------------------ GET, POST, PUT, DELETE--------------------------------- //
     // -------------------------------------- ACTIONS --------------------------------------- //
     // -------------------------------------------------------------------------------------- //
+    // --------------------- THESE METHODS CALL PRIVATE LOGIC METHODS ----------------------- //
 
     /* - Recibe y trata una petición GET solicitada
     *  - Se comunica con el modelo correspondiente y obtiene los datos solicitados por la petición
@@ -28,11 +29,12 @@ class MeasuresController extends BaseController {
         $model = parent::loadModel($request->resource);
         
         // Check de parámetros
-        if (!$this->areThereParameters($request->parameters)) {
-            // Obtiene todas las medidas
+        if (!areThereParameters($request->parameters)) {
             $result = $this->getAllMeasures($model, $request);
+        } elseif (authenticateUserSession()) {
+            $result = $this->getIncomingParametersAndExecuteMethod($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__, 1);
         }
 
         // Cargamos la vista seleccionada
@@ -53,10 +55,10 @@ class MeasuresController extends BaseController {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
 
-        if ($this->areThereParameters($request->parameters)) {
+        if (areThereParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
-            $result = null;
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
         }
 
         // Cargamos la vista seleccionada
@@ -65,6 +67,7 @@ class MeasuresController extends BaseController {
         $view->render($result);
     }
 
+    // INFO: php no recomienda el uso de 'put' por seguridad, usar 'post' en su defecto
     public function putAction($request) {
 
     }
@@ -73,8 +76,50 @@ class MeasuresController extends BaseController {
 
     }
 
-    // ---------------------------------- PRIVATE METHODS ------------------------------------- //
-    // ---------------------------------------------------------------------------------------- //
+    // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
+    // -------------------------------------------------------------------------------------------------- //
+
+    // -------------------------------------------- REQUEST --------------------------------------------- //
+
+    /* 
+    * Escoge el método GET acorde con el parámetro recibido
+    *
+    * MeasuresModel, Lista<Texto> -->
+    *                                                       getIncomingParametersAndExecuteMethod() <--
+    * <-- Lista<MeasureEntity> | MeasureEntity | Nada
+    */
+    private function getIncomingParametersAndExecuteMethod($model, $request) {
+        $params = $request->parameters;
+        foreach ($params as $key => $value) {
+            switch ($key) {
+                case 'users':
+                    $mail = $value;
+                    if (count($params) === 1) {
+                        $dataList = $model->getAllMeasuresOfUser($mail);
+                    }
+                    break;
+                case 'period':
+                    if (is_numeric($value)) {
+                        $tList = explode('-', $value);
+                        $dataList = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $mail);
+                    } elseif ($value === 'last') {
+                        $dataList = $model->getLastMeasure($mail);
+                    } else {
+                        $ts = getTimestampOfPeriod($value);
+                        $dataList = $model->getMeasuresFromTimestamp($ts, $mail);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
+        }
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
+    }
+
+    // ---------------------------------------------- (GET) ----------------------------------------------- //
 
     /* 
     * Obtiene todas las medidas disponibles
@@ -85,10 +130,14 @@ class MeasuresController extends BaseController {
     */
     private function getAllMeasures($model, $request) {
         // Obtenemos el array de mediciones (objects stdClass)
-        $data = $model->getAllMeasures();
-        $result = $this->createArrayOfMeasures($data, $request->resource);
-        return $result;
+        $dataList = $model->getAllMeasures();
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
+        } 
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
+
+    // ---------------------------------------------- (POST) ----------------------------------------------- //
 
     /* 
     * Inserta una medida en la base de datos
@@ -99,96 +148,35 @@ class MeasuresController extends BaseController {
     */
     private function postMeasure($model, $request) {
         // Enviamos la medida
-        $data = $model->postMeasure($request->parameters);
-        $result = null;
-        // Si hay datos
-        if (!is_null($data)) {
+        if ($model->postMeasure($request->parameters)) {
             // Creamos un nueva medición
-            $measure = parent::createEntity($request->resource);
-            // Asignamos las propiedades de cada objeto measure
-            $measure->setValue($data['value']);
-            $measure->setTimestamp($data['timestamp']);
-            $measure->setLocation($data['location']);
-            $measure->setSensorID($data['sensorID']);
-            $result = $measure->toARRAY();
+            $measure = parent::createEntity($request->resource)->createMeasureFromParams($request->parameters);
+            return $measure->parseMeasureToAssocArrayMeasures(); 
         }
-        return $result;             
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
-
-    /* 
-    * Comprueba si existen parámetros en la petición
-    *
-    * Lista<Texto> -->
-    *                   areThereParameters() <--
-    * <-- T | F
-    */
-    private function areThereParameters(&$params) {
-        if (count($params) > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    /* 
-    * Escoge el método GET acorde con el parámetro recibido
-    *
-    * MeasuresModel, Lista<Texto> -->
-    *                                                       getIncomingParametersAndExecuteGetMethod() <--
-    * <-- Lista<MeasureEntity> | MeasureEntity | Nada
-    */
-    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
-        $params = $request->parameters;
-        foreach ($params as $key => $value) {
-            switch ($key) {
-                case 'users':
-                    $sensorID = $model->getSensorIDFromUser($value)[0]->id;
-                    break;
-                case 'period':
-                    if (is_numeric($value)) {
-                        $tList = explode('-', $value);
-                        $data = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $sensorID);
-                    } elseif ($value === 'last') {
-                        $data = $model->getLastMeasure($sensorID);
-                    } else {
-                        $t = getTimestampOfPeriod($value);
-                        $data = $model->getMeasuresFromTimestamp($t, $sensorID);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        $result = $this->createArrayOfMeasures($data, $request->resource);
-        return $result;
-    }
+    // ---------------------------------------------- UTILS ----------------------------------------------- //
 
     /*
-    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Measure
+    * Crea un array asociativo de objetos Measure (MeasureEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
     * 
     * Lista<stdClass>, Texto -->
-    *                       createArrayOfMeasures() <--
-    * <-- Lista<Measure>
+    *                               parseDataListToAssocArrayMeasures() <--
+    * <-- Lista<MeasureEntity>
+    *
+    * Nota: dataList es una array númerica (iterativa)
     */
-    private function createArrayOfMeasures($data, $resource) {
-        // Si hay datos
-        if (!is_null($data)) {
-            $result = array();
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nueva medición
-                $measure = parent::createEntity($resource);
-                // Asignamos las propiedades de cada objeto measure
-                $measure->setValue($data[$i]->value);
-                $measure->setTimestamp($data[$i]->timestamp);
-                $measure->setLocation($data[$i]->location);
-                $measure->setSensorID($data[$i]->sensorID);
-                // Guardamos las mediciones en el array asociativo $result
-                array_push($result, $measure->toARRAY());
-            }
-            return $result;
-        } 
-        return null;
+    private function parseDataListToAssocArrayMeasures($dataList, $resource) {
+        $result = array();
+        // Por cada elemento del array de objetos
+        for ($i=0; $i < count($dataList); $i++) {
+            // Creamos un nueva medición
+            $measure = parent::createEntity($resource)->createMeasureFromDatabase($dataList, $i);
+            // Guardamos cada measure iterada en el array asociativo $result
+            array_push($result, $measure->toARRAY());
+        }
+        return $result;
     }
 
 }

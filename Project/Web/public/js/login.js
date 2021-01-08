@@ -1,23 +1,56 @@
-var attempt = 3; // Variable to count number of attempts.
-// Below function Executes on click of login button.
-function validate() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    if (email == "ecoprogress" && password == "1234") {
-        //alert("Has sido logeado");
-		// Para el servidor la direccion es, de momento, 
-		// window.location = "./../../private/app/html/home.html"; // Redirecting to other page. //server
-        window.location = "../Web/private/app/html/home.html"; // Redirecting to other page.
-        return false;
-    } else {
-        attempt--; // Decrementing by one.
-        alert("Te quedan " + attempt + " intentos");
-        // Disabling fields after 3 attempts.
-        if (attempt == 0) {
-            document.getElementById("email").disabled = true;
-            document.getElementById("password").disabled = true;
-            document.getElementById("submit").disabled = true;
-            return false;
-        }
+function login() {
+    let params = login.arguments;
+    let form = params[0];
+    if (isValidForm(form, params)) {
+        // Form data
+        let formData = new FormData(form);
+        formData.append("action", "login");
+        // URL to send request
+        let url = config.restDir + "/auth";
+        // Token of user for authorization
+        // let bearer = 'Bearer ' + bearer_token; // Login no dispone del token aún (se envía pass y se obtiene un token para posteriori)
+        // Headers
+        // let headers = new Headers();
+        // headers.append("Authorization", bearer);
+        // headers.append("Content-Type", "application/json"); // Login no necesita content-type, viene implícito en el form
+        var myInit = {
+            method: "POST",
+            //headers: headers,
+            //withCredentials: true,
+            //credentials: "include",
+            mode: "cors",
+            cache: "default",
+            body: formData
+        };
+        let request = new Request(url, myInit);
+        // Enviamos la petición
+        fetch(request).then(function(response) {
+            if (response.ok) return response.json();
+            else return 'Ha habido un error en la conexión con el servidor';
+        }).then(function(json) {
+            switch (typeof json) {
+                case 'object':
+                    if (json[0].role === 'user') {
+                        // Guardamos datos básicos de usuario
+                        saveUserSession(json);
+                        // Redireccionamos a la página principal del usuario
+                        window.location.href = './private/app/html/home.html';
+                    } else if (json[0].role === 'root') {
+                        // Redireccionamos a la página de admin
+                        window.location.href = './private/app/html/adminPanel.html';
+                    }
+                    hideModalPanel('loginPanel');
+                    break;
+                case 'string':
+                    alert(json);
+                    break;
+                default:
+            }
+        });
     }
+}
+
+function saveUserSession(userDataSession) {
+    sessionStorage.setItem("mail", userDataSession.mail);
+    sessionStorage.setItem("name", userDataSession.name);
 }

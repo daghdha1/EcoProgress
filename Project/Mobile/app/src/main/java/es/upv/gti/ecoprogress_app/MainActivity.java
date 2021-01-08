@@ -146,14 +146,13 @@ public class MainActivity extends AppCompatActivity {
         }
     } // ()
 
-    private void publicarNotificacion(){
-
-        Log.e(">>>>","Has clickado");
+    private void publicarNotificacion() {
+        Log.e(">>>>", "Has clickado");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "EcoProgress")
-                .setSmallIcon(R.drawable.ic_notification_icon)
-                .setContentTitle("¡¡Te estas alejando!!")
-                .setContentText("Si sigues alejando vas a perder la señal")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        .setSmallIcon(R.drawable.ic_notification_icon)
+        .setContentTitle("¡¡Te estas alejando!!")
+        .setContentText("Si sigues alejando vas a perder la señal")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
 
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         // Solicita permiso para los dispositivos con sistema operativo Android 6 o anteriores (obligatorio)
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Se solicitan los permisos
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, this.locationRequestCode);
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, this.locationRequestCode);
         } else {
             // Se activa listener de obtención de localización
             mFusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, null).addOnSuccessListener(this, location -> {
@@ -247,15 +246,15 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case 1000: {
-                // Si la petición es cancelada, devuelve una array vacía
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    extractLocation();
-                } else {
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
+        case 1000: {
+            // Si la petición es cancelada, devuelve una array vacía
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                extractLocation();
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
+            break;
+        }
         }
     }
 
@@ -346,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Log.d(">>>>",result.getRssi()+"");
                     //Log.d(">>>>",getEstimatedDistanceFromDevice(result.getRssi())+"");
-                    if(getEstimatedDistanceFromDevice(result.getRssi()) >= 5){
+                    if (getEstimatedDistanceFromDevice(result.getRssi()) >= 5) {
                         publicarNotificacion();
                     }
                     showDeviceInfoBTLE(result.getDevice(), result.getRssi(), data);
@@ -367,27 +366,27 @@ public class MainActivity extends AppCompatActivity {
         }; // new scanCallback
     }
 
-    private int getEstimatedDistanceFromDevice(int rssi){
+    private int getEstimatedDistanceFromDevice(int rssi) {
 
-        if(rssi > -50){
+        if (rssi > -50) {
             return 0;
         }
-        if(rssi<-50 && rssi>-61){
+        if (rssi < -50 && rssi > -61) {
             return 1;
         }
-        if(rssi<=-61 && rssi>-70) {
+        if (rssi <= -61 && rssi > -70) {
             return 2;
         }
-        if(rssi<=-70 && rssi>-75){
+        if (rssi <= -70 && rssi > -75) {
             return 3;
         }
-        if(rssi<=-75 && rssi > -82){
+        if (rssi <= -75 && rssi > -82) {
             return 4;
         }
-        if(rssi <=-82){
+        if (rssi <= -82) {
             return 5;
         }
-    return 0;
+        return 0;
     }
 
     // --------------------------------------------------------------

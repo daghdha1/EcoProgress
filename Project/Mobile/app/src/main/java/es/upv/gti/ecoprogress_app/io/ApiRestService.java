@@ -18,19 +18,19 @@ import retrofit2.http.POST;
 
 public interface ApiRestService {
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
+  @Headers({
+    "Accept: application/json",
+    "Content-Type: application/json"
+  })
 
-    @GET("measures")
-    Call<ArrayList<Measure>> getMeasures();
+  @GET("measures")
+  Call<ArrayList<Measure>> getMeasures();
 
-    @FormUrlEncoded
-    @POST("measures")
-    Call<JsonObject> postMeasures(@Field("value") double value,
-                                  @Field("timestamp") int timestamp,
-                                  @Field("location") String location,
-                                  @Field("sensorID") String sensorID);
+  @FormUrlEncoded
+  @POST("measures")
+  Call<JsonObject> postMeasures(@Field("value") double value,
+                                @Field("timestamp") int timestamp,
+                                @Field("location") String location,
+                                @Field("sensorID") String sensorID);
 
 }

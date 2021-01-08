@@ -1,12 +1,14 @@
+showUserData();
+
 function showUserData() {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
-    }, "daghdha@developer.com");
+    }, "test@test");
 }
 
 function fillInUserFields(userData) {
-    document.getElementById("name").innerHTML = userData.name;
-    document.getElementById("surnames").innerHTML = userData.surnames;
-    document.getElementById("mail").innerHTML = userData.mail;
-    document.getElementById("devices").innerHTML = userData.devices[0] + ", " + userData.devices[1];
+    document.getElementById("l_name").innerHTML = userData[0].name;
+    document.getElementById("l_surnames").innerHTML = userData[0].surnames;
+    document.getElementById("l_mail").innerHTML = userData[0].mail;
+    document.getElementById("l_devices").innerHTML = "C000001";
 }
