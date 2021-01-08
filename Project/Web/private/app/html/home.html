@@ -42,15 +42,24 @@
     <script defer="" src="../js/ui_graphicsPanelMinicharts.js"></script>
     <script defer="" src="../js/ui_graphicsPanelLinechart.js"></script>
     <script defer="" src="../js/ui_graphicsPanelColumnchart.js"></script>
+    <script defer="" src="../js/logout.js"></script>
 </head>
 
 <body style="filter: contrast(100%) grayscale(0%) hue-rotate(0deg);height: 100%;">
-    <header class="text-center"
-        style="text-align: left;height: 8%;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'CenturyGothic';">
-        <div style="height: 100%;">
-            <img class="img-fluid align-self-center" src="../media/logo_250.png" style="height: 80px;width: 210px;" />
+    <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
+        <div class="container-fluid justify-content-center flex-column m-0 p-0">
+            <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
+                <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
+                    <img src="../media/logo.png" style="width: 210px;margin: 0;"/>
+                </a>
+                <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
+                    <a class="ml-auto" onclick="return logout()" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                        Cerrar sesión
+                    </a>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
     <div style="height: 85%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;">
         <div style="border-style: none;height: 100%;margin: 0px;">
             <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">

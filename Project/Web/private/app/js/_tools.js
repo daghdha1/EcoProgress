@@ -1,7 +1,7 @@
 // -------------------------------------------------------------------------------- //
 // -----------------  Manejador de respuestas del servidor (JSON) ----------------- //
 // -------------------------------------------------------------------------------- //
-function responseHandler(json, callback) {
+function responseHandler(json, callback=null) {
     switch (true) {
         case json == null:
             alert("Error en la conexión con el servidor");

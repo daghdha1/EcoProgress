@@ -89,7 +89,7 @@ class AuthController extends BaseController {
                     }
                     break;
                 case 'logout':
-                    // $result = $model->logout();
+                    $result = $this->deleteUserSession();
                     break;
                 case 'recovery':
                     // $result = $model->recovery($params['email']);
