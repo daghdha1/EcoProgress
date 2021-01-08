@@ -105,6 +105,18 @@ class UsersController extends BaseController {
                     }
                     $result = $model->getActiveTimeOfUser($mail, $time);
                     break;
+                    case 'distance':
+                        $result = $model->getTraveledDistance($mail);
+                        $distance=0;
+                        for($i=1; $i<=count($result); $i++){
+                            $item = $result[$i];
+                            $item2 = $result[$i-1];
+                            if($result[$i]['timestamp']-$result[$i-1]['timestamp']<3600){
+                                $distance+=$tools->haversineDistanceCalculator($item['latitude'], $item['longitude'], $item2['latitude'], $item2['longitude'], $earthRadius = 6371000); 
+                            }
+                        }
+                        $result=$distance;
+                        break;
                 default:
                     break;
             }
