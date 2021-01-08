@@ -10,9 +10,9 @@ function getAllUsers(callback) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
-        callback(json);
+        responseHandler(json, callback);
     });
 }
 /* 
@@ -28,9 +28,9 @@ function getUser(callback, userID) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
-        callback(json);
+        responseHandler(json, callback);
     });
 }
 /* 
@@ -46,8 +46,8 @@ function getActiveTimeUser(callback, userID, differenceValue) {
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
-        else return false;
+        else return null;
     }).then((json) => {
-        callback(json);
+        responseHandler(json, callback);
     });
 }

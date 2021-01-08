@@ -25,14 +25,19 @@ class UsersController extends BaseController {
 	* <-- Lista<T> 
 	*/
     public function getAction($request) {
-        // Cargamos el modelo de Users
-        $model = parent::loadModel($request->resource);
-        // Check de parámetros
-        if (!areThereParameters($request->parameters)) {
-            // Obtiene todos los usuarios
-            $result = $this->getAllUsers($model, $request);
+        if (authenticateUserSession()) {
+            // Cargamos el modelo de Users
+            $model = parent::loadModel($request->resource);
+            // Check de parámetros
+            if (!areThereParameters($request->parameters)) {
+                // Obtiene todos los usuarios
+                $result = $this->getAllUsers($model, $request);
+            } else {
+                // Ejecuta el método correspondiente
+                $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            }
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__, 1);
         }
 
         // Cargamos la vista seleccionada
@@ -80,10 +85,16 @@ class UsersController extends BaseController {
             switch ($key) {
                 case 'users':
                     $mail = $value;
-                    if (count($params) == 1) {
+                    if (count($params) === 1) {
                         $data = $model->getUser($mail);
-                        $user = parent::createEntity($request->resource)->createUserFromDatabase($data);
-                        $result = $user->parseUserToAssocArrayUsers();
+                        if (!is_null($data) && !empty($data)) {
+                            $user = parent::createEntity($request->resource)->createUserFromDatabase($data);
+                            $result = $user->parseUserToAssocArrayUsers();
+                        } elseif (is_null($data)) {
+                            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
+                        } else {
+                            $result = $data;
+                        }
                     }
                     break;
                 case 'difference':
@@ -95,7 +106,6 @@ class UsersController extends BaseController {
                     $result = $model->getActiveTimeOfUser($mail, $time);
                     break;
                 default:
-                    $result = NULL;
                     break;
             }
         }
@@ -115,7 +125,7 @@ class UsersController extends BaseController {
         if (!is_null($dataList)) {
             return $this->parseDataListToAssocArrayUsers($dataList, $request->resource);
         }
-        return 'error';
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     // -------------------------------------------- UTILS ---------------------------------------------- //

@@ -73,7 +73,7 @@ class AuthController extends BaseController {
                     if($this->checkRegistrationData($usersModel, $sensorsModel, $params)) {
                         $result = $this->registration($usersModel, $params);
                     } else {
-                        $result = 'Correo eléctronico y/o clave de producto inválidos';
+                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
                     }
                     break;
                 case 'accountActivation':
@@ -85,7 +85,7 @@ class AuthController extends BaseController {
                     if ($this->checkLoginData($usersModel, $params)) {
                         $result = $this->login($usersModel, $params);
                     } else {
-                        $result = 'Datos de inicio de sesión inválidos';
+                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
                     }
                     break;
                 case 'logout':
@@ -94,12 +94,10 @@ class AuthController extends BaseController {
                 case 'recovery':
                     // $result = $model->recovery($params['email']);
                     break;
-                default:
-                    $result = NULL;
             }
             return $result;
         }
-        return NULL;
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     // ---------------------------------------------- (GET) ----------------------------------------------- //
@@ -131,7 +129,7 @@ class AuthController extends BaseController {
                 return 'Se ha producido un error al enviar el correo'; 
             }*/
         }
-        return 'Se ha producido un error al crear el usuario';
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     /* 
@@ -144,7 +142,7 @@ class AuthController extends BaseController {
     private function accountActivation($usersModel, $sensorsModel, $params) {
         // Updating user
         $data = $usersModel->getUser($params['reg_code_mail']);
-        if (!is_null($data)) {
+        if (!is_null($data) && !empty($data)) {
             $user = parent::createEntity('Users')->createUserFromDatabase($data);
             $user->setLastConn(time());
             $user->setAccountStatus('active');
@@ -161,11 +159,11 @@ class AuthController extends BaseController {
                 }
             }
         }
-        return "Ha ocurrido un fallo inesperado en la activación del usuario";
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     /* 
-    * Inicio de sesión de usuario y guardado de sesión en servidor generando un nuevo token (session_id)
+    * Inicio de sesión de usuario y guardado de sesión en servidor generando un nuevo id (session_id)
     *
     * UsersModel, Lista<Texto> -->
     *                                    login() <--
@@ -173,12 +171,12 @@ class AuthController extends BaseController {
     */
     private function login($usersModel, $params) {
         $data = $usersModel->getUser($params['log_mail']);
-        if (!is_null($data)) {
+        if (!is_null($data) && !empty($data)) {
             $user = parent::createEntity('Users')->createUserFromDatabase($data);
             $this->createUserSession($user);
             return $user->parseUserToAssocArrayUsers();
         }
-        return "Ha ocurrido un fallo inesperado en el inicio de sesión";
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     /* 
@@ -189,31 +187,22 @@ class AuthController extends BaseController {
     */
     private function createUserSession($user) {
         session_start();
-        //session_regenerate_id();
-        //date_default_timezone_set('UTC');
-        //date_default_timezone_set('Europe/Madrid');
-        //debug("TIMEZONE", date_default_timezone_get());
-        //$t=time();
-        //debug("seconds", $t . "<br>");
-        //debug("y,m,d", date("Y-m-d"));
-        //debug("h,m,s", date('H:i:sa'));
-        //debug("datecookie", date(DATE_COOKIE));
-        //$fecha = new DateTime();
-        //debug("datetime",$fecha->getTimestamp());
-        //setcookie(session_name(), session_id(), time() + 3600, '/'); // expira la sesión después de 1h
+        setcookie("REQSESSID", session_id(), time() + 3600); // expira la sesión en 1h
+        $_SESSION['SESSID'] = session_id();
         $_SESSION['mail'] = $user->getMail();
         $_SESSION['name'] = $user->getName();
-        $_SESSION["timeout"] = time();
+        session_write_close();
     }
 
     /* 
     * Finalización de sesión de usuario y destrucción de variables de sesión
     *
-    * deleteUserSession() <--
+    *               deleteUserSession() <--
+    * <-- V | F
     */
     private function deleteUserSession() {
         session_start();
-        setcookie(session_name(), session_id(), 1); // expira la sesión
+        setcookie("REQSESSID", session_id(), 1); // expira la sesión
         session_unset();
         $_SESSION = [];
         return session_destroy();

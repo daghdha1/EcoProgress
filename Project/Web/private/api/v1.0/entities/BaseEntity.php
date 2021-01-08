@@ -83,9 +83,11 @@ class BaseEntity {
                     $result[] = $obj;
                 }
                 return $result;
+            } else {
+                return array();
             }
         }
-        return null;
+        return NULL;
     }
 
     /* Acciones Update/Insert/Delete contra la base de datos
