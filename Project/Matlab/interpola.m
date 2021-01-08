@@ -33,9 +33,9 @@ writematrix(Y1,"required/fixedy.txt",'Delimiter',',')
 Z_corrector= griddata(x,y,z,X1,Y1,'v4');
 Z_corrector = max(0,min(100,Z_corrector));
 
- pcolor(X1,Y1,Z_corrector), shading interp, colorbar
+% pcolor(X1,Y1,Z_corrector), shading interp, colorbar
 % plot(Z_corrector)
-title('Ejercicio 2 tarea')
+% title('Ejercicio 2 tarea')
 
 % figure, [C,h]=contour(X1,Y1,LDEN_corrector, 30); clabel(C,h),colorbar
 % title('Curvas de nivel tarea 2')
