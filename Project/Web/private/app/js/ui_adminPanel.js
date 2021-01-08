@@ -11,7 +11,6 @@ function showUsersTable() {
 
 function showUserData() {
     getUser((dataReceived) => {
-        console.log(dataReceived);
         fillInUserFields(dataReceived);
     }, "test@test");
 }

@@ -3,12 +3,10 @@
 //SPARKS
 //*****************************************************************************************************************************
 //*****************************************************************************************************************************
-
 // Fill function in case fetch fails.
 function getcoData() {
     return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 }
-
 var minico = {
     chart: {
         id: 'spark1',
@@ -219,24 +217,20 @@ var minio3 = {
         }
     }
 }
-
 var minicoGrafica = new ApexCharts(document.querySelector("#minico"), minico);
 var minino2Grafica = new ApexCharts(document.querySelector("#minino2"), minino2);
 var miniso2Grafica = new ApexCharts(document.querySelector("#miniso2"), miniso2);
 var minio3Grafica = new ApexCharts(document.querySelector("#minio3"), minio3);
-
 minicoGrafica.render();
 minino2Grafica.render();
 miniso2Grafica.render();
 minio3Grafica.render();
-
 getMeasuresFromTimestamp((data) => {
     var last10Data = [];
     if (data != null && data.length > 10) {
         for (var i = 0; i < 10; i++) {
             last10Data.push(parseInt(data[i].value));
         }
-        console.log("Last 10->", last10Data);
         minicoGrafica.updateSeries([{
             data: last10Data
         }])

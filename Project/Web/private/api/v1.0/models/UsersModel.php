@@ -77,16 +77,19 @@ class UsersModel extends BaseModel {
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		$res = 0;
-		$resultado = 0;
-		for($i = 0; $i < count($result); $i++){
-			$res = $result[$i]->timestamp - $result[$i+1]->timestamp;
-			if($res <= $range) {
-				$resultado = $resultado + $res;
+		$diff = 0;
+		$finalResult = 0;
+		if (!is_null($result)) {
+			for($i = 0; $i < count($result); $i++) {
+				$diff = $result[$i]->timestamp - $result[$i+1]->timestamp;
+				if($diff <= $range) {
+					$finalResult = $finalResult + $diff;
+				}
 			}
+			// Devuelve el finalResult
+			return $finalResult;
 		}
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-		return $resultado;
+		return $result;
 	}
 
 	/* 

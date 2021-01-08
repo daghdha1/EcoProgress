@@ -19,7 +19,7 @@ function InitRequestLastMeasure() {
     return new Promise((resolve, reject) => {
         getLastMeasure((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -31,7 +31,7 @@ function InitRequestLastHourMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -43,7 +43,7 @@ function InitRequestLastDayMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -55,7 +55,7 @@ function InitRequestLastWeekMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -67,7 +67,7 @@ function InitRequestLastMonthMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -79,7 +79,7 @@ function InitRequestMyCustomMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
-            if (dataReceived != null) {
+            if (dataReceived.length > 0) {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
@@ -94,8 +94,6 @@ function InitRequestMyCustomMeasures() {
  * <-- gasValue:R
  */
 function calculateAirQuality(measureList) {
-
-    console.log(measureList)
     let result = 0;
     measureList.forEach(measure => {
         result += parseFloat(measure.value);

@@ -28,7 +28,7 @@ function isAnEntityOf($data, $name) {
 *
 * Lista<Texto> -->
 *                    areThereURIParameters() <--
-* <-- T | F
+* <-- V | F
 */
 function areThereParameters(&$params) {
     if (count($params) > 0) {
@@ -37,13 +37,19 @@ function areThereParameters(&$params) {
     return false;
 }
 
-function authenticateUser() {
-	if(!isset($_COOKIE[session_id()])) {
-    	echo "Cookie named '" . session_name() . "' is not set!";
-	} else {
-	    echo "Cookie '" . session_name() . "' is set!<br>";
-	    echo "Value is: " . $_COOKIE[session_id()];
+/* 
+* Comprueba si las cookies de sesión corresponden con la petición entrante del usuario
+*
+* Texto, Texto -->
+*                    authenticateUserSession() <--
+* <-- V | F
+*/
+function authenticateUserSession() {
+    session_start();
+	if(isset($_COOKIE['REQSESSID']) && $_COOKIE['REQSESSID'] == $_SESSION['SESSID']) {
+    	return true;
 	}
+    return false;
 }
 
 // -------------------------------------------------------------------------------------------- //
@@ -152,25 +158,8 @@ function verifyPasswordHash(&$pwForm, &$pwHashed) {
 // -------------------------------------- OTHERS --------------------------------------- //
 
 /*
-*  line() -->
-*/
-function line() {
-	echo PHP_EOL;
-}
-
-/*
-* Texto, Texto -->
-* 					  debug() <--
-* <-- Texto
-*/
-function debug($msg, $value) {
-	echo $msg . '--> ' . $value;
-	line();
-}
-
-/*
 * Lista<Texto> -->
-* 					removeElementsInStrArray() <--
+* 						removeElementsInStrArray() <--
 * <-- Lista<Texto>
 */
 function removeElementsInStrArray(&$array, $regex) {
@@ -181,3 +170,17 @@ function removeElementsInStrArray(&$array, $regex) {
 	}
 }
 
+/*
+* Texto, N -->
+* 						createAssocArrayError() <--
+* <-- Lista<Texto>
+*/
+function createAssocArrayError($class, $method, $line, $auth=0) {
+	return array(
+		'error' => 'Error catched',
+		'class' => $class,
+		'method' => $method,
+		'line' => $line,
+		'auth' => $auth
+	);
+}

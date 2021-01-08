@@ -56,6 +56,23 @@ class MeasureEntity extends BaseEntity {
     }
 
     /* 
+    * Crea un objeto Measure (MeasureEntity) recibido desde los parámetros de un form (FormData)
+    *
+    * Lista<Texto> -->
+    *                    createMeasureFromParams() <--
+    * <-- MeasureEntity
+    * 
+    * Nota: params es una array asociativa (clave-valor)
+    */
+    public function createMeasureFromParams($params) {
+        $this->setValue($params['value']);
+        $this->setTimestamp($params['timestamp']);
+        $this->setLocation($params['location']);
+        $this->setSensorID($params['sensorID']);
+        return $this;
+    }
+
+    /* 
     * Crea un objeto Measure (MeasureEntity) recibido desde un lista de objetos <stdClass> de la base de datos (Database)
     *
     * Lista<stdClass>, iterator:N -->
@@ -70,6 +87,19 @@ class MeasureEntity extends BaseEntity {
         $this->setLocation($dataList[$i]->location);
         $this->setSensorID($dataList[$i]->sensorID);
         return $this;
+    }
+
+    /*
+    * Crea un array asociativo de objetos Measure (MeasureEntity) desde un objeto Measure (MeasureEntity) (TO SEND WITH RESPONSE)
+    * 
+    * MeasureEntity -->
+    *                               parseMeasureToAssocArrayMeasures() <--
+    * <-- Lista<MeasureEntity>
+    */
+    public function parseMeasureToAssocArrayMeasures() {
+        $result = array(); 
+        array_push($result, $this->toArray());
+        return $result;
     }
             
 }

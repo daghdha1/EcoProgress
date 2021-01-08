@@ -131,10 +131,10 @@ class UserEntity extends BaseEntity {
     }
 
     /*
-    * Crea un array asociativo de objetos Users (UserEntity) desde un objeto User (UserEntity) (TO SEND WITH RESPONSE)
+    * Crea un array asociativo de objetos User (UserEntity) desde un objeto User (UserEntity) (TO SEND WITH RESPONSE)
     * 
     * UserEntity -->
-    *                           parseUserToArrayUsers() <--
+    *                           parseUserToAssocArrayUsers() <--
     * <-- Lista<UserEntity>
     */
     public function parseUserToAssocArrayUsers() {
