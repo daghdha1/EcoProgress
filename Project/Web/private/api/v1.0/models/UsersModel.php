@@ -70,25 +70,14 @@ class UsersModel extends BaseModel {
     *                 				getActiveTimeOfUser() <--
     * <-- Active range:N, Nada
     */
-	public function getActiveTimeOfUser($mail, $range) {
+	public function getActiveTimeOfUser($mail) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
 		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		$diff = 0;
-		$finalResult = 0;
-		if (!is_null($result)) {
-			for($i = 0; $i < count($result); $i++) {
-				$diff = $result[$i]->timestamp - $result[$i+1]->timestamp;
-				if($diff <= $range) {
-					$finalResult = $finalResult + $diff;
-				}
-			}
-			// Devuelve el finalResult
-			return $finalResult;
-		}
+
 		return $result;
 	}
 
@@ -105,7 +94,7 @@ class UsersModel extends BaseModel {
 		// Query
 		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
 		// Respuesta
-		$result = MyEntity::executeSql($sql);
+		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
 
 		return $result;
