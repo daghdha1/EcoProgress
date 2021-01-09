@@ -34,10 +34,10 @@ function login() {
                         // Guardamos datos básicos de usuario
                         saveUserSession(json);
                         // Redireccionamos a la página principal del usuario
-                        window.location.href = './private/app/html/home.html';
+                        window.location.replace('./private/app/html/home.html');
                     } else if (json[0].role === 'root') {
                         // Redireccionamos a la página de admin
-                        window.location.href = './private/app/html/adminPanel.html';
+                        window.location.redirect('./private/app/html/adminPanel.html');
                     }
                     hideModalPanel('loginPanel');
                     break;
