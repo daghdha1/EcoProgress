@@ -23,8 +23,8 @@ class UsersController extends BaseController
     *  - Una vez recibidos, los delega a la vista correspondiente, encargada de mostrárselos al cliente web
 	*
 	* Action -->
-	*					getAction() <--
-	* <-- Lista<T> 
+	*					                     getAction() <--
+	* <-- Lista<Lista<T>> | Lista<Error> 
 	*/
     public function getAction($request)
     {
@@ -54,8 +54,8 @@ class UsersController extends BaseController
     *  - Una vez enviados, los envia de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
     *
     * Action -->
-    *                   postAction() <--
-    * <-- Lista<T>
+    *                                           postAction() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     public function postAction($request)
     {
@@ -79,8 +79,8 @@ class UsersController extends BaseController
     * Escoge el método GET acorde con el parámetro recibido
     *
     * UsersModel, Lista<Texto> -->
-    *                                   getIncomingParametersAndExecuteGetMethod() <--
-    * <-- UserEntity | N | Nada
+    *                                           getIncomingParametersAndExecuteGetMethod() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function getIncomingParametersAndExecuteGetMethod($model, $request)
     {
@@ -137,8 +137,8 @@ class UsersController extends BaseController
     * Obtiene todos los usuarios registrados
     *
     * UsersModel, Request -->
-    *                               getAllUsers() <--
-    * <-- Lista<UserEntity>
+    *                                                   getAllUsers() <--
+    * <-- Lista<Lista<UserEntity>> | Lista<Error>
     */
     private function getAllUsers($model, $request)
     {
@@ -156,8 +156,8 @@ class UsersController extends BaseController
     * Crea un array asociativo de objetos User (UserEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
     * 
     * Lista<stdClass>, Texto -->
-    *                               parseDataListToAssocArrayUsers() <--
-    * <-- Lista<UserEntity>
+    *                                   parseDataListToAssocArrayUsers() <--
+    * <-- Lista<Lista<UserEntity>>
     *
     * Nota: dataList es una array númerica (iterativa)
     */
