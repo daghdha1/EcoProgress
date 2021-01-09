@@ -23,7 +23,7 @@ class UsersModel extends BaseModel {
 	public function getAllUsers() {
 		// Respuesta
 		$result = BaseEntity::getAll();
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
 	
@@ -31,8 +31,8 @@ class UsersModel extends BaseModel {
     * Obtiene el usuario activo
     *
     * userID:Texto -->
-    *                   			getUser() <--
-    * <-- User<stdClass> | Nada
+    *                   					getUser() <--
+    * <-- Lista<User<stdClass>> | Nada
     */
 	public function getUser($mail) {
 		// Escapamos los carácteres especiales
@@ -41,7 +41,7 @@ class UsersModel extends BaseModel {
 		$sql = "SELECT * FROM Users WHERE mail = '$strMail' LIMIT 1";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
 
@@ -49,8 +49,8 @@ class UsersModel extends BaseModel {
     * Comprueba si el código de activación de registro del usuario es válido
     *
     * Texto, N -->
-    *                 				getUserFromMailAndRegCode() <--
-    * <-- User<stdClass> | Nada
+    *                 						getUserFromMailAndRegCode() <--
+    * <-- Lista<User<stdClass>> | Nada
     */
 	public function getUserFromMailAndRegCode($mail, $regCode) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
@@ -59,21 +59,21 @@ class UsersModel extends BaseModel {
 		$sql = "SELECT * FROM Users as u WHERE u.mail = '$strMail' AND u.secret_code = $numRegCode";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el user, si no ha encontrado ninguna coincidencia, devuelve null
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
 
 	/* 
-    * Obtiene el tiempo total del usuario activo
+    * Obtiene las medidas de tiempo de usuario activo
     *
     * Texto, N -->
-    *                 				getActiveTimeOfUser() <--
-    * <-- Active range:N, Nada
+    *                 			getActiveTimeOfUser() <--
+    * <-- Lista<N> | Nada
     */
 	public function getActiveTimeOfUser($mail, $range) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
-		$sql = "SELECT m.timestamp FROM Measures as m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
+		$sql = "SELECT m.timestamp FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
@@ -89,25 +89,7 @@ class UsersModel extends BaseModel {
 			// Devuelve el finalResult
 			return $finalResult;
 		}
-		return $result;
-	}
-
-	/* 
-    * Obtiene la distancia total recorrida del usuario activo
-    *
-    * Texto -->
-    *                 			getActiveUser() <--
-    * <-- N, Nada
-    */
-	public function getTraveledDistance($mail) {
-		// Escapamos los carácteres especiales
-		$strMail = mysqli_real_escape_string($this->conn, $mail);
-		// Query
-		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
-		// Respuesta
-		$result = MyEntity::executeSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
 

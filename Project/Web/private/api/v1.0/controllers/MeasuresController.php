@@ -21,8 +21,8 @@ class MeasuresController extends BaseController {
     *  - Una vez recibidos, los delega a la vista correspondiente, encargada de mostrárselos al cliente web
 	*
 	* Action -->
-	*					getAction() <--
-	* <-- Lista<T> 
+	*					                     getAction() <--
+	* <-- Lista<Lista<T>> | Lista<Error>
 	*/
     public function getAction($request) {
         // Cargamos el modelo de Measures
@@ -48,8 +48,8 @@ class MeasuresController extends BaseController {
     *  - Una vez enviados, los envia de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
     *
     * Action -->
-    *                   postAction() <--
-    * <-- Lista<T>
+    *                                           postAction() <--
+    * <-- <-- Lista<Lista<T>> | Lista<Error>
     */
     public function postAction($request) {
         // Cargamos el modelo de Measures
@@ -85,8 +85,8 @@ class MeasuresController extends BaseController {
     * Escoge el método GET acorde con el parámetro recibido
     *
     * MeasuresModel, Lista<Texto> -->
-    *                                                       getIncomingParametersAndExecuteMethod() <--
-    * <-- Lista<MeasureEntity> | MeasureEntity | Nada
+    *                                         getIncomingParametersAndExecuteMethod() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function getIncomingParametersAndExecuteMethod($model, $request) {
         $params = $request->parameters;
@@ -125,8 +125,8 @@ class MeasuresController extends BaseController {
     * Obtiene todas las medidas disponibles
     *
     * MeasuresModel, Request -->
-    *                               getAllMeasures() <--
-    * <-- Lista<MeasureEntity>
+    *                                          getAllMeasures() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function getAllMeasures($model, $request) {
         // Obtenemos el array de mediciones (objects stdClass)
@@ -143,8 +143,8 @@ class MeasuresController extends BaseController {
     * Inserta una medida en la base de datos
     *
     * MeasuresModel, Request -->
-    *                              postMeasure() <--
-    * <-- MeasureEntity
+    *                                            postMeasure() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function postMeasure($model, $request) {
         // Enviamos la medida
@@ -162,8 +162,8 @@ class MeasuresController extends BaseController {
     * Crea un array asociativo de objetos Measure (MeasureEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
     * 
     * Lista<stdClass>, Texto -->
-    *                               parseDataListToAssocArrayMeasures() <--
-    * <-- Lista<MeasureEntity>
+    *                                       parseDataListToAssocArrayMeasures() <--
+    * <-- Lista<Lista<MeasureEntity>>
     *
     * Nota: dataList es una array númerica (iterativa)
     */

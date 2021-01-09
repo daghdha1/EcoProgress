@@ -25,8 +25,8 @@ class AuthController extends BaseController {
     *  - Una vez enviados, los reenvía de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
     *
     * Action -->
-    *                           postAction() <--
-    * <-- Lista<T> | Texto
+    *                                       postAction() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     public function postAction($request) {
         // Cargamos el modelo de Users
@@ -62,7 +62,7 @@ class AuthController extends BaseController {
     *
     * UsersModel, SensorsModel, Lista<Texto> -->
     *                                                   getIncomingParametersAndExecuteMethod() <--
-    * <-- RESULT T | Texto | Nada
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function getIncomingParametersAndExecuteMethod($usersModel, $sensorsModel, $request) {
         $params = $request->parameters;
@@ -70,15 +70,17 @@ class AuthController extends BaseController {
         if (isset($params['action'])) {
             switch ($params['action']) {
                 case 'registration':
-                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params)) {
+                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 1)) {
                         $result = $this->registration($usersModel, $params);
                     } else {
                         $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
                     }
                     break;
                 case 'accountActivation':
-                    if ($this->checkRegistrationCode($usersModel, $params)) {
-                        $result = $this->accountActivation($usersModel, $sensorsModel, $params);
+                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 2)) {
+                        if ($this->checkRegistrationCode($usersModel, $params)) {
+                            $result = $this->accountActivation($usersModel, $sensorsModel, $params);
+                        }
                     }
                     break;
                 case 'login':
@@ -109,9 +111,9 @@ class AuthController extends BaseController {
     /* 
     * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
     *
-    * UsersModel, UserEntity -->
-    *                                  registration() <--
-    * <-- Lista<UserEntity> | Texto
+    * UsersModel, Lista<Texto> -->
+    *                                        registration() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function registration($usersModel, $params) {
         // Creamos un nuevo usuario
@@ -137,7 +139,7 @@ class AuthController extends BaseController {
     *
     * UsersModel, SensorsModel, Lista<Texto> -->
     *                                               accountActivation() <--
-    * <-- Lista<UserEntity> | Texto
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function accountActivation($usersModel, $sensorsModel, $params) {
         // Updating user
@@ -150,12 +152,14 @@ class AuthController extends BaseController {
             // Updating sensor
             if ($isUserUpdated) {
                 $data = $sensorsModel->getSensorFromActivationKey($params['reg_code_key']);
-                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($data);
-                $sensor->setMail($params['reg_code_mail']);
-                $sensor->setState(1);
-                $isSensorUpdated = $sensorsModel->updateSensor($sensor);
-                if ($isSensorUpdated) {
-                    return $user->parseUserToAssocArrayUsers();
+                if (!is_null($data) && !empty($data)) {
+                    $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($data);
+                    $sensor->setMail($params['reg_code_mail']);
+                    $sensor->setState(1);
+                    $isSensorUpdated = $sensorsModel->updateSensor($sensor);
+                    if ($isSensorUpdated) {
+                        return $user->parseUserToAssocArrayUsers();
+                    }
                 }
             }
         }
@@ -166,8 +170,8 @@ class AuthController extends BaseController {
     * Inicio de sesión de usuario y guardado de sesión en servidor generando un nuevo id (session_id)
     *
     * UsersModel, Lista<Texto> -->
-    *                                    login() <--
-    * <-- Lista<UserEntity> | Texto
+    *                                           login() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function login($usersModel, $params) {
         $data = $usersModel->getUser($params['log_mail']);
@@ -213,17 +217,30 @@ class AuthController extends BaseController {
     /* 
     * Comprobación de datos de registro de usuario
     *
-    * UsersModel, SensorsModel, Lista<Texto> -->
-    *                                               checkRegistrationData() <--
+    * UsersModel, SensorsModel, Lista<Texto>, N -->
+    *                                                checkRegistrationData() <--
     * <-- V | F
     */
-    private function checkRegistrationData($usersModel, $sensorsModel, $params) {
+    private function checkRegistrationData($usersModel, $sensorsModel, $params, $step) {
+        $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['reg_key']);
         // Si el sensor a registrar está disponible (existe y no tiene propietario)
-        if (!is_null($sensorsModel->getAvailableSensorFromActivationKey($params['reg_key']))) {
-            // Si el email a registrar está disponible (no existe)
-            if (is_null($usersModel->getUser($params['reg_mail']))) {
-                return true;
-            } 
+        if (!is_null($sData) && !empty($sData)) {
+            $uData = $usersModel->getUser($params['reg_mail']);
+            switch ($step) {
+                case 1:
+                    // Si el email a registrar no está disponible (no existe)
+                    if (!is_null($uData) && empty($uData)) {
+                        return true;
+                    }
+                    break;
+                case 2:
+                    // Si el email a activar está disponible (existe)
+                    if (!is_null($uData) && !empty($uData)) {
+                        return true;
+                    }
+                    break;
+            }
+            
         }
         return false;
     }
@@ -236,12 +253,12 @@ class AuthController extends BaseController {
     * <-- V | F
     */
     private function checkRegistrationCode($usersModel, $params) {
-        // Si el código de activación de cuenta coincide con el secretCode del usuario
-        if (!is_null($usersModel->getUserFromMailAndRegCode($params['reg_code_mail'], $params['reg_code']))) {
+        // Si el código de activación de cuenta introducido coincide con el código de activación almacenado en la base de datos
+        $data = $usersModel->getUserFromMailAndRegCode($params['reg_code_mail'], $params['reg_code']);
+        if (!is_null($data) && !empty($data)) {
             return true;
         }
         return false;
-        // TODO Añadir comprobación mail y secretCode de form
     }
 
     /* 
@@ -254,7 +271,7 @@ class AuthController extends BaseController {
     private function checkLoginData($usersModel, $params) {
         // Obtenemos el usuario de la base de datos
         $data = $usersModel->getUser($params['log_mail']);
-        if (!is_null($data) && $data[0]->account_status === 'active') {
+        if (!is_null($data) && !empty($data) && $data[0]->account_status === 'active') {
             $pwForm = $params['log_password'];
             $pwHashed = $data[0]->password;
             // Comprobamos si la contraseña enviada desde el formulario se corresponde con el hash alojado en la db
