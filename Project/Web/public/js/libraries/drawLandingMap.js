@@ -8,15 +8,10 @@ getAllMeasures((measures) => {
 });
 
 function drawMap(heatmap) {
-
     var testData = heatmap;
-
-    var baseLayer = L.tileLayer(
-        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18
-        }
-    );
-
+    var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    });
     var cfg = {
         // radius should be small ONLY if scaleRadius is true (or small radius is intended)
         // if scaleRadius is false it will be the constant radius used in pixels
@@ -44,38 +39,26 @@ function drawMap(heatmap) {
             '0.50': '#ffff3e', //35
             '0.7143': '#ffa700', //50
             '0.9286': '#ff6b30', //65
-            '1.00': '#ff0030'  //70
+            '1.00': '#ff0030' //70
         }
     };
-
-
     var heatmapLayer = new HeatmapOverlay(cfg);
-
     var map = new L.Map('map', {
         center: new L.LatLng(39.003628, -0.166529),
         zoom: 14,
         layers: [baseLayer, heatmapLayer]
     });
-
-
     addOfficialSensors(map)
     heatmapLayer.setData(testData);
-
 }
 
 function addOfficialSensors(map) {
-
     var mapIcon = L.icon({
         iconUrl: 'public/media/map_marker.png',
-
         iconSize: [38, 38], // size of the icon
     });
-
-
     var marker = L.marker([38.96797739, -0.19109882], { // el de gandía
         icon: mapIcon
     }).addTo(map);
-
     marker.bindPopup("Estacion de medida de Gandía").openPopup();
-
 }

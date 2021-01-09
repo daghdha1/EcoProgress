@@ -1,5 +1,3 @@
-
-
 function processData(data) {
     //console.log("data---->",data);
     let finalData = {
@@ -11,7 +9,6 @@ function processData(data) {
         finalData.listx.push(data[i].location.longitude);
         finalData.listy.push(data[i].location.latitude);
         finalData.listz.push(Math.round((data[i].value)));
-
     }
     return finalData;
 }
@@ -29,10 +26,7 @@ function parseToObjectForHeatmap(data) {
             lng: pos[1],
             value: Math.round(pos[2])
         };
-        
-        if (obj.value == 0 || obj.value < 0) {
-
-        } else {
+        if (obj.value == 0 || obj.value < 0) {} else {
             dataObj.data.push(obj);
         }
     }
