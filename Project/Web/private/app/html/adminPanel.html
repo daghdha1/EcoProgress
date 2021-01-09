@@ -5,32 +5,37 @@
         <title>
             Página Administrador
         </title>
+        <!-- ICON -->
+        <link rel="icon" type="favicon.png" href="/EcoProgress/Project/Web/favicon.png" sizes="16x16 24x24 36x36 48x48"/>
         <!-- STYLES -->
-        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
+        <link href="/EcoProgress/Project/Web/public/css/libraries/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/EcoProgress/Project/Web/public/fonts/CenturyGothic.css" rel="stylesheet"/>
         <link href="../css/adminPanel.css" rel="stylesheet"/>
         <!-- SCRIPTS -->
-        <script defer="" src="../js/extra/jquery.min.js">
-        </script>
-        <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
-        </script>
-        <script defer="" src="../js/_config.js">
-        </script>
-        <script defer="" src="../js/_tools.js">
-        </script>
-        <script defer="" src="../js/rest_measures.js">
-        </script>
-        <script defer="" src="../js/rest_users.js">
-        </script>
-        <script defer="" src="../js/ui_adminPanel.js">
-        </script>
+        <script defer src="/EcoProgress/Project/Web/public/js/_config.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script defer src="/EcoProgress/Project/Web/public/js/libraries/bootstrap.bundle.min.js"></script>
+        <script defer src="/EcoProgress/Project/Web/public/js/_tools.js"></script>
+        <script defer src="../js/rest_measures.js"></script>
+        <script defer src="../js/rest_users.js"></script>
+        <script defer src="../js/rest_logout.js"></script>
+        <script defer src="../js/ui_adminPanel.js"></script>
     </head>
     <body>
-        <header style="text-align: left;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'CenturyGothic';">
-            <div style="height: 100%;">
-                <img class="img-fluid d-block" src="../media/logo_250.png" style="height: 80px;width: 210px;margin: 0 auto;"/>
+        <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
+            <div class="container-fluid justify-content-center flex-column m-0 p-0">
+                <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
+                    <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
+                        <img src="../media/logo.png" style="width: 210px;margin: 0;"/>
+                    </a>
+                    <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
+                        <a class="ml-auto" onclick="return logout()" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
             </div>
-        </header>
+        </nav>
         <div style="margin-top: 50px; margin-left: 20px;">
             <div class="col">
                 <div class="row">

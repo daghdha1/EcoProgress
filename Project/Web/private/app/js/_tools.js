@@ -1,7 +1,7 @@
 // -------------------------------------------------------------------------------- //
 // -----------------  Manejador de respuestas del servidor (JSON) ----------------- //
 // -------------------------------------------------------------------------------- //
-function responseHandler(json, callback=null) {
+function responseHandler(json, callback = null) {
     switch (true) {
         case json == null:
             alert("Error en la conexión con el servidor");
@@ -11,7 +11,7 @@ function responseHandler(json, callback=null) {
             if (json.auth === 1) window.location.replace(config.indexDir);
             break;
         case Array.isArray(json):
-            callback(json);
+            if (callback != null) callback(json);
             break;
     }
 }

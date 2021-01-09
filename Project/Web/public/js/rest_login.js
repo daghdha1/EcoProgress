@@ -5,19 +5,9 @@ function login() {
         // Form data
         let formData = new FormData(form);
         formData.append("action", "login");
-        // URL to send request
         let url = config.restDir + "/auth";
-        // Token of user for authorization
-        // let bearer = 'Bearer ' + bearer_token; // Login no dispone del token aún (se envía pass y se obtiene un token para posteriori)
-        // Headers
-        // let headers = new Headers();
-        // headers.append("Authorization", bearer);
-        // headers.append("Content-Type", "application/json"); // Login no necesita content-type, viene implícito en el form
         var myInit = {
             method: "POST",
-            //headers: headers,
-            //withCredentials: true,
-            //credentials: "include",
             mode: "cors",
             cache: "default",
             body: formData
@@ -37,7 +27,7 @@ function login() {
                         window.location.replace('./private/app/html/home.html');
                     } else if (json[0].role === 'root') {
                         // Redireccionamos a la página de admin
-                        window.location.redirect('./private/app/html/adminPanel.html');
+                        window.location.replace('./private/app/html/adminPanel.html');
                     }
                     hideModalPanel('loginPanel');
                     break;
