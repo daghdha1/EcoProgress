@@ -16,6 +16,7 @@ function logout() {
         else return 'Ha habido un error en la conexión con el servidor';
     }).then(function(json) {
         if (json) {
+            localStorage.clear();
             alert("Sesión cerrada, nos vemos pronto!");
             window.location.replace(config.indexDir);
         } else {

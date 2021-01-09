@@ -40,7 +40,7 @@ function login() {
     }
 }
 
-function saveUserSession(userDataSession) {
-    sessionStorage.setItem("mail", userDataSession.mail);
-    sessionStorage.setItem("name", userDataSession.name);
+function saveUserSession(userDataSession) {    
+    localStorage.setItem("mail", userDataSession[0].mail);
+    localStorage.setItem("name", userDataSession[0].name);
 }

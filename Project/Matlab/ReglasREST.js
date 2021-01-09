@@ -63,7 +63,7 @@ executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy 
 
 setInterval(() => {
     executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
-}, 15000);
+}, 300000);
 
 
 
@@ -102,9 +102,7 @@ function getMatrixFromFile() {
         }
     }
     //console.log(matriz.length);
-    return {
-        l: matriz
-    };
+    return matriz;
 }
 
 

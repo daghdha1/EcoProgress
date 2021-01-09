@@ -1,3 +1,12 @@
+getAllMeasures((measures) => {
+    let data = processData(measures);
+    console.log(data)
+    postData(data, (heatMap) => {
+        let parsedData = parseToObjectForHeatmap(heatMap);
+        drawMap(parsedData);
+    });
+});
+
 function drawMap(heatmap) {
 
     var testData = heatmap;

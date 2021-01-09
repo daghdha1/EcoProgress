@@ -1,33 +1,13 @@
-// Esto es por si utilizaramos otra biblioteca, me da pena borrarlo
-/*function drawMap(data) {
-    var map = L.map('map').setView([39.003628, -0.166529], 18);
+getMeasuresFromTimestamp((measures) => {
+    let data = processData(measures);
+    console.log()
+    postData(data, (heatMap) => {
+        let parsedData = parseToObjectForHeatmap(heatMap);
+        drawMap(parsedData);
+    });
+}, localStorage.getItem("mail"), "month")
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
-
-    /*var heat = L.heatLayer(data, {
-        radius: 1,
-        blur: 5,
-        maxZoom: 10,
-        max: 70.0,
-        gradient: {
-            0.0: 'green',
-            0.5: 'yellow',
-            1.0: 'red'
-        }
-    }).addTo(map);
-
-    var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',
-        imageBounds = [
-            [39.020594, -0.211071],
-            [38.944588, -0.129491]
-        ];
-    L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
-}
-*/
 function drawMap(heatmap) {
     var testData = heatmap;
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
