@@ -23,7 +23,7 @@ function InitRequestLastMeasure() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test");
+        }, localStorage.getItem(("mail")));
     });
 }
 
@@ -35,7 +35,7 @@ function InitRequestLastHourMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test", "hour");
+        }, localStorage.getItem(("mail")), "hour");
     });
 }
 
@@ -47,7 +47,7 @@ function InitRequestLastDayMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test", "day");
+        }, localStorage.getItem(("mail")), "day");
     });
 }
 
@@ -59,7 +59,7 @@ function InitRequestLastWeekMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test", "week");
+        }, localStorage.getItem(("mail")), "week");
     });
 }
 
@@ -71,7 +71,7 @@ function InitRequestLastMonthMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test", "month");
+        }, localStorage.getItem(("mail")), "month");
     });
 }
 // DONT USE IT (IN PROGRESS)
@@ -83,7 +83,7 @@ function InitRequestMyCustomMeasures() {
                 airQuality = calculateAirQuality(dataReceived);
             }
             resolve(airQuality);
-        }, "test@test", "153923022-162828823");
+        }, localStorage.getItem(("mail")), "153923022-162828823");
     });
 }
 /*
@@ -112,6 +112,7 @@ function calculateAirQuality(measureList) {
  * 
  */
 function populateGraph(valueList) {
+    console.log(valueList)
     //valueList = [-1, 43.5, 16.4];
     var options = {
         series: getPercentagesFromValues(valueList),

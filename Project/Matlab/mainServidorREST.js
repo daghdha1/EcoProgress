@@ -33,6 +33,7 @@ async function main() {
     process.on('SIGINT', function () {
         servicio.close();
         console.log(" terminando ");
+        process.exit(); // Node js sigue ocupando el puerto 8080 entonces me veo forzado a utilizar esto.
     })
 } // ()
 

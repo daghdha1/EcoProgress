@@ -1,10 +1,4 @@
-getAllMeasures((measures) => {
-    let data = processData(measures);
-    postData(data, (heatMap) => {
-        let parsedData = parseToObjectForHeatmap(heatMap.l);
-        drawMap(parsedData);
-    });
-});
+
 
 function processData(data) {
     //console.log("data---->",data);

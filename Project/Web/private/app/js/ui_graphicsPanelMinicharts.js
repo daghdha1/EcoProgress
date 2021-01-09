@@ -225,6 +225,7 @@ minicoGrafica.render();
 minino2Grafica.render();
 miniso2Grafica.render();
 minio3Grafica.render();
+/*
 getMeasuresFromTimestamp((data) => {
     var last10Data = [];
     if (data != null && data.length > 10) {
@@ -235,4 +236,5 @@ getMeasuresFromTimestamp((data) => {
             data: last10Data
         }])
     }
-}, "test@test", "month")
+}, sessionStorage.getItem("mail"), "month")
+*/

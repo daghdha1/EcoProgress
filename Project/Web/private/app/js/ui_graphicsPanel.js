@@ -38,11 +38,12 @@ window.Apex = {
         }
     }
 };
+
 getMeasuresFromTimestamp((data) => {
     populateColumchart(getFakeData()) // later it'll be data from fetch
     populateLinechart(data);
     populateMinicharts(data);
-}, "test@test", "month")
+}, sessionStorage.getItem("mail"), "month")
 
 function populateMinicharts(data) {
     var last10Data = [];
