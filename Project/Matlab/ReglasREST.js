@@ -63,7 +63,7 @@ executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy 
 
 setInterval(() => {
     executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
-}, 300000);
+}, 15000);
 
 
 

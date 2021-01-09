@@ -31,11 +31,18 @@ writematrix(X1,"required/fixedx.txt",'Delimiter',',')
 writematrix(Y1,"required/fixedy.txt",'Delimiter',',') 
 
 Z_corrector= griddata(x,y,z,X1,Y1,'v4');
-Z_corrector = max(0,min(100,Z_corrector));
+Z_corrector = max(0,min(70,Z_corrector));
 
-% pcolor(X1,Y1,Z_corrector), shading interp, colorbar
-% plot(Z_corrector)
-% title('Ejercicio 2 tarea')
+% Remove zero rows
+%Z_corrector( all(~Z_corrector,2), : ) = [];
+% Remove zero columns
+%Z_corrector( :, all(~Z_corrector,1) ) = [];
+
+% round(Z_corrector);
+
+ pcolor(X1,Y1,Z_corrector), shading interp, colorbar
+ %plot(Z_corrector)
+ title('Ejercicio 2 tarea')
 
 % figure, [C,h]=contour(X1,Y1,LDEN_corrector, 30); clabel(C,h),colorbar
 % title('Curvas de nivel tarea 2')

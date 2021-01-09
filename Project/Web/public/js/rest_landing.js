@@ -14,7 +14,6 @@ function getAllMeasures(callback) {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        console.log(json);
         if (json != null) callback(json);
         else window.location.replace(config.indexDir);
     });

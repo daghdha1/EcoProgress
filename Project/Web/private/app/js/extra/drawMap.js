@@ -66,7 +66,7 @@ function drawMap(heatmap) {
     var heatmapLayer = new HeatmapOverlay(cfg);
     var map = new L.Map('map', {
         center: new L.LatLng(39.003628, -0.166529),
-        zoom: 17,
+        zoom: 14,
         layers: [baseLayer, heatmapLayer]
     });
     addOfficialSensors(map)

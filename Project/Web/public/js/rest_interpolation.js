@@ -16,7 +16,8 @@ function processData(data) {
     for (let i = 0; i < data.length; i++) {
         finalData.listx.push(data[i].location.longitude);
         finalData.listy.push(data[i].location.latitude);
-        finalData.listz.push((data[i].value));
+        finalData.listz.push(Math.round((data[i].value)));
+
     }
     return finalData;
 }
@@ -32,9 +33,14 @@ function parseToObjectForHeatmap(data) {
         var obj = {
             lat: pos[0],
             lng: pos[1],
-            value: pos[2]
+            value: Math.round(pos[2])
         };
-        dataObj.data.push(obj);
+        
+        if (obj.value == 0 || obj.value < 0) {
+
+        } else {
+            dataObj.data.push(obj);
+        }
     }
     return dataObj;
 }
