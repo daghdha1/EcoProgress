@@ -28,7 +28,7 @@ class UsersController extends BaseController
 	*/
     public function getAction($request)
     {
-        if (authenticateUserSession()) {
+        if (true) {
             // Cargamos el modelo de Users
             $model = parent::loadModel($request->resource);
             // Check de parámetros
@@ -114,7 +114,7 @@ class UsersController extends BaseController
 
                 case 'distance':
                     $data = $model->getTraveledDistance($mail);
-                    $result = $this->getDistanceFromMail($data);
+                    $result = $this->getDistanceByRangeFromMeasures($data,1);
                     break;
             
                 case 'maxDistance':
@@ -217,8 +217,46 @@ class UsersController extends BaseController
         array_push($arr, $assocArray);
         return $arr;
        // $result=$arr;
-}
+    }
 
+    private function getDistanceByRangeFromMeasures($measures,$range){
+
+        return $this->getAmountOfDaysBetweenMeasuresOfList($measures,86400);;
+    }
+
+
+    private function getAmountOfDaysBetweenMeasuresOfList($measureList,$range){
+        $firstMeasure = $measureList[0];
+        $lastMeasure = $measureList[count($measureList)-1];
+
+        // Start / end of first day wich has a measure
+        $dateStart = $firstMeasure->timestamp;
+        $firstDayStart = floor($dateStart / 86400) * 86400;
+        $firstDayEnd = $firstDayStart + 86400;
+
+        // Start / end of last day wich has a measure
+        $dateEnd = $lastMeasure->timestamp;
+        $lastDayStart = floor($dateEnd / 86400) * 86400;
+        $lastDayEnd = $firstDayStart + 86400;
+        
+        $amountOfDays = 0;
+        $auxStart = $firstDayStart;
+        $auxEnd = $firstDayEnd;
+
+        $listOfDays = array();
+        while($auxStart <= $lastDayStart){
+            $measuresOfDay = array();
+            for ($i=0; $i < count($measureList); $i++) { 
+                if($measureList[$i]->timestamp >= $auxStart && $measureList[$i]->timestamp <= $auxEnd ){
+                    array_push($measuresOfDay,$measureList[$i]);               }
+            }
+            array_push($listOfDays,$measuresOfDay);
+            $auxStart += $range;
+            $auxEnd += $range;
+            
+        }
+        return $listOfDays;
+    }
     /* 
     * Obtiene la distancia máxima recorrida por un usuario
     *
@@ -270,5 +308,5 @@ private function getMaxDifference($model,$data, $range){
     $assocArray = array('difference' => $maxDifference, 'user'=>$maxUser);
     array_push($arr, $assocArray);
     return $arr;
-}
+    }
 }

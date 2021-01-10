@@ -26,7 +26,9 @@ class MeasuresModel extends BaseModel {
     */
 	public function getAllMeasures() {
 		// Respuesta
-		$result = BaseEntity::getAll();
+		$sql = "SELECT * FROM Measures ORDER BY timestamp DESC";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
@@ -41,7 +43,7 @@ class MeasuresModel extends BaseModel {
 	public function getAllMeasuresOfUser($mail) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
+		$sql = "SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp ASC";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
