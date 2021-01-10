@@ -64,6 +64,12 @@ INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('6', 'test@t
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1606409912', '38.995876, -0.167057', '1');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1606410000', '38.999622, -0.166512', '1');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1606411000', '39.001105, -0.164135', '1');
+-- 10 / 01
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (2.5, '1610293637', '39.002082, -0.162310', '1');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.5, '1610292637', '39.001227, -0.163908', '1');
+-- 09 / 01
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610034437', '39.002082, -0.162310', '1');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610032437', '38.999076, -0.162704', '1');
 
 
 

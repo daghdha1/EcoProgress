@@ -201,31 +201,50 @@ class UsersController extends BaseController
     *                 			getDistanceFromMail($data) <--
     * <-- array, Nada
 	*/
-    private function getDistanceFromMail($data)
+    private function calculateDistanceOfMeasureList($data)
     {
         //var_dump($data);    
         $distance=0;
+        $timestampOfDay = 0;
         for($i=1; $i<count($data); $i++){
             $measure = parent::createEntity('Measures')->createMeasureFromDatabase($data,$i);
             $measureAnterior = parent::createEntity('Measures')->createMeasureFromDatabase($data, $i-1);
             if(($measure->getTimestamp()-$measureAnterior->getTimestamp())<3600){
                 $distance+=haversineDistanceCalculator($measure->getLocation()['latitude'], $measure->getLocation()['longitude'], $measureAnterior->getLocation()['latitude'],  $measureAnterior->getLocation()['longitude']); 
+                
             }
         }
-        $arr = array();
-        $assocArray = array('distance' => $distance);
-        array_push($arr, $assocArray);
-        return $arr;
+        //$arr = array();
+        //$assocArray = array('distance' => $distance);
+        //array_push($arr, $assocArray);
+
+        return $distance;
        // $result=$arr;
     }
 
+    
     private function getDistanceByRangeFromMeasures($measures,$range){
 
-        return $this->getAmountOfDaysBetweenMeasuresOfList($measures,86400);;
+        $measuresByDay =  $this->orderMeasuresByDay($measures,86400);
+        $distanceByDay = array();
+
+        for ($i=0; $i < count($measuresByDay) ; $i++) { 
+            $distance = $this->calculateDistanceOfMeasureList($measuresByDay[$i]);
+
+            if($distance > 0){
+                $timestamp = $measuresByDay[$i][0]->timestamp - ($measuresByDay[$i][0]->timestamp % 86400); // para conseguir las 12am.
+                $obj  = array('distance' => $distance,
+                'timestamp' => $timestamp 
+              );
+                array_push($distanceByDay,$obj);
+                
+            }
+        }
+        return $distanceByDay;
     }
 
 
-    private function getAmountOfDaysBetweenMeasuresOfList($measureList,$range){
+    private function orderMeasuresByDay($measureList,$range){
         $firstMeasure = $measureList[0];
         $lastMeasure = $measureList[count($measureList)-1];
 
@@ -253,7 +272,6 @@ class UsersController extends BaseController
             array_push($listOfDays,$measuresOfDay);
             $auxStart += $range;
             $auxEnd += $range;
-            
         }
         return $listOfDays;
     }
