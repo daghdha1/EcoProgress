@@ -49,7 +49,7 @@
 .footer-basic .social > a:hover {
   opacity: 0.9;
   background-color: #682172;
-  color: white;
+  color: white !important;
 }
 
 .footer-basic .copyright {
