@@ -1,0 +1,14 @@
+<--SEPARAR />
+<div role="dialog" tabindex="-1" class="modal fade show" id="modalCrear">
+<form name="formRegistrationAdmin" onsubmit="registration(this,'ad_name', 'ad_surnames', 'ad_mail', 'ad_password', 'ad_rol', 'ad_status', 'ad_key'); return false;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family: Montserrat;">Crear usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body d-flex flex-column"><label for="ad_name" style="font-family: Montserrat;">Nombre </label><input id="ad_name" inputmode="text" name="ad_name" minlength="1" maxlength="20" style="font-family: Montserrat;" /><label for="ad_surnames" style="font-family: Montserrat;" type="text">Apellidos </label><input id="ad_surnames" inputmode="text" name="ad_surname" minlength="1" maxlength="30" style="font-family: Montserrat;" type="text" /><label for="ad_mail" style="font-family: Montserrat;">Correo electrónico</label><input id="ad_mail" inputmode="email" name="ad_mail" minlength="1" maxlength="50" style="font-family: Montserrat;" type="email" /><label for="ad_password" style="font-family: Montserrat;">Contraseña</label><input id="ad_password" name="ad_password" style="font-family: Montserrat;" type="password" /><label for="ad_rol" style="font-family: Montserrat;">Rol</label><input id="ad_rol" name="ad_rol" style="font-family: Montserrat;" type="text" /><label for="ad_status" style="font-family: Montserrat;">Status</label><input id="ad_status" name="ad_status" style="font-family: Montserrat;" type="numeric" /><label for="ad_key" style="font-family: Montserrat;">Clave de producto</label><input id="ad_key" name="ad_key" style="font-family: Montserrat;" type="text" /></div>
+            <div class="modal-footer d-xl-flex justify-content-xl-center"><button class="btn btn-primary d-xl-flex" formmethod="post" id="reg_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;" type="submit">Crear</button></div>
+        </div>
+    </div>
+</form>
+</div>

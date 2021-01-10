@@ -174,7 +174,13 @@ class UsersController extends BaseController
         return $result;
     }
 
-
+    /* 
+    * Obtiene el tiempo activo
+    *
+    * Texto -->
+    *                 			getDifference($data) <--
+    * <-- array, Nada
+	*/
     private function getDifference($data, $range){
         $diff = 0;
 		$finalResult = 0;
@@ -220,8 +226,7 @@ class UsersController extends BaseController
 }
 
     /* 
-    * Obtiene la distancia máxima recorrida por un usuario
-    *
+    * Obtiene la distancia máxima recorrida de entre todos los usuarios 
     * Texto -->
     *                 			getMaxDistance($data) <--
     * <-- array, Nada
@@ -247,6 +252,13 @@ private function getMaxDistance($model,$data){
     return $arr;
 }
 
+    /* 
+    * Obtiene el tiempo activo mayor de entre todos los usuarios
+    *
+    * model, data, range -->
+    *                 			getMaxDifference($model, $data, $range) <--
+    * <-- array, Nada
+	*/
 private function getMaxDifference($model,$data, $range){
     $maxDifference = 0;
     $maxUser = -1;

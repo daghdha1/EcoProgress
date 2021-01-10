@@ -1,188 +1,154 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-        <title>
-            Página Administrador
-        </title>
-        <!-- STYLES -->
-        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="../fonts/CenturyGothic.css" rel="stylesheet"/>
-        <link href="../css/adminPanel.css" rel="stylesheet"/>
-        <!-- SCRIPTS -->
-        <script defer="" src="../js/extra/jquery.min.js">
-        </script>
-        <script defer="" src="../bootstrap/js/bootstrap.bundle.min.js">
-        </script>
-        <script defer="" src="../js/_config.js">
-        </script>
-        <script defer="" src="../js/_tools.js">
-        </script>
-        <script defer="" src="../js/rest_measures.js">
-        </script>
-        <script defer="" src="../js/rest_users.js">
-        </script>
-        <script defer="" src="../js/ui_adminPanel.js">
-        </script>
-    </head>
-    <body>
-        <header style="text-align: left;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'CenturyGothic';">
-            <div style="height: 100%;">
-                <img class="img-fluid d-block" src="../media/logo_250.png" style="height: 80px;width: 210px;margin: 0 auto;"/>
-            </div>
-        </header>
-        <div style="margin-top: 50px; margin-left: 20px;">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h4 style="font-family: 'CenturyGothic';text-align: center;font-size: 20px;">
-                            Tabla de usuarios
-                        </h4>
-                        <div class="table-responsive d-flex mx-auto" style="border-collapse: collapse;border-spacing: 0;width: 100%;align-content: center;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;">
-                            <table id="usersDataTable">
-                                <thead>
-                                    <tr style="background-color: rgba(13,149,173,0.61);">
-                                        <th style="color: rgb(255,255,255);">
-                                            Nombre de usuario
-                                        </th>
-                                        <th style="color: rgb(255,255,255);">
-                                            Correo electrónico
-                                        </th>
-                                        <th style="color: rgb(255,255,255);">
-                                            Dispositivos
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>paginaAdmi(PruebaCodigoSeparado)</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Century%20Gothic.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Footer-Basic.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <header style="text-align: left;box-shadow: 0px 4px 6px #d6d6d6;font-family: 'Century Gothic';">
+        <div style="height: 100%;"><img class="img-fluid d-block" src="assets/img/logo_250.png" style="height: 80px;width: 210px;margin: 0 auto;"></div>
+    </header>
+    <div style="height: 100%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;width: 100%;">
+        <div style="border-style: none;height: 100%;margin: 0px;">
+            <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
+                <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;" href="#tab-1">&nbsp;Inicio&nbsp;</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="border-width: 0px;font-size: 20px;font-family: 'Century Gothic';font-weight: bold;">&nbsp;Mapas</a></li>
+            </ul>
+            <div class="tab-content" style="height: 100%;width: 100%;">
+                <div class="tab-pane active" role="tabpanel" id="tab-1" style="height: 100%;margin: 0px;padding: 0px;">
+                    <div style="margin-top: 50px;">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px;">
+                                    <h4 style="font-family: Montserrat;text-align: center;font-size: 20px;">Tabla de usuarios</h4>
+                                    <div class="table-responsive d-block mx-auto" style="border-collapse: collapse;border-spacing: 0;width: 100%;align-content: center;width: 95%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;/*background-color: rgba(13,149,173,0.61);*/">
+                                        <table class="table">
+                                            <thead>
+                                                <tr style="background-color: rgba(13,149,173,0.61);">
+                                                    <th style="color: rgb(255,255,255);font-family: Montserrat;">Nombre de usuario</th>
+                                                    <th style="color: rgb(255,255,255);font-family: Montserrat;">Correo electrónico</th>
+                                                    <th style="color: rgb(255,255,255);font-family: Montserrat;">Dispositivos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Cell 1</td>
+                                                    <td>Cell 2</td>
+                                                    <td>Cell 2</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Cell 3</td>
+                                                    <td>Cell 4</td>
+                                                    <td>Cell 4</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col" style="margin-right: 20px;">
+                                    <h4 style="font-family: Montserrat;text-align: center;font-size: 20px;">Administración de usuarios</h4>
+                                    <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #682172;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p style="font-family: Montserrat;">Nombre:</p>
+                                                    <p style="font-family: Montserrat;">Apellidos:</p>
+                                                    <p style="font-family: Montserrat;">Dispositivos:</p>
+                                                    <p style="font-family: Montserrat;">Actividad:<br></p>
+                                                    <p style="font-family: Montserrat;">Distancia recorrida total:<br></p>
+                                                </div>
+                                                <div class="col"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col" style="margin-right: 20px;">
-                        <h4 style="font-family: 'CenturyGothic';text-align: center;font-size: 20px;">
-                            Usuario
-                        </h4>
-                        <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #682172;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4 txt-title">
-                                        <p class="title">
-                                            Nombre:
-                                        </p>
-                                    </div>
-                                    <div class="col-8 txt-value">
-                                        <p id="a_name">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 txt-title">
-                                        <p class="title">
-                                            Apellidos:
-                                        </p>
-                                    </div>
-                                    <div class="col-8 txt-value">
-                                        <p id="a_surnames">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 txt-title">
-                                        <p class="title">
-                                            Dispositivos:
-                                        </p>
-                                    </div>
-                                    <div class="col-8 txt-value">
-                                        <p id="a_devices">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 txt-title">
-                                        <p class="title">
-                                            Tiempo de actividad:
-                                        </p>
-                                    </div>
-                                    <div class="col-8 txt-value">
-                                        <p id="a_timeActive">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4 txt-title">
-                                        <p class="title">
-                                            Distancia recorrida total:
-                                        </p>
-                                    </div>
-                                    <div class="col-8 txt-value">
-                                        <p id="a_totalDistance">
-                                        </p>
+                        <div class="col" style="margin-top: 50px;">
+                            <div class="row d-flex flex-row align-items-xl-center">
+                                <div class="col d-flex flex-row align-items-center align-self-center justify-content-lg-center"><button class="btn btn-primary" type="button"  data-toggle= "modal" data-target="#modalCrear" style="margin-right: 20px;/*align-items: center;*/color: #682172;background: rgb(242,244,245);border-radius: 8px;border-width: 2px;border-color: #422e65;font-family: Montserrat;">Crear Usuario</button><button class="btn btn-primary" type="button"  data-toggle= "modal" data-target="#modalEditar" style="margin-right: 20px;background: #f2f4f5;color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: Montserrat;">Editar Usuario</button><button class="btn btn-primary" type="button"  data-toggle= "modal" data-target="#modalEliminar" style="margin-right: 20px;background: rgb(242,244,245);color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: Montserrat;">Eliminar Usuario</button><div role="dialog" tabindex="-1" class="modal fade show" id="modalCrear">
+<form  name="formRegistrationAdmin" onsubmit="registration(this,'ad_name', 'ad_surnames', 'ad_mail', 'ad_password', 'ad_rol', 'ad_status', 'ad_key'); return false;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family: Montserrat;">Crear usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+            <div class="modal-body d-flex flex-column"><label for="ad_name" style="font-family: Montserrat;">Nombre </label><input id="ad_name" inputmode="text" name="ad_name" minlength="1" maxlength="20" style="font-family: Montserrat;" /><label for="ad_surnames" style="font-family: Montserrat;"type="text">Apellidos </label><input  id="ad_surnames" inputmode="text" name="ad_surname" minlength="1" maxlength="30" style="font-family: Montserrat;" type="text"/><label for="ad_mail" style="font-family: Montserrat;">Correo electrónico</label><input
+                     id="ad_mail" inputmode="email" name="ad_mail" minlength="1" maxlength="50" style="font-family: Montserrat;" type="email" /><label for="ad_password" style="font-family: Montserrat;">Contraseña</label><input  id="ad_password" name="ad_password"  style="font-family: Montserrat;"type="password"/><label for="ad_rol" style="font-family: Montserrat;">Rol</label><input id="ad_rol" name="ad_rol" style="font-family: Montserrat;" type="text"/><label for="ad_status" style="font-family: Montserrat;">Status</label><input id="ad_status" name="ad_status" style="font-family: Montserrat;" type="numeric"/><label for="ad_key" style="font-family: Montserrat;">Clave de producto</label><input  id="ad_key" name="ad_key" style="font-family: Montserrat;" type="text"/></div>
+            <div class="modal-footer d-xl-flex justify-content-xl-center"><button class="btn btn-primary d-xl-flex" formmethod="post" id="reg_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;"type="submit">Crear</button></div>
+        </div>
+    </div>
+    </form>
+</div><div role="dialog" tabindex="-1" class="modal fade show" id="modalEliminar">
+    <form name="formDeleteAdmin" onsubmit="registration(this,'addel_email'); return false;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family: Montserrat;">Eliminar usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+            <div class="modal-body d-flex flex-column"><label for="addel_email" style="font-family: Montserrat;">Correo electrónico</label><input
+                     id="addel_email" name="addel_email" inputmode="email" minlength="1" maxlength="50" style="font-family: Montserrat;" type="mail"/></div>
+            <div class="modal-footer d-xl-flex justify-content-xl-center"><button class="btn btn-primary d-xl-flex" formmethod="post" id="addel_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;" type="submit" >Eliminar</button></div>
+            </div>
+        </div>
+    </form>
+</div><div role="dialog" tabindex="-1" class="modal fade show" id="modalEditar">
+    <form>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family: Montserrat;">Editar usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+            <div class="modal-body d-flex flex-column"><label for="edit_name"  style="font-family: Montserrat;">Nombre</label><input type="text" id="edit_name" name="edit_name"  required minlength="1" maxlength="30" style="font-family: Montserrat;" /><label for="edit_surname"  style="font-family: Montserrat;">Apellidos</label><input type="text" id="edit_surname" name="edit_surname" required minlength="1" maxlength="30" style="font-family: Montserrat;" /><label for="edit_key" style="font-family: Montserrat;">Clave de producto</label><input  id="edit_key" name="edit_key" style="font-family: Montserrat;" type="text"/></div>
+            <div class="modal-footer d-xl-flex justify-content-xl-center"><button class="btn btn-primary d-xl-flex" id="editButton" type="button" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;">Editar</button></div>
+        </div>
+    </div>
+    </form>
+</div></div>
+                                <div class="col">
+                                    <h4 class="text-center d-xl-flex justify-content-xl-center" style="font-family: Montserrat;text-align: center;font-size: 20px;/*align-self: center;*/">Top de estadísticas</h4>
+                                    <div class="card d-lg-flex mx-auto justify-content-lg-end" style="width: 90%;border: solid 3px;border-radius: 8px;border-color: #1c195e;">
+                                        <div class="card-body d-xl-flex">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p style="font-family: Montserrat;">Distancia recorrida máxima:</p>
+                                                    <p style="font-family: Montserrat;">Usuario mas activo:</p>
+                                                    <p style="font-family: Montserrat;">Porcentaje de usuarios activos:</p>
+                                                    <p style="font-family: Montserrat;">Porcentaje de sensores usados diariamente:<br></p>
+                                                </div>
+                                                <div class="col"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col" style="margin-top: 50px;">
-                <h4 class="text-center d-xl-flex justify-content-xl-center" style="font-family: 'CenturyGothic';text-align: center;font-size: 20px;">
-                    Top de estadísticas
-                </h4>
-                <div class="card mx-auto" style="width: 40%;border: solid 3px;border-radius: 8px;border-color: #1c195e;">
-                    <div class="card-body d-xl-flex">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-8 txt-title">
-                                    <p class="title">
-                                        Distancia recorrida máxima:
-                                    </p>
-                                </div>
-                                <div class="col-4 txt-value">
-                                    <p id="a_maxDistance">
-                                        Próximamente
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 txt-title">
-                                    <p class="title">
-                                        Usuario más activo:
-                                    </p>
-                                </div>
-                                <div class="col-4 txt-value">
-                                    <p id="a_maxActive">
-                                        Próximamente
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 txt-title">
-                                    <p class="title">
-                                        Porcentaje de usuarios activos:
-                                    </p>
-                                </div>
-                                <div class="col-4 txt-value">
-                                    <p id="a_percActiveUser">
-                                        Próximamente
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 txt-title">
-                                    <p class="title">
-                                        Porcentaje de sensores usados diariamente:
-                                    </p>
-                                </div>
-                                <div class="col-4 txt-value">
-                                    <p id="a_percActiveUserDiary">
-                                        Próximamente
-                                    </p>
-                                </div>
-                            </div>
+                <div class="tab-pane" role="tabpanel" id="tab-2" style="height: 100%;">
+                    <div class="d-flex flex-column align-content-around justify-content-xl-center align-items-xl-center" style="margin-top: 2rem;">
+                        <div class="dropdown" style="margin-bottom: 3rem;"><button class="btn btn-primary dropdown-toggle d-xl-flex align-items-xl-center" data-toggle="dropdown" aria-expanded="false" type="button">Historial</button>
+                            <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
                         </div>
+                        <div id="mapa" style="margin-bottom: 8rem;width: 100%;"><iframe allowfullscreen="" frameborder="0" src="https://cdn.bootstrapstudio.io/placeholders/map.html" width="100%" height="400"></iframe></div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+    <div class="footer-basic" style="bottom: 0;">
+        <footer style="bottom: 0;">
+            <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-facebook"></i></a></div>
+            <p class="copyright">EcoProgress © 2020</p>
+        </footer>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
 </html>
