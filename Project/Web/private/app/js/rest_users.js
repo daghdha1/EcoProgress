@@ -30,7 +30,7 @@ function getUser(callback, userID) {
         if (response.ok) return response.text();
         else return null;
     }).then((json) => {
-        console.log(json)
+        console.log("-->>>",json)
         responseHandler(json, callback);
     });
 }
@@ -49,6 +49,7 @@ function getActiveTimeUser(callback, userID, differenceValue) {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
+        console.log(json);
         responseHandler(json, callback);
     });
 }

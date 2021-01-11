@@ -43,7 +43,6 @@ module.exports.cargar = function (servidorExpress) {
             let listz = convertDataToString(data.listz);
             console.log("Z-> ", listz);
 
-
             writeFile(cfg.pathx, listx);
             writeFile(cfg.pathy, listy);
             writeFile(cfg.pathz, listz);
@@ -52,19 +51,41 @@ module.exports.cargar = function (servidorExpress) {
 
             //executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "','" + data.n + "')");
 
-
             let interpolation = getMatrixFromFile();
             console.log(interpolation);
             respuesta.send(interpolation);
         });
 }
+counter = 0;
 
 executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
 
 setInterval(() => {
+    if (counter = 288) {
+        counter = 0;
+        saveForHistoric();
+    } else {
+        counter++;
+    }
     executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
+
 }, 300000);
 
+function saveForHistoric() {
+
+    var dateObj = new Date();
+    var month = dateObj.getMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    newdate = "Mapa-"+year + "/" + month + "/" + day
+
+    // File destination.txt will be created or overwritten by default.
+    fs.copyFile('result.txt', newdate, (err) => {
+        if (err) throw err;
+        console.log('source.txt was copied to destination.txt');
+    })
+}
 
 
 function getMatrixFromFile() {
@@ -78,7 +99,6 @@ function getMatrixFromFile() {
     let linesy = ally.split("\n");
     let ny = linesy.length;
 
-
     let all = fs.readFileSync(cfg.pathResult, "utf8");
     all = all.trim(); // final crlf in file
     let lines = all.split("\n");
@@ -87,21 +107,13 @@ function getMatrixFromFile() {
 
     let matriz = [];
     for (let i = 0; i < n; i++) {
-        //console.log(i);
         let values = lines[i].split(",");
         let valx = linesx[i].split(",");
         let valy = linesy[i].split(",");
         for (let j = 0; j < values.length; j++) {
-            //console.log(values.length)
-            /*console.log("Valores: ");
-            console.log(valx[j]);
-            console.log(valy[j]);
-            console.log(values[j]);*/
-            //console.log("Posicion:",i + " " + j);
             matriz.push([parseFloat(valx[j]), parseFloat(valy[j]), parseFloat(values[j])]);
         }
     }
-    //console.log(matriz.length);
     return matriz;
 }
 
@@ -179,7 +191,6 @@ function addNullPoints(data) {
 }
 
 function convertDataToString(list) {
-
     let result = "";
     for (let i = 0; i < list.length; i++) {
         result += list[i];
