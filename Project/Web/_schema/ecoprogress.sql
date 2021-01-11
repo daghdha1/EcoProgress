@@ -105,5 +105,3 @@ INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0, '16099319
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1, '1609931988', '38.97869438055453,-0.15552520751953128', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0, '1609931989', '38.974891064341726,-0.13338088989257815', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0, '1609931990', '38.970987448455716,-0.12956142425537112', '6');
-
-SELECT m.* FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = 'admin@admin' ORDER BY timestamp ASC;

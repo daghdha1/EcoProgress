@@ -89,7 +89,7 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 populateGraph();
 getDataForGraphicsBar("btn_co");
-configBtnsGases();
+//configBtnsGases();
 /*
  * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
  * 
@@ -105,8 +105,9 @@ function getDataForGraphicsBar(btnGas) {
             airQualitysPromiseList.push(initRequestLastHourMeasures());
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
+                console.log("--> ", response);
                 updateGraph(response);
-            }).catch(error => console.log("Error in promises ${error}"));
+            }).catch(error => console.log("Error in promises ${error}", error));
             break;
         case "btn_no2":
             airQualitysPromiseList.push(1, 1, 1);
@@ -135,6 +136,7 @@ function populateGraph() {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Actual'],
         chart: {
+            id: 'chartCo',
             height: '190%',
             width: '100%',
             type: 'radialBar',
@@ -209,9 +211,12 @@ function populateGraph() {
  * 
  */
 function updateGraph(valueList) {
-    myGraphs.airQualityChart.updateSeries({
+    /*myGraphs.airQualityChart.updateSeries([{
         data: valueList
-    });
+    }]);*/
+    ApexCharts.exec("chartCo", "updateSeries", [{
+        data: [5,5,5]
+    }], true);
 }
 /*
  * Actualiza el rosco gráfico de medidas de calidad del aire
