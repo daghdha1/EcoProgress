@@ -1,21 +1,4 @@
-GetDataForGraphicsBar();
-/*
- * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
- * 
- *                   GetDataForGraphicsBar() <--
- * <-- Lista<R>
- */
-function GetDataForGraphicsBar() {
-    let airQualitysPromiseList = []; // [day,hour,last]
-    airQualitysPromiseList.push(InitRequestLastDayMeasures());
-    airQualitysPromiseList.push(InitRequestLastHourMeasures());
-    airQualitysPromiseList.push(InitRequestLastMeasure());
-    Promise.all(airQualitysPromiseList).then((response) => {
-        populateGraph(response);
-    }).catch(error => console.log("Error in promises ${error}"));
-}
-
-function InitRequestLastMeasure() {
+function initRequestLastMeasure() {
     return new Promise((resolve, reject) => {
         getLastMeasure((dataReceived) => {
             let airQuality = -1;
@@ -27,7 +10,7 @@ function InitRequestLastMeasure() {
     });
 }
 
-function InitRequestLastHourMeasures() {
+function initRequestLastHourMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
@@ -39,7 +22,7 @@ function InitRequestLastHourMeasures() {
     });
 }
 
-function InitRequestLastDayMeasures() {
+function initRequestLastDayMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
@@ -51,7 +34,7 @@ function InitRequestLastDayMeasures() {
     });
 }
 
-function InitRequestLastWeekMeasures() {
+function initRequestLastWeekMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
@@ -63,7 +46,7 @@ function InitRequestLastWeekMeasures() {
     });
 }
 
-function InitRequestLastMonthMeasures() {
+function initRequestLastMonthMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
@@ -75,7 +58,7 @@ function InitRequestLastMonthMeasures() {
     });
 }
 // DONT USE IT (IN PROGRESS)
-function InitRequestMyCustomMeasures() {
+function initRequestMyCustomMeasures() {
     return new Promise((resolve, reject) => {
         getMeasuresFromTimestamp((dataReceived) => {
             let airQuality = -1;
@@ -104,16 +87,54 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
+populateGraph();
+//getDataForGraphicsBar("btn_co");
+configBtnsGases();
+/*
+ * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
+ * 
+ *                   GetDataForGraphicsBar() <--
+ * <-- Lista<R>
+ */
+function getDataForGraphicsBar(btnGas) {
+    let airQualitysPromiseList = []; // [day,hour,last]
+    let result;
+    switch (btnGas) {
+        case "btn_co":
+            airQualitysPromiseList.push(initRequestLastDayMeasures());
+            airQualitysPromiseList.push(initRequestLastHourMeasures());
+            airQualitysPromiseList.push(initRequestLastMeasure());
+            Promise.all(airQualitysPromiseList).then((response) => {
+                console.log("11111");
+                return response;
+            }).catch(error => console.log("Error in promises ${error}"));
+            break;
+        case "btn_no2":
+            airQualitysPromiseList.push(1, 1, 1);
+            console.log("222");
+            return airQualitysPromiseList;
+            break;
+        case "btn_so2":
+            airQualitysPromiseList.push(2, 2, 2);
+            console.log("33333");
+            return airQualitysPromiseList;
+            break;
+        case "btn_o3":
+            airQualitysPromiseList.push(3, 3, 3);
+            console.log("44444");
+            return airQualitysPromiseList;
+            break;
+    }
+}
 /*
  * Rellena el rosco gráfico de medidas de calidad del aire
  * 
  * Lista<gasValue:R> --> 
- *                       populateGraph() <--
+ *                          populateGraph() <--
  * 
  */
-function populateGraph(valueList) {
-    console.log(valueList)
-    //valueList = [-1, 43.5, 16.4];
+function populateGraph() {
+    let valueList = [10, 10, 10];
     var options = {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Actual'],
@@ -125,7 +146,7 @@ function populateGraph(valueList) {
             animations: {
                 enabled: true,
                 easing: 'easeinout',
-                speed: 3000,
+                speed: 2500,
                 dynamicAnimation: {
                     enabled: true,
                     speed: 1500
@@ -181,8 +202,39 @@ function populateGraph(valueList) {
             }
         }
     };
-    let chartCo = new ApexCharts(document.querySelector("#coChart"), options);
-    chartCo.render();
+    myGraphs.airQualityChart = new ApexCharts(document.querySelector("#coChart"), options);
+    myGraphs.airQualityChart.render();
+}
+/*
+ * Actualiza el rosco gráfico de medidas de calidad del aire
+ * 
+ * Lista<gasValue:R> --> 
+ *                         updateGraph() <--
+ * 
+ */
+function updateGraph(valueList) {
+    console.log("jejejeje");
+    //myGraphs.airQualityChart.destroy();
+    myGraphs.airQualityChart.updateOptions({
+        series: [{
+            data: valueList
+        }]
+    });
+}
+/*
+ * Actualiza el rosco gráfico de medidas de calidad del aire
+ * 
+ * configBtnsGases() <--
+ * 
+ */
+function configBtnsGases() {
+    let allBtnsGases = $("#btns-gases").find('button');
+    allBtnsGases.each(function(index, btn) {
+        executeCallbackBtn(btn.id, () => {
+            let dataValues = getDataForGraphicsBar(btn.id);
+            updateGraph(dataValues);
+        });
+    });
 }
 /*
  * Obtiene los pocentajes a mostrar de los valores calculados de calidad del aire
@@ -194,7 +246,7 @@ function populateGraph(valueList) {
 function getPercentagesFromValues(valueList) {
     // valor minimo son 0ppm y el maximo 70ppm
     let min = 0;
-    let max = 70;
+    let max = 40;
     let maxPercent = 100;
     let percentList = [];
     for (var i = 0; i < valueList.length; i++) {
@@ -218,7 +270,7 @@ function getPercentagesFromValues(valueList) {
 function getLabelsFromPercentage(percent) {
     // Valor mínimo son 0ppm y el maximo 70ppm
     let min = 0;
-    let max = 70;
+    let max = 40;
     let maxPercent = 100;
     if (percent != 101) {
         let label = percent * max / maxPercent;
@@ -258,16 +310,16 @@ function getGradientToColorsByValue(valueList) {
     colorList = [];
     valueList.forEach(function(val) {
         switch (true) {
-            case val >= 50:
+            case val >= 30:
                 colorList.push(myColors.eminence);
                 break;
-            case val >= 30:
+            case val >= 20:
                 colorList.push(myColors.space_cadet);
                 break;
-            case val >= 15:
+            case val >= 12:
                 colorList.push(myColors.blue_sapphire);
                 break;
-            case val >= 7:
+            case val >= 4:
                 colorList.push(myColors.metallic_seaweed);
                 break;
             case val >= 0:

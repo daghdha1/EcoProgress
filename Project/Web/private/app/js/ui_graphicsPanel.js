@@ -40,9 +40,9 @@ window.Apex = {
 };
 
 getMeasuresFromTimestamp((data) => {
-    populateColumchart(getFakeData()) // later it'll be data from fetch
-    populateLinechart(data);
-    populateMinicharts(data);
+    //populateColumchart(getFakeData()) // later it'll be data from fetch
+    //populateLinechart(data);
+    //populateMinicharts(data);
 }, sessionStorage.getItem("mail"), "month")
 
 function populateMinicharts(data) {
@@ -115,4 +115,3 @@ function getFakeData() {
     }];
     return fakeData;
 }
-window.setInterval(function() {}, 3000);

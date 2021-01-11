@@ -42,7 +42,7 @@ function configModalPanel(namePanel, hiddenCallback, shownCallback) {
         if (hiddenCallback != null) hiddenCallback();
     });
     $('#' + namePanel).on('shown.bs.modal', () => {
-        findAndFocusFirstInputFormElement();
+        findAndFocusFirstInputForm();
         if (shownCallback != null) shownCallback();
     });
 }
@@ -102,23 +102,20 @@ function setTextValueDOM(id, str) {
     document.getElementById(id).value = str;
 }
 
-function setAsyncFocusElementDOM(id) {
-    var r = setInterval(() => {
-        if (document.getElementById(id)) {
-            clearInterval(r);
-            setFocusElementDOM(id);
-        }
-    }, 100);
-};
-
 function setPlaceHolderDOM(id, str) {
     document.getElementById(id).placeholder = str;
 }
 
-function findAndFocusFirstInputFormElement() {
+function findAndFocusFirstInputForm() {
     $(document).ready(() => {
         let e = $("form").find("*").filter(":input:visible:enabled:not([readonly]):first").get(0);
         setFocusElementDOM(e.id);
+    });
+}
+
+function executeCallbackBtn(id, cb=null) {
+    $("#" + id).on("click", (e) => {
+        if (cb != null) cb();
     });
 }
 
