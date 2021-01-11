@@ -1,0 +1,14 @@
+<--SEPARAR />
+<div role="dialog" tabindex="-1" class="modal fade show" id="modalEliminar">
+    <form name="formDeleteAdmin" onsubmit="registration(this,'addel_email'); return false;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="font-family: Montserrat;">Eliminar usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body d-flex flex-column"><label for="addel_email" style="font-family: Montserrat;">Correo electrónico</label><input id="addel_email" name="addel_email" inputmode="email" minlength="1" maxlength="50" style="font-family: Montserrat;" type="mail" /></div>
+                <div class="modal-footer d-xl-flex justify-content-xl-center"><button class="btn btn-primary d-xl-flex" formmethod="post" id="addel_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;" type="submit">Eliminar</button></div>
+            </div>
+        </div>
+    </form>
+</div>

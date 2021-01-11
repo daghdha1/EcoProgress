@@ -70,26 +70,33 @@ class UsersModel extends BaseModel {
     *                 			getActiveTimeOfUser() <--
     * <-- Lista<N> | Nada
     */
-	public function getActiveTimeOfUser($mail, $range) {
+	public function getActiveTimeOfUser($mail) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 
 		$sql = "SELECT m.timestamp FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
 		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		$diff = 0;
-		$finalResult = 0;
-		if (!is_null($result)) {
-			for($i = 0; $i < count($result); $i++) {
-				$diff = $result[$i]->timestamp - $result[$i+1]->timestamp;
-				if($diff <= $range) {
-					$finalResult = $finalResult + $diff;
-				}
-			}
-			// Devuelve el finalResult
-			return $finalResult;
-		}
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
+
+		return $result;
+	}
+
+	/* 
+    * Obtiene la distancia total recorrida del usuario activo
+    *
+    * Texto -->
+    *                 			getActiveUser() <--
+    * <-- N, Nada
+    */
+	public function getTraveledDistance($mail) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+		// Query
+		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
+
 		return $result;
 	}
 

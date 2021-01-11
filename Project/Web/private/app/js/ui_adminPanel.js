@@ -4,21 +4,22 @@ showActiveTimeUser();
 showTotalDistanceUser();
 //////// Callbacks functions ////////
 function showUsersTable() {
-    getAllUsers((dataReceived) => {
-        fillUsersTable(dataReceived);
+    getAllUsers(function (dataReceived) {
+        //fillUsersTable(dataReceived);
     });
 }
 
 function showUserData() {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
-    }, localStorage.getItem("mail"));
+    }, "admin@admin");
 }
 
 function showActiveTimeUser() {
     getActiveTimeUser((dataReceived) => {
+        console.log("ASDASDSA->",dataReceived);
         fillInActiveTimeField(dataReceived);
-    }, localStorage.getItem("mail"), "hour");
+    }, "test@test", "hour");
 }
 
 function showTotalDistanceUser() {
@@ -41,15 +42,15 @@ function fillUsersTable(userListData) {
 }
 
 function fillInUserFields(userData) {
-    document.getElementById("a_name").innerHTML = userData[0].name;
-    document.getElementById("a_surnames").innerHTML = userData[0].surnames;
-    document.getElementById("a_devices").innerHTML = "COOOOO1";
+    document.getElementById("#a_name").innerHTML = userData[0].name;
+    document.getElementById("#a_surnames").innerHTML = userData[0].surnames;
+    document.getElementById("#a_devices").innerHTML = "COOOOO1";
 }
 
 function fillInActiveTimeField(activeTime) {
-    document.getElementById("a_timeActive").innerHTML = convertSecondsToFormatTime(activeTime);
+    document.getElementById("#a_timeActive").innerHTML = convertSecondsToFormatTime(activeTime);
 }
 
 function fillInTotalDistanceField(distance) {
-    document.getElementById("a_totalDistance").innerHTML = distance;
+    document.getElementById("#a_totalDistance").innerHTML += distance;
 }
