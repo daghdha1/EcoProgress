@@ -1,3 +1,6 @@
+getDataAndUpdateGraph("btn_co");
+configBtnsGases();
+
 function initRequestLastMeasure() {
     return new Promise((resolve, reject) => {
         getLastMeasure((dataReceived) => {
@@ -88,41 +91,50 @@ function calculateAirQuality(measureList) {
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
 
-populateGraph([10,10,10]);
-//getDataForGraphicsBar("btn_co");
-configBtnsGases();
 /*
- * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
+ * Configura los botones de tipo de gases para cambiar la información del rosco gráfico
  * 
- *                   GetDataForGraphicsBar() <--
+ * configBtnsGases() <--
+ * 
+ */
+function configBtnsGases() {
+    let allBtnsGases = $("#btns-gases").find('button');
+    allBtnsGases.each((index, btn) => {
+        executeCallbackBtnDOM(btn.id, () => {
+            getDataAndUpdateGraph(btn.id);
+        });
+    });
+}
+/*
+ * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico y actualización de este
+ * 
+ *                  getDataAndUpdateGraph() <--
  * <-- Lista<R>
  */
-function getDataForGraphicsBar(btnGas) {
+function getDataAndUpdateGraph(btnGas) {
     let airQualitysPromiseList = []; // [day,hour,last]
-    let result;
     switch (btnGas) {
         case "btn_co":
             airQualitysPromiseList.push(initRequestLastDayMeasures());
             airQualitysPromiseList.push(initRequestLastHourMeasures());
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
-                console.log("--> ", response);
-                myGraphs.airQualityChart.destroy();
+                if (myGraphs.airQualityChart != null) myGraphs.airQualityChart.destroy();
                 populateGraph(response);
             }).catch(error => console.log("Error in promises ${error}", error));
             break;
         case "btn_no2":
-            airQualitysPromiseList.push(1, 1, 1);
+            airQualitysPromiseList.push(12.5, 3, 0.3);
             myGraphs.airQualityChart.destroy();
             populateGraph(airQualitysPromiseList);
             break;
         case "btn_so2":
-            airQualitysPromiseList.push(2, 2, 2);
+            airQualitysPromiseList.push(24, 13.7, 3);
             myGraphs.airQualityChart.destroy();
             populateGraph(airQualitysPromiseList);
             break;
         case "btn_o3":
-            airQualitysPromiseList.push(3, 3, 3);
+            airQualitysPromiseList.push(24, 0, -1);
             myGraphs.airQualityChart.destroy();
             populateGraph(airQualitysPromiseList);
             break;
@@ -148,7 +160,7 @@ function populateGraph(valueList) {
             animations: {
                 enabled: true,
                 easing: 'easeinout',
-                speed: 2500,
+                speed: 2000,
                 dynamicAnimation: {
                     enabled: true,
                     speed: 1500
@@ -171,7 +183,7 @@ function populateGraph(valueList) {
                         fontSize: '18px',
                         color: myColors.blue_sapphire,
                         offsetY: -20,
-                        formatter: function (val) {
+                        formatter: function(val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
@@ -180,7 +192,7 @@ function populateGraph(valueList) {
                         label: 'CO',
                         color: myColors.soft_black,
                         fontSize: '27px',
-                        formatter: function (w) {
+                        formatter: function(w) {
                             return ""
                         }
                     }
@@ -208,35 +220,6 @@ function populateGraph(valueList) {
     myGraphs.airQualityChart.render();
 }
 /*
- * Actualiza el rosco gráfico de medidas de calidad del aire
- * 
- * Lista<gasValue:R> --> 
- *                         updateGraph() <--
- * 
- */
-function updateGraph(valueList) {
-    /*myGraphs.airQualityChart.updateSeries([{
-        data: valueList
-    }]);*/
-    ApexCharts.exec("chartCo", "updateSeries", [{
-        data: [5, 5, 5]
-    }], true);
-}
-/*
- * Actualiza el rosco gráfico de medidas de calidad del aire
- * 
- * configBtnsGases() <--
- * 
- */
-function configBtnsGases() {
-    let allBtnsGases = $("#btns-gases").find('button');
-    allBtnsGases.each(function (index, btn) {
-        executeCallbackBtn(btn.id, () => {
-            getDataForGraphicsBar(btn.id, updateGraph)
-        });
-    });
-}
-/*
  * Obtiene los pocentajes a mostrar de los valores calculados de calidad del aire
  * 
  * Lista<gasValue:R> --> 
@@ -246,14 +229,16 @@ function configBtnsGases() {
 function getPercentagesFromValues(valueList) {
     // valor minimo son 0ppm y el maximo 70ppm
     let min = 0;
-    let max = 40;
+    let max = 30;
     let maxPercent = 100;
     let percentList = [];
     for (var i = 0; i < valueList.length; i++) {
-        if (valueList[i] != -1) {
+        if (valueList[i] >= 0.5) {
             let percent = valueList[i] * maxPercent / max;
             let formatPercent = Math.round(percent * 100) / 100;
             percentList[i] = formatPercent >= 100 ? 100 : formatPercent;
+        } else if (valueList[i] >= 0) {
+            percentList[i] = 0.5;
         } else {
             percentList[i] = 101; // 101 for non data
         }
@@ -270,14 +255,17 @@ function getPercentagesFromValues(valueList) {
 function getLabelsFromPercentage(percent) {
     // Valor mínimo son 0ppm y el maximo 70ppm
     let min = 0;
-    let max = 40;
+    let max = 30;
     let maxPercent = 100;
-    if (percent != 101) {
+    if (percent > 100) {
+        return "No hay datos";
+    } else if (percent <= 0.5) {
+        return "< 0.5 ppm";
+    } else {
         let label = percent * max / maxPercent;
         let formatLabel = Math.round(label * 100) / 100;
         return formatLabel + " ppm";
     }
-    return "No hay datos";
 }
 /*
  * Obtiene los colores de las barras iniciales dependiendo de si hay datos o no (>=0 || -1)
@@ -288,7 +276,7 @@ function getLabelsFromPercentage(percent) {
  */
 function getColorBarByValue(valueList) {
     colorList = [];
-    valueList.forEach(function (val) {
+    valueList.forEach(function(val) {
         switch (true) {
             case val >= 0:
                 colorList.push(myColors.soft_metallic_seaweed);
@@ -308,15 +296,15 @@ function getColorBarByValue(valueList) {
  */
 function getGradientToColorsByValue(valueList) {
     colorList = [];
-    valueList.forEach(function (val) {
+    valueList.forEach(function(val) {
         switch (true) {
-            case val >= 30:
+            case val >= 20:
                 colorList.push(myColors.eminence);
                 break;
-            case val >= 20:
+            case val >= 12:
                 colorList.push(myColors.space_cadet);
                 break;
-            case val >= 12:
+            case val >= 8:
                 colorList.push(myColors.blue_sapphire);
                 break;
             case val >= 4:

@@ -113,7 +113,7 @@ function findAndFocusFirstInputForm() {
     });
 }
 
-function executeCallbackBtn(id, cb=null) {
+function executeCallbackBtnDOM(id, cb=null) {
     $("#" + id).on("click", (e) => {
         if (cb != null) cb();
     });
