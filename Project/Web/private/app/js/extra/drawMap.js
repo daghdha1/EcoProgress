@@ -1,11 +1,10 @@
 getMeasuresFromTimestamp((measures) => {
     let data = processData(measures);
-    console.log()
     postData(data, (heatMap) => {
         let parsedData = parseToObjectForHeatmap(heatMap);
         drawMap(parsedData);
     });
-}, localStorage.getItem("mail"), "month")
+}, localStorage.getItem("mail"), "month");
 
 
 function drawMap(heatmap) {
@@ -49,7 +48,7 @@ function drawMap(heatmap) {
         zoom: 14,
         layers: [baseLayer, heatmapLayer]
     });
-    addOfficialSensors(map)
+    addOfficialSensors(map);
     heatmapLayer.setData(testData);
 }
 
