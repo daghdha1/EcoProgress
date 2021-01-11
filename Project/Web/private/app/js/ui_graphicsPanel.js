@@ -43,7 +43,7 @@ getMeasuresFromTimestamp((data) => {
     populateColumchart(getFakeData()) // later it'll be data from fetch
     populateLinechart(data);
     populateMinicharts(data);
-}, sessionStorage.getItem("mail"), "month")
+}, localStorage.getItem("mail"), "month")
 
 function populateMinicharts(data) {
     var last10Data = [];
