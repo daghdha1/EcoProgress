@@ -12,13 +12,13 @@ function showUsersTable() {
 function showUserData() {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
-    }, sessionStorage.getItem("mail"));
+    }, localStorage.getItem("mail"));
 }
 
 function showActiveTimeUser() {
     getActiveTimeUser((dataReceived) => {
         fillInActiveTimeField(dataReceived);
-    }, sessionStorage.getItem("mail"), "hour");
+    }, localStorage.getItem("mail"), "hour");
 }
 
 function showTotalDistanceUser() {

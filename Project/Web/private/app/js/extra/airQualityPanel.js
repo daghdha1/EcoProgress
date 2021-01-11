@@ -88,7 +88,7 @@ function calculateAirQuality(measureList) {
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
 populateGraph();
-//getDataForGraphicsBar("btn_co");
+getDataForGraphicsBar("btn_co");
 configBtnsGases();
 /*
  * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
@@ -105,24 +105,20 @@ function getDataForGraphicsBar(btnGas) {
             airQualitysPromiseList.push(initRequestLastHourMeasures());
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
-                console.log("11111");
-                return response;
+                updateGraph(response);
             }).catch(error => console.log("Error in promises ${error}"));
             break;
         case "btn_no2":
             airQualitysPromiseList.push(1, 1, 1);
-            console.log("222");
-            return airQualitysPromiseList;
+            updateGraph(airQualitysPromiseList);
             break;
         case "btn_so2":
             airQualitysPromiseList.push(2, 2, 2);
-            console.log("33333");
-            return airQualitysPromiseList;
+            updateGraph(airQualitysPromiseList);
             break;
         case "btn_o3":
             airQualitysPromiseList.push(3, 3, 3);
-            console.log("44444");
-            return airQualitysPromiseList;
+            updateGraph(airQualitysPromiseList);
             break;
     }
 }
@@ -213,12 +209,8 @@ function populateGraph() {
  * 
  */
 function updateGraph(valueList) {
-    console.log("jejejeje");
-    //myGraphs.airQualityChart.destroy();
-    myGraphs.airQualityChart.updateOptions({
-        series: [{
-            data: valueList
-        }]
+    myGraphs.airQualityChart.updateSeries({
+        data: valueList
     });
 }
 /*
@@ -231,8 +223,7 @@ function configBtnsGases() {
     let allBtnsGases = $("#btns-gases").find('button');
     allBtnsGases.each(function(index, btn) {
         executeCallbackBtn(btn.id, () => {
-            let dataValues = getDataForGraphicsBar(btn.id);
-            updateGraph(dataValues);
+            getDataForGraphicsBar(btn.id, updateGraph)
         });
     });
 }

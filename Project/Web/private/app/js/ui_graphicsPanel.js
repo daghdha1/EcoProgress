@@ -40,10 +40,10 @@ window.Apex = {
 };
 
 getMeasuresFromTimestamp((data) => {
-    //populateColumchart(getFakeData()) // later it'll be data from fetch
-    //populateLinechart(data);
-    //populateMinicharts(data);
-}, sessionStorage.getItem("mail"), "month")
+    populateColumchart(getFakeData()) // later it'll be data from fetch
+    populateLinechart(data);
+    populateMinicharts(data);
+}, localStorage.getItem("mail"), "month");
 
 function populateMinicharts(data) {
     var last10Data = [];

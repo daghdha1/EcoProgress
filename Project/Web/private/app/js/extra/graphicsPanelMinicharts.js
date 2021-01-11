@@ -236,5 +236,5 @@ getMeasuresFromTimestamp((data) => {
             data: last10Data
         }])
     }
-}, sessionStorage.getItem("mail"), "month")
+}, localStorage.getItem("mail"), "month")
 */
