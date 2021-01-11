@@ -87,9 +87,10 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
-populateGraph();
-getDataForGraphicsBar("btn_co");
-//configBtnsGases();
+
+populateGraph([10,10,10]);
+//getDataForGraphicsBar("btn_co");
+configBtnsGases();
 /*
  * Obtención de valores en mg/m3 de calidad del aire del usuario activo para el rosco gráfico
  * 
@@ -106,20 +107,24 @@ function getDataForGraphicsBar(btnGas) {
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
                 console.log("--> ", response);
-                updateGraph(response);
+                myGraphs.airQualityChart.destroy();
+                populateGraph(response);
             }).catch(error => console.log("Error in promises ${error}", error));
             break;
         case "btn_no2":
             airQualitysPromiseList.push(1, 1, 1);
-            updateGraph(airQualitysPromiseList);
+            myGraphs.airQualityChart.destroy();
+            populateGraph(airQualitysPromiseList);
             break;
         case "btn_so2":
             airQualitysPromiseList.push(2, 2, 2);
-            updateGraph(airQualitysPromiseList);
+            myGraphs.airQualityChart.destroy();
+            populateGraph(airQualitysPromiseList);
             break;
         case "btn_o3":
             airQualitysPromiseList.push(3, 3, 3);
-            updateGraph(airQualitysPromiseList);
+            myGraphs.airQualityChart.destroy();
+            populateGraph(airQualitysPromiseList);
             break;
     }
 }
@@ -130,8 +135,7 @@ function getDataForGraphicsBar(btnGas) {
  *                          populateGraph() <--
  * 
  */
-function populateGraph() {
-    let valueList = [10, 10, 10];
+function populateGraph(valueList) {
     var options = {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Actual'],
@@ -167,7 +171,7 @@ function populateGraph() {
                         fontSize: '18px',
                         color: myColors.blue_sapphire,
                         offsetY: -20,
-                        formatter: function(val) {
+                        formatter: function (val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
@@ -176,7 +180,7 @@ function populateGraph() {
                         label: 'CO',
                         color: myColors.soft_black,
                         fontSize: '27px',
-                        formatter: function(w) {
+                        formatter: function (w) {
                             return ""
                         }
                     }
@@ -215,7 +219,7 @@ function updateGraph(valueList) {
         data: valueList
     }]);*/
     ApexCharts.exec("chartCo", "updateSeries", [{
-        data: [5,5,5]
+        data: [5, 5, 5]
     }], true);
 }
 /*
@@ -226,7 +230,7 @@ function updateGraph(valueList) {
  */
 function configBtnsGases() {
     let allBtnsGases = $("#btns-gases").find('button');
-    allBtnsGases.each(function(index, btn) {
+    allBtnsGases.each(function (index, btn) {
         executeCallbackBtn(btn.id, () => {
             getDataForGraphicsBar(btn.id, updateGraph)
         });
@@ -284,7 +288,7 @@ function getLabelsFromPercentage(percent) {
  */
 function getColorBarByValue(valueList) {
     colorList = [];
-    valueList.forEach(function(val) {
+    valueList.forEach(function (val) {
         switch (true) {
             case val >= 0:
                 colorList.push(myColors.soft_metallic_seaweed);
@@ -304,7 +308,7 @@ function getColorBarByValue(valueList) {
  */
 function getGradientToColorsByValue(valueList) {
     colorList = [];
-    valueList.forEach(function(val) {
+    valueList.forEach(function (val) {
         switch (true) {
             case val >= 30:
                 colorList.push(myColors.eminence);
