@@ -364,6 +364,8 @@ public class MainActivity extends AppCompatActivity {
                         publicarNotificacion();
                     }
                     // Comprobamos si se supera el límite recomendado
+                    //Measure measureLimit = new Measure(56.3, 1608144831, "38.9955, 0.1661","1");
+                    //if(getLimitExceeded(measureLimit) >= 2){
                     if(getLimitExceeded(currentMeasure) >= 2){
                         // Lanzamos la notificación
                         limiteExcedidoNotificacion();
