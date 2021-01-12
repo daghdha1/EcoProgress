@@ -32,6 +32,23 @@ function initModalPanel(namePanel, cb1, cb2) {
     }
 }
 
+// -------------------------------------------------------------------------------- //
+// -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
+// -------------------------------------------------------------------------------- //
+function initPrivateModalPanel(namePanel, cb1, cb2) {
+    if (document.getElementById(namePanel) == null) {
+        $.ajax({
+            url: './' + namePanel + '.html',
+            dataType: 'html',
+            success: (data) => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                configModalPanel(namePanel, cb1, cb2);
+                showModalPanel(namePanel);
+            }
+        });
+    }
+}
+
 function configModalPanel(namePanel, hiddenCallback, shownCallback) {
     $('#' + namePanel).modal({
         backdrop: 'static',
