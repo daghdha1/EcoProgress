@@ -29,7 +29,7 @@
 
 .footer-basic .social {
   text-align: center;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
 }
 
 .footer-basic .social > a {
@@ -48,6 +48,8 @@
 
 .footer-basic .social > a:hover {
   opacity: 0.9;
+  background-color: #682172;
+  color: white !important;
 }
 
 .footer-basic .copyright {
@@ -56,5 +58,14 @@
   font-size: 13px;
   color: #aaa;
   margin-bottom: 0;
+}
+
+.btn-primary:hover {
+  color: white !important;
+  background-color: #562a69 !important;
+}
+
+a {
+  color: #682172 !important;
 }
 
