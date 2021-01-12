@@ -2,38 +2,38 @@
 <html style="height: 100%;">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Landing</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>EcoProgress - Landing page</title>
     <!-- ICON -->
-    <link rel="icon" type="favicon.png" href="favicon.png" sizes="16x16 24x24 36x36 48x48"/>
+    <link type="favicon.png" href="favicon.png" sizes="16x16 24x24 36x36 48x48" rel="icon" />
     <!-- STYLES -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="public/css/CenturyGothic.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="public/css/AXY-Contact-Us-1.css"/>
-    <link rel="stylesheet" href="public/css/AXY-Contact-Us.css"/>
-    <link rel="stylesheet" href="public/css/Footer-Basic.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css"/>
-    <link rel="stylesheet" href="public/css/Navigation-Clean.css"/>
-    <link rel="stylesheet" href="public/css/palette.compiled.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css"/>
+    <link href="./public/css/libraries/bootstrap.min.css" rel="stylesheet"/>
+    <link href="./public/fonts/CenturyGothic.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="./public/css/libraries/AXY-Contact-Us-1.css" rel="stylesheet"/>
+    <link href="./public/css/libraries/AXY-Contact-Us.css" rel="stylesheet"/>
+    <link href="./public/css/libraries/Footer-Basic.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css" rel="stylesheet"/>
+    <link href="./public/css/libraries/Navigation-Clean.css" rel="stylesheet"/>
+    <link href="./public/css/libraries/palette.compiled.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" rel="stylesheet"/>
     <!-- SCRIPTS -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <script defer src="public/js/bs-init.js"></script>
+    <script defer src="./public/js/libraries/jquery.min.js"></script>
+    <script defer src="./public/js/libraries/bootstrap.bundle.min.js"></script>
+    <script defer src="./public/js/libraries/bs-init.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
-    <script defer src="public/js/_config.js"></script>
-    <script defer src="public/js/_tools.js"></script>
+    <script defer src="./public/js/_config.js"></script>
+    <script defer src="./public/js/_namespaces.js"></script>
+    <script defer src="./public/js/_tools.js"></script>
     <script defer src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-    <script defer src="public/js/libraries/heatmap.js"></script>
-    <script defer src="public/js/libraries/leaflet-heatmap.js"></script>
-    <script defer src="public/js/rest_landing.js"></script>
-    <!--<script defer src="public/js/rest_interpolation.js"></script>
-    <script defer src="public/js/drawLandingMap.js"></script>-->
-    <script defer src="public/js/login.js"></script>
-    <script defer src="public/js/registration.js"></script>
+    <script defer src="./public/js/libraries/heatmap.js"></script>
+    <script defer src="./public/js/libraries/leaflet-heatmap.js"></script>
+    <script defer src="./public/js/rest_landing.js"></script>
+    <script defer src="./public/js/rest_interpolation.js"></script>
+    <script defer src="./public/js/libraries/drawLandingMap.js"></script>
+    <script defer src="./public/js/rest_login.js"></script>
+    <script defer src="./public/js/rest_registration.js"></script>
 </head>
 
 <body class="text-center" style="font-family: 'CenturyGothic';color: #682172;height: 100%;">
@@ -44,10 +44,10 @@
                     <img src="public/media/logo.png" style="width: 210px;margin: 0;"/>
                 </a>
                 <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
-                    <a class="ml-auto" onclick="return initModalPanel('loginPanel', null, null)" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                    <a class="ml-auto" onclick="return initModalPanel('loginPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
                         Iniciar Sesión
                     </a>
-                    <a class="ml-auto" onclick="return initModalPanel('registrationPanel', null, null)" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;">
+                    <a class="ml-auto" onclick="return initModalPanel('registrationPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;">
                         Regístrate
                     </a>
                 </div>

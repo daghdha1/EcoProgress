@@ -13,3 +13,5 @@ var myColors = myColors || {
     black: '#000000',
     soft_black: '#474747'
 };
+
+var myGraphs = myGraphs || {};

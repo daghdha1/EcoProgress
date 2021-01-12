@@ -1,0 +1,53 @@
+<div class="modal fade" id="createUserPanel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h4 class="modal-title" style="font-family: Montserrat;">
+                    Crear usuario
+                </h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </header>
+            <form name="formCreateUser" onsubmit="createUser(this,'cup_name', 'cup_surnames', 'cup_mail', 'cup_password', 'cup_rol', 'cup_status', 'cup_key'); return false;">
+                <div class="modal-body d-flex flex-column">
+                    <label for="cup_name" style="font-family: Montserrat;">
+                        Nombre
+                    </label>
+                    <input id="cup_name" maxlength="20" name="cup_name" style="font-family: Montserrat;"/>
+                    <label for="cup_surnames" style="font-family: Montserrat;" type="text">
+                        Apellidos
+                    </label>
+                    <input id="cup_surnames" maxlength="30" name="cup_surnames" style="font-family: Montserrat;" type="text"/>
+                    <label for="cup_mail" style="font-family: Montserrat;">
+                        Correo electrónico
+                    </label>
+                    <input id="cup_mail" inputmode="email" maxlength="40" name="cup_mail" style="font-family: Montserrat;" type="email"/>
+                    <label for="cup_password" style="font-family: Montserrat;">
+                        Contraseña
+                    </label>
+                    <input id="cup_password" name="cup_password" style="font-family: Montserrat;" type="password"/>
+                    <label for="cup_rol" style="font-family: Montserrat;">
+                        Rol
+                    </label>
+                    <input id="cup_rol" name="cup_rol" style="font-family: Montserrat;" type="text"/>
+                    <label for="cup_status" style="font-family: Montserrat;">
+                        Status
+                    </label>
+                    <input id="cup_status" inputmode="numeric" name="cup_status" style="font-family: Montserrat;" type="numeric"/>
+                    <label for="cup_key" style="font-family: Montserrat;">
+                        Clave de producto
+                    </label>
+                    <input id="cup_key" name="cup_key" style="font-family: Montserrat;" type="text"/>
+                </div>
+                <div class="modal-footer d-xl-flex justify-content-xl-center">
+                    <button class="btn btn-primary d-xl-flex" formmethod="post" id="cup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: Montserrat;" type="submit">
+                        Crear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

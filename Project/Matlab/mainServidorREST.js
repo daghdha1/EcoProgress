@@ -25,7 +25,7 @@ async function main() {
     var reglas = require("./ReglasREST.js")
     reglas.cargar(servidorExpress);
     // arrancao el servidor
-    var servicio = servidorExpress.listen(8080,"localhost", function () {
+    var servicio = servidorExpress.listen(8080, function () {
         console.log("servidor REST escuchando en el puerto 8080 ")
     })
 
@@ -33,6 +33,7 @@ async function main() {
     process.on('SIGINT', function () {
         servicio.close();
         console.log(" terminando ");
+        process.exit(); // Node js sigue ocupando el puerto 8080 entonces me veo forzado a utilizar esto.
     })
 } // ()
 
