@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -76,6 +78,20 @@ public class MainActivity extends AppCompatActivity {
 
         ctx = getBaseContext();
         //AppAdapter.getAppService().getMeasures();
+
+        // Creamos un onClick para el botón de test
+        Button btnNotificacionTest = findViewById(R.id.btn_notif);
+        btnNotificacionTest.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Comprobamos si se supera el límite recomendado
+                Measure measureLimit = new Measure(56.3, 1608144831, "38.9955, 0.1661","1");
+                if(getLimitExceeded(measureLimit) >= 2){
+                    // Lanzamos la notificación
+                    limiteExcedidoNotificacion();
+                    Log.d(">>>>", "La medida es " + measureLimit.getValue());
+                }
+            }
+        });
     } // onCreate()
 
 
