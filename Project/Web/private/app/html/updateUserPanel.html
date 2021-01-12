@@ -1,0 +1,37 @@
+<div class="modal fade" id="updateUserPanel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h4 class="modal-title" style="font-family: CenturyGothic;">
+                    Editar usuario
+                </h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                </button>
+            </header>
+            <form name="formUpdateUser" onsubmit="updateUser(this,'uup_name', 'uup_surnames', 'uup_status'); return false;">
+                <div class="modal-body d-flex flex-column">
+                    <label for="uup_name" style="font-family: CenturyGothic;">
+                        Nombre
+                    </label>
+                    <input id="uup_name" maxlength="20" name="uup_name" style="font-family: CenturyGothic;"/>
+                    <label for="uup_surnames" style="font-family: CenturyGothic;" type="text">
+                        Apellidos
+                    </label>
+                    <input id="uup_surnames" maxlength="30" name="uup_surnames" style="font-family: CenturyGothic;" type="text"/>
+                    <label for="uup_status" style="font-family: CenturyGothic;">
+                        Status
+                    </label>
+                    <input id="uup_status" name="uup_status" style="font-family: CenturyGothic;" type="text"/>
+                </div>
+                <div class="modal-footer d-xl-flex justify-content-xl-center">
+                    <button class="btn btn-primary d-xl-flex" formmethod="post" id="uup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: CenturyGothic;" type="submit">
+                        Editar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
