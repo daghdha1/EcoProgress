@@ -13,7 +13,7 @@ function logout() {
     // Enviamos la petición
     fetch(request).then(function(response) {
         if (response.ok) return response.json();
-        else return 'Ha habido un error en la conexión con el servidor';
+        else return false;
     }).then(function(json) {
         if (json) {
             localStorage.clear();

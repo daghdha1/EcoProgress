@@ -43,6 +43,7 @@ FOREIGN KEY (sensorID) REFERENCES Sensors(id)
 # Admin  --> mail: admin@admin  password: admin
 INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Adrian', 'Soler Navarro', '$2y$10$m.IAnLCSMxLfd8bp/hvUh.B2FeObQF9vwFwVIWNfhktIb6G77e2Ze', 23342, 1620203039, 'root', 'active');
 INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('test@test', 'Test', 'Testing', '$2y$10$ipjTNAzIDRVQTMqRJtoRUeUkoLxRfmEkvpNh13/qZwB9As7i9jsiG', 19872, 1620202038, 1620202031, 'user', 'active');
+INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('miguel@dev.com', 'Miguel', 'Toledo', '$2y$10$4J5Pkkb81ctZ7ZodCPKmjuqf/E8CDDbcx0g.M4JvvkBV5Mqmj7qbu', 22961, 1610467728, 1610467724, 'user', 'active');
 
 # USER (use these data for registration)
 # Adrián  --> mail: daghdha@dev.com   activation_key: 1d2d92g6  for sensor 1
@@ -53,12 +54,14 @@ INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_d
 # Test    --> mail: test@test	  	  activation_key: t5lbh2k9  for sensor 6
 
 # SENSORS
-INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', 'admin@admin', 'CO', '1d2d92g6', 0);
+INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', 'admin@admin', 'CO', '1d2d92g6', 1);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('2', NULL, 'CO', '20kDÑ2ln', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('3', NULL, 'CO', 'KD82mA8f', 0);
-INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('4', NULL, 'CO', 'kÑA232r1', 0);
+INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('4', 'miguel@dev.com', 'CO', 'kÑA232r1', 1);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('5', NULL, 'CO', '9slñE2k6', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('6', 'test@test', 'CO', 't5lbh2k9', 1);
+INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('7', 'miguel@dev.com', 'NO2', '4d2jj345', 1);
+INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('8', 'miguel@dev.com', 'O3', '8k2Jsa23', 1);
 
 # MEASURES
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1606409912', '38.995876, -0.167057', '1');

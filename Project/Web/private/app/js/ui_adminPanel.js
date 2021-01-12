@@ -1,23 +1,27 @@
 showUsersTable();
-showUserData();
 showActiveTimeUser();
 showTotalDistanceUser();
-//////// Callbacks functions ////////
+/*****************************************************************************
+/*************************** CALLBACK FUNCTIONS ******************************
+/****************************************************************************/
 function showUsersTable() {
-    getAllUsers(function (dataReceived) {
-        //fillUsersTable(dataReceived);
+    getSensorIdsFromUser((dataReceived) => {
+        fillUsersTable(dataReceived);
+        if (dataReceived.length > 0) {
+            showUserData(dataReceived[0].mail);
+        }
     });
 }
 
-function showUserData() {
+function showUserData(mail) {
     getUser((dataReceived) => {
+        console.log("HERE--> " + dataReceived);
         fillInUserFields(dataReceived);
-    }, "admin@admin");
+    }, mail);
 }
 
 function showActiveTimeUser() {
     getActiveTimeUser((dataReceived) => {
-        console.log("ASDASDSA->",dataReceived);
         fillInActiveTimeField(dataReceived);
     }, "test@test", "hour");
 }
@@ -26,31 +30,33 @@ function showTotalDistanceUser() {
     // TODO: falta llamar a la funcion de distancia total
     fillInTotalDistanceField("1325m");
 }
-//////// Fill functions ////////
-function fillUsersTable(userListData) {
+/*****************************************************************************
+/*************************** FILL DOM FUNCTIONS ******************************
+/****************************************************************************/
+function fillUsersTable(dataUserList) {
     var table = document.querySelector("#usersDataTable").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
-    for (let i = 0; i < userListData.length; i++) {
+    for (let i = 0; i < dataUserList.length; i++) {
         var tr = table.insertRow(-1);
         var cellName = tr.insertCell(-1);
-        cellName.innerHTML = userListData[i].name;
+        cellName.innerHTML = dataUserList[i].name;
         var cellMail = tr.insertCell(-1);
-        cellMail.innerHTML = userListData[i].mail;
+        cellMail.innerHTML = dataUserList[i].mail;
         var cellTypeDevice = tr.insertCell(-1);
-        cellTypeDevice.innerHTML = "C000001";
+        cellTypeDevice.innerHTML = dataUserList[i].type;
     }
 }
 
 function fillInUserFields(userData) {
-    document.getElementById("#a_name").innerHTML = userData[0].name;
-    document.getElementById("#a_surnames").innerHTML = userData[0].surnames;
-    document.getElementById("#a_devices").innerHTML = "COOOOO1";
+    document.getElementById("lbl_name").innerHTML = userData[0].name;
+    document.getElementById("lbl_surnames").innerHTML = userData[0].surnames;
+    document.getElementById("lbl_devices").innerHTML = "COOOOO1";
 }
 
 function fillInActiveTimeField(activeTime) {
-    document.getElementById("#a_timeActive").innerHTML = convertSecondsToFormatTime(activeTime);
+    document.getElementById("lbl_activity_time").innerHTML = convertSecondsToFormatTime(activeTime);
 }
 
 function fillInTotalDistanceField(distance) {
-    document.getElementById("#a_totalDistance").innerHTML += distance;
+    document.getElementById("lbl_total_distance").innerHTML += distance;
 }

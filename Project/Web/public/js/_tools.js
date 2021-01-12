@@ -18,6 +18,7 @@ function responseHandler(json, callback = null) {
 // -------------------------------------------------------------------------------- //
 // -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
 // -------------------------------------------------------------------------------- //
+// For public modal panels
 function initModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
@@ -31,10 +32,7 @@ function initModalPanel(namePanel, cb1, cb2) {
         });
     }
 }
-
-// -------------------------------------------------------------------------------- //
-// -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
-// -------------------------------------------------------------------------------- //
+// For admin modal panels
 function initPrivateModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
@@ -130,7 +128,7 @@ function findAndFocusFirstInputForm() {
     });
 }
 
-function executeCallbackBtnDOM(id, cb=null) {
+function executeCallbackBtnDOM(id, cb = null) {
     $("#" + id).on("click", (e) => {
         if (cb != null) cb();
     });
@@ -147,7 +145,6 @@ function isValidForm(form, params) {
     }
     return true;
 }
-
 // -------------------------------------------------------------------------------- //
 // ------------------------------ Funciones Tiempo -------------------------------- //
 // -------------------------------------------------------------------------------- //

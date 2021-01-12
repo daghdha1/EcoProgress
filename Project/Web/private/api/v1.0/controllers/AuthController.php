@@ -222,25 +222,29 @@ class AuthController extends BaseController {
     * <-- V | F
     */
     private function checkRegistrationData($usersModel, $sensorsModel, $params, $step) {
-        $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['reg_key']);
-        // Si el sensor a registrar está disponible (existe y no tiene propietario)
-        if (!is_null($sData) && !empty($sData)) {
-            $uData = $usersModel->getUser($params['reg_mail']);
-            switch ($step) {
-                case 1:
-                    // Si el email a registrar no está disponible (no existe)
-                    if (!is_null($uData) && empty($uData)) {
-                        return true;
-                    }
-                    break;
-                case 2:
-                    // Si el email a activar está disponible (existe)
-                    if (!is_null($uData) && !empty($uData)) {
-                        return true;
-                    }
-                    break;
+        switch ($step) {
+        case 1:
+            $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['reg_key']);
+            // Si el sensor a registrar está disponible (existe y no tiene propietario)
+            if (!is_null($sData) && !empty($sData)) {
+                $uData = $usersModel->getUser($params['reg_mail']);
+                // Si el email a registrar no está disponible (no existe)
+                if (!is_null($uData) && empty($uData)) {
+                    return true;
+                }
             }
-            
+            break;
+        case 2:
+            $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['reg_code_key']);
+            // Si el sensor a registrar está disponible (existe y no tiene propietario)
+            if (!is_null($sData) && !empty($sData)) {
+                $uData = $usersModel->getUser($params['reg_code_mail']);
+                // Si el email a activar está disponible (existe)
+                if (!is_null($uData) && !empty($uData)) {
+                    return true;
+                }
+            }
+            break;
         }
         return false;
     }

@@ -22,15 +22,14 @@ function getAllUsers(callback) {
  *                    getUser() <--
  * <-- User | Nada
  */
-function getUser(callback, userID) {
-    var request = new Request(config.restDir + "/users/users/" + userID, {
+function getUser(callback, mail) {
+    var request = new Request(config.restDir + "/users/users/" + mail, {
         method: "GET"
     });
     fetch(request).then((response) => {
-        if (response.ok) return response.text();
+        if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        //console.log("-->>>",json)
         responseHandler(json, callback);
     });
 }
@@ -41,15 +40,14 @@ function getUser(callback, userID) {
  *                    getUser() <--
  * <-- seconds:N | Nada
  */
-function getActiveTimeUser(callback, userID, differenceValue) {
-    var request = new Request(config.restDir + "/users/users/" + userID + "/difference/" + differenceValue, {
+function getActiveTimeUser(callback, mail, differenceValue) {
+    var request = new Request(config.restDir + "/users/users/" + mail + "/difference/" + differenceValue, {
         method: "GET"
     });
     fetch(request).then((response) => {
         if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        console.log(json);
         responseHandler(json, callback);
     });
 }

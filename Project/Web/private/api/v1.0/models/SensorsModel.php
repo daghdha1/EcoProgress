@@ -36,23 +36,6 @@ class SensorsModel extends BaseModel {
 	}
 
 	/* 
-    * Obtiene el id del sensor del usuario activo
-    *
-    * Texto -->
-    *                 			getSensorId() <--
-    * <-- sensorID:N | Nada
-    */
-	public function getSensorId($mail) {
-		$strMail = mysqli_real_escape_string($this->conn, $mail);
-		// Query
-		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strMail'";
-		// Respuesta
-		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
-		return $result;
-	}
-
-	/* 
     * Comprueba si el sensor está disponible (no registrado)
     *
     * Texto -->
@@ -80,6 +63,22 @@ class SensorsModel extends BaseModel {
 		$strKey = mysqli_real_escape_string($this->conn, $key);
 		// Query
 		$sql = "SELECT * FROM Sensors as s WHERE s.activation_key = '$strKey' LIMIT 1";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
+		return $result;
+	}
+
+	/* 
+    * Obtiene todos los usuarios activos con sus sensors id
+    *
+    * Texto -->
+    *                 				getAllUsersWithSensorIds() <--
+    * <-- Lista<stdClass> | Nada
+    */
+	public function getAllUsersWithSensorIds() {
+		// Query
+		$sql = "SELECT u.name, u.mail, s.type FROM Users as u, Sensors as s WHERE u.mail = s.mail";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null

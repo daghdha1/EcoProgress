@@ -26,8 +26,7 @@ class UsersController extends BaseController
 	*					                     getAction() <--
 	* <-- Lista<Lista<T>> | Lista<Error> 
 	*/
-    public function getAction($request)
-    {
+    public function getAction($request) {
         if (true) {
             // Cargamos el modelo de Users
             $model = parent::loadModel($request->resource);
@@ -82,8 +81,7 @@ class UsersController extends BaseController
     *                                           getIncomingParametersAndExecuteGetMethod() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function getIncomingParametersAndExecuteGetMethod($model, $request)
-    {
+    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
         $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
@@ -287,26 +285,26 @@ class UsersController extends BaseController
     *                 			getMaxDistance($data) <--
     * <-- array, Nada
 	*/
-private function getMaxDistance($model,$data){
-    $maxDistance = 0;
-    $maxUser = -1;
-    //var_dump($data);
+    private function getMaxDistance($model,$data){
+        $maxDistance = 0;
+        $maxUser = -1;
+        //var_dump($data);
 
-    foreach ($data as $item) {
-        $measureList = $model->getTraveledDistance($item->mail);
-        $actualDistance = $this->getDistanceFromMail($measureList);
-        if ($actualDistance > $maxDistance) {
-            $maxDistance = $actualDistance;
-            $maxUser = $item;
+        foreach ($data as $item) {
+            $measureList = $model->getTraveledDistance($item->mail);
+            $actualDistance = $this->getDistanceFromMail($measureList);
+            if ($actualDistance > $maxDistance) {
+                $maxDistance = $actualDistance;
+                $maxUser = $item;
+            }
         }
-    }
-    
+        
 
-    $arr = array();
-    $assocArray = array('distance' => round($maxDistance[0]['distance']), 'user'=>$maxUser);
-    array_push($arr, $assocArray);
-    return $arr;
-}
+        $arr = array();
+        $assocArray = array('distance' => round($maxDistance[0]['distance']), 'user'=>$maxUser);
+        array_push($arr, $assocArray);
+        return $arr;
+    }
 
     /* 
     * Obtiene el tiempo activo mayor de entre todos los usuarios

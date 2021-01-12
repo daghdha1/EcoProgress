@@ -24,7 +24,11 @@
             </script>
             <script defer="" src="../js/rest_users.js">
             </script>
+            <script defer="" src="../js/rest_sensors.js">
+            </script>
             <script defer="" src="../js/ui_adminPanel.js">
+            </script>
+            <script defer="" src="../js/rest_logout.js">
             </script>
         </meta>
     </head>
@@ -67,7 +71,7 @@
                                             Tabla de usuarios
                                         </h4>
                                         <div class="table-responsive d-block mx-auto" style="border-collapse: collapse;border-spacing: 0;width: 100%;align-content: center;width: 95%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;/*background-color: rgba(13,149,173,0.61);*/">
-                                            <table class="table">
+                                            <table class="table" id="usersDataTable">
                                                 <thead>
                                                     <tr style="background-color: rgba(13,149,173,0.61);">
                                                         <th style="color: rgb(255,255,255);font-family: CenturyGothic;">
@@ -113,28 +117,69 @@
                                             Administración de usuarios
                                         </h4>
                                         <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #682172;">
-                                            <div class="card-body">
+                                            <div class="card-body" id="data_container">
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <p id="#a_name" style="font-family: CenturyGothic;">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
                                                             Nombre:
                                                         </p>
-                                                        <p id="#a_surname" style="font-family: CenturyGothic;">
-                                                            Apellidos:
-                                                        </p>
-                                                        <p id="#a_devices" style="font-family: CenturyGothic;">
-                                                            Dispositivos:
-                                                        </p>
-                                                        <p id="#a_timeActive" style="font-family: CenturyGothic;">
-                                                            Actividad:
-                                                            <br/>
-                                                        </p>
-                                                        <p id="#a_totalDistance" style="font-family: CenturyGothic;">
-                                                            Distancia recorrida total:
-                                                            <br/>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_name">
+                                                        <p id="lbl_name">
                                                         </p>
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Apellidos:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_surnames">
+                                                        <p id="lbl_surnames">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Email:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_email">
+                                                        <p id="lbl_email">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Mis dispositivos:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_devices">
+                                                        <p id="lbl_devices">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Actividad:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_activity_time">
+                                                        <p id="lbl_activity_time">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Distancia recorrida total:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_total_distance">
+                                                        <p id="lbl_total_distance">
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
