@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private static String ETIQUETA_LOG = ">>>>";
     private String MY_STR_DEVICE_UUID = "ECO-PROGRESS-DEV";
     private int MY_API_VERSION = android.os.Build.VERSION.SDK_INT;
-    private String USER_MAIL = "miguel@developer.com"; // set your mail for testing
-    private String SENSOR_ID = "4"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
+    private String USER_MAIL = "sotito@developer.com"; // set your mail for testing
+    private String SENSOR_ID = "1"; // Maria(1), Adrian(2), Marta(3), Migui(4), Marcelo(5)
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -153,6 +153,20 @@ public class MainActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_notification_icon)
                 .setContentTitle("¡¡Te estas alejando!!")
                 .setContentText("Si sigues alejando vas a perder la señal")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, builder.build());
+    }
+
+    private void limiteExcedidoNotificacion(){
+        Log.e(">>>>","Has clickado 2");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "EcoProgress")
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle("Límite excedido")
+                .setContentText("Vas ha sobrepasar el límite recomendado de inhalación de CO")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
@@ -349,6 +363,11 @@ public class MainActivity extends AppCompatActivity {
                     if(getEstimatedDistanceFromDevice(result.getRssi()) >= 5){
                         publicarNotificacion();
                     }
+                    // Comprobamos si se supera el límite recomendado
+                    if(getLimitExceeded(currentMeasure) >= 2){
+                        // Lanzamos la notificación
+                        limiteExcedidoNotificacion();
+                    }
                     showDeviceInfoBTLE(result.getDevice(), result.getRssi(), data);
                     // Tratamos el beacon obtenido
                     aBeaconHasArrived(tib);
@@ -388,6 +407,28 @@ public class MainActivity extends AppCompatActivity {
             return 5;
         }
     return 0;
+    }
+
+    // --------------------------------------------------------------
+    // Medicion ->
+    //             getLimitExceeded()
+    //                                 -> 0|1
+    // --------------------------------------------------------------
+
+    private int getLimitExceeded(Measure measure){
+        if(measure.getValue() >= 70){
+            return 4;
+        }
+        if(measure.getValue() >= 50){
+            return 3;
+        }
+        if(measure.getValue() >= 35){
+            return 2;
+        }
+        if(measure.getValue() >= 22){
+            return 1;
+        }
+        return 0;
     }
 
     // --------------------------------------------------------------
