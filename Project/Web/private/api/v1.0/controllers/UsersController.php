@@ -99,19 +99,20 @@ class UsersController extends BaseController
                         }
                     }
                     break;
-
                 case 'difference':
-                    if ($value === 'half') {
-                        $time = 1800;
-                    } elseif ($value === 'hour') {
-                        $time = 3600;
+                    if ($value === 'half') $time = 1800; 
+                    elseif ($value === 'hour') $time = 3600;
+                    $data = $model->getActiveTimeOfUser($mail);
+                    if (!is_null($data) && !empty($data)) {
+                        $result = $this->getDifference($data, $time);
+                    } elseif (is_null($data)) {
+                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
+                    } else {
+                        $result = 0;
                     }
-                    $data=$model->getActiveTimeOfUser($mail);
-                    $result = $this->getDifference($mail, $time);
                     break;
-
                 case 'distance':
-                    $data = $model->getTraveledDistance($mail);
+                    $data = $model->getTraveledDistanceOfUser($mail);
                     $result = $this->getDistanceByRangeFromMeasures($data,1);
                     break;
             
@@ -138,8 +139,7 @@ class UsersController extends BaseController
     *                                                   getAllUsers() <--
     * <-- Lista<Lista<UserEntity>> | Lista<Error>
     */
-    private function getAllUsers($model, $request)
-    {
+    private function getAllUsers($model, $request) {
         // Obtenemos el array de usuarios (objects stdClass)
         $dataList = $model->getAllUsers();
         if (!is_null($dataList)) {
@@ -159,8 +159,7 @@ class UsersController extends BaseController
     *
     * Nota: dataList es una array númerica (iterativa)
     */
-    private function parseDataListToAssocArrayUsers($dataList, $resource)
-    {
+    private function parseDataListToAssocArrayUsers($dataList, $resource) {
         $result = array();
         // Por cada elemento del array de objetos
         for ($i = 0; $i < count($dataList); $i++) {
@@ -176,37 +175,30 @@ class UsersController extends BaseController
     * Obtiene el tiempo activo
     *
     * Texto -->
-    *                 			getDifference($data) <--
-    * <-- array, Nada
+    *                 	 getDifference() <--
+    * <-- N, Nada
 	*/
     private function getDifference($data, $range){
         $diff = 0;
 		$finalResult = 0;
-		if (!is_null($data)) {
-			for($i = 0; $i < count($data); $i++) {
-				$diff = $data[$i]->timestamp - $data[$i+1]->timestamp;
-				if($diff <= $range) {
-					$finalResult = $finalResult + $diff;
-				}
+		for($i = 0; $i < count($data); $i++) {
+			$diff = $data[$i]->timestamp - $data[$i+1]->timestamp;
+			if($diff <= $range) {
+				$finalResult = $finalResult + $diff;
 			}
-			// Devuelve el finalResult
-			return $finalResult;
 		}
-        $arr = array();
-        $assocArray = array('difference' => $finalResult);
-        array_push($arr, $assocArray);
-        return $arr;
-       // $result=$arr;
-}
+		// Devuelve el finalResult
+		return $finalResult;
+    }
+
     /* 
     * Obtiene la distancia total recorrida del usuario activo
     *
     * Texto -->
-    *                 			getDistanceFromMail($data) <--
-    * <-- array, Nada
+    *                 		calculateDistanceOfMeasureList() <--
+    * <-- N, Nada
 	*/
-    private function calculateDistanceOfMeasureList($data)
-    {
+    private function calculateDistanceOfMeasureList($data) {
         //var_dump($data);    
         $distance=0;
         $timestampOfDay = 0;
@@ -215,7 +207,6 @@ class UsersController extends BaseController
             $measureAnterior = parent::createEntity('Measures')->createMeasureFromDatabase($data, $i-1);
             if(($measure->getTimestamp()-$measureAnterior->getTimestamp())<3600){
                 $distance+=haversineDistanceCalculator($measure->getLocation()['latitude'], $measure->getLocation()['longitude'], $measureAnterior->getLocation()['latitude'],  $measureAnterior->getLocation()['longitude']); 
-                
             }
         }
         //$arr = array();
@@ -227,28 +218,26 @@ class UsersController extends BaseController
     }
 
     
-    private function getDistanceByRangeFromMeasures($measures,$range){
-
-        $measuresByDay =  $this->orderMeasuresByDay($measures,86400);
+    private function getDistanceByRangeFromMeasures($measures, $range) {
+        $measuresByDay =  $this->orderMeasuresByDay($measures, 86400);
         $distanceByDay = array();
 
         for ($i=0; $i < count($measuresByDay) ; $i++) { 
             $distance = $this->calculateDistanceOfMeasureList($measuresByDay[$i]);
-
-            if($distance > 0){
+            if($distance > 0) {
                 $timestamp = $measuresByDay[$i][0]->timestamp - ($measuresByDay[$i][0]->timestamp % 86400); // para conseguir las 12am.
-                $obj  = array('distance' => $distance,
-                'timestamp' => $timestamp 
-              );
+                $obj = array(
+                    'distance' => $distance,
+                    'timestamp' => $timestamp 
+                );
                 array_push($distanceByDay,$obj);
-                
             }
         }
         return $distanceByDay;
     }
 
 
-    private function orderMeasuresByDay($measureList,$range){
+    private function orderMeasuresByDay($measureList,$range) {
         $firstMeasure = $measureList[0];
         $lastMeasure = $measureList[count($measureList)-1];
 
@@ -267,11 +256,12 @@ class UsersController extends BaseController
         $auxEnd = $firstDayEnd;
 
         $listOfDays = array();
-        while($auxStart <= $lastDayStart){
+        while($auxStart <= $lastDayStart) {
             $measuresOfDay = array();
             for ($i=0; $i < count($measureList); $i++) { 
-                if($measureList[$i]->timestamp >= $auxStart && $measureList[$i]->timestamp <= $auxEnd ){
-                    array_push($measuresOfDay,$measureList[$i]);               }
+                if($measureList[$i]->timestamp >= $auxStart && $measureList[$i]->timestamp <= $auxEnd ) {
+                    array_push($measuresOfDay,$measureList[$i]);               
+                }
             }
             array_push($listOfDays,$measuresOfDay);
             $auxStart += $range;
@@ -279,27 +269,27 @@ class UsersController extends BaseController
         }
         return $listOfDays;
     }
+
     /* 
     * Obtiene la distancia máxima recorrida de entre todos los usuarios 
     * Texto -->
     *                 			getMaxDistance($data) <--
     * <-- array, Nada
 	*/
-    private function getMaxDistance($model,$data){
+    private function getMaxDistance($model,$data) {
         $maxDistance = 0;
         $maxUser = -1;
         //var_dump($data);
 
         foreach ($data as $item) {
-            $measureList = $model->getTraveledDistance($item->mail);
+            $measureList = $model->getTraveledDistanceOfUser($item->mail);
             $actualDistance = $this->getDistanceFromMail($measureList);
             if ($actualDistance > $maxDistance) {
                 $maxDistance = $actualDistance;
                 $maxUser = $item;
             }
         }
-        
-
+    
         $arr = array();
         $assocArray = array('distance' => round($maxDistance[0]['distance']), 'user'=>$maxUser);
         array_push($arr, $assocArray);
@@ -313,28 +303,28 @@ class UsersController extends BaseController
     *                 			getMaxDifference($model, $data, $range) <--
     * <-- array, Nada
 	*/
-private function getMaxDifference($model,$data, $range){
-    $maxDifference = 0;
-    $maxUser = -1;
-    /*for ($i = 0; $i <= count($data); $i++) {
-        $actualDifference = $this->getDifference($data[$i]['mail'], $range);
-        if ($actualDifference > $maxDifference) {
-            $maxDifference = $actualDifference;
-            $maxUser = $i;
+    private function getMaxDifference($model,$data, $range) {
+        $maxDifference = 0;
+        $maxUser = -1;
+        /*for ($i = 0; $i <= count($data); $i++) {
+            $actualDifference = $this->getDifference($data[$i]['mail'], $range);
+            if ($actualDifference > $maxDifference) {
+                $maxDifference = $actualDifference;
+                $maxUser = $i;
+            }
+        }*/
+        foreach ($data as $item) {
+            $measureList = $model->getActiveTimeOfUser($item->mail);
+            $actualDifference = $this->getDifference($measureList, $range);
+            if ($actualDifference > $maxDifference) {
+                $maxDifference = $actualDifference;
+                $maxUser = $item;
+            }
         }
-    }*/
-    foreach ($data as $item) {
-        $measureList = $model->getActiveTimeOfUser($item->mail);
-        $actualDifference = $this->getDifference($measureList, $range);
-        if ($actualDifference > $maxDifference) {
-            $maxDifference = $actualDifference;
-            $maxUser = $item;
-        }
-    }
 
-    $arr = array();
-    $assocArray = array('difference' => $maxDifference, 'user'=>$maxUser);
-    array_push($arr, $assocArray);
-    return $arr;
+        $arr = array();
+        $assocArray = array('difference' => $maxDifference, 'user'=>$maxUser);
+        array_push($arr, $assocArray);
+        return $arr;
     }
 }

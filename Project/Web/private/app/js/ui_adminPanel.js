@@ -1,6 +1,4 @@
 showUsersTable();
-showActiveTimeUser();
-showTotalDistanceUser();
 /*****************************************************************************
 /*************************** CALLBACK FUNCTIONS ******************************
 /****************************************************************************/
@@ -9,25 +7,26 @@ function showUsersTable() {
         fillUsersTable(dataReceived);
         if (dataReceived.length > 0) {
             showUserData(dataReceived[0].mail);
+            showActiveTimeUser(dataReceived[0].mail, "hour");
+            showTotalDistanceUser();
         }
     });
 }
 
 function showUserData(mail) {
     getUser((dataReceived) => {
-        console.log("HERE--> " + dataReceived);
         fillInUserFields(dataReceived);
     }, mail);
 }
 
-function showActiveTimeUser() {
-    getActiveTimeUser((dataReceived) => {
+function showActiveTimeUser(mail, diffValue) {
+    getActiveTimeOfUser((dataReceived) => {
         fillInActiveTimeField(dataReceived);
-    }, "test@test", "hour");
+    }, mail, diffValue);
 }
 
 function showTotalDistanceUser() {
-    // TODO: falta llamar a la funcion de distancia total
+    // TODO: falta llamar a la funcion de distancia total en rest_users --> getTraveledDistanceOfUser()
     fillInTotalDistanceField("1325m");
 }
 /*****************************************************************************
@@ -50,7 +49,12 @@ function fillUsersTable(dataUserList) {
 function fillInUserFields(userData) {
     document.getElementById("lbl_name").innerHTML = userData[0].name;
     document.getElementById("lbl_surnames").innerHTML = userData[0].surnames;
-    document.getElementById("lbl_devices").innerHTML = "COOOOO1";
+    document.getElementById("lbl_email").innerHTML = userData[0].mail;
+    document.getElementById("lbl_role").innerHTML = userData[0].role;
+    document.getElementById("lbl_account_status").innerHTML = userData[0].accountStatus;
+    document.getElementById("lbl_secret_code").innerHTML = userData[0].secretCode;
+    document.getElementById("lbl_last_conn").innerHTML = timeConverter(userData[0].lastConn);
+    document.getElementById("lbl_reg_date").innerHTML = timeConverter(userData[0].regDate);
 }
 
 function fillInActiveTimeField(activeTime) {

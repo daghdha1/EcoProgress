@@ -13,6 +13,9 @@ function responseHandler(json, callback = null) {
         case Array.isArray(json):
             if (callback != null) callback(json);
             break;
+        case !isNaN(json):
+            if (callback != null) callback(json);
+            break;
     }
 }
 // -------------------------------------------------------------------------------- //
@@ -157,13 +160,13 @@ function timeConverter(UNIX_timestamp) {
     var hour = a.getHours();
     var min = a.getMinutes();
     var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + 'h:' + min + 'm:' + sec + 's';
     return time;
 }
 
 function convertSecondsToFormatTime(seconds) {
     var a = new Date(seconds * 1000);
-    var hour = a.getHours();
+    var hour = a.getHours() - 1;
     var min = a.getMinutes();
     var sec = a.getSeconds();
     var time = hour + 'h:' + min + 'm:' + sec + 's';

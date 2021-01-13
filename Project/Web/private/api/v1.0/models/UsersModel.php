@@ -66,7 +66,7 @@ class UsersModel extends BaseModel {
 	/* 
     * Obtiene las medidas de tiempo de usuario activo
     *
-    * Texto, N -->
+    * Texto -->
     *                 			getActiveTimeOfUser() <--
     * <-- Lista<N> | Nada
     */
@@ -85,10 +85,10 @@ class UsersModel extends BaseModel {
     * Obtiene la distancia total recorrida del usuario activo
     *
     * Texto -->
-    *                 			getActiveUser() <--
+    *                 getTraveledDistanceOfUser() <--
     * <-- N, Nada
     */
-	public function getTraveledDistance($mail) {
+	public function getTraveledDistanceOfUser($mail) {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query

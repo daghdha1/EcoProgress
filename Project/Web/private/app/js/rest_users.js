@@ -40,8 +40,8 @@ function getUser(callback, mail) {
  *                    getUser() <--
  * <-- seconds:N | Nada
  */
-function getActiveTimeUser(callback, mail, differenceValue) {
-    var request = new Request(config.restDir + "/users/users/" + mail + "/difference/" + differenceValue, {
+function getActiveTimeOfUser(callback, mail, diffValue) {
+    var request = new Request(config.restDir + "/users/users/" + mail + "/difference/" + diffValue, {
         method: "GET"
     });
     fetch(request).then((response) => {
