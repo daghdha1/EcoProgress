@@ -1,7 +1,7 @@
-showUsersTable();
-showUserData();
-showActiveTimeUser();
-showTotalDistanceUser();
+//showUsersTable();
+//showUserData();
+//showActiveTimeUser();
+//showTotalDistanceUser();
 //////// Callbacks functions ////////
 function showUsersTable() {
     getAllUsers(function (dataReceived) {
@@ -17,7 +17,7 @@ function showUserData() {
 
 function showActiveTimeUser() {
     getActiveTimeUser((dataReceived) => {
-        console.log("ASDASDSA->",dataReceived);
+        console.log("ASDASDSA->", dataReceived);
         fillInActiveTimeField(dataReceived);
     }, "test@test", "hour");
 }
@@ -54,3 +54,48 @@ function fillInActiveTimeField(activeTime) {
 function fillInTotalDistanceField(distance) {
     document.getElementById("#a_totalDistance").innerHTML += distance;
 }
+
+
+
+
+
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+//                                 MAPAS
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+
+
+
+function getHistoricNamesForDropdown() {
+    getHistoricNames((names) => {
+        var dropdown = document.getElementById("dropdown");
+        
+        names.forEach(name => {
+            var li = document.createElement("li");
+            let a = document.createElement("a");
+            a.innerHTML = name;
+            a.href = "#"
+            li.appendChild(a);
+            dropdown.appendChild(li);
+        });
+    })
+}
+
+drawMap();
+
+document.getElementById('dropdown').onclick = function (event) {
+    console.log("---->",event.target.innerHTML);
+        getHistoric(event.target.innerHTML,(heatmap) =>{
+            let data = parseToObjectForHeatmap(heatmap);
+            changeHeatmap(data);
+        });
+}
+
+getHistoricNamesForDropdown();

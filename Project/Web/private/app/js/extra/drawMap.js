@@ -1,18 +1,5 @@
-getMeasuresFromTimestamp((measures) => {
-    let data = processData(measures);
-    postData(data, (heatMap) => {
-        let parsedData = parseToObjectForHeatmap(heatMap);
-        drawMap(parsedData);
-    });
-}, localStorage.getItem("mail"), "month");
-
-
 function drawMap(heatmap) {
-    var container = L.DomUtil.get('map');
-    if (container != null) {
-        container._leaflet_id = null;
-    }
-    var testData = heatmap;
+    console.log("Dibujando mapa");
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
     });
@@ -54,11 +41,14 @@ function drawMap(heatmap) {
     });
 
     addOfficialSensors(map);
-    heatmapLayer.setData(testData);
+    if(heatmap != null){
+        heatmapLayer.setData(heatmap);
+    }
 }
 
 function changeHeatmap(heatmap) {
-    window.heatmapLayer.setData(heatmap)
+    console.log("HEATMAP: -->",heatmap);
+    window.heatmapLayer.setData(heatmap);
 }
 
 function addOfficialSensors(map) {

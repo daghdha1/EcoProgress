@@ -55,6 +55,19 @@ module.exports.cargar = function (servidorExpress) {
             console.log(interpolation);
             respuesta.send(interpolation);
         });
+    servidorExpress.get('/historicNames', function (peticion, respuesta) {
+        getFilenamesFromHistoric().then((result) => {
+            console.log(result);
+            respuesta.send(result);
+        })
+
+    });
+    servidorExpress.get('/historic', function (peticion, respuesta) {
+        console.log(peticion.query.arg)
+        let result = getMatrixFromHistoric(peticion.query.arg.toString());
+        respuesta.send(result);
+    });
+
 }
 counter = 0;
 
@@ -78,14 +91,14 @@ function saveForHistoric() {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    newdate = "historico/Mapa-" + year + "-" + month + "-" + day
-
+    newdate = "historic/Mapa-" + year + "-" + month + "-" + day
     // File destination.txt will be created or overwritten by default.
     fs.copyFile('result.txt', newdate, (err) => {
         if (err) throw err;
         console.log('source.txt was copied to destination.txt');
     })
 }
+
 
 
 function getMatrixFromFile() {
@@ -222,3 +235,50 @@ function executeComand(command) {
 
 
 // .....................................................................
+
+
+function getFilenamesFromHistoric() {
+    let result = new Promise((resolve, reject) => {
+        fs.readdir('./historic', function (err, files) {
+            if (err) {
+                return console.log('Unable to scan directory: ' + err);
+            }
+            let names = [];
+            //listing all files using forEach
+            files.forEach(function (file) {
+                names.push(file);
+            });
+            resolve(names)
+        });
+    });;
+    return result;
+}
+
+function getMatrixFromHistoric(filename) {
+    let allx = fs.readFileSync(cfg.pathfx, "utf8");
+    allx = allx.trim(); // final crlf in file
+    let linesx = allx.split("\n");
+    let nx = linesx.length;
+
+    let ally = fs.readFileSync(cfg.pathfy, "utf8");
+    ally = ally.trim(); // final crlf in file
+    let linesy = ally.split("\n");
+    let ny = linesy.length;
+
+    let all = fs.readFileSync('./historic/' + filename, "utf8");
+    all = all.trim(); // final crlf in file
+    let lines = all.split("\n");
+    let n = lines.length;
+
+    let matriz = [];
+    for (let i = 0; i < n; i++) {
+        let values = lines[i].split(",");
+        let valx = linesx[i].split(",");
+        let valy = linesy[i].split(",");
+        for (let j = 0; j < values.length; j++) {
+            matriz.push([parseFloat(valx[j]), parseFloat(valy[j]), parseFloat(values[j])]);
+        }
+    }
+
+    return matriz;
+}

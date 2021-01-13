@@ -333,7 +333,6 @@ allBtnsGases.each((index, btn) => {
     });
 });
 
-
 function retrieveDataToDraw(id) {
     getMeasuresFromTimestamp((measures) => {
         let data = processData(measures);
@@ -345,7 +344,6 @@ function retrieveDataToDraw(id) {
 }
 
 function drawFakeData(data, id) {
-
     let measures;
     switch (id) {
         case 'btn_co':
