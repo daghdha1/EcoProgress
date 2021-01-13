@@ -4,11 +4,13 @@ showUsersTable();
 /****************************************************************************/
 function showUsersTable() {
     getSensorIdsFromUser((dataReceived) => {
-        fillUsersTable(dataReceived);
         if (dataReceived.length > 0) {
+            fillUsersTable(dataReceived);
+            document.getElementById("userTableCells").rows[myIndex.lastRowIndex].style.background = "#00b7d1";
+            addTableListenerToGetEmailFromRowClicked();
             showUserData(dataReceived[0].mail);
             showActiveTimeUser(dataReceived[0].mail, "hour");
-            showTotalDistanceUser();
+            showTotalDistanceUser(dataReceived[0].mail);
         }
     });
 }
@@ -25,7 +27,7 @@ function showActiveTimeUser(mail, diffValue) {
     }, mail, diffValue);
 }
 
-function showTotalDistanceUser() {
+function showTotalDistanceUser(mail) {
     // TODO: falta llamar a la funcion de distancia total en rest_users --> getTraveledDistanceOfUser()
     fillInTotalDistanceField("1325m");
 }
@@ -62,5 +64,28 @@ function fillInActiveTimeField(activeTime) {
 }
 
 function fillInTotalDistanceField(distance) {
-    document.getElementById("lbl_total_distance").innerHTML += distance;
+    document.getElementById("lbl_total_distance").innerHTML = distance;
+}
+
+function addTableListenerToGetEmailFromRowClicked(tr) {
+    $('#userTableCells').delegate('tr', 'click', (e) => {
+        // Descoloreamos la row antigua
+        document.getElementById("userTableCells").rows[myIndex.lastRowIndex].style.background = null;
+        // Coloreamos la row clickada
+        e.currentTarget.style.background = "#00b7d1";
+        // Obtenemos el index de la row clickada
+        rowIndex = $(e.currentTarget).index();
+        // Si hemos clickado en un usuario distinto
+        if (rowIndex != myIndex.lastRowIndex) {
+            // Obtenemos el email del usuario seleccionado
+            let mail = e.currentTarget.cells[1].innerText;
+            // Mostramos sus datos en el panel de usuario
+            showUserData(mail);
+            showActiveTimeUser(mail, "hour");
+            showTotalDistanceUser(mail);
+            // Guardamos el index de la row clickada
+            myIndex.lastRowIndex = rowIndex;
+        }
+        return true;
+    });
 }

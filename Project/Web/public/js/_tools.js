@@ -124,6 +124,14 @@ function setPlaceHolderDOM(id, str) {
     document.getElementById(id).placeholder = str;
 }
 
+function setColorBorder(id, color) {
+    document.getElementById(id).style.borderColor = color;
+}
+
+function setBorderWidth(id, width) {
+    document.getElementById(id).style.borderWidth = width + "px";
+}
+
 function findAndFocusFirstInputForm() {
     $(document).ready(() => {
         let e = $("form").find("*").filter(":input:visible:enabled:not([readonly]):first").get(0);

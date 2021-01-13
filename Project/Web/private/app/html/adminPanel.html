@@ -22,6 +22,8 @@
             </script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/_config.js">
             </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_namespaces.js">
+            </script>
             <script defer="" src="../js/rest_users.js">
             </script>
             <script defer="" src="../js/rest_sensors.js">
@@ -70,44 +72,22 @@
                                         <h4 style="font-family: CenturyGothic;text-align: center;font-size: 22px;">
                                             Tabla de usuarios
                                         </h4>
-                                        <div class="table-responsive d-block mx-auto" style="border-collapse: collapse; border-spacing: 0;align-content: center; width:100%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #007d93;">
+                                        <div class="table-responsive d-block mx-auto" style="border-collapse: collapse; border-spacing: 0;align-content: center; width:100%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #00b7d1;">
                                             <table class="table" id="usersDataTable">
                                                 <thead>
-                                                    <tr style="background-color: rgba(13,149,173,0.61);">
-                                                        <th style="color: rgb(255,255,255);font-family: CenturyGothic;">
+                                                    <tr style="background-color: #e9e9e9">
+                                                        <th style="color: black;font-family: CenturyGothic;">
                                                             Nombre de usuario
                                                         </th>
-                                                        <th style="color: rgb(255,255,255);font-family: CenturyGothic;">
+                                                        <th style="color: black;font-family: CenturyGothic;">
                                                             Correo electrónico
                                                         </th>
-                                                        <th style="color: rgb(255,255,255);font-family: CenturyGothic;">
+                                                        <th style="color: black;font-family: CenturyGothic;">
                                                             Dispositivos
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            Cell 1
-                                                        </td>
-                                                        <td>
-                                                            Cell 2
-                                                        </td>
-                                                        <td>
-                                                            Cell 2
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            Cell 3
-                                                        </td>
-                                                        <td>
-                                                            Cell 4
-                                                        </td>
-                                                        <td>
-                                                            Cell 4
-                                                        </td>
-                                                    </tr>
+                                                <tbody id="userTableCells">
                                                 </tbody>
                                             </table>
                                         </div>
