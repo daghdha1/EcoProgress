@@ -59,16 +59,16 @@ module.exports.cargar = function (servidorExpress) {
 counter = 0;
 
 executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
+saveForHistoric();
 
 setInterval(() => {
-    if (counter = 288) {
+    if (counter >= 288) {
         counter = 0;
         saveForHistoric();
     } else {
         counter++;
+        executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
     }
-    executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
-
 }, 300000);
 
 function saveForHistoric() {
@@ -78,7 +78,7 @@ function saveForHistoric() {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    newdate = "Mapa-"+year + "/" + month + "/" + day
+    newdate = "historico/Mapa-" + year + "-" + month + "-" + day
 
     // File destination.txt will be created or overwritten by default.
     fs.copyFile('result.txt', newdate, (err) => {

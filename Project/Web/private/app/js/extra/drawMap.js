@@ -8,6 +8,10 @@ getMeasuresFromTimestamp((measures) => {
 
 
 function drawMap(heatmap) {
+    var container = L.DomUtil.get('map');
+    if (container != null) {
+        container._leaflet_id = null;
+    }
     var testData = heatmap;
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
@@ -42,14 +46,19 @@ function drawMap(heatmap) {
             '1.00': '#ff0030' //70
         }
     };
-    var heatmapLayer = new HeatmapOverlay(cfg);
+    window.heatmapLayer = new HeatmapOverlay(cfg);
     var map = new L.Map('map', {
         center: new L.LatLng(39.003628, -0.166529),
         zoom: 14,
         layers: [baseLayer, heatmapLayer]
     });
+
     addOfficialSensors(map);
     heatmapLayer.setData(testData);
+}
+
+function changeHeatmap(heatmap) {
+    window.heatmapLayer.setData(heatmap)
 }
 
 function addOfficialSensors(map) {
