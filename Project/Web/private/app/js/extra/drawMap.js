@@ -1,4 +1,8 @@
 function drawMap(heatmap) {
+    var container = L.DomUtil.get('map');
+      if(container != null){
+        container._leaflet_id = null;
+      }
     console.log("Dibujando mapa");
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
@@ -34,16 +38,23 @@ function drawMap(heatmap) {
         }
     };
     window.heatmapLayer = new HeatmapOverlay(cfg);
-    var map = new L.Map('map', {
-        center: new L.LatLng(39.003628, -0.166529),
+    window.map = new L.Map('map', {
+        center: new L.LatLng(39.003628, -0.166528),
         zoom: 14,
-        layers: [baseLayer, heatmapLayer]
+        layers: [baseLayer, window.heatmapLayer]
     });
 
+    window.map.on('moveend zoomend', function(e){map.invalidateSize()});
     addOfficialSensors(map);
     if(heatmap != null){
-        heatmapLayer.setData(heatmap);
+        window.heatmapLayer.setData(heatmap);
     }
+}
+
+function setView(){
+    setTimeout(() => {
+        window.map.setView(new L.LatLng(39.003628, -0.166528),13)
+    }, 100);
 }
 
 function changeHeatmap(heatmap) {

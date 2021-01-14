@@ -8,3 +8,8 @@
 .title {
     font-weight: bold;
 }
+#menu1 {
+    background-color: white;
+    color: #682172ff;
+    border-color: #682172ff;
+}

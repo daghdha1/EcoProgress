@@ -28,7 +28,7 @@ class UsersController extends BaseController
 	*/
     public function getAction($request)
     {
-        if (true) {
+        if (authenticateUserSession()) {
             // Cargamos el modelo de Users
             $model = parent::loadModel($request->resource);
             // Check de parámetros

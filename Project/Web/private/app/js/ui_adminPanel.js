@@ -87,7 +87,6 @@ function getHistoricNamesForDropdown() {
         });
     })
 }
-
 drawMap();
 
 document.getElementById('dropdown').onclick = function (event) {

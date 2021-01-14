@@ -63,13 +63,13 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;">
+                        style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;" onclick="setView()">
                         Mapas
                     </a>
                 </li>
             </ul>
-            <div class="tab-content" style="height: 100%;width: 100%;">
-                <div class="tab-pane active" id="tab-1" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px;">
+            <div class="tab-content"  style="height: 100%;width: 100%;">
+                <div class="tab-pane active"  id="tab-1" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px;">
                     <div style="margin-top: 50px;">
                         <div class="col">
                             <div class="row">
@@ -212,9 +212,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tab-2" role="tabpanel" style="height: 100%;">
+                <div class="tab-pane" id="tab-2"  role="tabpanel"  style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
                     <div class="d-flex flex-column align-content-around justify-content-xl-center align-items-xl-center"
-                        style="margin-top: 2rem;">
+                        style="margin-top: 1rem; margin-bottom: 3rem;">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" id="menu1" type="button"
                                 data-toggle="dropdown">Historial de mapas
@@ -223,10 +223,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="d-xl-flex justify-content-xl-center" id="map"
-                            style="margin-bottom: 8rem;width: 100%; height: 800px;">
-
-                        </div>
+                    <div style="height: 750px;">
+                    <div class="d-xl-flex justify-content-xl-center" id="map" style="width: 100%; height: 100%; z-index: 0;"></div>
+                    </div>
                 </div>
             </div>
         </div>
