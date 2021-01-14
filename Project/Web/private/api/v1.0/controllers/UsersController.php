@@ -222,7 +222,7 @@ class UsersController extends BaseController
     private function getDifference($data, $range){
         $diff = 0;
         $finalResult = 0;
-        for($i = 0; $i < count($data); $i++) {
+        for($i = 0; $i < count($data)-1; $i++) {
             $diff = $data[$i]->timestamp - $data[$i+1]->timestamp;
             if($diff <= $range) {
                 $finalResult = $finalResult + $diff;

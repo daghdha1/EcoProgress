@@ -27,10 +27,6 @@ const isRunning = (query, cb) => {
         cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
     });
 }
-
-
-
-
 function cosa(cb){
     let interval = setInterval(() => {
         isRunning('matlab.exe', (status) => {
@@ -42,18 +38,6 @@ function cosa(cb){
         })
     }, 1000);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 // -------------------------- COSAS
 
 console.log(cfg.lastTimestamp);

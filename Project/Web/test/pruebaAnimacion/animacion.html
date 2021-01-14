@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.13.0/bodymovin.min.js"
+        type="text/javascript"></script>
+    <title>Mi pagina de prueba</title>
+</head>
+
+<body>
+    <button id="btnIniciar">Iniciar</button>
+    <button id="btnPausar">Pausar</button>
+    <div id="divAnimacion">
+        <script>
+            var lottieAnimation = bodymovin.loadAnimation({
+                container: divAnimacion, // ID del div
+                path: './animacion.json', // Ruta fichero .json de la animación
+                renderer: 'svg', // Requerido
+                loop: true, // Opcional
+                autoplay: false, // Opcional
+            })
+
+            btnIniciar.addEventListener('click', function() {
+            lottieAnimation.play();
+});
+
+btnPausar.addEventListener('click', function() {
+            lottieAnimation.pause();
+});
+        </script>
+    </div>
+</body>
+
+</html>

@@ -8,3 +8,4 @@ getMeasuresFromTimestamp((measures) => {
 
 drawMap();
 
+

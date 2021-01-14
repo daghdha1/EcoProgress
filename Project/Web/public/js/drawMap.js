@@ -1,9 +1,9 @@
 function drawMap(heatmap) {
+    playAnimation();
     var container = L.DomUtil.get('map');
       if(container != null){
         container._leaflet_id = null;
       }
-    console.log("Dibujando mapa");
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
     });
@@ -54,11 +54,11 @@ function drawMap(heatmap) {
 function setView(){
     setTimeout(() => {
         window.map.setView(new L.LatLng(39.003628, -0.166528),13)
-    }, 100);
+    }, 50);
 }
 
 function changeHeatmap(heatmap) {
-    console.log("HEATMAP: -->",heatmap);
+    stopAnimation();
     window.heatmapLayer.setData(heatmap);
 }
 

@@ -19,10 +19,12 @@
     <link href="./public/css/libraries/palette.compiled.css" rel="stylesheet"/>
     <link href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" rel="stylesheet"/>
     <!-- SCRIPTS -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
     <script defer src="./public/js/libraries/jquery.min.js"></script>
     <script defer src="./public/js/libraries/bootstrap.bundle.min.js"></script>
     <script defer src="./public/js/libraries/bs-init.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
+    <script defer src="./public/js/animations.js"></script>
     <script defer src="./public/js/_config.js"></script>
     <script defer src="./public/js/_namespaces.js"></script>
     <script defer src="./public/js/_tools.js"></script>
@@ -35,6 +37,7 @@
     <script defer src="./public/js/rest_login.js"></script>
     <script defer src="./public/js/rest_registration.js"></script>
     <script defer src="./public/js/landingPage.js"></script>
+    
     
 </head>
 
@@ -59,6 +62,7 @@
     <div class="container-fluid" style="height: 100%;padding-right: 0px;padding-left: 0px ;">
         <div id="map" style="height: 90%; width: 100%;position: absolute; z-index: 0;">
         </div>
+        <div id="animation" style="position: absolute;"></div>
  <div class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
                 <div class="card text-center d-flex justify-content-center align-items-center" style="position: absolute !important;bottom: 80px;right: 20px;width: 26%;border-radius: 20px;box-shadow: 0 0 10px #888888;min-width: 200px;max-height: auto;">
                     <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column">
