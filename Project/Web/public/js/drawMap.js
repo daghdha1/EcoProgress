@@ -1,18 +1,9 @@
-getMeasuresFromTimestamp((measures) => {
-    let data = processData(measures);
-    postData(data, (heatMap) => {
-        let parsedData = parseToObjectForHeatmap(heatMap);
-        drawMap(parsedData);
-    });
-}, localStorage.getItem("mail"), "month");
-
-
 function drawMap(heatmap) {
+    playAnimation();
     var container = L.DomUtil.get('map');
-    if (container != null) {
+      if(container != null){
         container._leaflet_id = null;
-    }
-    var testData = heatmap;
+      }
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18
     });
@@ -47,23 +38,33 @@ function drawMap(heatmap) {
         }
     };
     window.heatmapLayer = new HeatmapOverlay(cfg);
-    var map = new L.Map('map', {
-        center: new L.LatLng(39.003628, -0.166529),
+    window.map = new L.Map('map', {
+        center: new L.LatLng(39.003628, -0.166528),
         zoom: 14,
-        layers: [baseLayer, heatmapLayer]
+        layers: [baseLayer, window.heatmapLayer]
     });
 
+    window.map.on('moveend zoomend', function(e){map.invalidateSize()});
     addOfficialSensors(map);
-    heatmapLayer.setData(testData);
+    if(heatmap != null){
+        window.heatmapLayer.setData(heatmap);
+    }
+}
+
+function setView(){
+    setTimeout(() => {
+        window.map.setView(new L.LatLng(39.003628, -0.166528),13)
+    }, 50);
 }
 
 function changeHeatmap(heatmap) {
-    window.heatmapLayer.setData(heatmap)
+    stopAnimation();
+    window.heatmapLayer.setData(heatmap);
 }
 
 function addOfficialSensors(map) {
     var mapIcon = L.icon({
-        iconUrl: '../../../public/media/map_marker.png',
+        iconUrl: '/EcoProgress/Project/Web/public/media/map_marker.png',
         iconSize: [38, 38], // size of the icon
     });
     var marker = L.marker([38.96797739, -0.19109882], { // el de gandía

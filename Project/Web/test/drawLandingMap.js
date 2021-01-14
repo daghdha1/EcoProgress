@@ -1,12 +1,95 @@
+
+/*
+     -->   [{
+            location: new google.maps.LatLng(37.782, -122.447),
+            weight: 0.5
+        }]
+*/
+function initMap(heatMapData) {
+
+    var sanFrancisco = new google.maps.LatLng(38.966667, -0.183333);
+
+    let map = new google.maps.Map(document.getElementById('map'), {
+        center: sanFrancisco,
+        zoom: 13,
+        mapTypeId: 'roadmap'
+    });
+
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+        data: heatMapData
+    });
+    heatmap.setMap(map);
+
+    heatmap.setOptions({
+        dissipating: false,
+        maxIntensity: 70,
+        radius: 0.0005,
+        opacity: 0.4
+    });
+}
+
+function toggleHeatmap() {
+    heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+    const gradient = [
+        'rgba(255, 0, 0, 0)',
+        'rgba(255, 255, 0, 0.9)',
+        'rgba(0, 255, 0, 0.7)',
+        'rgba(173, 255, 47, 0.5)',
+        'rgba(152, 251, 152, 0)',
+        'rgba(152, 251, 152, 0)',
+        'rgba(0, 0, 238, 0.5)',
+        'rgba(186, 85, 211, 0.7)',
+        'rgba(255, 0, 255, 0.9)',
+        'rgba(255, 0, 0, 1)'];
+    heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+}
+
+function changeRadius() {
+    heatmap.set("radius", heatmap.get("radius") ? null : 20);
+}
+
+function changeOpacity() {
+    heatmap.set("opacity", heatmap.get("opacity") ? null : 0.2);
+}
+
+// Heatmap data: 500 Points
+/*
+   -->   [{
+            location: new google.maps.LatLng(37.782, -122.447),
+            weight: 0.5
+        }]
+
+*/
+
+function parseData(data) {
+    let heatMap = [];
+    console.log(data[0][0]);
+    for (let index = 0; index < data.length; index++) {
+        if (data[index][2] > 0) {
+            heatMap.push({
+                location: new google.maps.LatLng(data[index][0], data[index][1]),
+                weight: data[index][2]
+            });
+        }
+
+    }
+    console.log("-->",heatMap);
+
+    initMap(heatMap)
+}
+
+
 getAllMeasures((measures) => {
     let data = processData(measures);
-    console.log(data)
     postData(data, (heatMap) => {
-        let parsedData = parseToObjectForHeatmap(heatMap);
-        drawMap(parsedData);
+        let parsedData = parseData(heatMap);
+        //drawMap(parsedData);
     });
 });
-
+/*
 function drawMap(heatmap) {
     var testData = heatmap;
     var baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -62,3 +145,4 @@ function addOfficialSensors(map) {
     }).addTo(map);
     marker.bindPopup("Estacion de medida de Gandía").openPopup();
 }
+*/

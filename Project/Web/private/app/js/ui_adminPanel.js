@@ -120,3 +120,48 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
         return true;
     });
 }
+
+
+
+
+
+
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+//                                 MAPAS
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+// #######################################################################
+
+
+
+function getHistoricNamesForDropdown() {
+    getHistoricNames((names) => {
+        var dropdown = document.getElementById("dropdown");
+        
+        names.forEach(name => {
+            var li = document.createElement("li");
+            let a = document.createElement("a");
+            a.innerHTML = name;
+            a.href = "#"
+            li.appendChild(a);
+            dropdown.appendChild(li);
+        });
+    })
+}
+drawMap();
+
+document.getElementById('dropdown').onclick = function (event) {
+    console.log("---->",event.target.innerHTML);
+        getHistoric(event.target.innerHTML,(heatmap) =>{
+            let data = parseToObjectForHeatmap(heatmap);
+            changeHeatmap(data);
+        });
+}
+
+getHistoricNamesForDropdown();
