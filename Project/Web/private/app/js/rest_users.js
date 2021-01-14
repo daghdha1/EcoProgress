@@ -70,13 +70,13 @@ function getTraveledDistanceOfUser(callback, mail) {
     });
 }
 
-function createUser() {
-    let params = createUser.arguments;
+function insertUser() {
+    let params = insertUser.arguments;
     let form = params[0];
     if (isValidForm(form, params)) {
         // Form data
         let formData = new FormData(form);
-        formData.append("action", "create");
+        formData.append("action", "insert");
         let url = config.restDir + "/users";
         var myInit = {
             method: "POST",
@@ -88,7 +88,9 @@ function createUser() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            responseHandler(json, addUserTable)
+            responseHandler(json, addUserTable);
+            hideModalPanel('createUserPanel');
+            alert("Usuario creado correctamente");
         });
     }
 }

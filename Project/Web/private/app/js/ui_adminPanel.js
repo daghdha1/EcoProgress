@@ -3,7 +3,7 @@ initUsersTable();
 /*************************** CALLBACK FUNCTIONS ******************************
 /****************************************************************************/
 function initUsersTable() {
-    getSensorIdsFromUser((dataReceived) => {
+    getUserDataAndSensorIds((dataReceived) => {
         if (dataReceived.length > 0) {
             // Users Table
             fillUsersTable(dataReceived);
@@ -12,12 +12,17 @@ function initUsersTable() {
             addTableListenerToGetEmailFromRowClicked();
             // User Data Panel
             let mail = dataReceived[0].mail
-            showUserData(mail);
-            showUserActiveTime(mail, "hour");
-            showUserTotalTraveledDistance(mail);
-            showUserDevices(firstRow.cells[2].innerText);
+            let devices = firstRow.cells[2].innerText;
+            initUserData(mail, devices);
         }
     });
+}
+
+function initUserData(mail, devices) {
+    showUserData(mail);
+    showUserActiveTime(mail, "hour");
+    showUserTotalTraveledDistance(mail);
+    showUserDevices(devices);
 }
 
 function showUserData(mail) {
@@ -35,9 +40,11 @@ function showUserActiveTime(mail, diffValue) {
 function showUserTotalTraveledDistance(mail) {
     getTraveledDistanceOfUser((dataReceived) => {
         let totalDistance = 0;
-        dataReceived.forEach(data => {
-            totalDistance += Math.round(data.distance);
-        });
+        if (dataReceived.length > 0) {
+            dataReceived.forEach(data => {
+                totalDistance += Math.round(data.distance);
+            });
+        }
         fillInUserTotalDistanceField(totalDistance);
     }, mail);
 }
@@ -63,8 +70,8 @@ function fillUsersTable(dataUserList) {
 }
 
 function addUserTable(userData) {
-    console.log(userData);
-    // Rellenar tabla con el usuario recibido
+    // Reiniciamos la tabla de usuarios
+    initUsersTable();
 }
 
 function fillInUserFields(userData) {
@@ -106,10 +113,7 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
             let mail = e.currentTarget.cells[1].innerText;
             let devices = e.currentTarget.cells[2].innerText;
             // Mostramos sus datos en el panel de usuario
-            showUserData(mail);
-            showUserActiveTime(mail, "hour");
-            showUserTotalTraveledDistance(mail);
-            showUserDevices(devices);
+            initUserData(mail, devices);
             // Guardamos el index de la row clickada
             myIndex.lastRowIndex = rowIndex;
         }

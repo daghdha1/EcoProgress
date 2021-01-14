@@ -161,33 +161,16 @@ class UsersController extends BaseController
         // Si existe una de estas acciones, la ejecutamos
         if (isset($params['action'])) {
             switch ($params['action']) {
-                case 'registration':
-                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 1)) {
-                        $result = $this->registration($usersModel, $params);
-                    } else {
-                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
-                    }
+                case 'insert':
+                    $result = $this->insertUser($usersModel, $sensorsModel, $params);
                     break;
-                case 'accountActivation':
-                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 2)) {
-                        if ($this->checkRegistrationCode($usersModel, $params)) {
-                            $result = $this->accountActivation($usersModel, $sensorsModel, $params);
-                        }
-                    }
+                case 'update':
+                    $result = '';
                     break;
-                case 'login':
-                    if ($this->checkLoginData($usersModel, $params)) {
-                        $result = $this->login($usersModel, $params);
-                    } else {
-                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
-                    }
+                case 'delete':
+                    $result = '';
                     break;
-                case 'logout':
-                    $result = $this->deleteUserSession();
-                    break;
-                case 'recovery':
-                    // $result = $model->recovery($params['email']);
-                    break;
+                return $result;
             }
             return $result;
         }
@@ -222,7 +205,7 @@ class UsersController extends BaseController
     private function getDifference($data, $range){
         $diff = 0;
         $finalResult = 0;
-        for($i = 0; $i < count($data); $i++) {
+        for($i = 0; $i < count($data)-1; $i++) {
             $diff = $data[$i]->timestamp - $data[$i+1]->timestamp;
             if($diff <= $range) {
                 $finalResult = $finalResult + $diff;
@@ -305,28 +288,26 @@ class UsersController extends BaseController
     // ---------------------------------------------- (POST) ----------------------------------------------- //
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Crea un nuevo usuario con estado 'active' y lo vincula al sensor asociado (clave de producto)
     *
-    * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               insertUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function createUser($usersModel, $sensorsModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-       // $sensors = parent::createEntity('Sensors')->
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
-                return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
+    private function insertUser($usersModel, $sensorsModel, $params) {
+        $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['cup_key']);
+        // Si el sensor a registrar está disponible (existe y no tiene propietario)
+        if (!is_null($sData) && !empty($sData)) {
+            // Creamos un nuevo usuario
+            $user = parent::createEntity('Users')->createUserFromAdminParams($params);
+            if ($usersModel->insertUser($user)) {
+                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($sData);
+                $sensor->setMail($params['cup_mail']);
+                $sensor->setState(1);
+                if ($sensorsModel->updateSensor($sensor)) {
+                    return $user->parseUserToAssocArrayUsers();
+                }
+            }
         }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
@@ -339,21 +320,7 @@ class UsersController extends BaseController
     * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function updateUser($usersModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
-                return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
-        }
+        
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
@@ -365,21 +332,7 @@ class UsersController extends BaseController
     * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function deleteUser($usersModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
-                return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
-        }
+        
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
