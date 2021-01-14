@@ -66,18 +66,15 @@ class UsersModel extends BaseModel {
 	/* 
     * Obtiene las medidas de tiempo de usuario activo
     *
-    * Texto, N -->
+    * Texto -->
     *                 			getActiveTimeOfUser() <--
     * <-- Lista<N> | Nada
     */
 	public function getActiveTimeOfUser($mail) {
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
-
 		$sql = "SELECT m.timestamp FROM Measures as m, Sensors as s WHERE m.sensorID = s.id AND s.mail = '$strMail' ORDER BY timestamp DESC";
-		
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-
 		return $result;
 	}
 
@@ -85,18 +82,17 @@ class UsersModel extends BaseModel {
     * Obtiene la distancia total recorrida del usuario activo
     *
     * Texto -->
-    *                 			getActiveUser() <--
-    * <-- N, Nada
+    *                 		getTraveledDistanceOfUser() <--
+    * <-- Lista<N>, Nada
     */
-	public function getTraveledDistance($mail) {
+	public function getTraveledDistanceOfUser($mail) {
 		// Escapamos los carácteres especiales
 		$strMail = mysqli_real_escape_string($this->conn, $mail);
 		// Query
-		$sql = "SELECT * FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
+		$sql = "SELECT m.* FROM Measures m, Sensors s WHERE m.sensorID = s.id AND s.mail = '$strMail'";
 		// Respuesta
 		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve null
-
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
 

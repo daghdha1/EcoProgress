@@ -1,7 +1,7 @@
 <div class="modal fade" id="updateUserPanel" role="dialog" tabindex="-1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <header class="modal-header">
+            <header class="modal-header" style="margin-left: 10px;">
                 <h4 class="modal-title" style="font-family: CenturyGothic;">
                     Editar usuario
                 </h4>
@@ -11,20 +11,24 @@
                     </span>
                 </button>
             </header>
-            <form name="formUpdateUser" onsubmit="updateUser(this,'uup_name', 'uup_surnames', 'uup_status'); return false;">
-                <div class="modal-body d-flex flex-column">
+            <form name="formUpdateUser" onsubmit="updateUser(this, 'uup_mail', 'uup_name', 'surnames', 'uup_status'); return false;">
+                <div class="modal-body d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
+                    <label for="uup_mail" style="font-family: CenturyGothic;">
+                        Correo electrónico *
+                    </label>
+                    <input id="uup_mail" inputmode="email" maxlength="40" name="uup_mail" style="font-family: CenturyGothic; margin-bottom: 10px;" type="email"/>
                     <label for="uup_name" style="font-family: CenturyGothic;">
                         Nombre
                     </label>
-                    <input id="uup_name" maxlength="20" name="uup_name" style="font-family: CenturyGothic;"/>
-                    <label for="uup_surnames" style="font-family: CenturyGothic;" type="text">
+                    <input id="uup_name" maxlength="20" name="uup_name" style="font-family: CenturyGothic; margin-bottom: 10px;"/>
+                    <label for="surnames" style="font-family: CenturyGothic;" type="text">
                         Apellidos
                     </label>
-                    <input id="uup_surnames" maxlength="30" name="uup_surnames" style="font-family: CenturyGothic;" type="text"/>
+                    <input id="surnames" maxlength="30" name="surnames" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
                     <label for="uup_status" style="font-family: CenturyGothic;">
                         Status
                     </label>
-                    <input id="uup_status" name="uup_status" style="font-family: CenturyGothic;" type="text"/>
+                    <input id="uup_status" name="uup_status" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
                 </div>
                 <div class="modal-footer d-xl-flex justify-content-xl-center">
                     <button class="btn btn-primary d-xl-flex" formmethod="post" id="uup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: CenturyGothic;" type="submit">

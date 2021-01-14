@@ -1,5 +1,39 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
+    <head>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+            <title>
+                EcoProgress - Página de administrador
+            </title>
+            <!-- ICON -->
+            <link href="/EcoProgress/Project/Web/favicon.png" rel="icon" sizes="16x16 24x24 36x36 48x48" type="favicon.png"/>
+            <!-- STYLES -->
+            <link href="/EcoProgress/Project/Web/public/css/libraries/bootstrap.min.css" rel="stylesheet"/>
+            <link href="/EcoProgress/Project/Web/public/fonts/CenturyGothic.css" rel="stylesheet"/>
+            <link href="/EcoProgress/Project/Web/public/css/libraries/Footer-Basic.css" rel="stylesheet"/>
+            <link href="../fonts/ionicons.min.css" rel="stylesheet"/>
+            <link href="../css/adminPanel.css" rel="stylesheet"/>
+            <!-- SCRIPTS -->
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/jquery.min.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/bootstrap.min.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_tools.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_config.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_namespaces.js">
+            </script>
+            <script defer="" src="../js/rest_users.js">
+            </script>
+            <script defer="" src="../js/rest_sensors.js">
+            </script>
+            <script defer="" src="../js/ui_adminPanel.js">
+            </script>
+            <script defer="" src="../js/rest_logout.js">
+            </script>
+        </meta>
+    </head>
 
 <head>
     <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
@@ -200,6 +234,49 @@
                                                     <p style="font-family: CenturyGothic;">
                                                         Porcentaje de sensores usados diariamente:
                                                         <br />
+                                                    </p>
+                                                </div>
+                                                <div class="col">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col" style="margin-top: 50px;">
+                            <div class="row d-flex flex-row align-items-xl-center">
+                                <div class="col d-flex flex-row align-items-center align-self-center justify-content-lg-center">
+                                    <button class="btn btn-primary" data-target="#modalCrear" data-toggle="modal" onclick="return initPrivateModalPanel('createUserPanel')" style="margin-right: 20px;/*align-items: center;*/color: #682172;background: rgb(242,244,245);border-radius: 8px;border-width: 2px;border-color: #422e65;font-family: CenturyGothic;" type="button">
+                                        Crear Usuario
+                                    </button>
+                                    <button class="btn btn-primary" data-target="#modalEditar" data-toggle="modal" onclick="return initPrivateModalPanel('updateUserPanel')" style="margin-right: 20px;background: #f2f4f5;color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;" type="button">
+                                        Editar Usuario
+                                    </button>
+                                    <button class="btn btn-primary" data-target="#modalEliminar" data-toggle="modal" onclick="return initPrivateModalPanel('deleteUserPanel')" style="margin-right: 20px;background: rgb(242,244,245);color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;" type="button">
+                                        Eliminar Usuario
+                                    </button>
+                                </div>
+                                <div class="col" style="margin-right: 35px;">
+                                    <h4 class="text-center d-xl-flex justify-content-xl-center" style="font-family: CenturyGothic;text-align: center;font-size: 22px;/*align-self: center;*/">
+                                        Top de estadísticas
+                                    </h4>
+                                    <div class="card d-lg-flex mx-auto justify-content-lg-end" style="width: 90%;border: solid 3px;border-radius: 8px;border-color: #1c195e;">
+                                        <div class="card-body d-xl-flex">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p style="font-family: CenturyGothic;">
+                                                        Distancia recorrida máxima:
+                                                    </p>
+                                                    <p style="font-family: CenturyGothic;">
+                                                        Usuario mas activo:
+                                                    </p>
+                                                    <p style="font-family: CenturyGothic;">
+                                                        Porcentaje de usuarios activos:
+                                                    </p>
+                                                    <p style="font-family: CenturyGothic;">
+                                                        Porcentaje de sensores usados diariamente:
+                                                        <br/>
                                                     </p>
                                                 </div>
                                                 <div class="col">
