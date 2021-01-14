@@ -147,8 +147,8 @@ function executeCallbackBtnDOM(id, cb = null) {
 
 function isValidForm(form, params) {
     for (var i = 1; i < params.length; i++) {
-        if (form[params[i]].name != 'reg_surnames') {
-            if (form[params[i]].value.length == 0 || form[params[i]].name == 'reg_password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
+        if (form[params[i]].name != 'surnames') {
+            if (form[params[i]].value.length == 0 || form[params[i]].name == 'password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
                 setFocusElementDOM(params[i]);
                 return false;
             }

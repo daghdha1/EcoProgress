@@ -15,7 +15,7 @@ password CHAR (72) NOT NULL,
 secret_code SMALLINT NOT NULL, 
 last_conn INT DEFAULT NULL,
 reg_date INT NOT NULL,
-role VARCHAR (4) NOT NULL,
+role VARCHAR (5) NOT NULL,
 account_status VARCHAR (10) NOT NULL,
 PRIMARY KEY (mail)
 );
@@ -39,44 +39,49 @@ PRIMARY KEY (timestamp),
 FOREIGN KEY (sensorID) REFERENCES Sensors(id)
 );
 
+
+########## USERS ##########
 # ADMIN (don't have sensors - only management)
 # Admin  --> mail: admin@admin  password: admin
-INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Adrian', 'Soler Navarro', '$2y$10$m.IAnLCSMxLfd8bp/hvUh.B2FeObQF9vwFwVIWNfhktIb6G77e2Ze', 23342, 1620203039, 'root', 'active');
-INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('test@test', 'Test', 'Testing', '$2y$10$ipjTNAzIDRVQTMqRJtoRUeUkoLxRfmEkvpNh13/qZwB9As7i9jsiG', 19872, 1620202038, 1620202031, 'user', 'active');
-INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('miguel@dev.com', 'Miguel', 'Toledo', '$2y$10$4J5Pkkb81ctZ7ZodCPKmjuqf/E8CDDbcx0g.M4JvvkBV5Mqmj7qbu', 22961, 1610467728, 1610467724, 'user', 'active');
+INSERT INTO Users (mail, name, surnames, password, secret_code, reg_date, role, account_status) VALUES ('admin@admin', 'Daghdha', 'Alderson', '$2y$10$m.IAnLCSMxLfd8bp/hvUh.B2FeObQF9vwFwVIWNfhktIb6G77e2Ze', 23342, 1620203039, 'admin', 'active');
 
 # USER (use these data for registration)
-# Adrián  --> mail: daghdha@dev.com   activation_key: 1d2d92g6  for sensor 1
+# Adrián  --> mail: adrian@dev.com    activation_key: 1d2d92g6  for sensor 1
 # Marcelo --> mail: marcelo@dev.com   activation_key: 20kDÑ2ln  for sensor 2
 # Marta   --> mail: marta@dev.com     activation_key: KD82mA8f  for sensor 3
-# Miguel  --> mail: miguel@dev.com    activation_key: kÑA232r1  for sensor 4
+# Miguel  --> mail: miguel@dev.com    activation_key: kÑA232r1  for sensor 4, 4d2jj345 for sensor 7, 8k2Jsa23 for sensor 8
 # María   --> mail: maria@dev.com     activation_key: 9slñE2k6  for sensor 5
 # Test    --> mail: test@test	  	  activation_key: t5lbh2k9  for sensor 6
+INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('test@test', 'Test', 'Testing', '$2y$10$ipjTNAzIDRVQTMqRJtoRUeUkoLxRfmEkvpNh13/qZwB9As7i9jsiG', 19872, 1620202038, 1620202031, 'user', 'active');
+INSERT INTO Users (mail, name, surnames, password, secret_code, last_conn, reg_date, role, account_status) VALUES ('miguel@dev.com', 'Miguel', 'Alvarez', '$2y$10$4J5Pkkb81ctZ7ZodCPKmjuqf/E8CDDbcx0g.M4JvvkBV5Mqmj7qbu', 22961, 1610467728, 1610467724, 'user', 'active');
 
-# SENSORS
-INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', 'admin@admin', 'CO', '1d2d92g6', 1);
+########### SENSORS ##########
+# CO
+INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('1', NULL, 'CO', '1d2d92g6', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('2', NULL, 'CO', '20kDÑ2ln', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('3', NULL, 'CO', 'KD82mA8f', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('4', 'miguel@dev.com', 'CO', 'kÑA232r1', 1);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('5', NULL, 'CO', '9slñE2k6', 0);
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('6', 'test@test', 'CO', 't5lbh2k9', 1);
+# NO2
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('7', 'miguel@dev.com', 'NO2', '4d2jj345', 1);
+# 03
 INSERT INTO Sensors (id, mail, type, activation_key, state) VALUES ('8', 'miguel@dev.com', 'O3', '8k2Jsa23', 1);
 
-# MEASURES
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1606409912', '38.995876, -0.167057', '1');
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1606410000', '38.999622, -0.166512', '1');
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1606411000', '39.001105, -0.164135', '1');
+# MEASURES #
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.12, '1606409912', '38.995876, -0.167057', '4');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1606410000', '38.999622, -0.166512', '4');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (10.5, '1606411000', '39.001105, -0.164135', '4');
 -- 10 / 01
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (2.5, '1610293637', '39.002082, -0.162310', '1');
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.5, '1610292637', '39.001227, -0.163908', '1');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (2.5, '1610293637', '39.002082, -0.162310', '4');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (1.5, '1610292637', '39.001227, -0.163908', '4');
 -- 09 / 01
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610034437', '39.002082, -0.162310', '1');
-INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610032437', '38.999076, -0.162704', '1');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610034437', '39.002082, -0.162310', '4');
+INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (3.5, '1610032437', '38.999076, -0.162704', '4');
 
 
 
-# MEASURES FOR TEST
+# MEASURES FOR TEST #
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (15.12, '1609934461', '38.99026988407104,-0.16149044036865237', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (4.45, '1609934662', '38.99657390099929,-0.16550302505493164', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0, '1609934863', '38.98843527630966,-0.1731204986572266', '6');

@@ -98,7 +98,7 @@ class UserEntity extends BaseEntity {
     public function createUserFromParams($params) {
         $this->setMail($params['reg_mail']);
         $this->setName($params['reg_name']);
-        $this->setSurnames($params['reg_surnames']);
+        $this->setSurnames($params['surnames']);
         $this->setPassword(generatePasswordHash($params['reg_password']));
         $this->setSecretCode(generateSecretCode());
         $this->setLastConn(NULL);

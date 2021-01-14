@@ -12,7 +12,7 @@ function registration() {
     if (isValidForm(form, params)) {
         let formData = new FormData(form);
         formData.append("action", "registration");
-        formData.delete("reg_password_confirm");
+        formData.delete("password_confirm");
         let request = new Request(config.restDir + "/auth", {
             method: "POST",
             body: formData

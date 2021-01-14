@@ -11,7 +11,7 @@
                     </span>
                 </button>
             </header>
-            <form name="formUpdateUser" onsubmit="updateUser(this,'uup_name', 'uup_surnames', 'uup_status'); return false;">
+            <form name="formUpdateUser" onsubmit="updateUser(this, 'uup_mail', 'uup_name', 'surnames', 'uup_status'); return false;">
                 <div class="modal-body d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
                     <label for="uup_mail" style="font-family: CenturyGothic;">
                         Correo electrónico *
@@ -21,10 +21,10 @@
                         Nombre
                     </label>
                     <input id="uup_name" maxlength="20" name="uup_name" style="font-family: CenturyGothic; margin-bottom: 10px;"/>
-                    <label for="uup_surnames" style="font-family: CenturyGothic;" type="text">
+                    <label for="surnames" style="font-family: CenturyGothic;" type="text">
                         Apellidos
                     </label>
-                    <input id="uup_surnames" maxlength="30" name="uup_surnames" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                    <input id="surnames" maxlength="30" name="surnames" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
                     <label for="uup_status" style="font-family: CenturyGothic;">
                         Status
                     </label>
