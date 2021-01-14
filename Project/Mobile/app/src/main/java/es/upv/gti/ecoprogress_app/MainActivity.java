@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Comprobamos si se supera el límite recomendado
                 Measure measureLimit = new Measure(56.3, 1608144831, "38.9955, 0.1661","1");
-                if(getLimitExceeded(measureLimit) >= 2){
+                if(getLimitExceeded(measureLimit.getValue()) >= 2){
                     // Lanzamos la notificación
                     limiteExcedidoNotificacion();
                     Log.d(">>>>", "La medida es " + measureLimit.getValue());
@@ -210,6 +210,10 @@ public class MainActivity extends AppCompatActivity {
             this.extractMeasure(b);
             if (this.currentMeasure.getValue() != -1) {
                 // Obtiene posición de dispositivo móvil (ASÍNCRONO)
+                if(getLimitExceeded(this.currentMeasure.getValue()) >= 2){
+                    // Lanzamos la notificación
+                    limiteExcedidoNotificacion();
+                }
                 this.extractLocation();
             } else {
                 // medida incorrecta, algo está fallando en la lectura del sensor
@@ -381,10 +385,7 @@ public class MainActivity extends AppCompatActivity {
                     // Comprobamos si se supera el límite recomendado
                     //Measure measureLimit = new Measure(56.3, 1608144831, "38.9955, 0.1661","1");
                     //if(getLimitExceeded(measureLimit) >= 2){
-                    if(getLimitExceeded(currentMeasure) >= 2){
-                        // Lanzamos la notificación
-                        limiteExcedidoNotificacion();
-                    }
+
                     showDeviceInfoBTLE(result.getDevice(), result.getRssi(), data);
                     // Tratamos el beacon obtenido
                     aBeaconHasArrived(tib);
@@ -432,17 +433,17 @@ public class MainActivity extends AppCompatActivity {
     //                                 -> 0|1
     // --------------------------------------------------------------
 
-    private int getLimitExceeded(Measure measure){
-        if(measure.getValue() >= 70){
+    private int getLimitExceeded(double value){
+        if(value>= 70){
             return 4;
         }
-        if(measure.getValue() >= 50){
+        if(value >= 50){
             return 3;
         }
-        if(measure.getValue() >= 35){
+        if(value >= 35){
             return 2;
         }
-        if(measure.getValue() >= 22){
+        if(value >= 22){
             return 1;
         }
         return 0;
