@@ -1,5 +1,6 @@
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
   text-decoration: underline !important;
+  font-family: Nunito, sans-serif !important;
   color: #007d93 !important;
   font-size: 24px !important;
 }
@@ -9,7 +10,7 @@
   text-decoration: underline !important;
 }
 
-a {
+.nav-tabs .nav-link a {
   color: #682172 !important;
 }
 

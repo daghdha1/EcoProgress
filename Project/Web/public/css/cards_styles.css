@@ -1,0 +1,132 @@
+ /*-------------boton contacto-----------------*/
+ #btnContacto:hover {
+    color: white !important;
+    background-color: #007d93ff !important;
+  }
+
+  #btn-arrow:hover {
+    color: #007d93ff !important;
+    font-size: 35px !important;
+    
+  }
+#modal1 .modal-title  {
+align-items: center;
+color:#422e65ff;
+font-family: Nunito, sans-serif;
+}
+#modal1 .modal-body{
+    font-family: Montserrat, sans-serif;
+}
+#modal1 .modal-body  p{
+    text-align: center;
+    font-weight: bold ;
+    color:#1a5979ff;
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+    padding-bottom: 10px;
+    }
+
+ 
+    #modal1 .modal-body img {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            height:100%;
+            width: 100%;
+            opacity: 0.2;
+    }
+  
+ /*------------------------------*/
+#modal2 .modal-title  {
+    align-items: center;
+    color:#422e65ff;
+    font-family: Nunito, sans-serif;
+    }
+    #modal2 .modal-body{
+        font-family: Montserrat, sans-serif;
+    }
+    #modal2 .modal-body  p{
+        text-align: center;
+        font-weight: bold ;
+        color:#1a5979ff;
+        position: relative;
+        z-index: 2;
+    
+        margin: 0;
+        padding-bottom: 10px;
+        }
+     
+        #modal2 .modal-body img {
+                position: absolute; 
+                top: 0;
+                left: 0;
+                height:100%;
+                width: 100%;
+                opacity: 0.2;
+        }
+      
+ /*------------*/
+ 
+#modal3 .modal-title  {
+    align-items: center;
+    color:#422e65ff;
+    font-family: Nunito, sans-serif;
+    }
+    #modal3 .modal-body{
+        font-family: Montserrat, sans-serif;
+    }
+    #modal3 .modal-body  p{
+        text-align: center;
+        font-weight: bold ;
+        color:#1a5979ff;
+        position: relative;
+        z-index: 2;
+    
+        margin: 0;
+        padding-bottom: 10px;
+        }
+     
+        #modal3 .modal-body img {
+                position: absolute; 
+                top: 0;
+                left: 0;
+                height:100%;
+                width: 100%;
+                opacity: 0.2;
+        }
+
+
+/*------------------*/        
+#modal4 .modal-title  {
+    align-items: center;
+    color:#422e65ff;
+    font-family: Nunito, sans-serif;
+    }
+    #modal4 .modal-body{
+        font-family: Montserrat, sans-serif;
+    }
+    #modal4 .modal-body  p{
+        text-align: center;
+        font-weight: bold ;
+        color:#1a5979ff;
+        position: relative;
+        z-index: 2;
+    
+        margin: 0;
+        padding-bottom: 10px;
+        }
+     
+ #modal4 .modal-body img {
+                position: absolute; 
+                top: 0;
+                left: 0;
+                height:100%;
+                width: 100%;
+                opacity: 0.2;
+        }
+      
+      
+      
+           
