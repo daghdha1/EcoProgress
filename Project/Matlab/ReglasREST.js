@@ -5,7 +5,56 @@ var cfg = require("./config.js");
 const {
     exec
 } = require("child_process");
+// -------------------------- COSAS
 
+const isRunning = (query, cb) => {
+    let platform = process.platform;
+    let cmd = '';
+    switch (platform) {
+        case 'win32':
+            cmd = `tasklist`;
+            break;
+        case 'darwin':
+            cmd = `ps -ax | grep ${query}`;
+            break;
+        case 'linux':
+            cmd = `ps -A`;
+            break;
+        default:
+            break;
+    }
+    exec(cmd, (err, stdout, stderr) => {
+        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+    });
+}
+
+
+
+
+function cosa(cb){
+    let interval = setInterval(() => {
+        isRunning('matlab.exe', (status) => {
+            console.log(status); // true|false
+            if (status == false) {
+                clearInterval(interval);
+                cb();
+            }
+        })
+    }, 1000);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------- COSAS
 
 console.log(cfg.lastTimestamp);
 // .....................................................................
@@ -49,11 +98,15 @@ module.exports.cargar = function (servidorExpress) {
 
             //console.log(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "','" + data.n + "')");
 
-            //executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "','" + data.n + "')");
+            // ejecuta matlab
+            executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
 
-            let interpolation = getMatrixFromFile();
-            console.log(interpolation);
-            respuesta.send(interpolation);
+            // comprbar si hemos acabado
+            cosa(()=>{
+                let interpolation = getMatrixFromFile();
+                respuesta.send(interpolation);
+            });
+            
         });
     servidorExpress.get('/historicNames', function (peticion, respuesta) {
         getFilenamesFromHistoric().then((result) => {
@@ -73,14 +126,12 @@ counter = 0;
 
 executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
 saveForHistoric();
-
 setInterval(() => {
     if (counter >= 288) {
         counter = 0;
         saveForHistoric();
     } else {
         counter++;
-        executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
     }
 }, 300000);
 
@@ -93,7 +144,7 @@ function saveForHistoric() {
 
     newdate = "historic/Mapa-" + year + "-" + month + "-" + day
     // File destination.txt will be created or overwritten by default.
-    fs.copyFile('result.txt', newdate, (err) => {
+    fs.copyFile('./required/result.txt', newdate, (err) => {
         if (err) throw err;
         console.log('source.txt was copied to destination.txt');
     })
@@ -116,7 +167,6 @@ function getMatrixFromFile() {
     all = all.trim(); // final crlf in file
     let lines = all.split("\n");
     let n = lines.length;
-    console.log("Nro Lineas:", n);
 
     let matriz = [];
     for (let i = 0; i < n; i++) {

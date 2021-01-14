@@ -64,7 +64,7 @@ function changeHeatmap(heatmap) {
 
 function addOfficialSensors(map) {
     var mapIcon = L.icon({
-        iconUrl: '../../../public/media/map_marker.png',
+        iconUrl: '/EcoProgress/Project/Web/public/media/map_marker.png',
         iconSize: [38, 38], // size of the icon
     });
     var marker = L.marker([38.96797739, -0.19109882], { // el de gandía
