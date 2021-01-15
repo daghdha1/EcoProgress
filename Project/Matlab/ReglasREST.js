@@ -1,6 +1,9 @@
 var fs = require('fs');
 var math = require("mathjs");
 var cfg = require("./config.js");
+
+const fetch = require('node-fetch');
+
 //var exec =  require("child_process");
 const {
     exec
@@ -27,7 +30,8 @@ const isRunning = (query, cb) => {
         cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
     });
 }
-function cosa(cb){
+
+function cosa(cb) {
     let interval = setInterval(() => {
         isRunning('matlab.exe', (status) => {
             console.log(status); // true|false
@@ -86,11 +90,11 @@ module.exports.cargar = function (servidorExpress) {
             executeComand(cfg.basiccommand + " interpola('" + cfg.pathx + "','" + cfg.pathy + "','" + cfg.pathz + "','" + cfg.pathResult + "'," + cfg.n + ")");
 
             // comprbar si hemos acabado
-            cosa(()=>{
+            cosa(() => {
                 let interpolation = getMatrixFromFile();
                 respuesta.send(interpolation);
             });
-            
+
         });
     servidorExpress.get('/historicNames', function (peticion, respuesta) {
         getFilenamesFromHistoric().then((result) => {
@@ -103,6 +107,25 @@ module.exports.cargar = function (servidorExpress) {
         console.log(peticion.query.arg)
         let result = getMatrixFromHistoric(peticion.query.arg.toString());
         respuesta.send(result);
+    });
+
+    servidorExpress.get('/sensorOficial', function (peticion, respuesta) {
+        /* fetch("http://webcat-web.gva.es/webcat_web/datosOnlineRvvcca/obtenerTablaPestanyaDatosOnline").then((response) => {
+             return response.text();
+         }).then((json) => {
+             console.log(json);
+             respuesta.send(json);
+         });*/
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        newdate =day +"/" + month + "/" + year;
+        respuesta.send({
+            dia: newdate,
+            medida: "0.1"
+        });
     });
 
 }

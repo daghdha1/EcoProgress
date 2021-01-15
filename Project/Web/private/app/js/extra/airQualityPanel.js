@@ -90,7 +90,6 @@ function calculateAirQuality(measureList) {
 //********************************************************************
 //************************* GRAPHIC BARS *****************************
 //********************************************************************
-
 /*
  * Configura los botones de tipo de gases para cambiar la información del rosco gráfico
  * 
@@ -120,23 +119,23 @@ function getDataAndUpdateGraph(btnGas) {
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
                 if (myGraphs.airQualityChart != null) myGraphs.airQualityChart.destroy();
-                populateGraph(response,"CO");
+                populateGraph(response, "CO");
             }).catch(error => console.log("Error in promises ${error}", error));
             break;
         case "btn_no2":
             airQualitysPromiseList.push(12.5, 3, 0.3);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList,"NO2");
+            populateGraph(airQualitysPromiseList, "NO2");
             break;
         case "btn_so2":
             airQualitysPromiseList.push(24, 13.7, 3);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList,"SO2");
+            populateGraph(airQualitysPromiseList, "SO2");
             break;
         case "btn_o3":
             airQualitysPromiseList.push(24, 0, -1);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList,"O3");
+            populateGraph(airQualitysPromiseList, "O3");
             break;
     }
 }
@@ -147,7 +146,7 @@ function getDataAndUpdateGraph(btnGas) {
  *                          populateGraph() <--
  * 
  */
-function populateGraph(valueList,sLabel="CO") {
+function populateGraph(valueList, sLabel = "CO") {
     var options = {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Actual'],
@@ -183,7 +182,7 @@ function populateGraph(valueList,sLabel="CO") {
                         fontSize: '18px',
                         color: myColors.blue_sapphire,
                         offsetY: -20,
-                        formatter: function (val) {
+                        formatter: function(val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
@@ -192,7 +191,7 @@ function populateGraph(valueList,sLabel="CO") {
                         label: sLabel,
                         color: myColors.soft_black,
                         fontSize: '27px',
-                        formatter: function (w) {
+                        formatter: function(w) {
                             return ""
                         }
                     }
@@ -276,7 +275,7 @@ function getLabelsFromPercentage(percent) {
  */
 function getColorBarByValue(valueList) {
     colorList = [];
-    valueList.forEach(function (val) {
+    valueList.forEach(function(val) {
         switch (true) {
             case val >= 0:
                 colorList.push(myColors.soft_metallic_seaweed);
@@ -296,7 +295,7 @@ function getColorBarByValue(valueList) {
  */
 function getGradientToColorsByValue(valueList) {
     colorList = [];
-    valueList.forEach(function (val) {
+    valueList.forEach(function(val) {
         switch (true) {
             case val >= 20:
                 colorList.push(myColors.eminence);
@@ -323,9 +322,6 @@ function getGradientToColorsByValue(valueList) {
 //********************************************************************
 //************************* INTERPOLACION *****************************
 //********************************************************************
-//********************************************************************
-//************************* INTERPOLACION *****************************
-//********************************************************************
 let allBtnsGases = $("#btns-gases").find('button');
 allBtnsGases.each((index, btn) => {
     executeCallbackBtnDOM(btn.id, () => {
@@ -346,7 +342,7 @@ function retrieveDataToDraw(id) {
     }, localStorage.getItem("mail"), "month");
 }
 
-function updateLegend(id){
+function updateLegend(id) {
     switch (id) {
         case 'btn_co':
             document.getElementById("#maxValueLegend").innerText = "45-75";
@@ -377,21 +373,24 @@ function updateLegend(id){
     }
 }
 
+function changueBackgroundColorOfCoBtn() {
+    document.getElementById("btn_co").style.backgroundColor = "#007d93";
+}
 
 function drawFakeData(data, id) {
     let measures;
     switch (id) {
         case 'btn_co':
-            measures = dataFaker(data, 1, 70,0)
+            measures = dataFaker(data, 1, 70, 0)
             break;
         case 'btn_no2':
-            measures = dataFaker(data, 2, 20,5)
+            measures = dataFaker(data, 2, 20, 5)
             break;
         case 'btn_so2':
-            measures = dataFaker(data, 0.3, 20,3)
+            measures = dataFaker(data, 0.3, 20, 3)
             break;
         case 'btn_o3':
-            measures = dataFaker(data, 0.5, 30,10)
+            measures = dataFaker(data, 0.5, 30, 10)
             break;
         default:
             break;
@@ -399,10 +398,10 @@ function drawFakeData(data, id) {
     changeHeatmap(measures);
 }
 
-function dataFaker(data, n, top,bottom) {
+function dataFaker(data, n, top, bottom) {
     let result = [];
     for (let i = 0; i < data.data.length; i++) {
-        if (data.data[i].value < top && data.data[i].value>bottom) {
+        if (data.data[i].value < top && data.data[i].value > bottom) {
             let measure = data.data[i];
             measure.value = measure.value * n;
             result.push(measure);

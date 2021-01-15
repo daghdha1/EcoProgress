@@ -31,7 +31,7 @@ class SensorsController extends BaseController {
             // Check de parámetros
             if (!areThereParameters($request->parameters)) {
                 // Obtiene todos los sensores
-                // $result = $this->getAllUsers($model, $request);
+                $result = $model->getAllSensors();
             } else {
                 // Ejecuta el método correspondiente
                 $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);

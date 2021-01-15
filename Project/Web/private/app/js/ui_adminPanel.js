@@ -72,11 +72,10 @@ function showUserDevices(devices) {
 }
 /*************************** TOP STATS ******************************/
 function showMaxDistanceOfUser() {
-    getMaxDistanceOfUser((dataReceived) => {
-        let maxDistance = "52519";
-        let mail = 'test@test';
-        fillInMaxDistanceOfUser(maxDistance, mail);
-    });
+    //getMaxDistanceOfUser((dataReceived) => {});
+    let maxDistance = "52519";
+    let mail = 'test@test';
+    fillInMaxDistanceOfUser(maxDistance, mail);
 }
 
 function showMaxActiveTimeOfUser() {
@@ -229,3 +228,31 @@ document.getElementById('dropdown').onclick = function(event) {
     });
 }
 getHistoricNamesForDropdown();
+
+function generarInformes() {
+    var doc = new jsPDF('p', 'pt');
+    var elem = document.getElementById("usersDataTable");
+    var res = doc.autoTableHtmlToJson(elem);
+    doc.autoTable(res.columns, res.data);
+    doc.save("listaUsuarios.pdf");
+
+    getAllSensors((data)=>{
+        console.log(data);
+        generarListaSensores(data);
+    })
+}
+
+function generarListaSensores(data){
+
+    
+    var doc = new jsPDF();
+    data.forEach(function(sensor, i){
+        doc.text(20, 10 + (i * 10), 
+            "ID: " + sensor.id +
+            " Correo: "+ sensor.mail +
+            " Tipo: "+ sensor.type +
+            " Codigo: " + sensor.activation_key+
+            " Activo: " + sensor.state 
+    )});
+    doc.save('Test.pdf');
+}
