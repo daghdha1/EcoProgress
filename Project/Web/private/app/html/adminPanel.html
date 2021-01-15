@@ -25,7 +25,13 @@
             </script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/leaflet-heatmap.js">
             </script>
+            <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/animations.js">
+            </script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/rest_interpolation.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/drawMap.js">
             </script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/_tools.js">
             </script>
@@ -36,8 +42,6 @@
             <script defer="" src="../js/rest_users.js">
             </script>
             <script defer="" src="../js/rest_sensors.js">
-            </script>
-            <script defer="" src="/EcoProgress/Project/Web/public/js/drawMap.js">
             </script>
             <script defer="" src="../js/ui_adminPanel.js">
             </script>
@@ -64,12 +68,12 @@
             <div style="border-style: none;height: 100%;margin: 0px;">
                 <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;">
+                        <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold; color: #682172;">
                             Inicio
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setView()" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;">
+                        <a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setView()" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold; color: #682172;">
                             Mapas
                         </a>
                     </li>
@@ -243,25 +247,50 @@
                                     <h4 class="text-center d-xl-flex justify-content-xl-center" style="font-family: CenturyGothic;text-align: center;font-size: 22px;/*align-self: center;*/">
                                         Top de estadísticas
                                     </h4>
-                                    <div class="card d-lg-flex mx-auto justify-content-lg-end" style="width: 90%;border: solid 3px;border-radius: 8px;border-color: #1c195e;">
-                                        <div class="card-body d-xl-flex">
+                                    <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #1c195e;">
+                                        <div class="card-body" id="data_container">
                                             <div class="row">
-                                                <div class="col">
-                                                    <p style="font-family: CenturyGothic;">
+                                                <div class="col-6 col txt-title">
+                                                    <p>
                                                         Distancia recorrida máxima:
                                                     </p>
-                                                    <p style="font-family: CenturyGothic;">
-                                                        Usuario mas activo:
-                                                    </p>
-                                                    <p style="font-family: CenturyGothic;">
-                                                        Porcentaje de usuarios activos:
-                                                    </p>
-                                                    <p style="font-family: CenturyGothic;">
-                                                        Porcentaje de sensores usados diariamente:
-                                                        <br/>
+                                                </div>
+                                                <div class="col-6 col txt-value" id="title_name">
+                                                    <p id="lbl_distMaxim">
                                                     </p>
                                                 </div>
-                                                <div class="col">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 col txt-title">
+                                                    <p>
+                                                        Usuario más activo:
+                                                    </p>
+                                                </div>
+                                                <div class="col-6 col txt-value" id="title_surnames">
+                                                    <p id="lbl_usuActivo">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 col txt-title">
+                                                    <p>
+                                                        Porcentaje de usuarios activos:
+                                                    </p>
+                                                </div>
+                                                <div class="col-6 col txt-value" id="title_mail">
+                                                    <p id="lbl_porcentajeUsuarios">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6 col txt-title">
+                                                    <p>
+                                                        Porcentaje de sensores usados diariamente:
+                                                    </p>
+                                                </div>
+                                                <div class="col-6 col txt-value" id="title_role">
+                                                    <p id="lbl_porcentajeSensores">
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -284,6 +313,10 @@
                         </div>
                         <div style="height: 850px;">
                             <div class="d-xl-flex justify-content-xl-center" id="map" style="width: 100%; height: 100%; z-index: 0;">
+                            </div>
+                            <div id="animationText" style="height: 200px; width: 200px; margin-left: 47%; margin-top:16%;position: absolute; z-index: 2;">
+                            </div>
+                            <div id="animation" style="height: 800px; width: 800px; margin-left: 30%;">
                             </div>
                         </div>
                     </div>
