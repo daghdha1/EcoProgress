@@ -177,8 +177,11 @@ class AuthController extends BaseController {
         $data = $usersModel->getUser($params['log_mail']);
         if (!is_null($data) && !empty($data)) {
             $user = parent::createEntity('Users')->createUserFromDatabase($data);
-            $this->createUserSession($user);
-            return $user->parseUserToAssocArrayUsers();
+            $user->setLastConn(time());
+            if ($usersModel->updateUser($user)) {
+                $this->createUserSession($user);
+                return $user->parseUserToAssocArrayUsers();
+            }
         }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }

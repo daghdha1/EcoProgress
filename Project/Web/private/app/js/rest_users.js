@@ -1,3 +1,4 @@
+/*************************** USERS DATA ******************************/
 /* 
  * Obtiene todos los usuarios registrados
  *
@@ -69,7 +70,32 @@ function getTraveledDistanceOfUser(callback, mail) {
         responseHandler(json, callback);
     });
 }
+/*************************** TOP STATS ******************************/
+function getMaxDistanceOfUser(callback) {
+    var request = new Request(config.restDir + "/users/maxDistance/all", {
+        method: "GET"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return null;
+    }).then((json) => {
+        responseHandler(json, callback);
+    });
+}
 
+function getMaxActiveTimeOfUser(callback) {
+    var request = new Request(config.restDir + "/users/maxTime/all", {
+        method: "GET"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return null;
+    }).then((json) => {
+        responseHandler(json, callback);
+    });
+}
+
+/*************************** INSERT UPDATE DELETE ******************************/
 function insertUser() {
     let params = insertUser.arguments;
     let form = params[0];

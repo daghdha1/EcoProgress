@@ -132,13 +132,12 @@ class UsersController extends BaseController
                     }
                     break;
                 case 'maxDistance':
-                    $data = $model->getAllUsers();
-                    $result = $this->getMaxDistance($model, $data);
+                    $dataList = $model->getAllUsers();
+                    $result = $this->getMaxDistanceOfUser($model, $dataList);
                     break;
-                case 'maxDifference':
-                    $range=$value;
-                    $data = $model->getAllUsers();
-                    $result = $this->getMaxDifference($model, $data, $range);
+                case 'maxTime':
+                    $dataList = $model->getAllUsers();
+                    $result = $this->getMaxActiveTimeOfUser($model, $dataList);
                     break;
                 default:
                     break;
@@ -232,21 +231,22 @@ class UsersController extends BaseController
         return $distanceByDay;
     }
 
-        /* 
+    /* 
     * Obtiene la distancia máxima recorrida de entre todos los usuarios 
+    * 
     * Texto -->
-    *                   getMaxDistance($data) <--
+    *                   getMaxDistanceOfUser <--
     * <-- array, Nada
     */
-    private function getMaxDistance($model,$data) {
+    private function getMaxDistanceOfUser($model,$dataList) {
         $maxDistance = 0;
         $mailUser = -1;
 
-        foreach ($data as $item) {
+        foreach ($dataList as $item) {
             $measureList = $model->getTraveledDistanceOfUser($item->mail);
-            $actualDistance = $this->getDistanceFromMail($measureList);
-            if ($actualDistance > $maxDistance) {
-                $maxDistance = $actualDistance;
+            $maxDisUser = $this->calculateDistanceOfMeasureList($measureList);
+            if ($maxDisUser > $maxDistance) {
+                $maxDistance = $maxDisUser;
                 $mailUser = $item->mail;
             }
         }
@@ -263,23 +263,26 @@ class UsersController extends BaseController
     /* 
     * Obtiene el tiempo activo mayor de entre todos los usuarios
     *
-    * model, data, range -->
-    *                           getMaxDifference($model, $data, $range) <--
+    * model, data -->
+    *                       getMaxActiveTimeOfUser() <--
     * <-- array, Nada
     */
-    private function getMaxDifference($model,$data, $range) {
-        $maxDifference = 0;
+    private function getMaxActiveTimeOfUser($model,$data) {
+        $maxActiveTime = 0;
         $maxUser = -1;
         foreach ($data as $item) {
             $measureList = $model->getActiveTimeOfUser($item->mail);
-            $actualDifference = $this->getDifference($measureList, $range);
-            if ($actualDifference > $maxDifference) {
-                $maxDifference = $actualDifference;
-                $maxUser = $item;
+            $actualDifference = $this->getDifference($measureList, time());
+            if ($actualDifference > $maxActiveTime) {
+                $maxActiveTime = $actualDifference;
+                $maxUser = $item->mail;
             }
         }
         $arr = array();
-        $assocArray = array('difference' => $maxDifference, 'user'=>$maxUser);
+        $assocArray = array(
+            'maxTime' => $maxActiveTime, 
+            'user' => $maxUser
+        );
         array_push($arr, $assocArray);
         return $arr;
     }
@@ -426,18 +429,18 @@ class UsersController extends BaseController
     }
 
     /* 
-    * Obtiene la distancia total recorrida del usuario activo
+    * Obtiene la distancia total recorrida del usuario activo (por horas de actividad)
     *
     * Texto -->
-    *                       calculateDistanceOfMeasureList() <--
+    *                  calculateDistanceOfMeasureList() <--
     * <-- N, Nada
     */
-    private function calculateDistanceOfMeasureList($data) {   
+    private function calculateDistanceOfMeasureList($dataList) {   
         $distance=0;
         $timestampOfDay = 0;
-        for($i=1; $i<count($data); $i++){
-            $measure = parent::createEntity('Measures')->createMeasureFromDatabase($data,$i);
-            $measureAnterior = parent::createEntity('Measures')->createMeasureFromDatabase($data, $i-1);
+        for($i=1; $i<count($dataList); $i++){
+            $measure = parent::createEntity('Measures')->createMeasureFromDatabase($dataList,$i);
+            $measureAnterior = parent::createEntity('Measures')->createMeasureFromDatabase($dataList, $i-1);
             if(($measure->getTimestamp()-$measureAnterior->getTimestamp())<3600){
                 $distance+=haversineDistanceCalculator($measure->getLocation()['latitude'], $measure->getLocation()['longitude'], $measureAnterior->getLocation()['latitude'],  $measureAnterior->getLocation()['longitude']); 
             }

@@ -1,4 +1,5 @@
 initUsersTable(true);
+initTopStatsData();
 /*****************************************************************************
 /*************************** CALLBACK FUNCTIONS ******************************
 /****************************************************************************/
@@ -35,6 +36,13 @@ function initUserData(mail, devices) {
     showUserDevices(devices);
 }
 
+function initTopStatsData() {
+    showMaxDistanceOfUser();
+    showMaxActiveTimeOfUser();
+    showPercentActiveTimeOfUsers();
+    showPercentUsedOfSensors();
+}
+/*************************** USER DATA ******************************/
 function showUserData(mail) {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
@@ -61,6 +69,30 @@ function showUserTotalTraveledDistance(mail) {
 
 function showUserDevices(devices) {
     fillInUserDevicesField(devices);
+}
+/*************************** TOP STATS ******************************/
+function showMaxDistanceOfUser() {
+    getMaxDistanceOfUser((dataReceived) => {
+        let maxDistance = "52519";
+        let mail = 'test@test';
+        fillInMaxDistanceOfUser(maxDistance, mail);
+    });
+}
+
+function showMaxActiveTimeOfUser() {
+    getMaxActiveTimeOfUser((dataReceived) => {
+        let maxActiveTime = convertSecondsToFormatTime(dataReceived[0]['maxTime']);
+        let mail = dataReceived[0]['user'];
+        fillInMaxActiveTimeOfUser(maxActiveTime, mail);
+    });
+}
+
+function showPercentActiveTimeOfUsers() {
+    fillInPercentActiveTimeOfUsers();
+}
+
+function showPercentUsedOfSensors() {
+    fillInPercentUsedOfSensors();
 }
 /*************************************************************************
 /*************************** FORM FUNCTIONS ******************************
@@ -123,6 +155,22 @@ function fillInUserTotalDistanceField(distance) {
 
 function fillInUserDevicesField(devices) {
     document.getElementById("lbl_devices").innerHTML = devices;
+}
+
+function fillInMaxDistanceOfUser(maxDistance, mail) {
+    document.getElementById("lbl_user_max_distance").innerHTML = maxDistance + "m del usuario " + mail;
+}
+
+function fillInMaxActiveTimeOfUser(maxActiveTime, mail) {
+    document.getElementById("lbl_user_max_active").innerHTML = maxActiveTime + " del usuario " + mail;
+}
+
+function fillInPercentActiveTimeOfUsers() {
+    document.getElementById("lbl_percent_users_active").innerHTML = "65%";
+}
+
+function fillInPercentUsedOfSensors() {
+    document.getElementById("lbl_percent_used_sensors").innerHTML = "50%";
 }
 /*****************************************************************************
 /******************************** LISTENERS **********************************
