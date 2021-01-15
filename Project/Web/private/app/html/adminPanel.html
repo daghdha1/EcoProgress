@@ -1,220 +1,295 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
-
-<head>
-    <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-    <title>
-        EcoProgress - Página de administrador
-    </title>
-    <!-- ICON -->
-    <link href="/EcoProgress/Project/Web/favicon.png" rel="icon" sizes="16x16 24x24 36x36 48x48" type="favicon.png" />
-    <!-- STYLES -->
-
-    <link href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" rel="stylesheet" />
-    <link href="/EcoProgress/Project/Web/public/css/libraries/bootstrap.min.css" rel="stylesheet" />
-    <link href="/EcoProgress/Project/Web/public/fonts/CenturyGothic.css" rel="stylesheet" />
-    <link href="/EcoProgress/Project/Web/public/css/libraries/Footer-Basic.css" rel="stylesheet" />
-    <link href="../fonts/ionicons.min.css" rel="stylesheet" />
-    <link href="../css/adminPanel.css" rel="stylesheet" />
-    <!-- SCRIPTS -->
-    <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/jquery.min.js"></script>
-    <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/bootstrap.min.js"></script>
-    <script defer src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-    <script defer src="/EcoProgress/Project/Web/public/js/libraries/heatmap.js"></script>
-    <script defer src="/EcoProgress/Project/Web/public/js/libraries/leaflet-heatmap.js"></script>
-    <script defer src="/EcoProgress/Project/Web/public/js/rest_interpolation.js"> </script>
-    <script defer="" src="/EcoProgress/Project/Web/public/js/_tools.js"></script>
-    <script defer="" src="/EcoProgress/Project/Web/public/js/_config.js"></script>
-    <script defer="" src="/EcoProgress/Project/Web/public/js/_namespaces.js"></script>
-    <script defer="" src="../js/rest_users.js"></script>
-    <script defer="" src="../js/rest_sensors.js"></script>
-    <script defer="" src="/EcoProgress/Project/Web/public/js/drawMap.js"></script>
-    <script defer="" src="../js/ui_adminPanel.js"></script>
-    <script defer="" src="../js/rest_logout.js"></script>
-    </meta>
-</head>
-
-<body>
-    <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean"
-        style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
-        <div class="container-fluid justify-content-center flex-column m-0 p-0">
-            <div class="d-flex justify-content-center align-items-xl-center"
-                style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
-                <a class="navbar-brand text-center" href="#logo" id="logo"
-                    style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
-                    <img src="../media/logo.png" style="width: 210px;margin: 0;" />
-                </a>
-                <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end"
-                    style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
-                    <a class="ml-auto" onclick="return logout()"
-                        style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
-                        Cerrar sesión
+    <head>
+        <meta charset="utf-8" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+            <title>
+                EcoProgress - Página de administrador
+            </title>
+            <!-- ICON -->
+            <link href="/EcoProgress/Project/Web/favicon.png" rel="icon" sizes="16x16 24x24 36x36 48x48" type="favicon.png"/>
+            <!-- STYLES -->
+            <link href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" rel="stylesheet"/>
+            <link href="/EcoProgress/Project/Web/public/css/libraries/bootstrap.min.css" rel="stylesheet"/>
+            <link href="/EcoProgress/Project/Web/public/fonts/CenturyGothic.css" rel="stylesheet"/>
+            <link href="/EcoProgress/Project/Web/public/css/libraries/Footer-Basic.css" rel="stylesheet"/>
+            <link href="../fonts/ionicons.min.css" rel="stylesheet"/>
+            <link href="../css/adminPanel.css" rel="stylesheet"/>
+            <!-- SCRIPTS -->
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/jquery.min.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/bootstrap.min.js">
+            </script>
+            <script defer="" src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/heatmap.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/libraries/leaflet-heatmap.js">
+            </script>
+            <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/animations.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/rest_interpolation.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/drawMap.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_tools.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_config.js">
+            </script>
+            <script defer="" src="/EcoProgress/Project/Web/public/js/_namespaces.js">
+            </script>
+            <script defer="" src="../js/rest_users.js">
+            </script>
+            <script defer="" src="../js/rest_sensors.js">
+            </script>
+            <script defer="" src="../js/ui_adminPanel.js">
+            </script>
+            <script defer="" src="../js/rest_logout.js">
+            </script>
+        </meta>
+    </head>
+    <body>
+        <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean" style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
+            <div class="container-fluid justify-content-center flex-column m-0 p-0">
+                <div class="d-flex justify-content-center align-items-xl-center" style="box-shadow: 0 4px 6px #d6d6d6;width: 100%;text-align: center;padding: 0px;padding-top: 10px;padding-bottom: 10px;">
+                    <a class="navbar-brand text-center" href="#logo" id="logo" style="text-align: center;margin-right: 0;color: #2d4066;font-weight: bold;">
+                        <img src="../media/logo.png" style="width: 210px;margin: 0;"/>
                     </a>
+                    <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end" style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
+                        <a class="ml-auto" onclick="return logout()" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;">
+                            Cerrar sesión
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-    <div style="height: 100%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;width: 100%;">
-        <div style="border-style: none;height: 100%;margin: 0px;">
-            <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;">
-                        Inicio
-                    </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" onclick="setView()" data-toggle="tab" href="#tab-2" role="tab"
-                        style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold;">
-                        Mapas
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content" style="height: 100%;width: 100%;">
-                <div class="tab-pane active" id="tab-1" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px;">
-                    <div style="margin-top: 50px;">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col" style="margin-left: 30px; margin-right: 30px; max-width: 45%;">
-                                    <h4 style="font-family: CenturyGothic;text-align: center;font-size: 22px;">
-                                        Tabla de usuarios
-                                    </h4>
-                                    <div class="table-responsive d-block mx-auto"
-                                        style="border-collapse: collapse; border-spacing: 0;align-content: center; width:100%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #00b7d1;">
-                                        <table class="table" id="usersDataTable">
-                                            <thead>
-                                                <tr style="background-color: #e9e9e9">
-                                                    <th style="color: black;font-family: CenturyGothic;">
-                                                        Nombre de usuario
-                                                    </th>
-                                                    <th style="color: black;font-family: CenturyGothic;">
-                                                        Correo electrónico
-                                                    </th>
-                                                    <th style="color: black;font-family: CenturyGothic;">
-                                                        Dispositivos
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="userTableCells">
-                                            </tbody>
-                                        </table>
+        </nav>
+        <div style="height: 100%;margin: 0px;margin-top: 10px;margin-left: 0px;margin-right: 0px;width: 100%;">
+            <div style="border-style: none;height: 100%;margin: 0px;">
+                <ul class="nav nav-tabs nav-justified" role="tablist" style="border-width: 0px;">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold; color: #682172;">
+                            Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setView()" role="tab" style="border-width: 0px;font-size: 20px;font-family: 'CenturyGothic';font-weight: bold; color: #682172;">
+                            Mapas
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="height: 100%;width: 100%;">
+                    <div class="tab-pane active" id="tab-1" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px;">
+                        <div style="margin-top: 50px;">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col" style="margin-left: 30px; margin-right: 30px; max-width: 45%;">
+                                        <h4 style="font-family: CenturyGothic;text-align: center;font-size: 22px;">
+                                            Tabla de usuarios
+                                        </h4>
+                                        <div class="table-responsive d-block mx-auto" style="border-collapse: collapse; border-spacing: 0;align-content: center; width:100%;text-align: center;border: solid 3px;border-radius: 8px;border-color: #00b7d1;">
+                                            <table class="table" id="usersDataTable">
+                                                <thead>
+                                                    <tr style="background-color: #e9e9e9">
+                                                        <th style="color: black;font-family: CenturyGothic;">
+                                                            Nombre de usuario
+                                                        </th>
+                                                        <th style="color: black;font-family: CenturyGothic;">
+                                                            Correo electrónico
+                                                        </th>
+                                                        <th style="color: black;font-family: CenturyGothic;">
+                                                            Dispositivos
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="userTableCells">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="margin-right: 30px; max-width: 50%;">
+                                        <h4 style="font-family: CenturyGothic;text-align: center;font-size: 22px;">
+                                            Administración de usuario
+                                        </h4>
+                                        <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #682172;">
+                                            <div class="card-body" id="data_container">
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Nombre:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_name">
+                                                        <p id="lbl_name">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Apellidos:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_surnames">
+                                                        <p id="lbl_surnames">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Email:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_mail">
+                                                        <p id="lbl_mail">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Rol:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_role">
+                                                        <p id="lbl_role">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Estado de cuenta:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_account_status">
+                                                        <p id="lbl_account_status">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Código de activación:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_secret_code">
+                                                        <p id="lbl_secret_code">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Última conexión:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_last_conn">
+                                                        <p id="lbl_last_conn">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Fecha de registro:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_reg_date">
+                                                        <p id="lbl_reg_date">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Tiempo de actividad:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_activity_time">
+                                                        <p id="lbl_activity_time">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Distancia total recorrida:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_total_distance">
+                                                        <p id="lbl_total_distance">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-3 col txt-title">
+                                                        <p>
+                                                            Dispositivos:
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3 col txt-value" id="title_devices">
+                                                        <p id="lbl_devices">
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col" style="margin-right: 30px; max-width: 50%;">
-                                    <h4 style="font-family: CenturyGothic;text-align: center;font-size: 22px;">
-                                        Administración de usuario
+                            </div>
+                        </div>
+                        <div class="col" style="margin-top: 50px;">
+                            <div class="row d-flex flex-row align-items-xl-center">
+                                <div class="col d-flex flex-row align-items-center align-self-center justify-content-lg-center">
+                                    <button class="btn btn-primary" data-target="#modalCrear" data-toggle="modal" onclick="return initPrivateModalPanel('createUserPanel')" style="margin-right: 20px;/*align-items: center;*/color: #682172;background: rgb(242,244,245);border-radius: 8px;border-width: 2px;border-color: #422e65;font-family: CenturyGothic;" type="button">
+                                        Crear Usuario
+                                    </button>
+                                    <button class="btn btn-primary" data-target="#modalEditar" data-toggle="modal" onclick="return showAndFillUpdateUserPanel()" style="margin-right: 20px;background: #f2f4f5;color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;" type="button">
+                                        Editar Usuario
+                                    </button>
+                                    <button class="btn btn-primary" data-target="#modalEliminar" data-toggle="modal" onclick="return showAndFillDeleteUserPanel()" style="margin-right: 20px;background: rgb(242,244,245);color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;" type="button">
+                                        Eliminar Usuario
+                                    </button>
+                                </div>
+                                <div class="col" style="margin-right: 35px;">
+                                    <h4 class="text-center d-xl-flex justify-content-xl-center" style="font-family: CenturyGothic;text-align: center;font-size: 22px;/*align-self: center;*/">
+                                        Top de estadísticas
                                     </h4>
-                                    <div class="card"
-                                        style="border: solid 3px;border-radius: 8px;border-color: #682172;">
+                                    <div class="card" style="border: solid 3px;border-radius: 8px;border-color: #1c195e;">
                                         <div class="card-body" id="data_container">
                                             <div class="row">
-                                                <div class="col-3 col txt-title">
+                                                <div class="col-6 col txt-title">
                                                     <p>
-                                                        Nombre:
+                                                        Distancia recorrida máxima:
                                                     </p>
                                                 </div>
-                                                <div class="col-3 col txt-value" id="title_name">
-                                                    <p id="lbl_name">
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Apellidos:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_surnames">
-                                                    <p id="lbl_surnames">
+                                                <div class="col-6 col txt-value" id="title_name">
+                                                    <p id="lbl_distMaxim">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-3 col txt-title">
+                                                <div class="col-6 col txt-title">
                                                     <p>
-                                                        Email:
+                                                        Usuario más activo:
                                                     </p>
                                                 </div>
-                                                <div class="col-3 col txt-value" id="title_email">
-                                                    <p id="lbl_email">
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Rol:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_role">
-                                                    <p id="lbl_role">
+                                                <div class="col-6 col txt-value" id="title_surnames">
+                                                    <p id="lbl_usuActivo">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-3 col txt-title">
+                                                <div class="col-6 col txt-title">
                                                     <p>
-                                                        Estado de cuenta:
+                                                        Porcentaje de usuarios activos:
                                                     </p>
                                                 </div>
-                                                <div class="col-3 col txt-value" id="title_account_status">
-                                                    <p id="lbl_account_status">
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Código de activación:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_secret_code">
-                                                    <p id="lbl_secret_code">
+                                                <div class="col-6 col txt-value" id="title_mail">
+                                                    <p id="lbl_porcentajeUsuarios">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-3 col txt-title">
+                                                <div class="col-6 col txt-title">
                                                     <p>
-                                                        Última conexión:
+                                                        Porcentaje de sensores usados diariamente:
                                                     </p>
                                                 </div>
-                                                <div class="col-3 col txt-value" id="title_last_conn">
-                                                    <p id="lbl_last_conn">
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Fecha de registro:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_reg_date">
-                                                    <p id="lbl_reg_date">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Tiempo de actividad:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_activity_time">
-                                                    <p id="lbl_activity_time">
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Distancia total recorrida:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_total_distance">
-                                                    <p id="lbl_total_distance">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-3 col txt-title">
-                                                    <p>
-                                                        Dispositivos:
-                                                    </p>
-                                                </div>
-                                                <div class="col-3 col txt-value" id="title_devices">
-                                                    <p id="lbl_devices">
+                                                <div class="col-6 col txt-value" id="title_role">
+                                                    <p id="lbl_porcentajeSensores">
                                                     </p>
                                                 </div>
                                             </div>
@@ -224,82 +299,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col" style="margin-top: 50px;">
-                        <div class="row d-flex flex-row align-items-xl-center">
-                            <div
-                                class="col d-flex flex-row align-items-center align-self-center justify-content-lg-center">
-                                <button class="btn btn-primary" data-target="#modalCrear" data-toggle="modal"
-                                    onclick="return initPrivateModalPanel('createUserPanel')"
-                                    style="margin-right: 20px;/*align-items: center;*/color: #682172;background: rgb(242,244,245);border-radius: 8px;border-width: 2px;border-color: #422e65;font-family: CenturyGothic;"
-                                    type="button">
-                                    Crear Usuario
+                    <div class="tab-pane" id="tab-2" role="tabpanel" style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
+                        <div class="d-flex flex-column align-content-around justify-content-xl-center align-items-xl-center" style="margin-top: 1rem; margin-left: 5rem; position: absolute; z-index: 1;">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="menu1" style="background-color: white; color: #682172; border-color: #682172; border-width: 2px;" type="button">
+                                    Historial de mapas
+                                    <span class="caret">
+                                    </span>
                                 </button>
-                                <button class="btn btn-primary" data-target="#modalEditar" data-toggle="modal"
-                                    onclick="return initPrivateModalPanel('updateUserPanel')"
-                                    style="margin-right: 20px;background: #f2f4f5;color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;"
-                                    type="button">
-                                    Editar Usuario
-                                </button>
-                                <button class="btn btn-primary" data-target="#modalEliminar" data-toggle="modal"
-                                    onclick="return initPrivateModalPanel('deleteUserPanel')"
-                                    style="margin-right: 20px;background: rgb(242,244,245);color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;"
-                                    type="button">
-                                    Eliminar Usuario
-                                </button>
-                            </div>
-                            <div class="col" style="margin-right: 35px;">
-                                <h4 class="text-center d-xl-flex justify-content-xl-center"
-                                    style="font-family: CenturyGothic;text-align: center;font-size: 22px;/*align-self: center;*/">
-                                    Top de estadísticas
-                                </h4>
-                                <div class="card d-lg-flex mx-auto justify-content-lg-end"
-                                    style="width: 90%;border: solid 3px;border-radius: 8px;border-color: #1c195e;">
-                                    <div class="card-body d-xl-flex">
-                                        <div class="row">
-                                            <div class="col">
-                                                <p style="font-family: CenturyGothic;">
-                                                    Distancia recorrida máxima:
-                                                </p>
-                                                <p style="font-family: CenturyGothic;">
-                                                    Usuario mas activo:
-                                                </p>
-                                                <p style="font-family: CenturyGothic;">
-                                                    Porcentaje de usuarios activos:
-                                                </p>
-                                                <p style="font-family: CenturyGothic;">
-                                                    Porcentaje de sensores usados diariamente:
-                                                    <br />
-                                                </p>
-                                            </div>
-                                            <div class="col">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ul aria-labelledby="menu1" class="dropdown-menu" id="dropdown" role="menu">
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tab-2" role="tabpanel"
-                    style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
-                    <div class="d-flex flex-column align-content-around justify-content-xl-center align-items-xl-center"
-                        style="margin-top: 1rem; margin-left: 5rem; position: absolute; z-index: 1;">
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button"
-                                data-toggle="dropdown" style="background-color: white; color: #682172; border-color: #682172; border-width: 2px;">Historial de mapas
-                                <span class="caret"></span></button>
-                            <ul id="dropdown" class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                            </ul>
+                        <div style="height: 850px;">
+                            <div class="d-xl-flex justify-content-xl-center" id="map" style="width: 100%; height: 100%; z-index: 0;">
+                            </div>
+                            <div id="animationText" style="height: 200px; width: 200px; margin-left: 47%; margin-top:16%;position: absolute; z-index: 2;">
+                            </div>
+                            <div id="animation" style="height: 800px; width: 800px; margin-left: 30%;">
+                            </div>
                         </div>
-                    </div>
-                    <div style="height: 850px;">
-                        <div class="d-xl-flex justify-content-xl-center" id="map"
-                            style="width: 100%; height: 100%; z-index: 0;"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

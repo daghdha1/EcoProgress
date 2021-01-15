@@ -161,32 +161,14 @@ class UsersController extends BaseController
         // Si existe una de estas acciones, la ejecutamos
         if (isset($params['action'])) {
             switch ($params['action']) {
-                case 'registration':
-                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 1)) {
-                        $result = $this->registration($usersModel, $params);
-                    } else {
-                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
-                    }
+                case 'insert':
+                    $result = $this->insertUser($usersModel, $sensorsModel, $params);
                     break;
-                case 'accountActivation':
-                    if($this->checkRegistrationData($usersModel, $sensorsModel, $params, 2)) {
-                        if ($this->checkRegistrationCode($usersModel, $params)) {
-                            $result = $this->accountActivation($usersModel, $sensorsModel, $params);
-                        }
-                    }
+                case 'update':
+                    $result = $this->updateUser($usersModel, $params);
                     break;
-                case 'login':
-                    if ($this->checkLoginData($usersModel, $params)) {
-                        $result = $this->login($usersModel, $params);
-                    } else {
-                        $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
-                    }
-                    break;
-                case 'logout':
-                    $result = $this->deleteUserSession();
-                    break;
-                case 'recovery':
-                    // $result = $model->recovery($params['email']);
+                case 'delete':
+                    $result = $this->deleteUser($usersModel, $sensorsModel, $params);
                     break;
             }
             return $result;
@@ -305,80 +287,77 @@ class UsersController extends BaseController
     // ---------------------------------------------- (POST) ----------------------------------------------- //
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Crea un nuevo usuario con estado 'active' y lo vincula al sensor asociado (clave de producto)
     *
-    * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               insertUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function createUser($usersModel, $sensorsModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-       // $sensors = parent::createEntity('Sensors')->
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
-                return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
+    private function insertUser($usersModel, $sensorsModel, $params) {
+        $sData = $sensorsModel->getAvailableSensorFromActivationKey($params['key']);
+        // Si el sensor a registrar está disponible (existe y no tiene propietario)
+        if (!is_null($sData) && !empty($sData)) {
+            // Creamos un nuevo usuario
+            $user = parent::createEntity('Users')->createUserFromAdminParams($params);
+            if ($usersModel->insertUser($user)) {
+                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($sData);
+                $sensor->setMail($params['mail']);
+                $sensor->setState(1);
+                if ($sensorsModel->updateSensor($sensor)) {
+                    return $user->parseUserToAssocArrayUsers();
+                }
+            }
         }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Actualiza un usuario con los datos suministrados
     *
     * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    *                                        updateUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function updateUser($usersModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
+        $uData = $usersModel->getUser($params['mail']);
+        // Si el user a actualizar existe
+        if (!is_null($uData) && !empty($uData)) {
+            // Creamos un nuevo usuario
+            $user = parent::createEntity('Users')->createUserFromDatabase($uData);
+            $user->setMail($params['mail']);
+            $user->setName($params['name']);
+            $user->setSurnames($params['surnames']);
+            $user->setAccountStatus($params['account_status']);
+            if ($usersModel->updateUser($user)) {
                 return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
+            }
         }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Elimina un usuario y lo desvincula del sensor asociado
     *
-    * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               deleteUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function deleteUser($usersModel, $params) {
-        // Creamos un nuevo usuario
-        $user = parent::createEntity('Users')->createUserFromParams($params);
-        if ($usersModel->insertUser($user)) {
-            // TEMPORAL hasta que puedan enviarse emails
-            return $user->parseUserToAssocArrayUsers();
-            /*if ($this->sendVerificationEmail($user)) {
-                //line();
-                //debug('email sended!', "");
-                return $user->parseUserToAssocArrayUsers();
-            } else {
-                //line();
-                //debug('email NOT sended', "");
-                return 'Se ha producido un error al enviar el correo'; 
-            }*/
+    private function deleteUser($usersModel, $sensorsModel, $params) {
+        $sData = $sensorsModel->getSensor($params['mail']);
+        $uData = $usersModel->getUser($params['mail']);
+        // Si el sensor a registrar está disponible (existe)
+        if (!is_null($sData) && !empty($sData)) {
+            // Si el user a eliminar existe
+            if (!is_null($uData) && !empty($uData)) {
+                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($sData);
+                $sensor->setState(0);
+                if ($sensorsModel->updateStatusSensor($sensor)) { 
+                    if ($usersModel->deleteUser($params['mail'])) {
+                        $user = parent::createEntity("Users")->createUserFromDatabase($uData);
+                        return $user->parseUserToAssocArrayUsers();
+                    }
+                }
+            }
         }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }

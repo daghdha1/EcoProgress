@@ -1,10 +1,10 @@
 /* 
  * Obtiene todos los usuarios activos y sus sensores asociados
  *
- *                                  getSensorIdsFromUser() <--
+ *                                  getUserDataAndSensorIds() <--
  * Lista<T> | Nada
  */
-function getSensorIdsFromUser(callback) {
+function getUserDataAndSensorIds(callback) {
     var request = new Request(config.restDir + "/sensors/users/id", {
         method: "GET"
     });

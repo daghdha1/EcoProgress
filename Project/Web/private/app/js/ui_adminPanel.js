@@ -1,23 +1,38 @@
-initUsersTable();
+initUsersTable(true);
 /*****************************************************************************
 /*************************** CALLBACK FUNCTIONS ******************************
 /****************************************************************************/
-function initUsersTable() {
-    getSensorIdsFromUser((dataReceived) => {
+function initUsersTable(moveBackground) {
+    getUserDataAndSensorIds((dataReceived) => {
         if (dataReceived.length > 0) {
             // Users Table
             fillUsersTable(dataReceived);
-            let firstRow = document.getElementById("userTableCells").rows[0];
-            firstRow.style.background = "#00b7d1";
+            // Row selected
+            let rowSelected;
+            // In register update
+            if (moveBackground) {
+                rowSelected = document.getElementById("userTableCells").rows[0];
+            } else {
+                rowSelected = document.getElementById("userTableCells").rows[myIndex.lastRowIndex];
+            }
+            // Aplicamos el background color
+            rowSelected.style.background = "#00b7d1";
+            // Obtenemos los datos de user
+            let mail = rowSelected.cells[1].innerText;
+            let devices = rowSelected.cells[2].innerText;
+            // Iniciamos el relleno de los datos de usuario
+            initUserData(mail, devices);
+            // Add row table listener
             addTableListenerToGetEmailFromRowClicked();
-            // User Data Panel
-            let mail = dataReceived[0].mail
-            showUserData(mail);
-            showUserActiveTime(mail, "hour");
-            showUserTotalTraveledDistance(mail);
-            showUserDevices(firstRow.cells[2].innerText);
         }
     });
+}
+
+function initUserData(mail, devices) {
+    showUserData(mail);
+    showUserActiveTime(mail, "hour");
+    showUserTotalTraveledDistance(mail);
+    showUserDevices(devices);
 }
 
 function showUserData(mail) {
@@ -35,9 +50,11 @@ function showUserActiveTime(mail, diffValue) {
 function showUserTotalTraveledDistance(mail) {
     getTraveledDistanceOfUser((dataReceived) => {
         let totalDistance = 0;
-        dataReceived.forEach(data => {
-            totalDistance += Math.round(data.distance);
-        });
+        if (dataReceived.length > 0) {
+            dataReceived.forEach(data => {
+                totalDistance += Math.round(data.distance);
+            });
+        }
         fillInUserTotalDistanceField(totalDistance);
     }, mail);
 }
@@ -45,9 +62,27 @@ function showUserTotalTraveledDistance(mail) {
 function showUserDevices(devices) {
     fillInUserDevicesField(devices);
 }
-/*****************************************************************************
-/*************************** FILL DOM FUNCTIONS ******************************
-/****************************************************************************/
+/*************************************************************************
+/*************************** FORM FUNCTIONS ******************************
+/*************************************************************************/
+function showAndFillUpdateUserPanel() {
+    initPrivateModalPanel('updateUserPanel', null, () => {
+        setTextValueDOM("mail", getTextValueDOM("lbl_mail"));
+        setTextValueDOM("name", getTextValueDOM("lbl_name"));
+        setTextValueDOM("surnames", getTextValueDOM("lbl_surnames"));
+        setTextValueDOM("account_status", getTextValueDOM("lbl_account_status"));
+        setReadOnlyInputDOM("mail");
+    });
+}
+
+function showAndFillDeleteUserPanel() {
+    initPrivateModalPanel('deleteUserPanel', null, () => {
+        setTextValueDOM("mail", getTextValueDOM("lbl_mail"));
+    });
+}
+/*************************************************************************
+/*************************** FILL FUNCTIONS ******************************
+/*************************************************************************/
 function fillUsersTable(dataUserList) {
     var table = document.querySelector("#usersDataTable").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
@@ -62,15 +97,15 @@ function fillUsersTable(dataUserList) {
     }
 }
 
-function addUserTable(userData) {
-    console.log(userData);
-    // Rellenar tabla con el usuario recibido
+function refreshUsersTable(userData, moveBackground) {
+    // Reiniciamos la tabla de usuarios
+    initUsersTable(moveBackground);
 }
 
 function fillInUserFields(userData) {
     document.getElementById("lbl_name").innerHTML = userData[0].name;
     document.getElementById("lbl_surnames").innerHTML = userData[0].surnames;
-    document.getElementById("lbl_email").innerHTML = userData[0].mail;
+    document.getElementById("lbl_mail").innerHTML = userData[0].mail;
     document.getElementById("lbl_role").innerHTML = userData[0].role;
     document.getElementById("lbl_account_status").innerHTML = userData[0].accountStatus;
     document.getElementById("lbl_secret_code").innerHTML = userData[0].secretCode;
@@ -106,22 +141,13 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
             let mail = e.currentTarget.cells[1].innerText;
             let devices = e.currentTarget.cells[2].innerText;
             // Mostramos sus datos en el panel de usuario
-            showUserData(mail);
-            showUserActiveTime(mail, "hour");
-            showUserTotalTraveledDistance(mail);
-            showUserDevices(devices);
+            initUserData(mail, devices);
             // Guardamos el index de la row clickada
             myIndex.lastRowIndex = rowIndex;
         }
         return true;
     });
 }
-
-
-
-
-
-
 // #######################################################################
 // #######################################################################
 // #######################################################################
@@ -133,13 +159,9 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
 // #######################################################################
 // #######################################################################
 // #######################################################################
-
-
-
 function getHistoricNamesForDropdown() {
     getHistoricNames((names) => {
         var dropdown = document.getElementById("dropdown");
-        
         names.forEach(name => {
             var li = document.createElement("li");
             let a = document.createElement("a");
@@ -151,13 +173,11 @@ function getHistoricNamesForDropdown() {
     })
 }
 drawMap();
-
-document.getElementById('dropdown').onclick = function (event) {
-    console.log("---->",event.target.innerHTML);
-        getHistoric(event.target.innerHTML,(heatmap) =>{
-            let data = parseToObjectForHeatmap(heatmap);
-            changeHeatmap(data);
-        });
+document.getElementById('dropdown').onclick = function(event) {
+    console.log("---->", event.target.innerHTML);
+    getHistoric(event.target.innerHTML, (heatmap) => {
+        let data = parseToObjectForHeatmap(heatmap);
+        changeHeatmap(data);
+    });
 }
-
 getHistoricNamesForDropdown();

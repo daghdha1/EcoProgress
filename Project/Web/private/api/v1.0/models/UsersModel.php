@@ -134,16 +134,40 @@ class UsersModel extends BaseModel {
     */
 	public function updateUser($user) {
 		// Escapamos los carácteres especiales
-		$strMail = $user->getMail();
+		$strMail = mysqli_real_escape_string($this->conn, $user->getMail());
 		$strName = mysqli_real_escape_string($this->conn, $user->getName());
 		$strSurnames = mysqli_real_escape_string($this->conn, $user->getSurnames());
 		$numLastConn = $user->getLastConn();
 		$strAccountStatus = mysqli_real_escape_string($this->conn, $user->getAccountStatus());
 
 		// Query
-		$sql = "UPDATE Users as u SET u.name = '$strName', u.surnames = '$strSurnames', u.last_conn = $numLastConn, u.account_status = '$strAccountStatus' WHERE u.mail = '$strMail'";
+		if (is_null($numLastConn)) {
+			$sql = "UPDATE Users as u SET u.name = '$strName', u.surnames = '$strSurnames', u.last_conn = NULL, u.account_status = '$strAccountStatus' WHERE u.mail = '$strMail'";
+		} else {
+			$sql = "UPDATE Users as u SET u.name = '$strName', u.surnames = '$strSurnames', u.last_conn = $numLastConn, u.account_status = '$strAccountStatus' WHERE u.mail = '$strMail'";
+		}
 		
 		// Devuelve true, si no ha podido actualizar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+
+		return $result;
+	}
+
+	/* 
+    * Borra un usuario de la base de datos
+    *
+    * Texto -->
+    *                   deleteUser() <--
+    * <-- V | F
+    */
+	public function deleteUser($mail) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+
+		// Query
+		$sql = "DELETE FROM Users WHERE Users.mail = '$strMail'";
+		
+		// Devuelve true, si no ha podido insertar el registro, devuelve false
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 
 		return $result;

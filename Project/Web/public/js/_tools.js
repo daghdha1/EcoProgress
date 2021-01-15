@@ -16,6 +16,8 @@ function responseHandler(json, callback = null) {
         case !isNaN(json):
             if (callback != null) callback(json);
             break;
+        default:
+            if (callback != null) callback(0);
     }
 }
 // -------------------------------------------------------------------------------- //
@@ -113,7 +115,7 @@ function setReadOnlyInputDOM(id) {
 }
 
 function getTextValueDOM(id) {
-    return document.getElementById(id).value.replace(/<[^>]*>/g, "");
+    return document.getElementById(id).innerText;
 }
 
 function setTextValueDOM(id, str) {
@@ -160,16 +162,19 @@ function isValidForm(form, params) {
 // ------------------------------ Funciones Tiempo -------------------------------- //
 // -------------------------------------------------------------------------------- //
 function timeConverter(UNIX_timestamp) {
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + 'h:' + min + 'm:' + sec + 's';
-    return time;
+    if (UNIX_timestamp != null) {
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + 'h:' + min + 'm:' + sec + 's';
+        return time;
+    }
+    return "Nunca";
 }
 
 function convertSecondsToFormatTime(seconds) {

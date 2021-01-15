@@ -45,10 +45,9 @@ function getActiveTimeOfUser(callback, mail, diffValue) {
         method: "GET"
     });
     fetch(request).then((response) => {
-        if (response.ok) return response.text();
+        if (response.ok) return response.json();
         else return null;
     }).then((json) => {
-        console.log(json)
         responseHandler(json, callback);
     });
 }
@@ -71,13 +70,13 @@ function getTraveledDistanceOfUser(callback, mail) {
     });
 }
 
-function createUser() {
-    let params = createUser.arguments;
+function insertUser() {
+    let params = insertUser.arguments;
     let form = params[0];
     if (isValidForm(form, params)) {
         // Form data
         let formData = new FormData(form);
-        formData.append("action", "create");
+        formData.append("action", "insert");
         let url = config.restDir + "/users";
         var myInit = {
             method: "POST",
@@ -89,7 +88,65 @@ function createUser() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            responseHandler(json, addUserTable)
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, true);
+            });
+            hideModalPanel('createUserPanel');
+            alert("Usuario creado correctamente");
+        });
+    }
+}
+
+function updateUser() {
+    let params = updateUser.arguments;
+    let form = params[0];
+    if (isValidForm(form, params)) {
+        // Form data
+        let formData = new FormData(form);
+        formData.append("action", "update");
+        let url = config.restDir + "/users";
+        var myInit = {
+            method: "POST",
+            body: formData
+        };
+        let request = new Request(url, myInit);
+        // Enviamos la petición
+        fetch(request).then(function(response) {
+            if (response.ok) return response.json();
+            else return null;
+        }).then(function(json) {
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, false);
+            });
+            hideModalPanel('updateUserPanel');
+            alert("Usuario modificado correctamente");
+        });
+    }
+}
+
+function deleteUser() {
+    let params = deleteUser.arguments;
+    let form = params[0];
+    if (isValidForm(form, params)) {
+        // Form data
+        let formData = new FormData(form);
+        formData.append("action", "delete");
+        let url = config.restDir + "/users";
+        var myInit = {
+            method: "POST",
+            body: formData
+        };
+        let request = new Request(url, myInit);
+        // Enviamos la petición
+        fetch(request).then(function(response) {
+            if (response.ok) return response.json();
+            else return null;
+        }).then(function(json) {
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, true);
+            });
+            hideModalPanel('deleteUserPanel');
+            alert("Usuario eliminado correctamente");
         });
     }
 }
