@@ -149,4 +149,24 @@ class UsersModel extends BaseModel {
 		return $result;
 	}
 
+	/* 
+    * Borra un usuario de la base de datos
+    *
+    * Texto -->
+    *                   deleteUser() <--
+    * <-- V | F
+    */
+	public function deleteUser($mail) {
+		// Escapamos los carácteres especiales
+		$strMail = mysqli_real_escape_string($this->conn, $mail);
+
+		// Query
+		$sql = "DELETE FROM Users WHERE Users.mail = '$strMail'";
+		
+		// Devuelve true, si no ha podido insertar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+
+		return $result;
+	}
+
 }

@@ -88,10 +88,10 @@ class SensorsModel extends BaseModel {
 	// ----------------------------------------------- POST ------------------------------------------------ //
 
 	/* 
-    * Actualiza un sensor en la base de datos
+    * Actualiza un sensor de un usuario en la base de datos
     *
     * SensorEntity -->
-    *                    updateUser() <--
+    *                    			updateUser() <--
     * <-- V | F
     */
 	public function updateSensor($sensor) {
@@ -100,13 +100,29 @@ class SensorsModel extends BaseModel {
 		$strType = mysqli_real_escape_string($this->conn, $sensor->getType());
 		$numState = $sensor->getState();
 		$strActivationKey = mysqli_real_escape_string($this->conn, $sensor->getActivationKey());
-
 		// Query
 		$sql = "UPDATE Sensors as s SET s.mail = '$strMail', s.type = '$strType', s.state = $numState WHERE s.activation_key = '$strActivationKey'";
-		
 		// Devuelve true, si no ha podido actualizar el registro, devuelve false
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+		return $result;
+	}
 
+
+	/* 
+    * Actualiza un sensor de un usuario en la base de datos
+    *
+    * SensorEntity -->
+    *                    updateUser() <--
+    * <-- V | F
+    */
+	public function updateStatusSensor($sensor) {
+		// Escapamos los carácteres especiales
+		$strId = $sensor->getId();
+		$numState = $sensor->getState();
+		// Query
+		$sql = "UPDATE Sensors as s SET s.state = $numState WHERE s.id = '$strId'";
+		// Devuelve true, si no ha podido actualizar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 		return $result;
 	}
 

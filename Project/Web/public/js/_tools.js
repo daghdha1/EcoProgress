@@ -16,6 +16,8 @@ function responseHandler(json, callback = null) {
         case !isNaN(json):
             if (callback != null) callback(json);
             break;
+        default:
+            if (callback != null) callback(0);
     }
 }
 // -------------------------------------------------------------------------------- //
@@ -113,7 +115,7 @@ function setReadOnlyInputDOM(id) {
 }
 
 function getTextValueDOM(id) {
-    return document.getElementById(id).value.replace(/<[^>]*>/g, "");
+    return document.getElementById(id).innerText;
 }
 
 function setTextValueDOM(id, str) {

@@ -168,9 +168,8 @@ class UsersController extends BaseController
                     $result = '';
                     break;
                 case 'delete':
-                    $result = '';
+                    $result = $this->deleteUser($usersModel, $sensorsModel, $params);
                     break;
-                return $result;
             }
             return $result;
         }
@@ -313,10 +312,10 @@ class UsersController extends BaseController
     }
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Actualiza un usuario con los datos suministrados
     *
     * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    *                                        updateUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function updateUser($usersModel, $params) {
@@ -325,14 +324,29 @@ class UsersController extends BaseController
     }
 
     /* 
-    * Crea un nuevo usuario con estado 'pending', después envía un correo de verificación de cuenta
+    * Elimina un usuario y lo desvincula del sensor asociado
     *
-    * UsersModel, Lista<Texto> -->
-    *                                        registration() <--
+    * UsersModel, SensorsModel, Lista<Texto> -->
+    *                                               deleteUser() <--
     * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function deleteUser($usersModel, $params) {
-        
+    private function deleteUser($usersModel, $sensorsModel, $params) {
+        $sData = $sensorsModel->getSensor($params['dup_mail']);
+        $uData = $usersModel->getUser($params['dup_mail']);
+        // Si el sensor a registrar está disponible (existe)
+        if (!is_null($sData) && !empty($sData)) {
+            // Si el user a eliminar existe
+            if (!is_null($uData) && !empty($uData)) {
+                $sensor = parent::createEntity('Sensors')->createSensorFromDatabase($sData);
+                $sensor->setState(0);
+                if ($sensorsModel->updateStatusSensor($sensor)) { 
+                    if ($usersModel->deleteUser($params['dup_mail'])) {
+                        $user = parent::createEntity("Users")->createUserFromDatabase($uData);
+                        return $user->parseUserToAssocArrayUsers();
+                    }
+                }
+            }
+        }
         return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 

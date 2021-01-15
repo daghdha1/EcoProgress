@@ -52,9 +52,26 @@ function showUserTotalTraveledDistance(mail) {
 function showUserDevices(devices) {
     fillInUserDevicesField(devices);
 }
-/*****************************************************************************
-/*************************** FILL DOM FUNCTIONS ******************************
-/****************************************************************************/
+/*************************************************************************
+/*************************** FORM FUNCTIONS ******************************
+/*************************************************************************/
+function showAndFillUpdateUserPanel() {
+    initPrivateModalPanel('updateUserPanel', null, () => {
+        setTextValueDOM("uup_mail", getTextValueDOM("lbl_mail"));
+        setTextValueDOM("uup_name", getTextValueDOM("lbl_name"));
+        setTextValueDOM("surnames", getTextValueDOM("lbl_surnames"));
+        setTextValueDOM("uup_status", getTextValueDOM("lbl_account_status"));
+    });
+}
+
+function showAndFillDeleteUserPanel() {
+    initPrivateModalPanel('deleteUserPanel', null, () => {
+        setTextValueDOM("dup_mail", getTextValueDOM("lbl_mail"));
+    });
+}
+/*************************************************************************
+/*************************** FILL FUNCTIONS ******************************
+/*************************************************************************/
 function fillUsersTable(dataUserList) {
     var table = document.querySelector("#usersDataTable").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
@@ -69,7 +86,7 @@ function fillUsersTable(dataUserList) {
     }
 }
 
-function addUserTable(userData) {
+function refreshUsersTable(userData) {
     // Reiniciamos la tabla de usuarios
     initUsersTable();
 }
@@ -77,7 +94,7 @@ function addUserTable(userData) {
 function fillInUserFields(userData) {
     document.getElementById("lbl_name").innerHTML = userData[0].name;
     document.getElementById("lbl_surnames").innerHTML = userData[0].surnames;
-    document.getElementById("lbl_email").innerHTML = userData[0].mail;
+    document.getElementById("lbl_mail").innerHTML = userData[0].mail;
     document.getElementById("lbl_role").innerHTML = userData[0].role;
     document.getElementById("lbl_account_status").innerHTML = userData[0].accountStatus;
     document.getElementById("lbl_secret_code").innerHTML = userData[0].secretCode;
@@ -120,12 +137,6 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
         return true;
     });
 }
-
-
-
-
-
-
 // #######################################################################
 // #######################################################################
 // #######################################################################
@@ -137,13 +148,9 @@ function addTableListenerToGetEmailFromRowClicked(tr) {
 // #######################################################################
 // #######################################################################
 // #######################################################################
-
-
-
 function getHistoricNamesForDropdown() {
     getHistoricNames((names) => {
         var dropdown = document.getElementById("dropdown");
-        
         names.forEach(name => {
             var li = document.createElement("li");
             let a = document.createElement("a");
@@ -155,13 +162,11 @@ function getHistoricNamesForDropdown() {
     })
 }
 drawMap();
-
-document.getElementById('dropdown').onclick = function (event) {
-    console.log("---->",event.target.innerHTML);
-        getHistoric(event.target.innerHTML,(heatmap) =>{
-            let data = parseToObjectForHeatmap(heatmap);
-            changeHeatmap(data);
-        });
+document.getElementById('dropdown').onclick = function(event) {
+    console.log("---->", event.target.innerHTML);
+    getHistoric(event.target.innerHTML, (heatmap) => {
+        let data = parseToObjectForHeatmap(heatmap);
+        changeHeatmap(data);
+    });
 }
-
 getHistoricNamesForDropdown();
