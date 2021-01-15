@@ -7,22 +7,22 @@
     <!-- ICON -->
     <link type="favicon.png" href="favicon.png" sizes="16x16 24x24 36x36 48x48" rel="icon" />
     <!-- STYLES -->
-    <link href="./public/fonts/CenturyGothic.css" rel="stylesheet"/>
-    
-    <link href="./public/css/libraries/Footer-Basic.css" rel="stylesheet"/>
-    <link href="./public/css/libraries/palette.compiled.css" rel="stylesheet"/>
+    <link href="./public/fonts/CenturyGothic.css" rel="stylesheet" />
+
+    <link href="./public/css/libraries/Footer-Basic.css" rel="stylesheet" />
+    <link href="./public/css/libraries/palette.compiled.css" rel="stylesheet" />
     <link href="./public/css/libraries/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css" rel="stylesheet" />
     <link href="./public/css/libraries/Navigation-Clean.css" rel="stylesheet" />
     <link href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" rel="stylesheet" />
-    <link  href="./public/css/Footer-Basic.css"rel="stylesheet"/>
+    <link href="./public/css/Footer-Basic.css" rel="stylesheet" />
     <link href="./public/css/libraries/nav.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
     <link rel="stylesheet" href="./public/fonts/font-awesome.min.css">
-       
+
     <link rel="stylesheet" href="./public/css/cards_styles.css">
     <link rel="stylesheet" href="./public/fonts/ionicons.min.css">
     <!-- SCRIPTS -->
@@ -31,8 +31,8 @@
     <script defer src="./public/js/libraries/bootstrap.bundle.min.js"></script>
     <script defer src="./public/js/libraries/bs-init.js"></script>
     <script defer src="  https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js"></script>
-  
-    
+
+
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
     <script defer src="./public/js/animations.js"></script>
     <script defer src="./public/js/_config.js"></script>
@@ -47,9 +47,10 @@
     <script defer src="./public/js/rest_login.js"></script>
     <script defer src="./public/js/rest_registration.js"></script>
     <script defer src="./public/js/landingPage.js"></script>
-    
-    
+
+
 </head>
+
 <body class="text-center" style="font-family: Nunito, sans-serif ;color: #682172;height: 100%;">
     <nav class="navbar navbar-light navbar-expand-md text-center d-flex justify-content-center navigation-clean"
         style="padding: 0;padding-top: 16;min-width: 100%;width: 100%;">
@@ -62,13 +63,11 @@
                 </a>
                 <div class="text-right d-xl-flex justify-content-end justify-content-xl-end justify-content-end"
                     style="padding: 0;padding-right: 15px;padding-top: 5px;padding-bottom: 5px;width: 225px;right: 0px;position: absolute;">
-                    <a class="ml-auto" onclick="return initModalPanel('loginPanel')"
-                        style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;  text-decoration: none;
+                    <a class="ml-auto" onclick="return initModalPanel('loginPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-right:10px; text-align:center;  text-decoration: none;
                         ">
                         Iniciar Sesión
                     </a>
-                    <a class="ml-auto" onclick="return initModalPanel('registrationPanel')"
-                        style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;  text-decoration: none;
+                    <a class="ml-auto" onclick="return initModalPanel('registrationPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:10px; text-align:center;  text-decoration: none;
                         ">
                         Regístrate
                     </a>
@@ -79,31 +78,32 @@
     <div class="container-fluid" style="height: 100%;padding-right: 0px;padding-left: 0px ;">
         <div id="map" style="height: 90%; width: 100%;position: absolute; z-index: 0;">
         </div>
+        <div style="height: 200px; width: 200px; margin-left: 47%; margin-top:16%;position: absolute; z-index: 2;" id="animationText"></div>
 
-        <div style="position: absolute; height: 800px; width: 800px; margin-left: 500px;" id="animation"></div>
+        <div style="height: 800px; width: 800px; margin-left: 30%;" id="animation"></div>
 
         <div
             class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
             <div class="card text-center d-flex justify-content-center align-items-center"
                 style="position: absolute !important;bottom: 80px;right: 20px;width: 26%;border-radius: 20px;box-shadow: 0 0 10px #888888;min-width: 200px;max-height: auto;">
                 <div class="card-body d-flex flex-row justify-content-center flex-sm-column flex-md-column">
-                    <div class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around"
-                        role="group" style="min-width: 65px;max-width: 270px;margin: 0;"><button
-                            class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button"
-                            style="font-weight: bold;background: #007d93;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">CO</button>
-                        <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse"
-                            type="button"
-                            style="border-radius: 0;font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">NO<sub>2</sub></button><button
-                            class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button"
-                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">SO<sub>2</sub></button>
-                        <button class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse"
-                            type="button"
-                            style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">0<sub>3</sub></button>
+                    <div id="btn-gases"
+                        class="btn-group d-flex justify-content-around align-items-center align-content-center align-self-center flex-wrap flex-sm-wrap flex-md-nowrap flex-lg-nowrap flex-xl-nowrap d-flex justify-content-around"
+                        role="group" style="min-width: 65px;max-width: 270px;margin: 0;">
+                        <button id="btn_co" class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button"
+                            style="font-weight: bold;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">CO</button>
+                        <button id="btn_no2" class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse"
+                            type="button"style="border-radius: 0;font-weight: bold;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">NO<sub>2</sub></button>
+                            <button id="btn_so2" class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button"
+                            style="font-weight: bold;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">SO<sub>2</sub></button>
+                        <button id="btn_o3" class="btn btn-primary border rounded-circle" data-bs-hover-animate="pulse" type="button"
+                            style="font-weight: bold;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: Nunito, sans-serif;">0<sub>3</sub></button>
                     </div>
                     <div class="flex-sm-column">
                         <p style="font-weight: bold;font-family: Montserrat, sans-serif;">Si quieres acceder a
                             información más detallada, colabora en nuestra red de sensores</p>
-                            <a id="btnContacto" class="btn btn-primary" data-bs-hover-animate="pulse" role="button" style="color: #ffffff !important; font-weight: bold;border-radius: 20px;background: #682172;border-style: none;font-family: Nunito, sans-serif;"
+                        <a id="btnContacto" class="btn btn-primary" data-bs-hover-animate="pulse" role="button"
+                            style="color: #ffffff !important; font-weight: bold;border-radius: 20px;background: #682172;border-style: none;font-family: Nunito, sans-serif;"
                             href="#contacto">Contacto</a>
                     </div>
                 </div>
@@ -111,8 +111,8 @@
         </div>
         <div class="d-block d-xl-flex justify-content-center align-items-xl-center footer"
             style="height: 45px;box-shadow: 0px -4px 6px #d6d6d6;background: #ffffff;position: absolute;bottom: 0px;width: 100%;">
-            <a  href="#info"><i id="btn-arrow" data-bs-hover-animate="pulse" class="fa fa-chevron-down" style="font-size: 30px;text-align: center;color: #682172;"
-                    href="#info"></i></a>
+            <a href="#info"><i id="btn-arrow" data-bs-hover-animate="pulse" class="fa fa-chevron-down"
+                    style="font-size: 30px;text-align: center;color: #682172;" href="#info"></i></a>
         </div>
     </div>
     <div class="container-fluid text-center d-flex flex-column justify-content-center justify-content-xl-center align-items-xl-center"
@@ -141,7 +141,8 @@
                             </div>
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="width: 100%;height: 10%;"><button class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modal1" type="button" style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
+                                    data-target="#modal1" type="button"
+                                    style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
                                     Info</button>
                             </div>
                         </div>
@@ -150,7 +151,7 @@
                 <div class="col-md-3 d-xl-flex justify-content-xl-center">
                     <div class="card" data-bs-hover-animate="pulse"
                         style="width: 80%;height: 90%;background: rgba(255,255,255,0.80);border-width: 0px;border-radius: 13px;">
-                        <div class="card-body d-flex flex-column justify-content-around align-items-center align-items-xl-center" 
+                        <div class="card-body d-flex flex-column justify-content-around align-items-center align-items-xl-center"
                             style="margin-right: 0;background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;box-shadow: 0px 0px 10px rgb(78,78,78);color: rgb(57,31,61);/*width: 100%;*/padding-top: 10px;border-width: 0px;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;">
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="width: 90%;height: 40%;margin: 0px;margin-bottom: 0px;/*top: 0;*/"><img
@@ -167,7 +168,8 @@
                             </div>
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="width: 100%;height: 10%;"><button class="btn btn-primary" type="button"
-                                    data-toggle="modal" data-target="#modal2" style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
+                                    data-toggle="modal" data-target="#modal2"
+                                    style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
                                     Info</button></div>
                         </div>
                     </div>
@@ -175,7 +177,7 @@
                 <div class="col-md-3 d-xl-flex justify-content-xl-center">
                     <div class="card" data-bs-hover-animate="pulse"
                         style="border-width: 0px;width: 80%;height: 90%;background: rgba(255,255,255,0.80);">
-                        <div class="card-body d-flex flex-column justify-content-around align-items-xl-center" 
+                        <div class="card-body d-flex flex-column justify-content-around align-items-xl-center"
                             style="background: rgba(255,255,255,0.5);border-radius: 13px;opacity: 0.96;color: rgb(57,31,61);border-width: 0px;border-top-style: solid;border-right-style: solid;border-bottom-style: solid;border-left-style: solid;width: 100%;height: 100%;padding: 20px;box-shadow: 0px 0px 10px rgb(78,78,78);padding-top: 10px;padding-bottom: 15px;">
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="/*top: 0;*/width: 90%;height: 40%;"><img src="./public/media/NO2.png"
@@ -192,7 +194,8 @@
                             </div>
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="width: 100%;height: 10%;"><button class="btn btn-primary" type="button"
-                                    data-toggle="modal" data-target="#modal3" style="background: #007d93; border-radius: 15px; border: 0px !important;">Más
+                                    data-toggle="modal" data-target="#modal3"
+                                    style="background: #007d93; border-radius: 15px; border: 0px !important;">Más
                                     Info</button></div>
                         </div>
 
@@ -219,7 +222,8 @@
                             </div>
                             <div class="d-xl-flex justify-content-xl-center align-items-xl-center"
                                 style="width: 100%;height: 10%;"><button class="btn btn-primary" type="button"
-                                    data-toggle="modal" data-target="#modal4" style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
+                                    data-toggle="modal" data-target="#modal4"
+                                    style="background: #007d93;border-radius: 15px; border: 0px !important;">Más
                                     Info</button></div>
                         </div>
                     </div>

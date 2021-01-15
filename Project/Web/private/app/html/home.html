@@ -92,7 +92,10 @@
                     style="height: 100%;margin: 0px;padding: 0px; overflow: hidden;">
                     <div id="map" style="height: 100%; width: 100%;position: absolute; z-index: 0;">
                     </div>
-                    <div style="position: absolute; height: 800px; width: 800px; margin-left: 500px;" id="animation"></div>
+                    <div style="height: 200px; width: 200px; margin-left: 47%; margin-top:16%;position: absolute; z-index: 2;"
+                        id="animationText"></div>
+
+                    <div style="height: 800px; width: 800px; margin-left: 30%;" id="animation"></div>
                     <div
                         class="d-flex d-lg-flex d-xl-flex flex-grow-0 justify-content-end flex-sm-grow-1 justify-content-lg-end align-items-lg-start justify-content-xl-end flex-row">
                         <div class="card text-center d-flex justify-content-center align-items-center"
@@ -127,9 +130,9 @@
                                         <button id="btn_o3" class="btn btn-primary border rounded-circle"
                                             style="font-weight: bold;background: #8f8f8f;width: 55px;height: 55px;margin: 5px;margin-right: 5px;margin-left: 5px;padding: 0px;font-family: 'CenturyGothic';"
                                             type="button">
-                                            0
+                                            O
                                             <sub>
-                                                3
+                                            3
                                             </sub>
                                         </button>
                                     </div>
@@ -169,16 +172,16 @@
                                         <div class="col" style="width: 25%;padding: 0;">
                                             <div class="d-flex d-xl-flex flex-column justify-content-around"
                                                 style="height: 100%;width: 100%;">
-                                                <h6
+                                                <h6 id="maxValueLegend"
                                                     style="font-size: 14px;height: 16px;margin: 0;color: rgb(255,0,48);font-weight: bold;text-shadow: 1px 1px 1px #808080;">
                                                     45-70</h6>
-                                                <h6
+                                                <h6 id="mediumhighValueLegend"
                                                     style="font-size: 14px;height: 16px;margin: 0;color: rgb(255,107,48);font-weight: bold;text-shadow: 1px 1px 1px #808080;">
                                                     22-45</h6>
-                                                <h6
+                                                <h6 id="mediumlowValueLegend"
                                                     style="font-size: 14px;height: 16px;margin: 0;color: rgb(255,255,62);font-weight: bold;text-shadow: 1px 1px 1px #808080;">
                                                     10-22</h6>
-                                                <h6
+                                                <h6 id="minValueLegend"
                                                     style="font-size: 14px;height: 16px;margin: 0;color: #b6ff3c;font-weight: bold;text-shadow: 1px 1px 1px #808080;">
                                                     0-10</h6>
                                             </div>
