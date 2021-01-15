@@ -10,7 +10,14 @@
     box-shadow: none;
 
  }
+ #btn_co:active,#btn_no2:active,#btn_so2:active,#btn_o3:active{
+   color: white !important;
+   background-color: #007d93ff !important;
+   outline: 0 none !important;
+   border: none !important;
+   box-shadow: none;
 
+}
  #btn_co:hover,#btn_no2:hover,#btn_so2:hover,#btn_o3:hover{
     color: white !important;
     background-color:#682172ff !important;
