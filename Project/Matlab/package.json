@@ -13,6 +13,7 @@
         "cors": "^2.8.5",
         "express": "*",
         "mathjs": "^8.1.0",
+        "node-fetch": "^2.6.1",
         "request": "*",
         "sqlite3": "*"
     },

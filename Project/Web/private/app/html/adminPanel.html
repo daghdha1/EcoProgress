@@ -27,6 +27,8 @@
             </script>
             <script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.5/lottie.min.js">
             </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+            <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/animations.js">
             </script>
             <script defer="" src="/EcoProgress/Project/Web/public/js/rest_interpolation.js">
@@ -241,6 +243,9 @@
                                     </button>
                                     <button class="btn btn-primary" data-target="#modalEliminar" data-toggle="modal" onclick="return showAndFillDeleteUserPanel()" style="margin-right: 20px;background: rgb(242,244,245);color: #682172;border-width: 2px;border-color: #422e65;border-radius: 8px;font-family: CenturyGothic;" type="button">
                                         Eliminar Usuario
+                                    </button>
+                                    <button class="btn btn-primary" data-target="#modalCrear" data-toggle="modal" onclick="generarInformes()" style="margin-right: 20px;/*align-items: center;*/color: #682172;background: rgb(242,244,245);border-radius: 8px;border-width: 2px;border-color: #422e65;font-family: CenturyGothic;" type="button">
+                                        Generar informes
                                     </button>
                                 </div>
                                 <div class="col" style="margin-right: 35px;">

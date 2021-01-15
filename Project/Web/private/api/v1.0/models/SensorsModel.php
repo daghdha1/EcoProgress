@@ -51,6 +51,18 @@ class SensorsModel extends BaseModel {
 		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
 		return $result;
 	}
+/* 
+    * Obtiene todos los usuarios registrados
+    *
+    *                   			getAllUsers() <--
+    * <-- Lista<User<stdClass>>
+    */
+	public function getAllSensors() {
+		// Respuesta
+		$result = BaseEntity::getAll();
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
+		return $result;
+	}
 
 	/* 
     * Obtiene el sensor de un usuario en base a su clave de activación
