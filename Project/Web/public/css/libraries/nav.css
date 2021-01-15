@@ -5,12 +5,12 @@
   font-size: 24px !important;
 }
 
-.nav-tabs .nav-link:focus {
+.nav-tabs .nav-link:hover {
   color: #007d93 !important;
   text-decoration: underline !important;
 }
 
-.nav-tabs .nav-link a {
+.nav-tabs .nav-link  {
   color: #682172 !important;
 }
 
