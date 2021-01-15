@@ -1,19 +1,29 @@
-initUsersTable();
+initUsersTable(true);
 /*****************************************************************************
 /*************************** CALLBACK FUNCTIONS ******************************
 /****************************************************************************/
-function initUsersTable() {
+function initUsersTable(moveBackground) {
     getUserDataAndSensorIds((dataReceived) => {
         if (dataReceived.length > 0) {
             // Users Table
             fillUsersTable(dataReceived);
-            let firstRow = document.getElementById("userTableCells").rows[0];
-            firstRow.style.background = "#00b7d1";
-            addTableListenerToGetEmailFromRowClicked();
-            // User Data Panel
-            let mail = dataReceived[0].mail
-            let devices = firstRow.cells[2].innerText;
+            // Row selected
+            let rowSelected;
+            // In register update
+            if (moveBackground) {
+                rowSelected = document.getElementById("userTableCells").rows[0];
+            } else {
+                rowSelected = document.getElementById("userTableCells").rows[myIndex.lastRowIndex];
+            }
+            // Aplicamos el background color
+            rowSelected.style.background = "#00b7d1";
+            // Obtenemos los datos de user
+            let mail = rowSelected.cells[1].innerText;
+            let devices = rowSelected.cells[2].innerText;
+            // Iniciamos el relleno de los datos de usuario
             initUserData(mail, devices);
+            // Add row table listener
+            addTableListenerToGetEmailFromRowClicked();
         }
     });
 }
@@ -57,16 +67,17 @@ function showUserDevices(devices) {
 /*************************************************************************/
 function showAndFillUpdateUserPanel() {
     initPrivateModalPanel('updateUserPanel', null, () => {
-        setTextValueDOM("uup_mail", getTextValueDOM("lbl_mail"));
-        setTextValueDOM("uup_name", getTextValueDOM("lbl_name"));
+        setTextValueDOM("mail", getTextValueDOM("lbl_mail"));
+        setTextValueDOM("name", getTextValueDOM("lbl_name"));
         setTextValueDOM("surnames", getTextValueDOM("lbl_surnames"));
-        setTextValueDOM("uup_status", getTextValueDOM("lbl_account_status"));
+        setTextValueDOM("account_status", getTextValueDOM("lbl_account_status"));
+        setReadOnlyInputDOM("mail");
     });
 }
 
 function showAndFillDeleteUserPanel() {
     initPrivateModalPanel('deleteUserPanel', null, () => {
-        setTextValueDOM("dup_mail", getTextValueDOM("lbl_mail"));
+        setTextValueDOM("mail", getTextValueDOM("lbl_mail"));
     });
 }
 /*************************************************************************
@@ -86,9 +97,9 @@ function fillUsersTable(dataUserList) {
     }
 }
 
-function refreshUsersTable(userData) {
+function refreshUsersTable(userData, moveBackground) {
     // Reiniciamos la tabla de usuarios
-    initUsersTable();
+    initUsersTable(moveBackground);
 }
 
 function fillInUserFields(userData) {

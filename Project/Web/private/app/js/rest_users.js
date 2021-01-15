@@ -88,7 +88,9 @@ function insertUser() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            responseHandler(json, refreshUsersTable);
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, true);
+            });
             hideModalPanel('createUserPanel');
             alert("Usuario creado correctamente");
         });
@@ -113,7 +115,9 @@ function updateUser() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            responseHandler(json, refreshUsersTable);
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, false);
+            });
             hideModalPanel('updateUserPanel');
             alert("Usuario modificado correctamente");
         });
@@ -138,7 +142,9 @@ function deleteUser() {
             if (response.ok) return response.json();
             else return null;
         }).then(function(json) {
-            responseHandler(json, refreshUsersTable);
+            responseHandler(json, (data) => {
+                refreshUsersTable(data, true);
+            });
             hideModalPanel('deleteUserPanel');
             alert("Usuario eliminado correctamente");
         });

@@ -11,40 +11,40 @@
                     </span>
                 </button>
             </header>
-            <form name="formCreateUser" onsubmit="insertUser(this,'cup_name', 'surnames', 'cup_mail', 'cup_password', 'password_confirm', 'cup_rol', 'cup_status', 'cup_key'); return false;">
+            <form name="formCreateUser" onsubmit="insertUser(this,'name', 'surnames', 'mail', 'password', 'password_confirm', 'rol', 'account_status', 'key'); return false;">
                 <div class="modal-body d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
-                    <label for="cup_name" style="font-family: CenturyGothic;">
+                    <label for="name" style="font-family: CenturyGothic;">
                         Nombre *
                     </label>
-                    <input id="cup_name" maxlength="20" name="cup_name" style="font-family: CenturyGothic; margin-bottom: 10px;"/>
+                    <input id="name" maxlength="20" name="name" style="font-family: CenturyGothic; margin-bottom: 10px;"/>
                     <label for="surnames" style="font-family: CenturyGothic;" type="text">
                         Apellidos
                     </label>
                     <input id="surnames" maxlength="30" name="surnames" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
-                    <label for="cup_mail" style="font-family: CenturyGothic;">
+                    <label for="mail" style="font-family: CenturyGothic;">
                         Correo electrónico *
                     </label>
-                    <input id="cup_mail" inputmode="email" maxlength="40" name="cup_mail" style="font-family: CenturyGothic; margin-bottom: 10px;" type="email"/>
-                    <label for="cup_password" style="font-family: CenturyGothic;">
+                    <input id="mail" inputmode="email" maxlength="40" name="mail" style="font-family: CenturyGothic; margin-bottom: 10px;" type="email"/>
+                    <label for="password" style="font-family: CenturyGothic;">
                         Contraseña *
                     </label>
-                    <input id="cup_password" name="cup_password" style="font-family: CenturyGothic; margin-bottom: 10px;" type="password"/>
+                    <input id="password" name="password" style="font-family: CenturyGothic; margin-bottom: 10px;" type="password"/>
                     <label for="password_confirm" style="font-family: CenturyGothic;">
                         Confirmar contraseña *
                     </label>
                     <input id="password_confirm" name="password_confirm" style="font-family: CenturyGothic; margin-bottom: 10px;" type="password"/>
-                    <label for="cup_rol" style="font-family: CenturyGothic;">
+                    <label for="rol" style="font-family: CenturyGothic;">
                         Rol *
                     </label>
-                    <input id="cup_rol" name="cup_rol" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
-                    <label for="cup_status" style="font-family: CenturyGothic;">
+                    <input id="rol" name="rol" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                    <label for="account_status" style="font-family: CenturyGothic;">
                         Status *
                     </label>
-                    <input id="cup_status" name="cup_status" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
-                    <label for="cup_key" style="font-family: CenturyGothic;">
+                    <input id="account_status" name="account_status" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                    <label for="key" style="font-family: CenturyGothic;">
                         Clave de producto *
                     </label>
-                    <input id="cup_key" name="cup_key" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                    <input id="key" name="key" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
                 </div>
                 <div class="modal-footer d-xl-flex justify-content-xl-center">
                     <button class="btn btn-primary d-xl-flex" formmethod="post" id="cup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: CenturyGothic;" type="submit">

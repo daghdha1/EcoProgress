@@ -118,15 +118,15 @@ class UserEntity extends BaseEntity {
     * Nota: params es una array asociativa (clave-valor)
     */
     public function createUserFromAdminParams($params) {
-        $this->setMail($params['cup_mail']);
-        $this->setName($params['cup_name']);
+        $this->setMail($params['mail']);
+        $this->setName($params['name']);
         $this->setSurnames($params['surnames']);
-        $this->setPassword(generatePasswordHash($params['cup_password']));
+        $this->setPassword(generatePasswordHash($params['password']));
         $this->setSecretCode(generateSecretCode());
         $this->setLastConn(NULL);
         $this->setRegDate(time());
-        $this->setRole($params['cup_rol']);
-        $this->setAccountStatus($params['cup_status']);
+        $this->setRole($params['rol']);
+        $this->setAccountStatus($params['account_status']);
         return $this;
     }
 
