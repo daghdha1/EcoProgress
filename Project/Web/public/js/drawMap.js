@@ -49,6 +49,10 @@ function drawMap(heatmap) {
     if(heatmap != null){
         window.heatmapLayer.setData(heatmap);
     }
+
+    map.on('click', function(e) {
+        alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+    });
 }
 
 function setView(){
@@ -67,8 +71,11 @@ function addOfficialSensors(map) {
         iconUrl: '/EcoProgress/Project/Web/public/media/map_marker.png',
         iconSize: [38, 38], // size of the icon
     });
-    var marker = L.marker([38.96797739, -0.19109882], { // el de gandía
+    window.marker = L.marker([38.96797739, -0.19109882], { // el de gandía
         icon: mapIcon
     }).addTo(map);
-    marker.bindPopup("Estacion de medida de Gandía").openPopup();
+    window.marker.bindPopup("Estacion de medida de Gandía").openPopup();
+}
+function updateOficial(data){
+    window.marker.bindPopup("Estación de medida de Gandía <br> Dia: "+data.dia+" Valor:"+data.medida +" ppm");
 }

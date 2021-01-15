@@ -15,3 +15,20 @@ function getUserDataAndSensorIds(callback) {
         responseHandler(json, callback);
     });
 }
+/* 
+ * Todos los sensores
+ *
+ *                                  getAllSensors() <--
+ * Lista<T> | Nada
+ */
+function getAllSensors(callback) {
+    var request = new Request(config.restDir + "/sensors", {
+        method: "GET"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return null;
+    }).then((json) => {
+        responseHandler(json, callback);
+    });
+}
