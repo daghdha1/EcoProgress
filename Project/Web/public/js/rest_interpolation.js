@@ -34,7 +34,7 @@ function parseToObjectForHeatmap(data) {
 }
 
 function postData(data, cb) {
-    fetch(config.restInterpDir, {
+    fetch(config.restInterpDir+"/interpolate", {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
         headers: {
@@ -43,6 +43,32 @@ function postData(data, cb) {
     }).then(res => {
         return res.json();
     }).catch(error => console.error('Error:', error)).then(response => {
+        cb(response)
+    });
+}
+
+function getHistoricNames(cb){
+    fetch(config.restInterpDir+"/historicNames", {
+        method: 'GET', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).then(response => {
+        cb(response)
+    });
+}
+
+function getHistoric(mapa,cb){
+    fetch(config.restInterpDir+"/historic?arg="+mapa, {
+        method: 'GET', // or 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).then(response => {
         cb(response)
     });
 }

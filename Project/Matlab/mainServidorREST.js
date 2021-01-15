@@ -4,14 +4,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors');
-
-
 // .....................................................................
 // main()
 // .....................................................................
 async function main() {
-
-   
     // creo el servidor
     var servidorExpress = express();
     servidorExpress.use(cors());

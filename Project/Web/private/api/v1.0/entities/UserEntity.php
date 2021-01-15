@@ -87,7 +87,7 @@ class UserEntity extends BaseEntity {
     }
 
     /* 
-    * Crea un objeto User (UserEntity) recibido desde los parámetros de un form (FormData)
+    * Crea un objeto User (UserEntity) recibido desde los parámetros de un form (FormData) de registro
     *
     * Lista<Texto> -->
     *                    createUserFromParams() <--
@@ -98,13 +98,35 @@ class UserEntity extends BaseEntity {
     public function createUserFromParams($params) {
         $this->setMail($params['reg_mail']);
         $this->setName($params['reg_name']);
-        $this->setSurnames($params['reg_surnames']);
+        $this->setSurnames($params['surnames']);
         $this->setPassword(generatePasswordHash($params['reg_password']));
         $this->setSecretCode(generateSecretCode());
         $this->setLastConn(NULL);
         $this->setRegDate(time());
         $this->setRole('user');
         $this->setAccountStatus('pending');
+        return $this;
+    }
+
+    /* 
+    * Crea un objeto User (UserEntity) recibido desde los parámetros de un form (FormData) de administrador
+    *
+    * Lista<Texto> -->
+    *                    createUserFromParams() <--
+    * <-- UserEntity
+    * 
+    * Nota: params es una array asociativa (clave-valor)
+    */
+    public function createUserFromAdminParams($params) {
+        $this->setMail($params['mail']);
+        $this->setName($params['name']);
+        $this->setSurnames($params['surnames']);
+        $this->setPassword(generatePasswordHash($params['password']));
+        $this->setSecretCode(generateSecretCode());
+        $this->setLastConn(NULL);
+        $this->setRegDate(time());
+        $this->setRole($params['rol']);
+        $this->setAccountStatus($params['account_status']);
         return $this;
     }
 

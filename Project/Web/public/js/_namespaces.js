@@ -15,3 +15,7 @@ var myColors = myColors || {
 };
 
 var myGraphs = myGraphs || {};
+
+var myIndex = myIndex || {
+    lastRowIndex: 0
+};

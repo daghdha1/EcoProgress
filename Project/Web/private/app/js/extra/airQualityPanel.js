@@ -120,23 +120,23 @@ function getDataAndUpdateGraph(btnGas) {
             airQualitysPromiseList.push(initRequestLastMeasure());
             Promise.all(airQualitysPromiseList).then((response) => {
                 if (myGraphs.airQualityChart != null) myGraphs.airQualityChart.destroy();
-                populateGraph(response);
+                populateGraph(response,"CO");
             }).catch(error => console.log("Error in promises ${error}", error));
             break;
         case "btn_no2":
             airQualitysPromiseList.push(12.5, 3, 0.3);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList);
+            populateGraph(airQualitysPromiseList,"NO2");
             break;
         case "btn_so2":
             airQualitysPromiseList.push(24, 13.7, 3);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList);
+            populateGraph(airQualitysPromiseList,"SO2");
             break;
         case "btn_o3":
             airQualitysPromiseList.push(24, 0, -1);
             myGraphs.airQualityChart.destroy();
-            populateGraph(airQualitysPromiseList);
+            populateGraph(airQualitysPromiseList,"O3");
             break;
     }
 }
@@ -147,7 +147,7 @@ function getDataAndUpdateGraph(btnGas) {
  *                          populateGraph() <--
  * 
  */
-function populateGraph(valueList) {
+function populateGraph(valueList,sLabel="CO") {
     var options = {
         series: getPercentagesFromValues(valueList),
         labels: ['Diaria', 'Horaria', 'Actual'],
@@ -183,16 +183,16 @@ function populateGraph(valueList) {
                         fontSize: '18px',
                         color: myColors.blue_sapphire,
                         offsetY: -20,
-                        formatter: function(val) {
+                        formatter: function (val) {
                             return getLabelsFromPercentage(val)
                         }
                     },
                     total: {
                         show: true,
-                        label: 'CO',
+                        label: sLabel,
                         color: myColors.soft_black,
                         fontSize: '27px',
-                        formatter: function(w) {
+                        formatter: function (w) {
                             return ""
                         }
                     }
@@ -276,7 +276,7 @@ function getLabelsFromPercentage(percent) {
  */
 function getColorBarByValue(valueList) {
     colorList = [];
-    valueList.forEach(function(val) {
+    valueList.forEach(function (val) {
         switch (true) {
             case val >= 0:
                 colorList.push(myColors.soft_metallic_seaweed);
@@ -296,7 +296,7 @@ function getColorBarByValue(valueList) {
  */
 function getGradientToColorsByValue(valueList) {
     colorList = [];
-    valueList.forEach(function(val) {
+    valueList.forEach(function (val) {
         switch (true) {
             case val >= 20:
                 colorList.push(myColors.eminence);
@@ -318,4 +318,98 @@ function getGradientToColorsByValue(valueList) {
         }
     });
     return colorList;
+}
+
+//********************************************************************
+//************************* INTERPOLACION *****************************
+//********************************************************************
+//********************************************************************
+//************************* INTERPOLACION *****************************
+//********************************************************************
+let allBtnsGases = $("#btns-gases").find('button');
+allBtnsGases.each((index, btn) => {
+    executeCallbackBtnDOM(btn.id, () => {
+        retrieveDataToDraw(btn.id);
+        playAnimation();
+    });
+});
+
+function retrieveDataToDraw(id) {
+    getMeasuresFromTimestamp((measures) => {
+        let data = processData(measures);
+        postData(data, (heatMap) => {
+            let parsedData = parseToObjectForHeatmap(heatMap);
+            drawFakeData(parsedData, id);
+            stopAnimation();
+            updateLegend(id);
+        });
+    }, localStorage.getItem("mail"), "month");
+}
+
+function updateLegend(id){
+    switch (id) {
+        case 'btn_co':
+            document.getElementById("#maxValueLegend").innerText = "45-75";
+            document.getElementById("#mediumhighValueLegend").innerText = "22-45";
+            document.getElementById("#mediumlowValueLegend").innerText = "10-22";
+            document.getElementById("#minValueLegend").innerText = "0-10";
+            break;
+        case 'btn_no2':
+            document.getElementById("#maxValueLegend").innerText = "150-200";
+            document.getElementById("#mediumhighValueLegend").innerText = "100-150";
+            document.getElementById("#mediumlowValueLegend").innerText = "40-100";
+            document.getElementById("#minValueLegend").innerText = "0-40";
+            break;
+        case 'btn_so2':
+            document.getElementById("#maxValueLegend").innerText = "150-200";
+            document.getElementById("#mediumhighValueLegend").innerText = "100-150";
+            document.getElementById("#mediumlowValueLegend").innerText = "40-100";
+            document.getElementById("#minValueLegend").innerText = "0-40";
+            break;
+        case 'btn_o3':
+            document.getElementById("#maxValueLegend").innerText = "180-240";
+            document.getElementById("#mediumhighValueLegend").innerText = "120-180";
+            document.getElementById("#mediumlowValueLegend").innerText = "80-120";
+            document.getElementById("#minValueLegend").innerText = "0-80";
+            break;
+        default:
+            break;
+    }
+}
+
+
+function drawFakeData(data, id) {
+    let measures;
+    switch (id) {
+        case 'btn_co':
+            measures = dataFaker(data, 1, 70,0)
+            break;
+        case 'btn_no2':
+            measures = dataFaker(data, 2, 20,5)
+            break;
+        case 'btn_so2':
+            measures = dataFaker(data, 0.3, 20,3)
+            break;
+        case 'btn_o3':
+            measures = dataFaker(data, 0.5, 30,10)
+            break;
+        default:
+            break;
+    }
+    changeHeatmap(measures);
+}
+
+function dataFaker(data, n, top,bottom) {
+    let result = [];
+    for (let i = 0; i < data.data.length; i++) {
+        if (data.data[i].value < top && data.data[i].value>bottom) {
+            let measure = data.data[i];
+            measure.value = measure.value * n;
+            result.push(measure);
+        }
+    }
+    return {
+        max: 70,
+        data: result
+    }
 }

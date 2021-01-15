@@ -36,23 +36,6 @@ class SensorsModel extends BaseModel {
 	}
 
 	/* 
-    * Obtiene el id del sensor del usuario activo
-    *
-    * Texto -->
-    *                 			getSensorId() <--
-    * <-- sensorID:N | Nada
-    */
-	public function getSensorId($mail) {
-		$strMail = mysqli_real_escape_string($this->conn, $mail);
-		// Query
-		$sql = "SELECT id FROM Sensors as s WHERE s.mail = '$strMail'";
-		// Respuesta
-		$result = BaseEntity::executeSelectSql($sql);
-		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
-		return $result;
-	}
-
-	/* 
     * Comprueba si el sensor está disponible (no registrado)
     *
     * Texto -->
@@ -86,13 +69,29 @@ class SensorsModel extends BaseModel {
 		return $result;
 	}
 
+	/* 
+    * Obtiene todos los usuarios activos con sus sensors id
+    *
+    * Texto -->
+    *                 				getAllUsersWithSensorIds() <--
+    * <-- Lista<stdClass> | Nada
+    */
+	public function getAllUsersWithSensorIds() {
+		// Query
+		$sql = "SELECT u.name, u.mail, s.type FROM Users as u, Sensors as s WHERE u.mail = s.mail";
+		// Respuesta
+		$result = BaseEntity::executeSelectSql($sql);
+		// Devuelve el resultado, si no ha encontrado ninguna coincidencia, devuelve una lista vacía; si hay algún fallo, devuelve null
+		return $result;
+	}
+
 	// ----------------------------------------------- POST ------------------------------------------------ //
 
 	/* 
-    * Actualiza un sensor en la base de datos
+    * Actualiza un sensor de un usuario en la base de datos
     *
     * SensorEntity -->
-    *                    updateUser() <--
+    *                    			updateUser() <--
     * <-- V | F
     */
 	public function updateSensor($sensor) {
@@ -101,13 +100,29 @@ class SensorsModel extends BaseModel {
 		$strType = mysqli_real_escape_string($this->conn, $sensor->getType());
 		$numState = $sensor->getState();
 		$strActivationKey = mysqli_real_escape_string($this->conn, $sensor->getActivationKey());
-
 		// Query
 		$sql = "UPDATE Sensors as s SET s.mail = '$strMail', s.type = '$strType', s.state = $numState WHERE s.activation_key = '$strActivationKey'";
-		
 		// Devuelve true, si no ha podido actualizar el registro, devuelve false
 		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
+		return $result;
+	}
 
+
+	/* 
+    * Actualiza un sensor de un usuario en la base de datos
+    *
+    * SensorEntity -->
+    *                    updateUser() <--
+    * <-- V | F
+    */
+	public function updateStatusSensor($sensor) {
+		// Escapamos los carácteres especiales
+		$strId = $sensor->getId();
+		$numState = $sensor->getState();
+		// Query
+		$sql = "UPDATE Sensors as s SET s.state = $numState WHERE s.id = '$strId'";
+		// Devuelve true, si no ha podido actualizar el registro, devuelve false
+		$result = BaseEntity::executeInsertUpdateDeleteSql($sql);
 		return $result;
 	}
 

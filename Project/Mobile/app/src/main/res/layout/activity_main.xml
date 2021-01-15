@@ -10,7 +10,14 @@
     <ImageView
         android:id="@+id/imgBTLE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="452dp"
         android:contentDescription="imgBTLE"
         app:srcCompat="@drawable/img_btle" />
+
+    <Button
+        android:id="@+id/btn_notif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Botón Test Notificación" />
 </android.widget.LinearLayout>

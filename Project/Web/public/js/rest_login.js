@@ -25,7 +25,7 @@ function login() {
                         saveUserSession(json);
                         // Redireccionamos a la página principal del usuario
                         window.location.replace('./private/app/html/home.html');
-                    } else if (json[0].role === 'root') {
+                    } else if (json[0].role === 'admin') {
                         // Redireccionamos a la página de admin
                         window.location.replace('./private/app/html/adminPanel.html');
                     }

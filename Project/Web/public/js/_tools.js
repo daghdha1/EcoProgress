@@ -13,11 +13,17 @@ function responseHandler(json, callback = null) {
         case Array.isArray(json):
             if (callback != null) callback(json);
             break;
+        case !isNaN(json):
+            if (callback != null) callback(json);
+            break;
+        default:
+            if (callback != null) callback(0);
     }
 }
 // -------------------------------------------------------------------------------- //
 // -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
 // -------------------------------------------------------------------------------- //
+// For public modal panels
 function initModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
@@ -31,10 +37,7 @@ function initModalPanel(namePanel, cb1, cb2) {
         });
     }
 }
-
-// -------------------------------------------------------------------------------- //
-// -------------------- Funciones interacción DOM (HTML/CSS) ---------------------- //
-// -------------------------------------------------------------------------------- //
+// For admin modal panels
 function initPrivateModalPanel(namePanel, cb1, cb2) {
     if (document.getElementById(namePanel) == null) {
         $.ajax({
@@ -112,7 +115,7 @@ function setReadOnlyInputDOM(id) {
 }
 
 function getTextValueDOM(id) {
-    return document.getElementById(id).value.replace(/<[^>]*>/g, "");
+    return document.getElementById(id).innerText;
 }
 
 function setTextValueDOM(id, str) {
@@ -123,6 +126,14 @@ function setPlaceHolderDOM(id, str) {
     document.getElementById(id).placeholder = str;
 }
 
+function setColorBorder(id, color) {
+    document.getElementById(id).style.borderColor = color;
+}
+
+function setBorderWidth(id, width) {
+    document.getElementById(id).style.borderWidth = width + "px";
+}
+
 function findAndFocusFirstInputForm() {
     $(document).ready(() => {
         let e = $("form").find("*").filter(":input:visible:enabled:not([readonly]):first").get(0);
@@ -130,7 +141,7 @@ function findAndFocusFirstInputForm() {
     });
 }
 
-function executeCallbackBtnDOM(id, cb=null) {
+function executeCallbackBtnDOM(id, cb = null) {
     $("#" + id).on("click", (e) => {
         if (cb != null) cb();
     });
@@ -138,8 +149,8 @@ function executeCallbackBtnDOM(id, cb=null) {
 
 function isValidForm(form, params) {
     for (var i = 1; i < params.length; i++) {
-        if (form[params[i]].name != 'reg_surnames') {
-            if (form[params[i]].value.length == 0 || form[params[i]].name == 'reg_password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
+        if (form[params[i]].name != 'surnames') {
+            if (form[params[i]].value.length == 0 || form[params[i]].name == 'password_confirm' && form[params[i]].value != form[params[i - 1]].value) {
                 setFocusElementDOM(params[i]);
                 return false;
             }
@@ -147,26 +158,28 @@ function isValidForm(form, params) {
     }
     return true;
 }
-
 // -------------------------------------------------------------------------------- //
 // ------------------------------ Funciones Tiempo -------------------------------- //
 // -------------------------------------------------------------------------------- //
 function timeConverter(UNIX_timestamp) {
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-    return time;
+    if (UNIX_timestamp != null) {
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + 'h:' + min + 'm:' + sec + 's';
+        return time;
+    }
+    return "Nunca";
 }
 
 function convertSecondsToFormatTime(seconds) {
     var a = new Date(seconds * 1000);
-    var hour = a.getHours();
+    var hour = a.getHours() - 1;
     var min = a.getMinutes();
     var sec = a.getSeconds();
     var time = hour + 'h:' + min + 'm:' + sec + 's';

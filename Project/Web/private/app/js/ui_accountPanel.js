@@ -3,7 +3,7 @@ showUserData();
 function showUserData() {
     getUser((dataReceived) => {
         fillInUserFields(dataReceived);
-    }, "test@test");
+    }, localStorage.getItem("mail"));
 }
 
 function fillInUserFields(userData) {
