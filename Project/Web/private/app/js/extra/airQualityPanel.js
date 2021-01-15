@@ -341,13 +341,40 @@ function retrieveDataToDraw(id) {
             let parsedData = parseToObjectForHeatmap(heatMap);
             drawFakeData(parsedData, id);
             stopAnimation();
-            updateLegend();
+            updateLegend(id);
         });
     }, localStorage.getItem("mail"), "month");
 }
 
-function updateLegend(){
-    //document.getElementById("#maxValueLegend")
+function updateLegend(id){
+    switch (id) {
+        case 'btn_co':
+            document.getElementById("#maxValueLegend").innerText = "45-75";
+            document.getElementById("#mediumhighValueLegend").innerText = "22-45";
+            document.getElementById("#mediumlowValueLegend").innerText = "10-22";
+            document.getElementById("#minValueLegend").innerText = "0-10";
+            break;
+        case 'btn_no2':
+            document.getElementById("#maxValueLegend").innerText = "150-200";
+            document.getElementById("#mediumhighValueLegend").innerText = "100-150";
+            document.getElementById("#mediumlowValueLegend").innerText = "40-100";
+            document.getElementById("#minValueLegend").innerText = "0-40";
+            break;
+        case 'btn_so2':
+            document.getElementById("#maxValueLegend").innerText = "150-200";
+            document.getElementById("#mediumhighValueLegend").innerText = "100-150";
+            document.getElementById("#mediumlowValueLegend").innerText = "40-100";
+            document.getElementById("#minValueLegend").innerText = "0-40";
+            break;
+        case 'btn_o3':
+            document.getElementById("#maxValueLegend").innerText = "180-240";
+            document.getElementById("#mediumhighValueLegend").innerText = "120-180";
+            document.getElementById("#mediumlowValueLegend").innerText = "80-120";
+            document.getElementById("#minValueLegend").innerText = "0-80";
+            break;
+        default:
+            break;
+    }
 }
 
 
