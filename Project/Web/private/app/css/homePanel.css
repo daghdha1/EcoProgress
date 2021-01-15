@@ -2,3 +2,27 @@
     height: 100%;
     overflow-y:auto;
 }
+#btn_co:focus,#btn_no2:focus,#btn_so2:focus,#btn_o3:focus{
+    color: white !important;
+    background-color: #007d93ff !important;
+    outline: 0 none !important;
+    border: none !important;
+    box-shadow: none;
+
+ }
+
+ #btn_co:hover,#btn_no2:hover,#btn_so2:hover,#btn_o3:hover{
+    color: white !important;
+    background-color:#682172ff !important;
+    outline: 0 none !important;
+    border:  none !important;
+    box-shadow: none;
+
+ }
+ 
+ 
+ #btn_co,#btn_no2,#btn_so2,#btn_o3{
+    background-color: rgb(128, 128, 128) !important;
+ }
+ 
+ 

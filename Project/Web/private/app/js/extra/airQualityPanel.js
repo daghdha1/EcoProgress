@@ -330,6 +330,7 @@ let allBtnsGases = $("#btns-gases").find('button');
 allBtnsGases.each((index, btn) => {
     executeCallbackBtnDOM(btn.id, () => {
         retrieveDataToDraw(btn.id);
+        playAnimation();
     });
 });
 
@@ -339,9 +340,16 @@ function retrieveDataToDraw(id) {
         postData(data, (heatMap) => {
             let parsedData = parseToObjectForHeatmap(heatMap);
             drawFakeData(parsedData, id);
+            stopAnimation();
+            updateLegend();
         });
     }, localStorage.getItem("mail"), "month");
 }
+
+function updateLegend(){
+    //document.getElementById("#maxValueLegend")
+}
+
 
 function drawFakeData(data, id) {
     let measures;
