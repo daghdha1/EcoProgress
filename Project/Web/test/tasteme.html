@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--<html style="height: 100%;">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	</head>
+	<div>
+		<button id="test">TEST</button>
+	</div>
+    <div id="btnPanel" class="btn-group" style="height: 100%;">
+        <button id="btn1">1</button>
+        <button id="btn2">2</button>
+        <button id="btn3">3</button>
+    </div>
+    <div>
+        <button id="btn10">10</button>
+    </div>
+
+    <script type="text/javascript">
+    	$('#test').click(() => {
+	    	let allBtnsGases = $("#btnPanel").find('button');
+		    allBtnsGases.each(function(index, btn){
+		        console.log("Index: " + index + " - Value: " + btn.id);
+		    });
+		});
+    </script>
+</html>-->
+<html style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+            <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+            <link href="./_tests.css" rel="stylesheet"/>
+            <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+            </script>
+            <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+            </script>
+            <script crossorigin="anonymous" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+            </script>
+        </meta>
+    </head>
+    <table id="mitabla">
+        <thead>
+            <tr style="background-color: rgba(13,149,173,0.61);">
+                <th style="color: rgb(255,255,255);">
+                    Nombre
+                </th>
+                <th style="color: rgb(255,255,255);">
+                    Correo electrónico
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Adrian
+                </td>
+                <td>
+                    adrian@dev.com
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Marcelo
+                </td>
+                <td>
+                    marcelo@dev.com
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Miguel
+                </td>
+                <td>
+                    miguel@dev.com
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $('#mitabla tbody').delegate('tr','click',(e) => {
+    		//alert('Row index selected: ' + ($(e.currentTarget).index() + 1));
+    		//let rowIndex = ($(e.currentTarget).index() + 1);
+    		console.log(e.currentTarget.cells[1].innerText);
+		});
+		//alert("First cell value is: " + tr.cells[1].innerHTML.replace(/\s/g, ''));
+    </script>
+</html>

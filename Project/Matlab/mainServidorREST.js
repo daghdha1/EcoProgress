@@ -4,16 +4,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require('cors');
-
-
-
-
 // .....................................................................
 // main()
 // .....................................................................
 async function main() {
-
-   
     // creo el servidor
     var servidorExpress = express();
     servidorExpress.use(cors());
@@ -33,10 +27,10 @@ async function main() {
 
     // capturo control-c para cerrar el servicio ordenadamente
     process.on('SIGINT', function () {
-        console.log(" terminando ")
-        servicio.close()
+        servicio.close();
+        console.log(" terminando ");
+        process.exit(); // Node js sigue ocupando el puerto 8080 entonces me veo forzado a utilizar esto.
     })
 } // ()
 
-
-main()
+main();

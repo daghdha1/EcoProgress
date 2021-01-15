@@ -3,34 +3,47 @@
         <div class="modal-content">
             <header class="modal-header">
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                    <span aria-hidden="true">
-                        ×
-                    </span>
+                    &times;
                 </button>
             </header>
-            <div class="modal-body d-flex flex-column">
-                <p class="text-center text-muted" style="margin-bottom: 5px;">
-                    Nombre de usuario
-                </p>
-                <input class="justify-content-center mx-auto" id="reg_name" inputmode="text" name="name" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
-                <p class="text-center text-muted" style="margin-bottom: 5px;">
-                    Correo electrónico
-                </p>
-                <input class="justify-content-center mx-auto" id="reg_email" inputmode="email" name="email" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email"/>
-                <p class="text-center text-muted" style="margin-bottom: 5px;">
-                    Contraseña
-                </p>
-                <input class="justify-content-center mx-auto" id="reg_password" name="password" style="width: 70%;margin-bottom: 5%;text-align: center;" type="password"/>
-                <button class="btn btn-primary mx-auto" id="reg_submit" onclick="return regValidation()" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background: #682172;border-style: none;width: 35%;" type="button">
-                    Regístrate
-                </button>
-                <p class="d-xl-flex justify-content-center mx-auto" style="width: 100%; margin-top: 5%; margin-bottom: 20px;">
-                    ¿Ya tienes una cuenta?
-                    <a onclick="return swapModalPanel('registrationPanel','loginPanel')" style="font-style: normal;border-bottom-style: solid;color: #682172;font-weight: bold; margin-left: 15px; font-size: 14px;">
-                        Iniciar sesión
-                    </a>
-                </p>
-            </div>
+            <!-- Form  -->
+            <form name="formRegistration" onsubmit="registration(this, 'reg_name', 'surnames', 'reg_mail', 'reg_password', 'password_confirm', 'reg_key'); return false;">
+                <div class="modal-body d-flex flex-column">
+                    <label class="text-center text-muted" for="reg_name" style="margin-bottom: 5px;">
+                        Nombre *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_name" name="reg_name" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
+                    <label class="text-center text-muted" for="surnames" style="margin-bottom: 5px;">
+                        Apellidos
+                    </label>
+                    <input class="justify-content-center mx-auto" id="surnames" name="surnames" style="width: 70%;margin-bottom: 10px;text-align: center;" type="text"/>
+                    <label class="text-center text-muted" for="reg_mail" style="margin-bottom: 5px;">
+                        Correo electrónico *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_mail" inputmode="email" name="reg_mail" style="width: 70%;margin-bottom: 10px;text-align: center;" type="email"/>
+                    <label class="text-center text-muted" for="reg_password" style="margin-bottom: 5px;">
+                        Contraseña *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_password" name="reg_password" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password"/>
+                    <label class="text-center text-muted" for="password_confirm" style="margin-bottom: 5px;">
+                        Confirma tu contraseña *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="password_confirm" name="password_confirm" style="width: 70%;margin-bottom: 10px;text-align: center;" type="password"/>
+                    <label class="text-center text-muted" for="reg_key" style="margin-bottom: 5px;">
+                        Clave de producto *
+                    </label>
+                    <input class="justify-content-center mx-auto" id="reg_key" name="reg_key" style="width: 70%;margin-bottom: 5%;text-align: center;" type="text"/>
+                    <button class="btn btn-primary mx-auto" formmethod="post" id="reg_submit" style="font-weight: bold;border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;background:#682172; border-style:none; width:35%;" type="submit">
+                        Regístrate
+                    </button>
+                    <label class="d-xl-flex justify-content-center mx-auto" style="width: 100%; margin-top: 5%; margin-bottom: 20px;" type="text">
+                        ¿Ya tienes una cuenta?
+                        <a onclick="return swapModalPanel('registrationPanel','loginPanel')" style="font-style:normal; border-bottom-style:solid; color:#682172; font-weight:bold; margin-left:15px; font-size:14px;">
+                            Iniciar sesión
+                        </a>
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
 </div>

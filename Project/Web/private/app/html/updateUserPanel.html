@@ -1,0 +1,41 @@
+<div class="modal fade" id="updateUserPanel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header" style="margin-left: 10px;">
+                <h4 class="modal-title" style="font-family: CenturyGothic;">
+                    Editar usuario
+                </h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                </button>
+            </header>
+            <form name="formUpdateUser" onsubmit="updateUser(this, 'mail', 'name', 'surnames', 'account_status'); return false;">
+                <div class="modal-body d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
+                    <label for="mail" style="font-family: CenturyGothic;">
+                        Correo electrónico *
+                    </label>
+                    <input id="mail" inputmode="email" maxlength="40" name="mail" style="font-family: CenturyGothic; margin-bottom: 10px;" type="email"/>
+                    <label for="name" style="font-family: CenturyGothic;">
+                        Nombre
+                    </label>
+                    <input id="name" maxlength="20" name="name" style="font-family: CenturyGothic; margin-bottom: 10px;"/>
+                    <label for="surnames" style="font-family: CenturyGothic;" type="text">
+                        Apellidos
+                    </label>
+                    <input id="surnames" maxlength="30" name="surnames" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                    <label for="account_status" style="font-family: CenturyGothic;">
+                        Status
+                    </label>
+                    <input id="account_status" name="account_status" style="font-family: CenturyGothic; margin-bottom: 10px;" type="text"/>
+                </div>
+                <div class="modal-footer d-xl-flex justify-content-xl-center">
+                    <button class="btn btn-primary d-xl-flex" formmethod="post" id="uup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: CenturyGothic;" type="submit">
+                        Editar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

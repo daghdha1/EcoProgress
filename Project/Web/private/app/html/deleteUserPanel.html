@@ -1,0 +1,29 @@
+<div class="modal fade" id="deleteUserPanel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <header class="modal-header" style="margin-left: 10px;">
+                <h4 class="modal-title" style="font-family: CenturyGothic;">
+                    Eliminar usuario
+                </h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                </button>
+            </header>
+            <form name="formDeleteUser" onsubmit="deleteUser(this,'mail'); return false;">
+                <div class="modal-body d-flex flex-column" style="margin-left: 10px; margin-right: 10px;">
+                    <label for="mail" style="font-family: CenturyGothic;">
+                        Correo electrónico *
+                    </label>
+                    <input id="mail" inputmode="email" maxlength="40" name="mail" style="font-family: CenturyGothic; margin-bottom: 10px;" type="email"/>
+                </div>
+                <div class="modal-footer d-xl-flex justify-content-xl-center">
+                    <button class="btn btn-primary d-xl-flex" formmethod="post" id="dup_submit" style="background-color: white;color: #562a69;border-color: #682172;font-family: CenturyGothic;" type="submit">
+                        Eliminar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

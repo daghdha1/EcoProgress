@@ -9,7 +9,7 @@ spl_autoload_register('myAutoloader');
 /* Implementamos myAutoloader(), la cual recibe el nombre de la clase que se intenta inicializar para incluirla (se utilizan expresiones regulares para comparar la cadena classname)
 * 
 * Texto -->
-*           myAutoloader() -->
+*               myAutoloader() -->
 * <-- V | F
 */
 function myAutoloader($classname) {

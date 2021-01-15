@@ -17,13 +17,12 @@ public class Measure {
     public Measure() {
     }
 
-    public JsonObject toJson(){
-
+    public JsonObject toJson() {
         JsonObject json = new JsonObject();
-        json.addProperty("value",this.value);
-        json.addProperty("location",this.location);
-        json.addProperty("timestamp",this.timestamp);
-        json.addProperty("sensorID",this.sensorID);
+        json.addProperty("value", this.value);
+        json.addProperty("location", this.location);
+        json.addProperty("timestamp", this.timestamp);
+        json.addProperty("sensorID", this.sensorID);
         return json;
     }
 

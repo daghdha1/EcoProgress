@@ -1,0 +1,16 @@
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  text-decoration: underline !important;
+  font-family: Nunito, sans-serif !important;
+  color: #007d93 !important;
+  font-size: 24px !important;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #007d93 !important;
+  text-decoration: underline !important;
+}
+
+.nav-tabs .nav-link  {
+  color: #682172 !important;
+}
+

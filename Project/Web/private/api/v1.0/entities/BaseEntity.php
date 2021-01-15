@@ -83,20 +83,20 @@ class BaseEntity {
                     $result[] = $obj;
                 }
                 return $result;
+            } else {
+                return array();
             }
         }
-        return null;
+        return NULL;
     }
 
     /* Acciones Update/Insert/Delete contra la base de datos
     *
     * Texto -->
     *             executeInsertUpdateDeleteSql() <--
-    * <-- T
+    * <-- V | F
     */
     public function executeInsertUpdateDeleteSql($sql) {
-        // Si hay Respuesta
-        $data = $this->conn->query($sql);
-        return $data;
+        return $this->conn->query($sql);
     }
 }

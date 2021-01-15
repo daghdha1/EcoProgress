@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 class MeasuresController extends BaseController {
 
@@ -21,19 +21,20 @@ class MeasuresController extends BaseController {
     *  - Una vez recibidos, los delega a la vista correspondiente, encargada de mostrárselos al cliente web
 	*
 	* Action -->
-	*					getAction() <--
-	* <-- Lista<T> 
+	*					                     getAction() <--
+	* <-- Lista<Lista<T>> | Lista<Error>
 	*/
     public function getAction($request) {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
         
         // Check de parámetros
-        if (!areThereURIParameters($request->parameters)) {
-            // Obtiene todas las medidas
+        if (!areThereParameters($request->parameters)) {
             $result = $this->getAllMeasures($model, $request);
+        } elseif (authenticateUserSession()) {
+            $result = $this->getIncomingParametersAndExecuteMethod($model, $request);
         } else {
-            $result = $this->getIncomingParametersAndExecuteGetMethod($model, $request);
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__, 1);
         }
 
         // Cargamos la vista seleccionada
@@ -47,17 +48,17 @@ class MeasuresController extends BaseController {
     *  - Una vez enviados, los envia de vuelta a la vista correspondiente, encargada de mostrárselos al cliente web
     *
     * Action -->
-    *                   postAction() <--
-    * <-- Lista<T>
+    *                                           postAction() <--
+    * <-- <-- Lista<Lista<T>> | Lista<Error>
     */
     public function postAction($request) {
         // Cargamos el modelo de Measures
         $model = parent::loadModel($request->resource);
 
-        if (areThereURIParameters($request->parameters)) {
+        if (areThereParameters($request->parameters)) {
             $result = $this->postMeasure($model, $request);
         } else {
-            $result = null;
+            $result = createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
         }
 
         // Cargamos la vista seleccionada
@@ -66,6 +67,7 @@ class MeasuresController extends BaseController {
         $view->render($result);
     }
 
+    // INFO: php no recomienda el uso de 'put' por seguridad, usar 'post' en su defecto
     public function putAction($request) {
 
     }
@@ -77,103 +79,104 @@ class MeasuresController extends BaseController {
     // -------------------------------------- PRIVATE LOGIC METHODS ------------------------------------- //
     // -------------------------------------------------------------------------------------------------- //
 
-    // ---------------------------------------------- GET ----------------------------------------------- //
-
-    /* 
-    * Obtiene todas las medidas disponibles
-    *
-    * MeasuresModel, Request -->
-    *                               getAllMeasures() <--
-    * <-- Lista<MeasureEntity>
-    */
-    private function getAllMeasures($model, $request) {
-        // Obtenemos el array de mediciones (objects stdClass)
-        $data = $model->getAllMeasures();
-        $result = $this->createArrayOfMeasures($data, $request->resource);
-        return $result;
-    }
+    // -------------------------------------------- REQUEST --------------------------------------------- //
 
     /* 
     * Escoge el método GET acorde con el parámetro recibido
     *
     * MeasuresModel, Lista<Texto> -->
-    *                                                       getIncomingParametersAndExecuteGetMethod() <--
-    * <-- Lista<MeasureEntity> | MeasureEntity | Nada
+    *                                         getIncomingParametersAndExecuteMethod() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function getIncomingParametersAndExecuteGetMethod($model, $request) {
+    private function getIncomingParametersAndExecuteMethod($model, $request) {
         $params = $request->parameters;
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'users':
-                    $userID = $value;
-                    if (count($params) == 1) {
-                        $data = $model->getAllMeasuresOfUser($userID);
+                    $mail = $value;
+                    if (count($params) === 1) {
+                        $dataList = $model->getAllMeasuresOfUser($mail);
                     }
                     break;
                 case 'period':
                     if (is_numeric($value)) {
                         $tList = explode('-', $value);
-                        $data = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $userID);
+                        $dataList = $model->getMeasuresFromTwoTimestamp($tList[0], $tList[1], $mail);
                     } elseif ($value === 'last') {
-                        $data = $model->getLastMeasure($userID);
+                        $dataList = $model->getLastMeasure($mail);
                     } else {
-                        $t = getTimestampOfPeriod($value);
-                        $data = $model->getMeasuresFromTimestamp($t, $userID);
+                        $ts = getTimestampOfPeriod($value);
+                        $dataList = $model->getMeasuresFromTimestamp($ts, $mail);
                     }
                     break;
                 default:
                     break;
             }
         }
-        $result = $this->createArrayOfMeasures($data, $request->resource);
-        return $result;
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
+        }
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
-    /*
-    * Recibe un array de objetos stdClass y lo convierte en un array asociativo de objetos Measure
-    * 
-    * Lista<stdClass>, Texto -->
-    *                       createArrayOfMeasures() <--
-    * <-- Lista<Measure>
+    // ---------------------------------------------- (GET) ----------------------------------------------- //
+
+    /* 
+    * Obtiene todas las medidas disponibles
+    *
+    * MeasuresModel, Request -->
+    *                                          getAllMeasures() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
-    private function createArrayOfMeasures($data, $resource) {
-        // Si hay datos
-        if (!is_null($data)) {
-            $result = array();
-            // Por cada elemento del array de objetos
-            for ($i=0; $i < count($data); $i++) {
-                // Creamos un nueva medición
-                $measure = parent::createEntity($resource);
-                // Asignamos las propiedades de cada objeto measure
-                $measure->setValue($data[$i]->value);
-                $measure->setTimestamp($data[$i]->timestamp);
-                $measure->setLocation($data[$i]->location);
-                $measure->setSensorID($data[$i]->sensorID);
-                // Guardamos las mediciones en el array asociativo $result
-                array_push($result, $measure->toARRAY());
-            }
-            return $result;
+    private function getAllMeasures($model, $request) {
+        // Obtenemos el array de mediciones (objects stdClass)
+        $dataList = $model->getAllMeasures();
+        if (!is_null($dataList)) {
+            return $this->parseDataListToAssocArrayMeasures($dataList, $request->resource);
         } 
-        return null;
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
     }
 
-    // ---------------------------------------------- POST ----------------------------------------------- //
+    // ---------------------------------------------- (POST) ----------------------------------------------- //
 
     /* 
     * Inserta una medida en la base de datos
     *
     * MeasuresModel, Request -->
-    *                              postMeasure() <--
-    * <-- MeasureEntity
+    *                                            postMeasure() <--
+    * <-- Lista<Lista<T>> | Lista<Error>
     */
     private function postMeasure($model, $request) {
         // Enviamos la medida
-        $data = $model->postMeasure($request->parameters);
-        if ($data) {
-            $result = $this->createArrayOfMeasures($request->parameters, $request->resource);
-            return $result;    
+        if ($model->postMeasure($request->parameters)) {
+            // Creamos un nueva medición
+            $measure = parent::createEntity($request->resource)->createMeasureFromParams($request->parameters);
+            return $measure->parseMeasureToAssocArrayMeasures(); 
         }
-        return null;    
+        return createAssocArrayError(__CLASS__, __FUNCTION__, __LINE__);
+    }
+
+    // ---------------------------------------------- UTILS ----------------------------------------------- //
+
+    /*
+    * Crea un array asociativo de objetos Measure (MeasureEntity) desde una lista de objetos stdClass (TO SEND WITH RESPONSE)
+    * 
+    * Lista<stdClass>, Texto -->
+    *                                       parseDataListToAssocArrayMeasures() <--
+    * <-- Lista<Lista<MeasureEntity>>
+    *
+    * Nota: dataList es una array númerica (iterativa)
+    */
+    private function parseDataListToAssocArrayMeasures($dataList, $resource) {
+        $result = array();
+        // Por cada elemento del array de objetos
+        for ($i=0; $i < count($dataList); $i++) {
+            // Creamos un nueva medición
+            $measure = parent::createEntity($resource)->createMeasureFromDatabase($dataList, $i);
+            // Guardamos cada measure iterada en el array asociativo $result
+            array_push($result, $measure->toARRAY());
+        }
+        return $result;
     }
 
 }

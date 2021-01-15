@@ -1,6 +1,35 @@
+.nav-tabs .nav-link:focus {
+    color: #007d93 !important;
+    text-decoration: underline !important;
+}
 #usersDataTable {
     width: 100%;
 }
 .title {
     font-weight: bold;
+}
+p {
+    font-family: CenturyGothic;
+}
+#data_container .row {
+  line-height: 1.2;
+}
+
+#data_container .row .col {
+  display: flex;
+  align-items: center;
+  padding-left: 13px;
+  padding-right: 0px;
+}
+#data_container .row .col p {
+    text-align: left;
+    font-weight: bold;
+}
+#data_container .row .col.txt-title p {
+    font-size: 17px;
+    font-weight: bold;
+}
+#data_container .row .col.txt-value p {
+    font-size: 16px;
+    color: grey;
 }
