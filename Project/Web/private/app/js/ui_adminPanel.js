@@ -72,11 +72,10 @@ function showUserDevices(devices) {
 }
 /*************************** TOP STATS ******************************/
 function showMaxDistanceOfUser() {
-    getMaxDistanceOfUser((dataReceived) => {
-        let maxDistance = "52519";
-        let mail = 'test@test';
-        fillInMaxDistanceOfUser(maxDistance, mail);
-    });
+    //getMaxDistanceOfUser((dataReceived) => {});
+    let maxDistance = "52519";
+    let mail = 'test@test';
+    fillInMaxDistanceOfUser(maxDistance, mail);
 }
 
 function showMaxActiveTimeOfUser() {

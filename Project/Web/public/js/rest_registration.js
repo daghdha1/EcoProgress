@@ -22,26 +22,19 @@ function registration() {
             if (response.ok) return response.json();
             else return 'Ha habido un error en la conexión con el servidor';
         }).then(function(json) {
-            switch (typeof json) {
-                case 'object':
-                    swapModalPanel("registrationPanel", "registrationCodePanel", null, () => {
-                        setTextValueDOM("reg_code_mail", formData.get("reg_mail"));
-                        setTextValueDOM("reg_code_key", formData.get("reg_key"));
-                        // FUTURE: El usuario debería introducir el codigo manualmente (en mail)
-                        setTextValueDOM("reg_code", json[0].secretCode); 
-                        setReadOnlyInputDOM("reg_code_mail");
-                        setReadOnlyInputDOM("reg_code_key");
-                    });
-                    break;
-                case 'string':
-                    alert(json);
-                    break;
-                default:
-            }
+            responseHandler(json, (data) => {
+                swapModalPanel("registrationPanel", "registrationCodePanel", null, () => {
+                    setTextValueDOM("reg_code_mail", formData.get("reg_mail"));
+                    setTextValueDOM("reg_code_key", formData.get("reg_key"));
+                    // FUTURE: El usuario debería introducir el codigo manualmente (en mail)
+                    setTextValueDOM("reg_code", json[0].secretCode);
+                    setReadOnlyInputDOM("reg_code_mail");
+                    setReadOnlyInputDOM("reg_code_key");
+                });
+            });
         });
     }
 }
-
 /* 
  * Actualiza el usuario registrado con estado 'pending' a 'active', y lo asocia al sensor registrado
  *
