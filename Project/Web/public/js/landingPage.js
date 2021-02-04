@@ -68,3 +68,16 @@ function dataFaker(data, n, top, bottom) {
         data: result
     }
 }
+getMedidasFromGVA();
+function getMedidasFromGVA() {
+    var request = new Request("http://localhost:8080/sensorOficial", {
+        method: "GET"
+    });
+    fetch(request).then((response) => {
+        if (response.ok) return response.json();
+        else return null;
+    }).then((json) => {
+        updateOficial(json);
+    });
+
+}

@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS ecoprogress;
-
-USE ecoprogress;
 
 DROP TABLE IF EXISTS Measures;
 DROP TABLE IF EXISTS Sensors;
@@ -119,3 +116,5 @@ INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0.1, '160993
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (0.1, '1610703814', '38.966476752560204, -0.18891334533691406', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (2, '1609931993',  '38.96064036588376, -0.19054412841796878', '6');
 INSERT INTO Measures (value, timestamp, location, sensorID) VALUES (2, '1610703514',  '38.96064036588376, -0.19054412841796878', '6');
+
+select * from Users;

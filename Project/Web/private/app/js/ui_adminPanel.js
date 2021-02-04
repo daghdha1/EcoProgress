@@ -220,7 +220,7 @@ function getHistoricNamesForDropdown() {
     })
 }
 drawMap();
-document.getElementById('dropdown').onclick = function(event) {
+document.getElementById('dropdown').onclick = function (event) {
     console.log("---->", event.target.innerHTML);
     getHistoric(event.target.innerHTML, (heatmap) => {
         let data = parseToObjectForHeatmap(heatmap);
@@ -231,28 +231,58 @@ getHistoricNamesForDropdown();
 
 function generarInformes() {
     var doc = new jsPDF('p', 'pt');
+    var date = new Date();
+
+    var img = new Image()
+    img.src = './../media/logo.png'
+    doc.addImage(img, 'png', 450, 30, 90    , 20);
+
     var elem = document.getElementById("usersDataTable");
     var res = doc.autoTableHtmlToJson(elem);
-    doc.autoTable(res.columns, res.data);
-    doc.save("listaUsuarios.pdf");
 
-    getAllSensors((data)=>{
+    doc.setFontSize(18);
+    doc.text(45, 45, 'Informe de usuarios: ');
+    doc.autoTable(res.columns, res.data, {margin: {top: 80}});
+
+
+
+    /* Optional - set properties on the document */
+    doc.setProperties({
+        title: 'Informe Usuarios:' + date.getFullYear() + "/" + date.getMonth() + 1 + "/" + date.getDay(),
+        subject: 'Informe de usuarios de ECOPROGRESS',
+        author: 'Ecoprogress Team',
+        keywords: 'pdf.js, javascript, Ecoprogress, Ecoprogress',
+        creator: 'pdf.js'
+    });
+
+
+    doc.save("listaUsuarios+" + date.getFullYear() + "/" + date.getMonth() + 1 + "/" + date.getDay() + ".pdf");
+
+
+    getAllSensors((data) => {
         console.log(data);
         generarListaSensores(data);
     })
 }
 
-function generarListaSensores(data){
+function generarListaSensores(data) {
 
-    
+
     var doc = new jsPDF();
-    data.forEach(function(sensor, i){
-        doc.text(20, 10 + (i * 10), 
-            "ID: " + sensor.id +
-            " Correo: "+ sensor.mail +
-            " Tipo: "+ sensor.type +
-            " Codigo: " + sensor.activation_key+
-            " Activo: " + sensor.state 
-    )});
-    doc.save('Test.pdf');
+
+    doc.setFontSize(18);
+    doc.text(10, 10, 'Lista de nodos: ');
+
+    let objToTable = {
+        head: [['ID', 'Correo', 'Tipo','Codigo','Activo']],
+        body: [
+        ],
+      }
+
+    data.forEach(function (sensor) {
+        objToTable.body.push([sensor.id,sensor.mail ? sensor.mail:"Null",sensor.type,sensor.activation_key,sensor.active ? "Si":"No"]);
+    });
+
+    doc.autoTable(objToTable);
+    doc.save('ListaSensores.pdf');
 }
